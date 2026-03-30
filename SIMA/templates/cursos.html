@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-info">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+<h2 class="mb-4">Cursos Disponibles</h2>
+
+<table class="table table-hover table-bordered shadow">
+
+    <thead class="table-dark">
+        <tr>
+            <th>Código</th>
+            <th>Curso</th>
+            <th>Ciclo</th>
+            <th>Créditos</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for item in cursos %}
+        <tr>
+
+            <td>{{ item.curso.codigo }}</td>
+            <td>{{ item.curso.nombre }}</td>
+            <td>{{ item.curso.ciclo.numero }}</td>
+            <td>{{ item.curso.creditos }}</td>
+
+            <td>
+
+                {% if item.puede %}
+
+                    <span class="badge bg-success">Puede llevar</span>
+
+                    <br>
+
+                    <a href="{% url 'ver_secciones' item.curso.id %}" 
+                      class="btn btn-sm btn-primary mt-2">
+                        Ver Horarios
+                    </a>
+
+                {% else %}
+
+                    <span class="badge bg-danger">
+                        {{ item.motivo }}
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+
+{% endblock %}

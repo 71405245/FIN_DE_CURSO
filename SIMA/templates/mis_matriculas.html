@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h3>📅 Mi Horario</h3>
+
+<table class="table table-bordered">
+
+    <thead class="table-dark">
+        <tr>
+            <th>Curso</th>
+            <th>Día</th>
+            <th>Hora</th>
+            <th>Aula</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for m in matriculas %}
+        <tr>
+            <td>{{ m.curso.nombre }}</td>
+            <td>{{ m.seccion.dia }}</td>
+            <td>{{ m.seccion.hora_inicio }} - {{ m.seccion.hora_fin }}</td>
+            <td>{{ m.seccion.aula }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+
+<a href="{% url 'descargar_horario' %}" class="btn btn-danger">
+    📄 Descargar PDF
+</a>
+
+{% endblock %}

@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <!-- HEADER -->
+    <div class="card shadow-lg p-4 mb-4 bg-primary text-white rounded-4">
+        <h3 class="fw-bold">🎓 SIMA - Sistema Inteligente de Matrícula</h3>
+        <p class="mb-0">Bienvenido, {{ user.username }}</p>
+    </div>
+
+    {% if user.rol == 'admin' %}
+
+    <!-- ================= ADMIN ================= -->
+
+    <div class="row">
+
+        <!-- PANEL ADMIN -->
+        <div class="col-md-6 mb-3">
+            <div class="card shadow-lg border-0 rounded-4 p-3">
+                <h5 class="fw-bold">👨‍💼 Administración</h5>
+
+                <a href="/admin" class="btn btn-dark w-100 mb-2">
+                    ⚙️ Django Admin
+                </a>
+
+                <a href="{% url 'panel_admin' %}" class="btn btn-primary w-100 mb-2">
+                    📊 Panel Administrativo
+                </a>
+
+                <a href="{% url 'cursos' %}" class="btn btn-secondary w-100">
+                    📚 Gestionar Cursos
+                </a>
+            </div>
+        </div>
+
+        <!-- INFO -->
+        <div class="col-md-6 mb-3">
+            <div class="card shadow-lg border-0 rounded-4 p-3 bg-light">
+                <h5 class="fw-bold">📌 Funciones</h5>
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">✔ Crear estudiantes</li>
+                    <li class="list-group-item">✔ Registrar notas</li>
+                    <li class="list-group-item">✔ Gestionar cursos</li>
+                    <li class="list-group-item">✔ Control académico</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    {% elif user.rol == 'estudiante' %}
+
+    <!-- ================= ESTUDIANTE ================= -->
+
+    <div class="row">
+
+        <!-- INFO DEL ESTUDIANTE -->
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-lg border-0 rounded-4 p-3 bg-info text-white">
+                <h5 class="fw-bold">📌 Mi Información</h5>
+
+                <p><strong>👤 Código:</strong> {{ user.codigo }}</p>
+                <p><strong>🎓 Ciclo:</strong> {{ user.ciclo_actual }}</p>
+                <p><strong>📊 Créditos:</strong> {{ user.creditos_acumulados }}</p>
+            </div>
+        </div>
+
+        <!-- ACCIONES -->
+        <div class="col-md-8 mb-3">
+            <div class="card shadow-lg border-0 rounded-4 p-3">
+
+                <h5 class="fw-bold">⚡ Acciones</h5>
+
+                <a href="{% url 'cursos' %}" class="btn btn-primary w-100 mb-2">
+                    📚 Ver Cursos Disponibles
+                </a>
+
+                <a href="{% url 'mis_matriculas' %}" class="btn btn-success w-100 mb-2">
+                    📝 Mis Matrículas
+                </a>
+
+                <a href="{% url 'historial' %}" class="btn btn-warning w-100">
+                    📊 Historial Académico
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- IA RECOMENDACIONES -->
+    <div class="card shadow-lg border-0 rounded-4 p-4 mt-3">
+
+        <h5 class="fw-bold">🤖 Cursos Recomendados</h5>
+
+        {% if recomendaciones %}
+            <div class="row">
+                {% for curso in recomendaciones %}
+                <div class="col-md-4 mb-3">
+                    <div class="card border-0 shadow-sm p-3 bg-light rounded-3">
+
+                        <h6 class="fw-bold">{{ curso.nombre }}</h6>
+
+                        <p class="mb-1">
+                            📘 Código: {{ curso.codigo }}
+                        </p>
+
+                        <span class="badge bg-primary">
+                            Ciclo {{ curso.ciclo.numero }}
+                        </span>
+
+                        <span class="badge bg-success">
+                            {{ curso.creditos }} créditos
+                        </span>
+
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info mt-2">
+                No hay recomendaciones disponibles
+            </div>
+        {% endif %}
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

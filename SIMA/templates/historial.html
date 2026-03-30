@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2 class="mb-4">Historial Académico</h2>
+
+<table class="table table-bordered shadow">
+
+    <thead class="table-warning">
+        <tr>
+            <th>Ciclo</th>
+            <th>Código</th>
+            <th>Curso</th>
+            <th>Nota</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for h in historial %}
+        <tr>
+            <td>{{ h.ciclo }}</td>
+            <td>{{ h.curso.codigo }}</td>
+            <td>{{ h.curso.nombre }}</td>
+            <td>{{ h.nota }}</td>
+
+            <td>
+                {% if h.estado == 'aprobado' %}
+                    <span class="badge bg-success">Aprobado</span>
+                {% elif h.estado == 'desaprobado' %}
+                    <span class="badge bg-danger">Desaprobado</span>
+                {% else %}
+                    <span class="badge bg-warning">En curso</span>
+                {% endif %}
+            </td>
+
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5" class="text-center">
+                No tienes historial académico
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+
+{% endblock %}

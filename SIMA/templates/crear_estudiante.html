@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Crear Estudiante</h2>
+
+<div class="card p-4 shadow">
+
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button class="btn btn-primary w-100">
+            Crear Estudiante
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}
