@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #0d6efd;
+            color: white;
+            padding: 8px;
+        }
+
+        td {
+            border: 1px solid black;
+            height: 60px;
+            text-align: center;
+        }
+
+        .curso {
+            background: #198754;
+            color: white;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<h2>Horario Académico</h2>
+
+<table>
+    <tr>
+        <th>Hora</th>
+        {% for dia in dias %}
+        <th>{{ dia }}</th>
+        {% endfor %}
+    </tr>
+
+    {% for fila in matriz %}
+    <tr>
+        <td>{{ fila.hora }}</td>
+
+        {% for celda in fila.dias %}
+        <td>
+            {% if celda %}
+                <div class="curso">
+                    {{ celda.curso }}<br>
+                    {{ celda.aula }}
+                </div>
+            {% endif %}
+        </td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+
+</table>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Registrar Nota - {{ estudiante.username }}</h2>
+
+<div class="card p-4 shadow">
+
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button class="btn btn-success w-100">
+            Guardar Nota
+        </button>
+    </form>
+
+</div>
+
+{% endblock %}

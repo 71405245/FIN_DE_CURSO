@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🚀 SIMA - Sistema Inteligente de Matrícula Académica
 
 Sistema web desarrollado para la gestión de matrícula universitaria, permitiendo a estudiantes inscribirse en cursos de manera inteligente, validando prerrequisitos, evitando cruces de horario y recomendando cursos automáticamente.
@@ -64,3 +65,6 @@ Ejemplo:
 
 ```markdown
 ![Dashboard](docs/img/dashboard.png)
+=======
+# FIN_DE_CURSO
+>>>>>>> f73b4fc11875f84d6b8bcb8fe603c4d6517317e5
