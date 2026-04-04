@@ -55,6 +55,7 @@ Este proyecto está orientado a mejorar la eficiencia del proceso de matrícula 
 
 - 📄 [Supuestos y Restricciones](docs/supuestos-restricciones.md)
 - 👥 [Equipo del Proyecto](docs/equipo-proyecto.md)
+- 📊 [Project Charter](docs/project-charter.md)
 
 ## 📷 Capturas (Opcional)
 
