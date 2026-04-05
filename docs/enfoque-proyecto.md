@@ -79,22 +79,41 @@ Este enfoque permite abordar la complejidad del problema, considerando múltiple
 
 ## 5. Arquitectura y stack tecnológico
 
-### 🔹 Frontend:
-- React.js  
-Se selecciona por su capacidad para crear interfaces dinámicas, reutilizables y de alto rendimiento.
+### 🔹 Lenguaje de programación:
+- Python  
+Se selecciona por su simplicidad, legibilidad y amplia adopción en el desarrollo de aplicaciones web y sistemas inteligentes.
 
-### 🔹 Backend:
-- Node.js  
-Permite desarrollar servicios rápidos y escalables, ideales para aplicaciones web modernas.
+---
+
+### 🔹 Framework backend:
+- Django  
+Framework robusto que permite el desarrollo rápido de aplicaciones web seguras y escalables. Incluye funcionalidades integradas como autenticación, ORM y administración automática.
+
+---
 
 ### 🔹 Base de datos:
-- PostgreSQL  
-Ofrece robustez, integridad de datos y buen rendimiento en consultas complejas.
+- MySQL / SQL Server  
+Se utilizan sistemas de gestión de bases de datos relacionales que garantizan integridad, consistencia y eficiencia en el manejo de datos académicos.
 
-### 🔹 Módulo de IA:
-- Algoritmo de recomendación (basado en lógica heurística o IA)  
-Encargado de generar combinaciones de horarios y priorizar las más óptimas.
+---
 
+### 🔹 Frontend:
+- HTML, CSS, Bootstrap 5  
+Permiten construir interfaces web responsivas y fáciles de usar, mejorando la experiencia del usuario.
+
+---
+
+### 🔹 Generación de documentos:
+- ReportLab / xhtml2pdf  
+Herramientas utilizadas para la generación de reportes y exportación de horarios en formato PDF.
+
+---
+
+### 🔹 Componentes adicionales:
+
+- ORM de Django: Facilita la interacción con la base de datos mediante objetos, reduciendo la complejidad del código SQL.  
+- Sistema de autenticación integrado: Permite gestionar usuarios y roles de manera segura.  
+- Lógica personalizada para IA: Implementación de algoritmos para la recomendación de cursos y generación de horarios óptimos.
 ---
 
 ## 6. Metodología de desarrollo
@@ -128,10 +147,14 @@ El uso de un módulo de recomendación permite aplicar técnicas heurísticas o 
 
 Asimismo, la elección del stack tecnológico responde a criterios de rendimiento, escalabilidad y mantenibilidad:
 
-- **React.js** permite construir interfaces dinámicas y responsivas, mejorando la experiencia del usuario.
-- **Node.js** facilita el desarrollo de servicios backend eficientes y escalables, especialmente en aplicaciones con múltiples solicitudes concurrentes.
-- **PostgreSQL** garantiza integridad de datos y buen desempeño en consultas complejas relacionadas con horarios y combinaciones.
+- **Python** se selecciona por su simplicidad, legibilidad y amplia adopción en el desarrollo de aplicaciones web y soluciones basadas en inteligencia artificial.
+- **Django** permite un desarrollo rápido y seguro gracias a sus componentes integrados, como el ORM, el sistema de autenticación y la administración automática.
+- **MySQL / SQL Server** garantizan la integridad, consistencia y eficiencia en el manejo de datos relacionales.
+- **HTML, CSS y Bootstrap 5** permiten construir interfaces web responsivas y accesibles, mejorando la experiencia del usuario.
+- **ReportLab / xhtml2pdf** facilitan la generación de reportes y exportación de horarios en formato PDF.
+
+Adicionalmente, el uso del ORM de Django simplifica la interacción con la base de datos, reduciendo la complejidad del desarrollo, mientras que el sistema de autenticación integrado permite gestionar usuarios y roles de manera segura.
 
 Finalmente, la adopción de la metodología Scrum se justifica por su capacidad de gestionar proyectos con alto grado de incertidumbre y cambios frecuentes en los requerimientos, permitiendo entregas incrementales y mejora continua del sistema.
 
-En conjunto, este enfoque tecnológico y metodológico proporciona una solución robusta, adaptable y alineada con los objetivos del proyecto.
+En conjunto, este enfoque tecnológico y metodológico proporciona una solución robusta, escalable y alineada con los objetivos del proyecto.
