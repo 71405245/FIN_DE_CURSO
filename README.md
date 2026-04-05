@@ -1,76 +1,96 @@
-<<<<<<< HEAD
-# 🚀 SIMA - Sistema Inteligente de Matrícula Académica
+# 🚀 Sistema Web Inteligente para la Optimización del Proceso de Matrícula Universitaria
 
-Sistema web desarrollado para la gestión de matrícula universitaria, permitiendo a estudiantes inscribirse en cursos de manera inteligente, validando prerrequisitos, evitando cruces de horario y recomendando cursos automáticamente.
+## 📌 Descripción del Proyecto
 
----
+Este proyecto consiste en el desarrollo de un sistema web inteligente orientado a estudiantes universitarios, el cual permite optimizar el proceso de planificación de la matrícula académica mediante la generación y recomendación automática de horarios.
 
-## 📑 Tabla de Contenidos
+El sistema utiliza un enfoque basado en inteligencia artificial para analizar las preferencias, restricciones y disponibilidad del estudiante, generando combinaciones de horarios válidas y recomendando aquellas que mejor se adapten a sus necesidades.
 
-- [📌 Descripción](#-descripción)
-- [🛠 Tecnologías](#-tecnologías)
-- [⚙️ Instalación](docs/installation.md)
-- [▶️ Uso](docs/usage.md)
-- [🏗 Arquitectura](docs/architecture.md)
-- [🔌 API](docs/api.md)
-- [🤝 Contribución](docs/contributing.md)
-- [❓ FAQ](docs/faq.md)
+Su objetivo principal es mejorar la toma de decisiones durante la matrícula, reducir errores en la selección de cursos y optimizar el uso del tiempo del estudiante, brindando una experiencia más eficiente, intuitiva y personalizada.
+
+## 📌 1. Documento de selección del enfoque del proyecto
+📊 [Ver documento](docs/enfoque-proyecto.md)
 
 ---
 
-## 📌 Descripción
+## 🎯 2. Declaración de la visión del proyecto
 
-SIMA es un sistema académico que automatiza el proceso de matrícula universitaria.
-
-El sistema permite:
-- Registro de estudiantes por parte del administrador
-- Inicio de sesión con roles (admin / estudiante)
-- Visualización de cursos por ciclo
-- Validación de prerrequisitos
-- Recomendación automática de cursos mediante lógica inteligente
-- Matrícula en cursos con control de créditos
-- Detección de cruce de horarios
-- Generación de horario académico visual
-- Exportación del horario en formato PDF
-
-Este proyecto está orientado a mejorar la eficiencia del proceso de matrícula y reducir errores humanos en la selección de cursos.
+Desarrollar un sistema web inteligente que permita a los estudiantes universitarios optimizar el proceso de planificación de su matrícula académica mediante la generación y recomendación automática de horarios, considerando sus preferencias, restricciones y disponibilidad, con el fin de mejorar la toma de decisiones, reducir errores y optimizar el uso del tiempo.
 
 ---
 
-## 🛠 Tecnologías
-
-- **Lenguaje:** Python
-- **Framework:** Django
-- **Base de datos:** MySQL / SQL Server
-- **Frontend:** HTML, CSS, Bootstrap 5
-- **PDF:** ReportLab / xhtml2pdf
-- **Otros:**
-  - ORM de Django
-  - Sistema de autenticación integrado
-  - Lógica personalizada para IA (recomendación de cursos)
+## 📄 3. Project Charter
+📊 [Ver documento](docs/project-charter.md)
 
 ---
 
-## 📂 Documentación del Proyecto
+## 📌 4. Registro de supuestos y restricciones
+📄 [Ver documento](docs/supuestos-restricciones.md)
 
-- 📄 [Supuestos y Restricciones](docs/supuestos-restricciones.md)
-- 👥 [Equipo del Proyecto](docs/equipo-proyecto.md)
-- 📊 [Project Charter](docs/project-charter.md)
+---
 
-## 📷 Capturas (Opcional)
+## 👥 5. Declaración del equipo del proyecto
+👥 [Ver documento](docs/equipo-proyecto.md)
 
-Puedes agregar aquí imágenes como:
+---
 
-- Login del sistema
-- Dashboard del estudiante
-- Panel de administrador
-- Horario visual
-- PDF generado
+## 💻 6. Repositorio GitHub operativo
 
-Ejemplo:
+🔗 Repositorio: https://github.com/71405245/FIN_DE_CURSO
 
-```markdown
-![Dashboard](docs/img/dashboard.png)
-=======
-# FIN_DE_CURSO
->>>>>>> f73b4fc11875f84d6b8bcb8fe603c4d6517317e5
+---
+
+## 📊 7. Documento inicial del problema (primer borrador)
+
+### 📌 Descripción del problema
+
+En el proceso actual de matrícula universitaria, los estudiantes deben seleccionar manualmente sus cursos y horarios, enfrentándose a múltiples combinaciones posibles de secciones, docentes y horarios. Esta tarea resulta compleja debido a la necesidad de evitar cruces de horarios, considerar la disponibilidad personal y optimizar la distribución del tiempo.
+
+Además, la falta de herramientas inteligentes que apoyen la toma de decisiones provoca que los estudiantes inviertan un tiempo considerable en este proceso, aumentando la probabilidad de cometer errores y generando horarios poco eficientes.
+
+---
+
+### 🎯 Problema central
+
+La dificultad de los estudiantes para construir horarios académicos óptimos debido a la complejidad de las combinaciones de cursos, restricciones personales y la falta de herramientas automatizadas que faciliten la toma de decisiones.
+
+---
+
+### ⚙️ Variables del problema
+
+- Disponibilidad horaria del estudiante  
+- Oferta académica (cursos, secciones, docentes)  
+- Distribución de horarios  
+- Cantidad de cursos a matricular  
+- Preferencias personales  
+
+---
+
+### ⚠️ Complejidad del problema
+
+El problema presenta un alto nivel de complejidad debido a la interacción de múltiples variables, la existencia de restricciones simultáneas y la necesidad de optimizar diferentes criterios, lo cual dificulta su resolución mediante métodos manuales.
+
+---
+
+## 📋 8. Lista preliminar de requerimientos
+
+### 🔹 Requerimientos funcionales (RF)
+
+- RF1: Registro de preferencias del estudiante  
+- RF2: Visualización de la oferta académica  
+- RF3: Detección de cruces de horario  
+- RF4: Generación de combinaciones de horarios  
+- RF5: Recomendación de horarios óptimos  
+- RF6: Edición de preferencias  
+- RF7: Visualización gráfica del horario  
+- RF8: Exportación de horarios  
+
+---
+
+### 🔸 Requerimientos no funcionales (RNF)
+
+- RNF1: Usabilidad (interfaz intuitiva)  
+- RNF2: Rendimiento (respuesta < 5 segundos)  
+- RNF3: Disponibilidad (95% uptime)  
+- RNF4: Compatibilidad (navegadores web)  
+- RNF5: Seguridad (autenticación de usuarios)  
