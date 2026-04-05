@@ -117,3 +117,21 @@ Scrum facilita la organización del equipo, el seguimiento del progreso y la ent
 El enfoque seleccionado combina tecnologías modernas con un modelo de desarrollo ágil, permitiendo construir una solución eficiente, escalable y alineada con los objetivos del proyecto.
 
 La incorporación de un módulo de recomendación basado en inteligencia artificial representa un valor diferencial, ya que mejora significativamente la experiencia del usuario y optimiza el proceso de toma de decisiones durante la matrícula académica.
+
+## 8. Justificación técnica del enfoque seleccionado
+
+El enfoque basado en inteligencia artificial se justifica técnicamente debido a la naturaleza compleja del problema, el cual involucra múltiples variables, restricciones y criterios de optimización que deben ser evaluados de manera simultánea.
+
+Desde un punto de vista computacional, la generación de horarios académicos puede modelarse como un problema de combinación y optimización, donde el número de posibles configuraciones crece exponencialmente en función de la cantidad de cursos y secciones disponibles. Este tipo de problema resulta ineficiente de resolver mediante métodos manuales o enfoques basados únicamente en reglas estáticas.
+
+El uso de un módulo de recomendación permite aplicar técnicas heurísticas o algoritmos de optimización que reducen el espacio de búsqueda y priorizan soluciones que se ajustan mejor a las preferencias del usuario, mejorando la eficiencia del sistema y la calidad de las recomendaciones.
+
+Asimismo, la elección del stack tecnológico responde a criterios de rendimiento, escalabilidad y mantenibilidad:
+
+- **React.js** permite construir interfaces dinámicas y responsivas, mejorando la experiencia del usuario.
+- **Node.js** facilita el desarrollo de servicios backend eficientes y escalables, especialmente en aplicaciones con múltiples solicitudes concurrentes.
+- **PostgreSQL** garantiza integridad de datos y buen desempeño en consultas complejas relacionadas con horarios y combinaciones.
+
+Finalmente, la adopción de la metodología Scrum se justifica por su capacidad de gestionar proyectos con alto grado de incertidumbre y cambios frecuentes en los requerimientos, permitiendo entregas incrementales y mejora continua del sistema.
+
+En conjunto, este enfoque tecnológico y metodológico proporciona una solución robusta, adaptable y alineada con los objetivos del proyecto.
