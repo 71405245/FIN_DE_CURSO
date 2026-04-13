@@ -95,8 +95,16 @@ El problema presenta un alto nivel de complejidad debido a la interacción de m�
 
 ### 🔸 Requerimientos no funcionales (RNF)
 
-- RNF1: Usabilidad (interfaz intuitiva)  
-- RNF2: Rendimiento (respuesta < 5 segundos)  
-- RNF3: Disponibilidad (95% uptime)  
-- RNF4: Compatibilidad (navegadores web)  
-- RNF5: Seguridad (autenticación de usuarios)  
+# 9. Requerimientos No Funcionales
+
+## RNF1: Rendimiento
+El sistema debe generar horarios en un tiempo menor a 5 segundos.
+
+## RNF2: Usabilidad
+El sistema debe ser intuitivo y permitir completar el proceso en menos de 3 minutos.
+
+## RNF3: Compatibilidad
+El sistema debe funcionar en los principales navegadores web.
+
+## RNF4: Seguridad
+El sistema debe proteger la información de los usuarios.
