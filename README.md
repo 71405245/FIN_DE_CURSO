@@ -96,16 +96,12 @@ El problema presenta un alto nivel de complejidad debido a la interacción de m�
 
 ### 🔸 Requerimientos no funcionales (RNF)
 
-# 9. Requerimientos No Funcionales
+# 9. Especificación de Requerimientos No Funcionales (SMART)
 
-## RNF1: Rendimiento
-El sistema debe generar horarios en un tiempo menor a 5 segundos.
-
-## RNF2: Usabilidad
-El sistema debe ser intuitivo y permitir completar el proceso en menos de 3 minutos.
-
-## RNF3: Compatibilidad
-El sistema debe funcionar en los principales navegadores web.
-
-## RNF4: Seguridad
-El sistema debe proteger la información de los usuarios.
+| ID | Nombre del Requerimiento | Descripción Técnica | Criterio de Aceptación |
+|----|--------------------------|--------------------|------------------------|
+| RNF-01 | Rendimiento | El sistema debe procesar la generación de horarios de manera eficiente, optimizando el uso de recursos y tiempo de ejecución. | Dado que el usuario solicita generar horarios, cuando el sistema ejecuta el proceso, entonces debe completarlo en ≤ 5 segundos. |
+| RNF-02 | Usabilidad | El sistema debe ser intuitivo, fácil de usar y permitir una interacción clara para el usuario. | Dado un usuario nuevo, cuando utiliza el sistema, entonces debe completar el proceso en ≤ 3 minutos sin errores. |
+| RNF-03 | Compatibilidad | El sistema debe ser accesible desde diferentes navegadores web modernos. | Dado que el usuario accede desde Chrome, Edge o Firefox, cuando utiliza el sistema, entonces debe funcionar correctamente sin fallos. |
+| RNF-04 | Seguridad | El sistema debe proteger la información del usuario y controlar el acceso mediante autenticación. | Dado que el usuario inicia sesión, cuando accede al sistema, entonces sus datos deben estar protegidos y no ser accesibles por terceros. |
+| RNF-05 | Disponibilidad | El sistema debe estar disponible para su uso durante el tiempo de operación definido. | Dado que el usuario accede al sistema, cuando lo utiliza, entonces debe estar disponible al menos el 95% del tiempo. |
