@@ -1,4 +1,4 @@
-## 3. Declaración del Proyecto (Project Charter)
+## 3. Declaración del Proyecto
 
 | Campo | Descripción |
 |------|------------|
