@@ -4,7 +4,7 @@
 |------|------------|
 | **Project Name** | Sistema Web Inteligente para la Optimización del Proceso de Matrícula Universitaria |
 | **Project Sponsor** | Universidad Continental |
-| **Project Manager** | Liand |
+| **Project Manager** |  |
 | **Fecha de inicio** | 2026 |
 | **Última actualización** | 2026 |
 
