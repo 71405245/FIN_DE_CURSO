@@ -1,45 +1,73 @@
 ## 3. Project Charter
 
-### 📌 Nombre del proyecto:
-Sistema Web Inteligente para la Optimización del Proceso de Matrícula Universitaria mediante un módulo de recomendación de horarios basado en inteligencia artificial
+| Campo | Descripción |
+|------|------------|
+| **Project Name** | Sistema Web Inteligente para la Optimización del Proceso de Matrícula Universitaria |
+| **Project Sponsor** | Universidad Continental |
+| **Project Manager** | Liand |
+| **Fecha de inicio** | 2026 |
+| **Última actualización** | 2026 |
 
 ---
 
-### 🎯 Objetivo del proyecto:
-Desarrollar un sistema web inteligente que permita generar y recomendar horarios académicos óptimos, considerando las preferencias y restricciones de los estudiantes, con el fin de mejorar la eficiencia del proceso de matrícula.
+| Campo | Descripción |
+|------|------------|
+| **Descripción del Proyecto** | Desarrollo de un sistema web inteligente que permite generar y recomendar horarios académicos óptimos para estudiantes universitarios. |
 
 ---
 
-### 📦 Alcance del proyecto:
-
-Incluye:
-- Generación automática de horarios  
-- Recomendación de combinaciones óptimas  
-- Visualización de horarios  
-- Exportación de horarios  
-
-No incluye:
-- Integración con sistemas reales  
-- Matrícula oficial  
-- Uso de datos reales  
+| Campo | Descripción |
+|------|------------|
+| **Alcance (Scope)** | El sistema permitirá generar horarios automáticamente, recomendar combinaciones óptimas, visualizar horarios y exportarlos en PDF. No incluye integración con sistemas reales ni matrícula oficial. |
 
 ---
 
-### 👥 Stakeholders:
-- Estudiantes  
-- Universidad  
-- Docentes  
-- Equipo de desarrollo  
+| Campo | Descripción |
+|------|------------|
+| **Justificación (Business Case)** | Mejorar la eficiencia del proceso de matrícula, reducir errores en la selección de cursos y optimizar el tiempo del estudiante mediante recomendaciones inteligentes. |
 
 ---
 
-### ⚠️ Riesgos:
-- Complejidad del algoritmo  
-- Limitación de tiempo  
-- Falta de datos reales  
-- Posibles errores en la generación de horarios  
+| Restricciones | Detalle |
+|--------------|--------|
+| **Tiempo** | Desarrollo limitado al periodo académico |
+| **Recursos** | Recursos tecnológicos limitados |
+| **Alcance** | Desarrollo como prototipo |
+| **Datos** | Uso de datos simulados |
 
 ---
+
+| Entregables del Proyecto |
+|------------------------|
+| Sistema web funcional |
+| Módulo de recomendación de horarios |
+| Generación y exportación de horarios |
+| Documentación del sistema |
+
+---
+
+| Beneficios | Meta |
+|-----------|------|
+| Reducción de tiempo de matrícula | ≤ 3 minutos |
+| Mejora en toma de decisiones | Alta |
+| Reducción de errores | Significativa |
+
+---
+
+| Equipo del Proyecto |
+|-------------------|
+| Scrum Master: Kevin |
+| Product Owner: Liand |
+| Developer: Jordan |
+
+---
+
+| Riesgos |
+|--------|
+| Complejidad del algoritmo |
+| Falta de datos reales |
+| Limitación de tiempo |
+| Errores en generación de horarios |
 
 ### 📅 Cronograma:
 - Sprint 0: Análisis  
