@@ -4,7 +4,7 @@
 |------|------------|
 | **Nombre del Proyecto** | Sistema Web Inteligente para la Optimización del Proceso de Matrícula Universitaria |
 | **Patrocinador del Proyecto** | Universidad Continental |
-| **Responsable del Proyecto** | Liand |
+| **Responsable del Proyecto** | _ _ _ |
 | **Fecha de Inicio** | 2026 |
 | **Última Actualización** | 2026 |
 
