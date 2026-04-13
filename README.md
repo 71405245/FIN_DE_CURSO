@@ -80,17 +80,18 @@ El problema presenta un alto nivel de complejidad debido a la interacción de m�
 
 ## 📋 8. Lista preliminar de requerimientos
 
-### 🔹 Requerimientos funcionales (RF)
+### 🟢 Especificación de Requerimientos Funcionales (SMART)
 
-- RF1: Registro de preferencias del estudiante  
-- RF2: Visualización de la oferta académica  
-- RF3: Detección de cruces de horario  
-- RF4: Generación de combinaciones de horarios  
-- RF5: Recomendación de horarios óptimos  
-- RF6: Edición de preferencias  
-- RF7: Visualización gráfica del horario  
-- RF8: Exportación de horarios  
-
+| ID | Nombre del Requerimiento | Descripción Técnica (Trigger / Lógica / Resultado) | Criterio de Aceptación |
+|----|--------------------------|---------------------------------------------------|------------------------|
+| RF-01 | Registro de preferencias del estudiante | Trigger: El estudiante accede al formulario de preferencias. Lógica: El sistema valida campos obligatorios (cursos, horario, días, créditos). Resultado: Almacena las preferencias del usuario. | Dado que el usuario ingresa datos válidos, cuando presiona “Guardar”, entonces el sistema persiste la información y muestra confirmación en ≤ 1 s. |
+| RF-02 | Visualización de la oferta académica | Trigger: El usuario solicita ver cursos. Lógica: Consulta base de datos de cursos y secciones. Resultado: Lista paginada de cursos con detalles. | Dado que existen cursos, cuando accede al módulo, entonces se muestran al menos 10 registros por página con filtros. |
+| RF-03 | Detección de cruces de horario | Trigger: Evaluación de secciones seleccionadas. Lógica: Compara intervalos de tiempo y detecta solapamientos. Resultado: Marca combinaciones inválidas. | Dado un traslape, cuando se valida, entonces el sistema identifica el conflicto en ≤ 200 ms. |
+| RF-04 | Generación de combinaciones de horarios | Trigger: Solicitud del usuario. Lógica: Genera combinaciones y filtra conflictos. Resultado: Lista de horarios válidos. | Dado 3 a 7 cursos, cuando se genera, entonces el sistema produce combinaciones válidas en ≤ 5 s. |
+| RF-05 | Recomendación de horarios óptimos | Trigger: Combinaciones generadas. Lógica: Aplica puntuación según preferencias. Resultado: Ordena combinaciones. | Dado combinaciones válidas, cuando se evalúan, entonces retorna top 5 en ≤ 1 s. |
+| RF-06 | Edición de preferencias | Trigger: Usuario modifica datos. Lógica: Valida y actualiza información. Resultado: Cambios persistidos. | Dado un cambio válido, cuando guarda, entonces el sistema actualiza correctamente los datos. |
+| RF-07 | Visualización gráfica del horario | Trigger: Selección de combinación. Lógica: Representa datos en grilla semanal. Resultado: Vista tipo calendario. | Dado un horario, cuando se visualiza, entonces se muestra correctamente sin superposición. |
+| RF-08 | Exportación de horarios | Trigger: Solicitud de exportación. Lógica: Genera archivo PDF o imagen. Resultado: Descarga del archivo. | Dado un horario, cuando exporta, entonces el sistema descarga el archivo en ≤ 3 s. |
 ---
 
 ### 🔸 Requerimientos no funcionales (RNF)
