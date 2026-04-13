@@ -100,7 +100,7 @@ El problema presenta un alto nivel de complejidad debido a la interacción de m�
 
 | ID | Nombre del Requerimiento | Descripción Técnica | Criterio de Aceptación |
 |----|--------------------------|--------------------|------------------------|
-| RNF-01 | Rendimiento | El sistema debe procesar la generación de horarios de manera eficiente, optimizando el uso de recursos y tiempo de ejecución. | Dado que el usuario solicita generar horarios, cuando el sistema ejecuta el proceso, entonces debe completarlo en ≤ 5 segundos. |
+| RNF-01 | Tiempo de respuesta / Latencia | El sistema debe responder a las solicitudes del usuario en tiempos mínimos, garantizando fluidez en la interacción. | Dado que el usuario realiza una acción (generar horarios o navegar), cuando el sistema procesa la solicitud, entonces debe responder en ≤ 2 segundos. |
 | RNF-02 | Usabilidad | El sistema debe ser intuitivo, fácil de usar y permitir una interacción clara para el usuario. | Dado un usuario nuevo, cuando utiliza el sistema, entonces debe completar el proceso en ≤ 3 minutos sin errores. |
 | RNF-03 | Compatibilidad | El sistema debe ser accesible desde diferentes navegadores web modernos. | Dado que el usuario accede desde Chrome, Edge o Firefox, cuando utiliza el sistema, entonces debe funcionar correctamente sin fallos. |
 | RNF-04 | Seguridad | El sistema debe proteger la información del usuario y controlar el acceso mediante autenticación. | Dado que el usuario inicia sesión, cuando accede al sistema, entonces sus datos deben estar protegidos y no ser accesibles por terceros. |
