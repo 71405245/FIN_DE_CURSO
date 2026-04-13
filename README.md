@@ -15,7 +15,6 @@ Su objetivo principal es mejorar la toma de decisiones durante la matrícula, re
 
 ## 🎯 2. Declaración de la visión del proyecto
 
-## 2. Declaración de la visión del proyecto
 
 Para estudiantes universitarios de la Universidad Continental  
 Quiénes necesitan optimizar su proceso de matrícula académica  
