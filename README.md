@@ -1,5 +1,14 @@
 # 🚀 Sistema Web Inteligente para la Optimización del Proceso de Matrícula Universitaria
 
+## 🔗 Repositorio
+https://github.com/71405245/FIN_DE_CURSO
+
+---
+
+## 📌 Descripción
+
+Este proyecto consiste en el desarrollo de un sistema web inteligente que permite a los estudiantes universitarios optimizar su proceso de matrícula mediante la generación y recomendación automática de horarios, considerando sus preferencias y restricciones.
+
 ---
 
 ## 📑 Tabla de Contenidos
