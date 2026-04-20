@@ -35,3 +35,9 @@ https://github.com/71405245/FIN_DE_CURSO
 
 - 🏗 [Arquitectura del Sistema](docs/arquitectura.md)  
   Explica la estructura técnica y las tecnologías utilizadas en el sistema.
+  
+- 📄 [Informe de Estado del Proyecto](docs/informe-estado.md)  
+  Presenta el avance del proyecto, incluyendo estado, riesgos, problemas y próximos pasos.
+
+- 📝 [Minuta de Reunión](docs/minuta-reunion.md)  
+  Resume los puntos tratados, acuerdos y tareas asignadas durante las reuniones del equipo.
