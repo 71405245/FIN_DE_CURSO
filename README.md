@@ -42,7 +42,7 @@ https://github.com/71405245/FIN_DE_CURSO
 - 📝 [Minuta de Reunión](docs/minuta-reunion.md)  
   Resume los puntos tratados, acuerdos y tareas asignadas durante las reuniones del equipo.
 
-  - ⚠️ [Registro de Riesgos](https://github.com/71405245/FIN_DE_CURSO/blob/main/docs/riesgos.md)  
+- ⚠️ [Registro de Riesgos](https://github.com/71405245/FIN_DE_CURSO/blob/main/docs/riesgos.md)  
   Identificación, análisis y estrategias de mitigación de riesgos del proyecto.
 
 - 🚀 [Registro de Oportunidades](https://github.com/71405245/FIN_DE_CURSO/blob/main/docs/oportunidades.md)  
