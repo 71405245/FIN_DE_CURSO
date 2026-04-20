@@ -1,3 +1,4 @@
+# 📊 Registro de Riesgos
 | ID Riesgo | Descripción del Riesgo | Área de Impacto | Causa | Impacto | Probabilidad | Puntuación | Detectabilidad | Estado | Asignado a | Evento que lo Dispara | Estrategia de Respuesta | Reserva / Ajustes | Fecha de Aprobación | Comentarios |
 |----------|----------------------|----------------|-------|---------|-------------|------------|----------------|--------|------------|----------------------|------------------------|------------------|--------------------|-------------|
 | R-01 | Datos simulados no representan la realidad del problema | Calidad | Uso de datos ficticios (S1, R2) | Critico | Alto | 6,3 | Medio | Activo | Equipo Dev | Uso de datos irreales en pruebas | Mitigación: validar escenarios reales | Ajuste en pruebas y validación | - | Riesgo clave del proyecto |
