@@ -10,5 +10,4 @@
 | R2 | Académico | Restricciones por secuencia de cursos (prerrequisitos no aprobados) | Activo | Limita la selección de cursos |
 | R3 | Académico | Límite de créditos permitidos por ciclo | Activo | Restricción institucional |
 | R4 | Académico | Disponibilidad limitada de secciones | Activo | Puede afectar la generación de horarios |
-| R5 | Tiempo | Tiempo limitado para el desarrollo del proyecto | Activo | Condición académica |
-| R6 | Datos | No se cuenta con acceso a datos reales de la universidad | Activo | Uso de datos simulados |
+| R5 | Datos | No se cuenta con acceso a datos reales de la universidad | Activo | Uso de datos simulados |
