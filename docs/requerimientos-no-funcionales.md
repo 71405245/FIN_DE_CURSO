@@ -1,4 +1,4 @@
-#Especificación de Requerimientos No Funcionales (SMART)
+# 📋 Requerimientos No Funcionales
 
 | ID | Nombre del Requerimiento | Descripción Técnica | Criterio de Aceptación |
 |----|--------------------------|--------------------|------------------------|
