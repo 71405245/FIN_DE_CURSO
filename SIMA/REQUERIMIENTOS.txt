@@ -1,0 +1,36 @@
+REQUERIMIENTOS DEL SISTEMA - SIMA
+================================
+
+Para poder trabajar este proyecto en otra computadora, asegúrate de cumplir con los siguientes requisitos:
+
+1. LENGUAJE DE PROGRAMACIÓN:
+   - Python 3.14.3 o superior.
+
+2. BASE DE DATOS:
+   - MySQL o MariaDB.
+   - Nombre de la base de datos: sima_db
+   - Usuario: root
+   - Contraseña: (vacía por defecto en settings.py)
+   - Host: localhost
+   - Puerto: 3306
+
+3. DEPENDENCIAS DE PYTHON:
+   - Se ha generado un archivo 'requirements.txt' con todas las librerías necesarias.
+
+4. PASOS PARA LA INSTALACIÓN EN OTRA PC:
+   a. Clonar o copiar la carpeta del proyecto.
+   b. Crear un entorno virtual:
+      python -m venv venv
+   c. Activar el entorno virtual:
+      - Windows: .\venv\Scripts\activate
+      - Linux/Mac: source venv/bin/activate
+   d. Instalar las dependencias:
+      pip install -r requirements.txt
+   e. Configurar la base de datos MySQL (crear la base de datos 'sima_db').
+   f. Ejecutar las migraciones:
+      python manage.py migrate
+   g. Iniciar el servidor:
+      python manage.py runserver
+
+5. NOTA SOBRE MYSQL:
+   Asegúrate de tener instalado un conector de MySQL para Python (como mysqlclient o django-mysql) que ya está incluido en el requirements.txt.
