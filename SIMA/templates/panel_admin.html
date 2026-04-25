@@ -10,12 +10,32 @@
         <p class="mb-0">Gestión de estudiantes y control académico</p>
     </div>
 
-    <!-- BOTÓN CREAR -->
-    <div class="mb-3">
-        <a href="{% url 'crear_estudiante' %}" class="btn btn-success">
-            ➕ Crear Estudiante
-        </a>
+    <!-- BOTONES DE ADMINISTRACIÓN -->
+    <div class="row mb-4">
+        <div class="col-md-3 mb-2">
+            <a href="{% url 'crear_estudiante' %}" class="btn btn-success w-100 fw-bold shadow-sm">
+                ➕ Crear Estudiante
+            </a>
+        </div>
+        <div class="col-md-3 mb-2">
+            <a href="{% url 'gestionar_cursos_admin' %}" class="btn btn-primary w-100 fw-bold shadow-sm">
+                📚 Gestionar Cursos
+            </a>
+        </div>
+        <div class="col-md-3 mb-2">
+            <a href="{% url 'gestionar_salones_admin' %}" class="btn btn-info w-100 fw-bold shadow-sm text-white">
+                🏢 Gestionar Salones
+            </a>
+        </div>
+        <div class="col-md-3 mb-2">
+            <a href="{% url 'gestionar_horarios_admin' %}" class="btn btn-warning w-100 fw-bold shadow-sm">
+                🕒 Gestionar Horarios
+            </a>
+        </div>
     </div>
+
+    <!-- TABLA DE ESTUDIANTES -->
+    <h4 class="fw-bold mb-3">🎓 Lista de Estudiantes</h4>
 
     <!-- TABLA -->
     <div class="card shadow-lg p-3">
@@ -51,6 +71,11 @@
                     </td>
 
                     <td>
+
+                        <a href="{% url 'historial_estudiante_admin' u.id %}" 
+                           class="btn btn-info btn-sm">
+                            📚 Ver Historial
+                        </a>
 
                         <a href="{% url 'registrar_nota' u.id %}" 
                            class="btn btn-warning btn-sm">

@@ -50,10 +50,17 @@ class HistorialAcademico(models.Model):
     def __str__(self):
         return f"{self.estudiante} - {self.curso} - {self.estado}"
 
+class Salon(models.Model):
+    numero = models.CharField(max_length=20)
+    capacidad = models.IntegerField()
+
+    def __str__(self):
+        return f"Salón {self.numero}"
+
 class Seccion(models.Model):
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
     dia = models.CharField(max_length=20)
     hora_inicio = models.TimeField()
     hora_fin = models.TimeField()
-    aula = models.CharField(max_length=50)
+    salon = models.ForeignKey(Salon, on_delete=models.SET_NULL, null=True, blank=True)
     cupo = models.IntegerField()

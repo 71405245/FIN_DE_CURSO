@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5" style="max-width: 500px;">
+    <div class="card shadow-lg p-4 rounded-4 border-0 text-center">
+        <h3 class="fw-bold text-danger mb-3">⚠️ Confirmar Eliminación</h3>
+        
+        <p class="mb-4">
+            ¿Estás seguro de que deseas eliminar permanentemente:<br>
+            <strong>{{ objeto }}</strong>?
+        </p>
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-3">
+                {% if cancel_args %}
+                    <a href="{% url cancel_url cancel_args %}" class="btn btn-secondary px-4">Cancelar</a>
+                {% else %}
+                    <a href="{% url cancel_url %}" class="btn btn-secondary px-4">Cancelar</a>
+                {% endif %}
+                <button type="submit" class="btn btn-danger px-4 fw-bold">Sí, Eliminar</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

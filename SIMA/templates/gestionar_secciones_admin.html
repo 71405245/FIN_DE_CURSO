@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow-lg p-4 mb-4 bg-info text-white rounded-4">
+        <h3 class="fw-bold">📅 Gestión de Secciones (Horarios)</h3>
+        <p class="mb-0">Curso: <strong>{{ curso.nombre }} ({{ curso.codigo }})</strong></p>
+    </div>
+
+    <div class="mb-3 d-flex justify-content-between">
+        <a href="{% url 'gestionar_cursos_admin' %}" class="btn btn-secondary">⬅️ Volver a Cursos</a>
+        <a href="{% url 'crear_seccion_admin' curso.id %}" class="btn btn-success fw-bold">➕ Crear Nueva Sección</a>
+    </div>
+
+    <div class="card shadow-lg p-3 rounded-4 border-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Día</th>
+                        <th>Horario</th>
+                        <th>Aula</th>
+                        <th>Cupo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for s in secciones %}
+                    <tr>
+                        <td class="fw-bold text-primary">{{ s.dia }}</td>
+                        <td>{{ s.hora_inicio|time:"H:i" }} - {{ s.hora_fin|time:"H:i" }}</td>
+                        <td>{% if s.salon %}{{ s.salon.numero }}{% else %}Sin asignar{% endif %}</td>
+                        <td><span class="badge bg-secondary">{{ s.cupo }}</span></td>
+                        <td>
+                            <a href="{% url 'editar_seccion_admin' s.id %}" class="btn btn-warning btn-sm">✏️ Editar</a>
+                            <a href="{% url 'eliminar_seccion_admin' s.id %}" class="btn btn-danger btn-sm">🗑️ Eliminar</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center text-muted">Este curso aún no tiene secciones asignadas.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

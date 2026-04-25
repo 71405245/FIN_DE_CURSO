@@ -11,17 +11,26 @@
             <th>Curso</th>
             <th>Día</th>
             <th>Hora</th>
-            <th>Aula</th>
+            <th>Salón</th>
+            <th>Acciones</th>
         </tr>
     </thead>
 
     <tbody>
         {% for m in matriculas %}
         <tr>
-            <td>{{ m.curso.nombre }}</td>
+            <td>{{ m.seccion.curso.nombre }}</td>
             <td>{{ m.seccion.dia }}</td>
-            <td>{{ m.seccion.hora_inicio }} - {{ m.seccion.hora_fin }}</td>
-            <td>{{ m.seccion.aula }}</td>
+            <td>{{ m.seccion.hora_inicio|time:"H:i" }} - {{ m.seccion.hora_fin|time:"H:i" }}</td>
+            <td>{% if m.seccion.salon %}{{ m.seccion.salon.numero }}{% else %}Sin asignar{% endif %}</td>
+            <td>
+                <form method="POST" action="{% url 'rectificar_matricula' m.id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-warning btn-sm" onclick="return confirm('¿Seguro que deseas rectificar (eliminar) esta matrícula?');">
+                        ❌ Rectificar
+                    </button>
+                </form>
+            </td>
         </tr>
         {% endfor %}
     </tbody>

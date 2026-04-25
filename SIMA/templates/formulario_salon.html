@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4 d-flex justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-lg p-4 rounded-4">
+            <h3 class="fw-bold text-center text-primary mb-4">{{ accion }}</h3>
+
+            <form method="post" class="needs-validation" novalidate>
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Número de Salón:</label>
+                    {{ form.numero }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Capacidad:</label>
+                    {{ form.capacidad }}
+                </div>
+
+                <div class="d-grid gap-2 mt-4">
+                    <button type="submit" class="btn btn-success fw-bold">💾 Guardar Salón</button>
+                    <a href="{% url 'gestionar_salones_admin' %}" class="btn btn-secondary fw-bold">❌ Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

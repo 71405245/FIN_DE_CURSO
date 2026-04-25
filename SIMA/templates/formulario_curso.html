@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4" style="max-width: 600px;">
+    <div class="card shadow-lg p-4 rounded-4 border-0">
+        <h3 class="fw-bold text-center mb-4">{{ accion }}</h3>
+
+        <form method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="mb-3">
+                    <label class="form-label fw-bold">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <div class="text-danger small mt-1">{{ field.errors }}</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            
+            <div class="d-grid gap-2 mt-4">
+                <button type="submit" class="btn btn-success fw-bold text-uppercase">💾 Guardar Curso</button>
+                <a href="{% url 'gestionar_cursos_admin' %}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

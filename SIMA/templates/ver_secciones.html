@@ -20,7 +20,7 @@
         <tr>
             <td>{{ s.dia }}</td>
             <td>{{ s.hora_inicio }} - {{ s.hora_fin }}</td>
-            <td>{{ s.aula }}</td>
+            <td>{% if s.salon %}{{ s.salon.numero }}{% else %}Sin asignar{% endif %}</td>
 
             <td>
                 <a href="{% url 'matricular' s.id %}" 
