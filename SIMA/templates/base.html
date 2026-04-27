@@ -16,8 +16,10 @@
 
     <style>
         :root {
-            --primary-gradient: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            --accent-color: #4facfe;
+            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --accent-color: #a78bfa;
+            --primary-purple: #7c3aed;
+            --primary-purple-hover: #6d28d9;
             --navbar-bg: #ffffff;
             --sidebar-bg: #ffffff;
             --sidebar-width: 260px;
@@ -78,10 +80,7 @@
             margin-bottom: 5px;
         }
 
-        #sidebar ul li a:hover, #sidebar ul li.active > a {
-            color: #1e3c72;
-            background: #f0f4ff;
-        }
+
 
         #sidebar ul li a i {
             margin-right: 10px;
@@ -136,17 +135,7 @@
         }
 
         /* Calendar Styles */
-        .calendar-day-class {
-            position: relative;
-            background: #e8f0fe !important;
-            color: #1e3c72 !important;
-            font-weight: bold;
-            border-radius: 50% !important;
-            width: 35px;
-            height: 35px;
-            line-height: 35px;
-            display: inline-block;
-        }
+
 
         .class-count-badge {
             position: absolute;
@@ -185,6 +174,60 @@
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
+
+        /* Purple Theme Overrides */
+        .bg-primary {
+            background: var(--primary-purple) !important;
+        }
+        .btn-primary {
+            background-color: var(--primary-purple);
+            border-color: var(--primary-purple);
+        }
+        .btn-primary:hover {
+            background-color: var(--primary-purple-hover);
+            border-color: var(--primary-purple-hover);
+        }
+        .text-primary {
+            color: var(--primary-purple) !important;
+        }
+        .bg-primary-subtle {
+            background-color: #f3e8ff !important;
+            color: #6b21a8 !important;
+        }
+        .btn-outline-primary {
+            color: var(--primary-purple);
+            border-color: var(--primary-purple);
+        }
+        .btn-outline-primary:hover {
+            background-color: var(--primary-purple);
+            border-color: var(--primary-purple);
+            color: white;
+        }
+        .bg-purple-subtle {
+            background: #f3e8ff;
+            color: #6b21a8;
+        }
+        .text-purple {
+            color: #6b21a8;
+        }
+        
+        #sidebar ul li a:hover, #sidebar ul li.active > a {
+            color: var(--primary-purple);
+            background: #f5f3ff;
+        }
+
+        .calendar-day-class {
+            position: relative;
+            background: #f3e8ff !important;
+            color: #6b21a8 !important;
+            font-weight: bold;
+            border-radius: 50% !important;
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            display: inline-block;
+        }
+
     </style>
 </head>
 <body class="{% if user.rol == 'estudiante' %}is-student{% endif %}">

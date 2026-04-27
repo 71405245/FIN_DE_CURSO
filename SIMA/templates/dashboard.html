@@ -58,7 +58,7 @@
         
         <!-- CLASE ACTUAL -->
         <div class="col-md-6 mb-3">
-            <div class="card h-100 border-0 shadow-sm overflow-hidden" style="border-left: 5px solid #0d6efd !important;">
+            <div class="card h-100 border-0 shadow-sm overflow-hidden" style="border-left: 5px solid var(--primary-purple) !important;">
                 <div class="card-body p-4">
                     <div class="d-flex justify-content-between align-items-start mb-3">
                         <div>
@@ -92,13 +92,13 @@
 
         <!-- SIGUIENTE CLASE -->
         <div class="col-md-6 mb-3">
-            <div class="card h-100 border-0 shadow-sm" style="border-left: 5px solid #6f42c1 !important;">
+            <div class="card h-100 border-0 shadow-sm" style="border-left: 5px solid #8b5cf6 !important;">
                 <div class="card-body p-4">
                     <div class="d-flex justify-content-between align-items-start mb-3">
                         <div>
                             <span class="badge bg-purple-subtle text-purple mb-2" style="background: #f3e8ff; color: #6b21a8;">A CONTINUACIÓN</span>
                             {% if proxima_clase %}
-                                <h3 class="fw-bold mb-1" style="color: #6b21a8;">{{ proxima_clase.curso }}</h3>
+                                <h3 class="fw-bold mb-1" style="color: #6d28d9;">{{ proxima_clase.curso }}</h3>
                                 <p class="text-muted mb-0"><i class="fas fa-clock me-1"></i> {{ proxima_clase.rango }}</p>
                             {% else %}
                                 <h3 class="fw-bold text-muted mb-1">No hay más clases</h3>
@@ -107,7 +107,7 @@
                         </div>
                         {% if proxima_clase %}
                         <div style="background: #f3e8ff; padding: 1rem; border-radius: 1rem;">
-                            <i class="fas fa-forward fa-2x" style="color: #6b21a8;"></i>
+                            <i class="fas fa-forward fa-2x" style="color: #6d28d9;"></i>
                         </div>
                         {% endif %}
                     </div>
