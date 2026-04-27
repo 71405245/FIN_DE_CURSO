@@ -26,7 +26,8 @@ Sistema web inteligente orientado a optimizar el proceso de matrícula universit
 ## 3. IMPLEMENTACIÓN
 - 📊 [Informe de Estado del Proyecto](informe-estado.md)  
 - 📊 [Segundo Informe de Estado](informe_estado2.md)  
-- 📝 [Minuta de Reunión](minuta-reunion.md)  
+- 📝 [Minuta de Reunión](minuta-reunion.md)
+- 📝 [Minuta de Reunión 2](minuta-reunion2.md)
 - 📝 [Segunda Minuta de Reunión](minuta_reunión2.md)  
 - 🚧 [Registro de Impedimentos](impedimentos.md)  
 
