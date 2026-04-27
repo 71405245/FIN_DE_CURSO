@@ -20,7 +20,7 @@ Sistema web inteligente orientado a optimizar el proceso de matrícula universit
 - 📦 [Backlog Detallado del Producto](docs/backlog-detallado-producto.md)
 - 💰 [Presupuesto del Proyecto](docs/presupuesto.md)
 - ⚠️ [Registro de Riesgos](docs/riesgos.md)
-- ⚠️ [Registro de Riesgos](docs/supuestos-restricciones.md)
+- ⚠️ [Supuestos / Restricciones](docs/supuestos-restricciones.md)
 ---
 
 ## 03. IMPLEMENTACIÓN
