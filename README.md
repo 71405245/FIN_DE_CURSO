@@ -17,7 +17,7 @@ Sistema web inteligente orientado a optimizar el proceso de matrícula universit
 ## 02. PLANIFICACIÓN
 
 - 📋 Backlog del Sprint *(pendiente de documentar o ubicar en docs)*
-- 📦 Backlog Detallado del Producto *(pendiente)*
+- 📦 Backlog Detallado del Producto (docs/backlog-detallado-producto.md)
 - 💰 [Presupuesto del Proyecto](docs/presupuesto.md)
 - ⚠️ [Registro de Riesgos](docs/riesgos.md)
 
