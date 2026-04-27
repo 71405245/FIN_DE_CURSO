@@ -1,55 +1,45 @@
-# 🚀 Sistema Web Inteligente para la Optimización del Proceso de Matrícula Universitaria
+# 🎓 SIMA - Sistema Inteligente de Matrícula Académica
 
-## 🔗 Repositorio
-https://github.com/71405245/FIN_DE_CURSO
+Sistema web inteligente orientado a optimizar el proceso de matrícula universitaria mediante la generación automática de horarios.
 
 ---
 
+## 📂 Documentación del Proyecto
 
-## 📑 Tabla de Contenidos
+### 🟢 01. Inicio
+- 📄 [Acta de Constitución](docs/01-inicio/acta-constitucion.md)
+- 📋 [Backlog del Producto](docs/01-inicio/backlog-producto.md)
+- 🎯 [Visión del Proyecto](docs/01-inicio/vision-proyecto.md)
 
+---
 
-- 📌 [Descripción del Proyecto](docs/descripcion.md)  
-  Explica el propósito del sistema, el problema que resuelve y los beneficios que ofrece a los estudiantes.
+### 🟡 02. Planificación
+- 📝 [Backlog del Sprint](docs/02-planificacion/backlog-sprint.md)
+- 📊 [Backlog Detallado del Producto](docs/02-planificacion/backlog-detallado.md)
+- 💰 [Presupuesto del Proyecto](docs/02-planificacion/presupuesto.md)
+- ⚠️ [Registro de Riesgos](docs/02-planificacion/riesgos.md)
 
-- 🎯 [Visión del Proyecto](docs/vision.md)  
-  Define el objetivo a largo plazo del sistema y el valor que aporta frente a otras soluciones.
+---
 
-- 📊 [Selección del Enfoque](docs/enfoque-proyecto.md)  
-  Justifica la elección del uso de inteligencia artificial frente a otras alternativas.
+### 🔵 03. Implementación
+- 📊 [Informe de Estado del Proyecto](docs/03-implementacion/informe-estado.md)
+- 📝 [Minuta de Reunión](docs/03-implementacion/minuta-reunion.md)
+- 🚧 [Registro de Impedimentos](docs/03-implementacion/impedimentos.md)
 
-- 📋 [Requerimientos Funcionales](docs/requerimientos-funcionales.md)  
-  Detalla las funcionalidades que debe cumplir el sistema.
+---
 
-- ⚙️ [Requerimientos No Funcionales](docs/requerimientos-no-funcionales.md)  
-  Define las características de calidad como rendimiento, usabilidad y seguridad.
+## ⚙️ Tecnologías Utilizadas
 
-- 📊 [Project Charter](docs/project-charter.md)  
-  Presenta la planificación general del proyecto, incluyendo alcance, objetivos y riesgos.
+- Python
+- Django
+- MySQL (XAMPP)
+- HTML, CSS, Bootstrap
 
-- ⚠️ [Supuestos y Restricciones](docs/supuestos-restricciones.md)  
-  Identifica condiciones asumidas y limitaciones del proyecto.
+---
 
-- 👥 [Equipo del Proyecto](docs/equipo-proyecto.md)  
-  Describe los roles y responsabilidades de los integrantes del equipo.
+## 🚀 Ejecución del Proyecto
 
-- 🏗 [Arquitectura del Sistema](docs/arquitectura.md)  
-  Explica la estructura técnica y las tecnologías utilizadas en el sistema.
-  
-- 📄 [Informe de Estado del Proyecto](docs/informe-estado.md)  
-  Presenta el avance del proyecto, incluyendo estado, riesgos, problemas y próximos pasos.
-
-- 📝 [Minuta de Reunión](docs/minuta-reunion.md)  
-  Resume los puntos tratados, acuerdos y tareas asignadas durante las reuniones del equipo.
-
-- ⚠️ [Registro de Riesgos](https://github.com/71405245/FIN_DE_CURSO/blob/main/docs/riesgos.md)  
-  Identificación, análisis y estrategias de mitigación de riesgos del proyecto.
-
-- 🚀 [Registro de Oportunidades](https://github.com/71405245/FIN_DE_CURSO/blob/main/docs/oportunidades.md)  
-  Oportunidades detectadas para mejorar el valor del sistema y su impacto.
-
-- 🚧 [Registro de Impedimentos](https://github.com/71405245/FIN_DE_CURSO/blob/main/docs/impedimentos.md)  
-  Problemas que afectan el avance del proyecto y sus soluciones.
-
-- 💰 [Presupuesto del Proyecto](https://github.com/71405245/FIN_DE_CURSO/blob/main/docs/presupuesto.md)  
-  Estimación de costos del desarrollo del sistema.
+```bash
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver
