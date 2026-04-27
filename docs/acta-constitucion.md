@@ -11,8 +11,8 @@
 | Tipo de proyecto | Proyecto académico de ingeniería de software |
 | Patrocinador | Docente del curso |
 | Dueño del Producto | Liand, Jordan, Kevin |
-| Gerente de Proyecto | Liand, Jordan, Kevin |
-| Scrum Master | Liand, Jordan, Kevin |
+| Gerente de Proyecto |  Jordan |
+| Scrum Master |  Kevin |
 
 ---
 
