@@ -140,7 +140,7 @@ No incluye:
 
 | Nombre | Cargo | Firma | Fecha |
 |--------|------|-------|-------|
-| Docente del curso | Patrocinador | Job Daniel, GAMARRA MORENO | ___/___/____ |
-| Equipo del proyecto | Ejecutor | _ | ___/___/____ |
+| Docente del curso | Patrocinador | Job Daniel, GAMARRA MORENO | 25/04/2026 |
+| Equipo del proyecto | Ejecutor | Jordan, Liand, Kevin | 25/04/2026 |
 
 ---
