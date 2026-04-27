@@ -9,7 +9,7 @@ Sistema web inteligente orientado a optimizar el proceso de matrícula universit
 ## 01. INICIO
 
 - 📄 [Acta de Constitución del Proyecto](docs/acta-constitucion.md)
-- 📦 Backlog del Producto *(pendiente de documentar o ubicar en docs)*
+- 📦 Backlog del Producto *(pendiente)*
 - 🎯 [Visión del Proyecto](docs/vision.md)
 
 ---
@@ -17,7 +17,7 @@ Sistema web inteligente orientado a optimizar el proceso de matrícula universit
 ## 02. PLANIFICACIÓN
 
 - 📋 Backlog del Sprint *(pendiente de documentar o ubicar en docs)*
-- 📦 Backlog Detallado del Producto *(pendiente de documentar o ubicar en docs)*
+- 📦 Backlog Detallado del Producto *(pendiente)*
 - 💰 [Presupuesto del Proyecto](docs/presupuesto.md)
 - ⚠️ [Registro de Riesgos](docs/riesgos.md)
 
@@ -68,6 +68,6 @@ El repositorio está dividido en tres fases principales:
 
 # 👥 Equipo del Proyecto
 
-Ver detalles en: `docs/equipo-proyecto.md` (si aplica)
+Ver detalles en: `(docs/equipo-proyecto.md)`
 
 ---
