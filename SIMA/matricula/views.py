@@ -104,6 +104,7 @@ def descargar_horario(request):
     ]
 
     matriz = []
+    colores = ["#D1E9F5", "#FDE2E2", "#E2FDF2", "#FFF4E2", "#F2E2FD", "#FDFAE2", "#E2F2FD"]
 
     matriculas = Matricula.objects.filter(estudiante=request.user).select_related('seccion__curso', 'seccion__salon')
 
@@ -121,9 +122,12 @@ def descargar_horario(request):
                 rango = f"{sec.hora_inicio.strftime('%H:%M')} - {sec.hora_fin.strftime('%H:%M')}"
 
                 if sec.dia == dia and rango == hora:
+                    # Usar el ID del curso para que el color sea consistente para el mismo curso
+                    color_index = sec.curso.id % len(colores)
                     contenido = {
                         "curso": sec.curso.nombre,
-                        "salon": sec.salon.numero if sec.salon else "Sin asignar"
+                        "salon": sec.salon.numero if sec.salon else "Sin asignar",
+                        "color": colores[color_index]
                     }
 
             fila["dias"].append(contenido)

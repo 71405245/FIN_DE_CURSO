@@ -3,7 +3,7 @@ import sys
 import django
 
 # Add the project root to the sys.path
-sys.path.append(r'c:\Users\Usuario\Music\SIMA')
+sys.path.append(r'd:\FIN_DE_CURSO\SIMA')
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'core.settings')
 django.setup()
 

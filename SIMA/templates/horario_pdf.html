@@ -2,36 +2,68 @@
 <html>
 <head>
     <style>
+        @page {
+            size: A4 landscape;
+            margin: 1cm;
+        }
+        
         body {
-            font-family: Arial;
+            font-family: Arial, sans-serif;
+            color: #333;
         }
 
         h2 {
             text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            table-layout: fixed;
         }
 
         th {
-            background: #0d6efd;
-            color: white;
-            padding: 8px;
+            background-color: #b7d5ac; /* Verde suave */
+            color: #000;
+            padding: 12px 8px;
+            border: 1px solid #9dbb92;
+            font-size: 14px;
         }
 
         td {
-            border: 1px solid black;
-            height: 60px;
+            border: 1px solid #ccc;
+            height: 70px;
             text-align: center;
+            vertical-align: middle;
+            font-size: 11px;
+            padding: 0;
         }
 
-        .curso {
-            background: #198754;
-            color: white;
+        /* Columna de Horas */
+        .col-hora {
+            background-color: #b7d5ac; /* Verde suave */
+            font-weight: bold;
+            width: 15%;
+            border: 1px solid #9dbb92;
+        }
+
+        /* Celda con curso */
+        .celda-curso {
             padding: 5px;
-            border-radius: 5px;
+        }
+
+        .curso-nombre {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 3px;
+            font-size: 12px;
+        }
+
+        .curso-salon {
+            font-style: italic;
+            color: #555;
         }
 
     </style>
@@ -42,31 +74,31 @@
 <h2>Horario Académico</h2>
 
 <table>
-    <tr>
-        <th>Hora</th>
-        {% for dia in dias %}
-        <th>{{ dia }}</th>
+    <thead>
+        <tr>
+            <th>Hora</th>
+            {% for dia in dias %}
+            <th>{{ dia }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for fila in matriz %}
+        <tr>
+            <td class="col-hora">{{ fila.hora }}</td>
+
+            {% for celda in fila.dias %}
+            <td class="{% if celda %}celda-curso{% endif %}" {% if celda %}style="background-color: {{ celda.color }};"{% endif %}>
+                {% if celda %}
+                    <span class="curso-nombre">{{ celda.curso }}</span>
+                    <span class="curso-salon">{{ celda.salon }}</span>
+                {% endif %}
+            </td>
+            {% endfor %}
+        </tr>
         {% endfor %}
-    </tr>
-
-    {% for fila in matriz %}
-    <tr>
-        <td>{{ fila.hora }}</td>
-
-        {% for celda in fila.dias %}
-        <td>
-            {% if celda %}
-                <div class="curso">
-                    {{ celda.curso }}<br>
-                    {{ celda.salon }}
-                </div>
-            {% endif %}
-        </td>
-        {% endfor %}
-    </tr>
-    {% endfor %}
-
+    </tbody>
 </table>
 
 </body>
-</html>
+</html>

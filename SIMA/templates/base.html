@@ -18,7 +18,10 @@
         :root {
             --primary-gradient: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             --accent-color: #4facfe;
-            --navbar-bg: rgba(30, 60, 114, 0.95);
+            --navbar-bg: #ffffff;
+            --sidebar-bg: #ffffff;
+            --sidebar-width: 260px;
+            --right-sidebar-width: 300px;
         }
 
         body {
@@ -26,43 +29,149 @@
             background-color: #f8fafd;
             color: #333;
             min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* DASHBOARD LAYOUT */
+        .wrapper {
+            display: flex;
+            width: 100%;
+            align-items: stretch;
+            transition: all 0.3s;
+        }
+
+        #sidebar {
+            min-width: var(--sidebar-width);
+            max-width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            color: #333;
+            transition: all 0.3s;
+            box-shadow: 2px 0 15px rgba(0,0,0,0.05);
+            z-index: 1000;
+            position: fixed;
+            height: 100vh;
+        }
+
+        #sidebar.active {
+            margin-left: calc(-1 * var(--sidebar-width));
+        }
+
+        #sidebar .sidebar-header {
+            padding: 20px;
+            background: #fff;
+            border-bottom: 1px solid #eee;
+        }
+
+        #sidebar ul.components {
+            padding: 20px 0;
+        }
+
+        #sidebar ul li a {
+            padding: 12px 30px;
+            font-size: 1.1em;
+            display: block;
+            color: #666;
+            text-decoration: none;
+            transition: 0.3s;
+            border-radius: 0 50px 50px 0;
+            margin-right: 15px;
+            margin-bottom: 5px;
+        }
+
+        #sidebar ul li a:hover, #sidebar ul li.active > a {
+            color: #1e3c72;
+            background: #f0f4ff;
+        }
+
+        #sidebar ul li a i {
+            margin-right: 10px;
+            width: 25px;
+        }
+
+        #content-area {
+            width: 100%;
+            padding: 20px;
+            min-height: 100vh;
+            transition: all 0.3s;
+        }
+
+        /* Adjustments when student */
+        .is-student #content-area {
+            margin-left: var(--sidebar-width);
+            margin-right: var(--right-sidebar-width);
+        }
+
+        .is-student #content-area.active-left {
+            margin-left: 0;
+        }
+
+        .is-student #content-area.active-right {
+            margin-right: 0;
+        }
+
+        #right-sidebar {
+            min-width: var(--right-sidebar-width);
+            max-width: var(--right-sidebar-width);
+            background: #fff;
+            position: fixed;
+            right: 0;
+            height: 100vh;
+            transition: all 0.3s;
+            box-shadow: -2px 0 15px rgba(0,0,0,0.05);
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        #right-sidebar.active {
+            margin-right: calc(-1 * var(--right-sidebar-width));
         }
 
         .navbar {
-            background: var(--navbar-bg) !important;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 1rem 0;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            background: #fff !important;
+            padding: 15px 10px;
+            border: none;
+            border-radius: 0;
+            margin-bottom: 40px;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
         }
 
-        .navbar-brand {
-            font-weight: 700;
-            font-size: 1.5rem;
-            letter-spacing: -0.5px;
-            background: linear-gradient(to right, #fff, #a5ccff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        /* Calendar Styles */
+        .calendar-day-class {
+            position: relative;
+            background: #e8f0fe !important;
+            color: #1e3c72 !important;
+            font-weight: bold;
+            border-radius: 50% !important;
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+            display: inline-block;
         }
 
-        .nav-link-logout {
-            background: rgba(220, 53, 69, 0.1);
-            color: #dc3545 !important;
-            font-weight: 600;
-            border-radius: 10px;
-            padding: 0.5rem 1.25rem !important;
-            transition: all 0.3s ease;
+        .class-count-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff4757;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 10px;
+            line-height: 18px;
+            text-align: center;
         }
 
-        .nav-link-logout:hover {
-            background: #dc3545;
-            color: white !important;
-            transform: translateY(-1px);
+        @media (max-width: 992px) {
+            #sidebar { margin-left: calc(-1 * var(--sidebar-width)); }
+            #sidebar.active { margin-left: 0; }
+            .is-student #content-area { margin-left: 0; margin-right: 0; }
+            #right-sidebar { margin-right: calc(-1 * var(--right-sidebar-width)); }
+            #right-sidebar.active { margin-right: 0; }
         }
 
         .content-container {
-            padding-top: 2rem;
-            padding-bottom: 4rem;
+            padding-top: 1rem;
             animation: fadeIn 0.5s ease-out;
         }
 
@@ -71,54 +180,142 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Common Premium Card Styles */
         .card {
             border: none;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .btn-premium {
-            border-radius: 12px;
-            font-weight: 600;
-            padding: 0.6rem 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .btn-premium:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
     </style>
 </head>
-<body>
+<body class="{% if user.rol == 'estudiante' %}is-student{% endif %}">
 
-<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-    <div class="container">
-        <a class="navbar-brand" href="{% url 'dashboard' %}">
-            <i class="fas fa-graduation-cap me-2"></i>SIMA
-        </a>
+    <div class="{% if user.rol == 'estudiante' %}wrapper{% endif %}">
         
-        <div class="ms-auto d-flex align-items-center">
-            {% if user.is_authenticated %}
-                <span class="text-white-50 me-3 d-none d-md-inline">
-                    <i class="fas fa-user-circle me-1"></i> {{ user.username }}
-                </span>
-                <a href="{% url 'logout' %}" class="nav-link-logout">
-                    <i class="fas fa-sign-out-alt me-1"></i> Salir
-                </a>
+        {% if user.is_authenticated and user.rol == 'estudiante' %}
+            <!-- Sidebar Izquierdo -->
+            <nav id="sidebar">
+                <div class="sidebar-header">
+                    <h3 class="fw-bold text-primary mb-0"><i class="fas fa-graduation-cap"></i> SIMA</h3>
+                    <small class="text-muted">Student Portal</small>
+                </div>
+                <ul class="list-unstyled components">
+                    <li class="active">
+                        <a href="{% url 'dashboard' %}"><i class="fas fa-th-large"></i> Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'cursos' %}"><i class="fas fa-book"></i> Cursos</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'mis_matriculas' %}"><i class="fas fa-calendar-alt"></i> Mi Horario</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'historial' %}"><i class="fas fa-file-invoice"></i> Historial</a>
+                    </li>
+                </ul>
+            </nav>
+        {% endif %}
+
+        <!-- Contenido Principal -->
+        <div id="content-area" class="{% if user.rol != 'estudiante' %}container py-4{% endif %}">
+            
+            {% if user.is_authenticated and user.rol == 'estudiante' %}
+                <!-- Navbar para Estudiante -->
+                <nav class="navbar navbar-expand-lg navbar-light bg-light rounded-4 mb-4">
+                    <div class="container-fluid">
+                        <button type="button" id="sidebarCollapse" class="btn btn-primary">
+                            <i class="fas fa-align-left"></i>
+                        </button>
+                        <div class="ms-3 d-none d-md-block">
+                            <h5 class="mb-0 fw-bold">SIMA Portal</h5>
+                        </div>
+                        <div class="ms-auto d-flex align-items-center">
+                            <span class="me-3 d-none d-sm-inline">Hola, <strong>{{ user.username }}</strong></span>
+                            <a href="{% url 'logout' %}" class="btn btn-outline-danger btn-sm rounded-3">
+                                <i class="fas fa-sign-out-alt"></i> Salir
+                            </a>
+                            <button type="button" id="rightSidebarCollapse" class="btn btn-outline-primary ms-2">
+                                <i class="fas fa-calendar"></i>
+                            </button>
+                        </div>
+                    </div>
+                </nav>
+            {% else %}
+                <!-- Navbar para Admin / No Logueado -->
+                <nav class="navbar navbar-expand-lg navbar-dark sticky-top bg-primary rounded-4 mb-4" style="background: var(--primary-gradient) !important;">
+                    <div class="container-fluid">
+                        <a class="navbar-brand text-white" href="/">
+                            <i class="fas fa-graduation-cap me-2"></i>SIMA
+                        </a>
+                        <div class="ms-auto d-flex align-items-center">
+                            {% if user.is_authenticated %}
+                                <span class="text-white me-3 d-none d-sm-inline">Admin: {{ user.username }}</span>
+                                <a href="{% url 'logout' %}" class="btn btn-danger btn-sm rounded-pill text-white px-3">Salir</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </nav>
             {% endif %}
+
+            <div class="content-container">
+                {% block content %}
+                {% endblock %}
+            </div>
         </div>
+
+        {% if user.is_authenticated and user.rol == 'estudiante' %}
+            <!-- Sidebar Derecho -->
+            <aside id="right-sidebar">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h5 class="fw-bold mb-0">Calendario</h5>
+                    <button type="button" id="closeRightSidebar" class="btn-close d-lg-none"></button>
+                </div>
+                <div id="calendar-container">
+                    {% include 'components/calendar.html' %}
+                </div>
+                <hr>
+                <h6 class="fw-bold mb-3">Próximas Clases</h6>
+                <div id="today-classes">
+                    {% if hoy_clases %}
+                        {% for clase in hoy_clases %}
+                            <div class="card mb-2 p-2 bg-light border-0">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-primary rounded-circle me-2" style="width:10px; height:10px;"></div>
+                                    <div>
+                                        <div class="fw-bold small" style="font-size: 0.75rem;">{{ clase.curso }}</div>
+                                        <div class="text-muted small" style="font-size: 0.7rem;">{{ clase.rango }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-muted small">No hay clases hoy.</p>
+                    {% endif %}
+                </div>
+            </aside>
+        {% endif %}
+
     </div>
-</nav>
 
-<div class="container content-container">
-    {% block content %}
-    {% endblock %}
-</div>
-
-<!-- Bootstrap Bundle -->
+<!-- JS para Toggles -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
+            $('#content-area').toggleClass('active-left');
+        });
+
+        $('#rightSidebarCollapse').on('click', function () {
+            $('#right-sidebar').toggleClass('active');
+            $('#content-area').toggleClass('active-right');
+        });
+
+        $('#closeRightSidebar').on('click', function () {
+            $('#right-sidebar').addClass('active');
+            $('#content-area').addClass('active-right');
+        });
+    });
+</script>
 </body>
 </html>

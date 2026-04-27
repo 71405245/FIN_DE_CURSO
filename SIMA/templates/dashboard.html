@@ -48,85 +48,154 @@
     </div>
 
     {% elif user.rol == 'estudiante' %}
+    
+    <!-- ================= ESTUDIANTE (NUEVO DASHBOARD) ================= -->
 
-    <!-- ================= ESTUDIANTE ================= -->
-
-    <div class="row">
-
-        <!-- INFO DEL ESTUDIANTE -->
-        <div class="col-md-4 mb-3">
-            <div class="card shadow-lg border-0 rounded-4 p-3 bg-info text-white">
-                <h5 class="fw-bold">📌 Mi Información</h5>
-
-                <p><strong>👤 Código:</strong> {{ user.codigo }}</p>
-                <p><strong>🎓 Ciclo:</strong> {{ user.ciclo_actual }}</p>
-                <p><strong>📊 Créditos:</strong> {{ user.creditos_acumulados }}</p>
+    <div class="row mb-4">
+        <div class="col-12">
+            <h4 class="fw-bold mb-3">Resumen del Día</h4>
+        </div>
+        
+        <!-- CLASE ACTUAL -->
+        <div class="col-md-6 mb-3">
+            <div class="card h-100 border-0 shadow-sm overflow-hidden" style="border-left: 5px solid #0d6efd !important;">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <span class="badge bg-primary-subtle text-primary mb-2">EN CURSO AHORA</span>
+                            {% if clase_actual %}
+                                <h3 class="fw-bold text-primary mb-1">{{ clase_actual.curso }}</h3>
+                                <p class="text-muted mb-0"><i class="fas fa-clock me-1"></i> {{ clase_actual.rango }}</p>
+                            {% else %}
+                                <h3 class="fw-bold text-muted mb-1">Sin clases ahora</h3>
+                                <p class="text-muted mb-0">Disfruta tu tiempo libre</p>
+                            {% endif %}
+                        </div>
+                        {% if clase_actual %}
+                        <div class="bg-primary-subtle p-3 rounded-4">
+                            <i class="fas fa-chalkboard-teacher fa-2x text-primary"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% if clase_actual %}
+                    <div class="d-flex align-items-center mt-3">
+                        <div class="me-4">
+                            <small class="text-muted d-block">SALÓN</small>
+                            <span class="fw-bold">{{ clase_actual.salon }}</span>
+                        </div>
+                        <a href="#" class="btn btn-primary rounded-pill px-4 ms-auto">Entrar</a>
+                    </div>
+                    {% endif %}
+                </div>
             </div>
         </div>
 
-        <!-- ACCIONES -->
-        <div class="col-md-8 mb-3">
-            <div class="card shadow-lg border-0 rounded-4 p-3">
-
-                <h5 class="fw-bold">⚡ Acciones</h5>
-
-                <a href="{% url 'cursos' %}" class="btn btn-primary w-100 mb-2">
-                    📚 Ver Cursos Disponibles
-                </a>
-
-                <a href="{% url 'mis_matriculas' %}" class="btn btn-success w-100 mb-2">
-                    📝 Mis Matrículas
-                </a>
-
-                <a href="{% url 'historial' %}" class="btn btn-warning w-100">
-                    📊 Historial Académico
-                </a>
-
+        <!-- SIGUIENTE CLASE -->
+        <div class="col-md-6 mb-3">
+            <div class="card h-100 border-0 shadow-sm" style="border-left: 5px solid #6f42c1 !important;">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <span class="badge bg-purple-subtle text-purple mb-2" style="background: #f3e8ff; color: #6b21a8;">A CONTINUACIÓN</span>
+                            {% if proxima_clase %}
+                                <h3 class="fw-bold mb-1" style="color: #6b21a8;">{{ proxima_clase.curso }}</h3>
+                                <p class="text-muted mb-0"><i class="fas fa-clock me-1"></i> {{ proxima_clase.rango }}</p>
+                            {% else %}
+                                <h3 class="fw-bold text-muted mb-1">No hay más clases</h3>
+                                <p class="text-muted mb-0">Día terminado</p>
+                            {% endif %}
+                        </div>
+                        {% if proxima_clase %}
+                        <div style="background: #f3e8ff; padding: 1rem; border-radius: 1rem;">
+                            <i class="fas fa-forward fa-2x" style="color: #6b21a8;"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% if proxima_clase %}
+                    <div class="d-flex align-items-center mt-3">
+                        <div>
+                            <small class="text-muted d-block">SALÓN</small>
+                            <span class="fw-bold">{{ proxima_clase.salon }}</span>
+                        </div>
+                        <button class="btn btn-outline-secondary rounded-pill px-4 ms-auto" disabled>Recordatorio</button>
+                    </div>
+                    {% endif %}
+                </div>
             </div>
         </div>
-
     </div>
 
-    <!-- IA RECOMENDACIONES -->
-    <div class="card shadow-lg border-0 rounded-4 p-4 mt-3">
-
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h5 class="fw-bold mb-0">🤖 Cursos Recomendados</h5>
-            <a href="{% url 'horarios_recomendados' %}" class="btn btn-outline-primary fw-bold">
-                ✨ Generar Horario Completo (IA)
+    <!-- HORARIO SEMANAL -->
+    <div class="card shadow-sm border-0 rounded-4 mb-4">
+        <div class="card-header bg-white border-0 py-3 d-flex justify-content-between align-items-center">
+            <h5 class="fw-bold mb-0">📅 Mi Horario Semanal</h5>
+            <a href="{% url 'descargar_horario' %}" class="btn btn-sm btn-outline-primary rounded-pill">
+                <i class="fas fa-download me-1"></i> PDF
             </a>
         </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-bordered mb-0 text-center">
+                    <thead class="bg-light">
+                        <tr>
+                            <th style="width: 120px;">Hora</th>
+                            {% for dia in dias %}
+                                <th>{{ dia }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for fila in matriz %}
+                        <tr>
+                            <td class="fw-bold bg-light align-middle" style="font-size: 0.85rem;">{{ fila.hora }}</td>
+                            {% for celda in fila.dias %}
+                                <td style="height: 80px; width: 14%; padding: 2px;">
+                                    {% if celda %}
+                                        <div class="h-100 p-2 rounded-3 d-flex flex-column justify-content-center shadow-sm" 
+                                             style="background-color: {{ celda.color }}; border: 1px solid rgba(0,0,0,0.05);">
+                                            <div class="fw-bold" style="font-size: 0.75rem; line-height: 1.1;">{{ celda.curso }}</div>
+                                            <div class="text-muted mt-1" style="font-size: 0.65rem;">📍 {{ celda.salon }}</div>
+                                        </div>
+                                    {% endif %}
+                                </td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
-        {% if recomendaciones %}
-            <div class="row">
-                {% for curso in recomendaciones %}
-                <div class="col-md-4 mb-3">
-                    <div class="card border-0 shadow-sm p-3 bg-light rounded-3">
-
-                        <h6 class="fw-bold">{{ curso.nombre }}</h6>
-
-                        <p class="mb-1">
-                            📘 Código: {{ curso.codigo }}
-                        </p>
-
-                        <span class="badge bg-primary">
-                            Ciclo {{ curso.ciclo.numero }}
-                        </span>
-
-                        <span class="badge bg-success">
-                            {{ curso.creditos }} créditos
-                        </span>
-
+    <!-- RECOMENDACIONES (ESTILO MEJORADO) -->
+    <div class="card shadow-sm border-0 rounded-4 mb-4">
+        <div class="card-header bg-white border-0 py-3">
+            <div class="d-flex justify-content-between align-items-center">
+                <h5 class="fw-bold mb-0">🤖 Recomendaciones de IA</h5>
+                <a href="{% url 'horarios_recomendados' %}" class="btn btn-primary btn-sm rounded-pill">
+                    Generar Horario Completo
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+            {% if recomendaciones %}
+                <div class="row">
+                    {% for curso in recomendaciones %}
+                    <div class="col-md-4 mb-3">
+                        <div class="p-3 rounded-4 bg-light h-100 border transition-hover">
+                            <h6 class="fw-bold mb-2">{{ curso.nombre }}</h6>
+                            <div class="d-flex gap-2">
+                                <span class="badge bg-white text-primary border border-primary-subtle">Ciclo {{ curso.ciclo.numero }}</span>
+                                <span class="badge bg-white text-success border border-success-subtle">{{ curso.creditos }} créd.</span>
+                            </div>
+                        </div>
                     </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
-            </div>
-        {% else %}
-            <div class="alert alert-info mt-2">
-                No hay recomendaciones disponibles
-            </div>
-        {% endif %}
-
+            {% else %}
+                <p class="text-muted text-center py-3">No hay recomendaciones en este momento.</p>
+            {% endif %}
+        </div>
     </div>
 
     {% endif %}
