@@ -4,66 +4,70 @@ Sistema web inteligente orientado a optimizar el proceso de matrícula universit
 
 ---
 
-# 📌 📚 Índice de documentación
+# 📌 📚 Índice del Proyecto
 
-## 1. INICIO
-- 📄 [Acta de Constitución del Proyecto](project-charter.md)  
-- 🎯 [Visión del Proyecto](vision.md)  
-- 🧾 [Descripción General](descripcion.md)  
+## 01. INICIO
 
----
-
-## 2. PLANIFICACIÓN
-- 💰 [Presupuesto del Proyecto](presupuesto.md)  
-- ⚠️ [Registro de Riesgos](riesgos.md)  
-- 🚀 [Oportunidades del Proyecto](oportunidades.md)  
-- 📌 [Requerimientos Funcionales](requerimientos-funcionales.md)  
-- 📌 [Requerimientos No Funcionales](requerimientos-no-funcionales.md)  
-- 📋 [Supuestos y Restricciones](supuestos-restricciones.md)  
+- 📄 [Acta de Constitución del Proyecto](docs/acta-constitucion.md)
+- 📦 Backlog del Producto *(pendiente de documentar o ubicar en docs)*
+- 🎯 [Visión del Proyecto](docs/vision.md)
 
 ---
 
-## 3. IMPLEMENTACIÓN
-- 📊 [Informe de Estado del Proyecto](informe-estado.md)  
-- 📊 [Segundo Informe de Estado](informe_estado2.md)  
-- 📝 [Minuta de Reunión](minuta-reunion.md)
-- 📝 [Minuta de Reunión 2](minuta-reunion2.md)
-- 📝 [Segunda Minuta de Reunión](minuta_reunión2.md)  
-- 🚧 [Registro de Impedimentos](impedimentos.md)  
+## 02. PLANIFICACIÓN
+
+- 📋 Backlog del Sprint *(pendiente de documentar o ubicar en docs)*
+- 📦 Backlog Detallado del Producto *(pendiente de documentar o ubicar en docs)*
+- 💰 [Presupuesto del Proyecto](docs/presupuesto.md)
+- ⚠️ [Registro de Riesgos](docs/riesgos.md)
 
 ---
 
-## 4. ARQUITECTURA Y ENFOQUE
-- 🏗️ [Arquitectura del Sistema](arquitectura.md)  
-- ⚙️ [Enfoque del Proyecto](enfoque-proyecto.md)  
+## 03. IMPLEMENTACIÓN
 
----
-
-## 5. SOPORTE Y DOCUMENTACIÓN GENERAL
-- 🔌 [API](api.md)  
-- ⚙️ [Instalación](installation.md)  
-- 📘 [Uso del Sistema](usage.md)  
-- ❓ [FAQ](faq.md)  
-- 🤝 [Contribución](contributing.md)  
-- 👥 [Equipo del Proyecto](equipo-proyecto.md)  
+- 📊 [Informe de Estado del Proyecto](docs/informe-estado.md)
+- 📊 [Informe de Estado del Proyecto 2](docs/informe_estado2.md)
+- 📝 [Minuta de Reunión](docs/minuta-reunion.md)
+- 📝 [Minuta de Reunión 2](docs/minuta-reunion2.md)
+- 🚧 [Registro de Impedimentos](docs/impedimentos.md)
 
 ---
 
 # 🎯 Objetivo del Proyecto
 
-El proyecto **SIMA** busca optimizar procesos mediante una solución tecnológica basada en ingeniería de software, aplicando metodologías ágiles y buenas prácticas de desarrollo.
+El proyecto **FIN_DE_CURSO** tiene como objetivo estructurar y gestionar correctamente la documentación del ciclo de vida del software, aplicando metodología ágil (Scrum) y herramientas de control de versiones como GitHub.
 
 ---
 
-# 🛠️ Tecnologías
+# 🛠️ Tecnologías y Metodología
 
 - Metodología: Scrum (Ágil)
 - Documentación: Markdown
 - Control de versiones: Git / GitHub
-- Enfoque: Ingeniería de Software + Gestión de proyectos
+- Enfoque: Ingeniería de Software
 
 ---
 
-# 📌 Nota
+# 📌 Estructura del proyecto
 
-Toda la documentación está organizada para facilitar la navegación, trazabilidad y mantenimiento del proyecto.
+El repositorio está dividido en tres fases principales:
+
+- 🟢 Inicio: definición del proyecto y visión
+- 🟡 Planificación: organización de tareas, riesgos y presupuesto
+- 🔵 Implementación: seguimiento, control y reportes
+
+---
+
+# ⚠️ Notas importantes
+
+- Todos los documentos deben estar dentro de la carpeta `/docs`
+- Los enlaces están configurados con rutas relativas para GitHub
+- Mantener nombres de archivos consistentes para evitar errores de navegación
+
+---
+
+# 👥 Equipo del Proyecto
+
+Ver detalles en: `docs/equipo-proyecto.md` (si aplica)
+
+---
