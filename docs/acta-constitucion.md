@@ -10,9 +10,9 @@
 | Nombre del proyecto | Sistema de Gestión y Documentación del Proyecto |
 | Tipo de proyecto | Proyecto académico de ingeniería de software |
 | Patrocinador | Docente del curso |
-| Dueño del Producto | Equipo de desarrollo |
-| Gerente de Proyecto | Integrante designado del equipo |
-| Scrum Master | Integrante responsable de la gestión ágil |
+| Dueño del Producto | Liand, Jordan, Kevin |
+| Gerente de Proyecto | Liand, Jordan, Kevin |
+| Scrum Master | Liand, Jordan, Kevin |
 
 ---
 
