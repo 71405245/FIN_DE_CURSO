@@ -68,7 +68,7 @@ El repositorio está dividido en tres fases principales:
 
 # 👥 Equipo del Proyecto
 
-- [](docs/equipo-proyecto.md)
+- [Equipo del proyecto](docs/equipo-proyecto.md)
 
 
 ---
