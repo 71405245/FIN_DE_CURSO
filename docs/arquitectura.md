@@ -8,7 +8,7 @@ El sistema está basado en una arquitectura web cliente-servidor.
 
 - Lenguaje: Python  
 - Framework: Django  
-- Base de datos: MySQL / SQL Server  
+- Base de datos: MySQL 
 - Frontend: HTML, CSS, Bootstrap 5  
 - Generación de PDF: ReportLab / xhtml2pdf  
 
