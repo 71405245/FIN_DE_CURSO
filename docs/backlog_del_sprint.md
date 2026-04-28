@@ -4,14 +4,8 @@
 - Tendencia calculada en los últimos: **25 días**
 - Totales: 62, 62, 54, 45, 37, 28, 18, 11, 6, 2  
 - Task rows: 4  
-- Done days: 9  
-- Progreso: 62, 55.8, 49.6, 43.4, 37.2, 31, 24.8, 18.6, 12.4, 6.2  
-
-### Trend
-60.62, 52.77, 44.92, 37.07, 29.22, 21.37, 13.52, 5.67  
-
-### Trend Days
-1, 2, 3, 4, 5, 6, 7, 8, 9, 10  
+- Done days: 9    
+   
 
 ## Tareas
 
@@ -31,14 +25,8 @@
 - Tendencia calculada en los últimos: **24 días**
 - Totales: 60, 60, 55, 47, 39, 30, 21, 14, 8, 4  
 - Task rows: 4  
-- Done days: 9  
-- Progreso: 60, 54, 48, 42, 36, 30, 24, 18, 12, 6  
-
-### Trend
-60.82, 53.34, 45.86, 38.37, 30.89, 23.41, 15.92, 8.44, 0.96  
-
-### Trend Days
-1, 2, 3, 4, 5, 6, 7, 8, 9, 10  
+- Done days: 9    
+  
 
 ## Tareas
 
