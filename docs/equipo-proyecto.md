@@ -1,4 +1,4 @@
-## 3. Declaración del Proyecto
+## Declaración del Proyecto
 
 | Campo | Descripción |
 |------|------------|
