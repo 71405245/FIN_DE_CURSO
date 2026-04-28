@@ -58,14 +58,6 @@ El repositorio está dividido en tres fases principales:
 
 ---
 
-# ⚠️ Notas importantes
-
-- Todos los documentos deben estar dentro de la carpeta `/docs`
-- Los enlaces están configurados con rutas relativas para GitHub
-- Mantener nombres de archivos consistentes para evitar errores de navegación
-
----
-
 # 👥 Equipo del Proyecto
 
 - [Equipo del proyecto](docs/equipo-proyecto.md)
