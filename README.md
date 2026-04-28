@@ -12,7 +12,7 @@ Sistema web inteligente orientado a optimizar el proceso de matrícula universit
 - 📌 [Descripción del Proyecto](docs/descripcion.md)
 - 📦 [Backlog del Producto](docs/backlog_producto.md)
 - 🎯 [Visión del Proyecto](docs/vision.md)
--📌 [Arquitectura del Proyecto](docs/arquitectura.md)
+- 📌 [Arquitectura del Proyecto](docs/arquitectura.md)
 ---
 
 ## 02. PLANIFICACIÓN
