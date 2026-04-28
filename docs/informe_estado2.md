@@ -36,8 +36,7 @@
 ## Próximos avances
 
 - Desarrollo de interfaz gráfica para gestión de alumnos.
-- Implementación de generación de horarios.
-- Validación de cruces de horarios.
+- Implementación de generación de horarios por preferencias.
 - Optimización del sistema.
 
 ---
