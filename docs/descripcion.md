@@ -15,6 +15,7 @@ Mejorar la toma de decisiones durante la matrícula, reducir errores en la selec
 - Mejor experiencia de usuario  
 - Recomendaciones personalizadas
 
-##
+## PROBLEMA GENERAL IDENTIFICADO
+
 
  📌 [Registro de Oportunidades](docs/descripcion.md)
