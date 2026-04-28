@@ -70,7 +70,6 @@
 | Errores en generación de horarios |
 
 ### 📅 Cronograma:
-- Sprint 0: Análisis  
 - Sprint 1: Diseño  
 - Sprint 2: Desarrollo  
-- Sprint 3: Pruebas  
+- Sprint 3: Optimización
