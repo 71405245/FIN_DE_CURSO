@@ -9,7 +9,12 @@ erDiagram
         string email
     }
 
- 
+    ADMIN {
+        int id_admin PK
+        string nombre
+        string email
+    }
+
     CURSO {
         int id_curso PK
         string nombre
@@ -26,7 +31,7 @@ erDiagram
         int id_seccion PK
         string nombre
         int id_curso FK
-        int id_docente FK
+        int id_admin FK
         int id_ciclo FK
     }
 
@@ -64,6 +69,7 @@ erDiagram
     SECCION ||--o{ DETALLE_MATRICULA : incluye
 
     CURSO ||--o{ SECCION : tiene
+    ADMIN ||--o{ SECCION : gestiona
     CICLO ||--o{ SECCION : pertenece
 
     DETALLE_MATRICULA ||--|| NOTA : genera
