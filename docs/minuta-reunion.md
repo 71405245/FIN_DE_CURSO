@@ -12,7 +12,7 @@
 
 ## Puntos Tratados
 
-- Revisión del avance del proyecto  
+- Definición del avance del proyecto  
 - Validación de requerimientos  
 - Organización de tareas en Jira  
 - Discusión del algoritmo  
