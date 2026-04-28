@@ -18,4 +18,4 @@ Mejorar la toma de decisiones durante la matrícula, reducir errores en la selec
 ## PROBLEMA GENERAL IDENTIFICADO
 
 
- 📌 [Registro de Oportunidades](docs/descripcion.md)
+ - 📌 [Registro de Oportunidades](docs/descripcion.md)
