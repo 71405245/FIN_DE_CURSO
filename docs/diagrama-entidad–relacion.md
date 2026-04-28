@@ -1,18 +1,19 @@
 ```mermaid
 erDiagram
 
+    ADMIN {
+        int id_admin PK
+        string nombre
+        string email
+    }
+
     ESTUDIANTE {
         int id_estudiante PK
         string nombre
         string apellido
         string dni
         string email
-    }
-
-    ADMIN {
-        int id_admin PK
-        string nombre
-        string email
+        int id_admin_creador FK
     }
 
     CURSO {
@@ -62,6 +63,8 @@ erDiagram
     }
 
     %% RELACIONES
+
+    ADMIN ||--o{ ESTUDIANTE : crea
 
     ESTUDIANTE ||--o{ MATRICULA : realiza
     MATRICULA ||--o{ DETALLE_MATRICULA : contiene
