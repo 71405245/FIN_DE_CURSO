@@ -22,7 +22,7 @@ Sistema web inteligente orientado a optimizar el proceso de matrícula universit
 - 💰 [Presupuesto del Proyecto](docs/presupuesto.md)
 - ⚠️ [Registro de Riesgos](docs/riesgos.md)
 - 📋 [Requerimientos funcionales](docs/requerimientos-funcionales.md)
-- [Requerimientos no funcionales](docs/requerimientos-no-funcionales.md)
+- 📋 [Requerimientos no funcionales](docs/requerimientos-no-funcionales.md)
 - 🚫 [Supuestos / Restricciones](docs/supuestos-restricciones.md)
 
 
