@@ -6,7 +6,7 @@
 | Motivo de la Reunión | Revisión de avances técnicos e implementación del sistema |
 | Participantes | Liand Mejía (Product Owner), Kevin (Scrum Master), Jordan (Developer) |
 | Fecha y Hora | 26/04/2026 - 15:30 |
-| Lugar | Virtual / Laboratorio |
+| Lugar | Virtual  |
 
 ---
 
