@@ -1,8 +1,7 @@
 ## 4. Registro de supuestos y restricciones
 
-| ID | Categoría |Restricción /  Supuesto| Estado | Comentarios |
-|----|----------|----------------------|--------|-------------|
-
+| ID | Categoría | Restricción / Supuesto | Estado | Comentarios |
+|----|-----------|------------------------|--------|--------------|
 | R1 | Académico | Existencia de cruces de horarios entre cursos | Activo | Problema principal que el sistema busca resolver |
 | R2 | Académico | Restricciones por secuencia de cursos (prerrequisitos no aprobados) | Activo | Limita la selección de cursos |
 | R3 | Académico | Límite de créditos permitidos por ciclo | Activo | Restricción institucional |
