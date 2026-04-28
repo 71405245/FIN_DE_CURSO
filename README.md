@@ -9,7 +9,7 @@ Sistema web inteligente orientado a optimizar el proceso de matrícula universit
 ## 01. INICIO
 
 - 📄 [Acta de Constitución del Proyecto](docs/acta-constitucion.md)
-- [Descripción del Proyecto](docs/descripcion.md)
+- 📌 [Descripción del Proyecto](docs/descripcion.md)
 - 📦 [Backlog del Producto](docs/backlog_producto.md)
 - 🎯 [Visión del Proyecto](docs/vision.md)
 
