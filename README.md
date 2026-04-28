@@ -31,6 +31,7 @@ Sistema web inteligente orientado a optimizar el proceso de matrícula universit
 
 ## 03. IMPLEMENTACIÓN
 
+- 📊 [Diagrama Entidad-Relación](docs/diagrama-entidad–relacion.md)
 - 📊 [Informe de Estado del Proyecto](docs/informe-estado.md)
 - 📊 [Informe de Estado del Proyecto 2](docs/informe_estado2.md)
 - 📝 [Minuta de Reunión](docs/minuta-reunion.md)
