@@ -9,13 +9,7 @@ erDiagram
         string email
     }
 
-    DOCENTE {
-        int id_docente PK
-        string nombre
-        string especialidad
-        string email
-    }
-
+ 
     CURSO {
         int id_curso PK
         string nombre
