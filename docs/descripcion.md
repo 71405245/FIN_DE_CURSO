@@ -15,4 +15,6 @@ Mejorar la toma de decisiones durante la matrícula, reducir errores en la selec
 - Mejor experiencia de usuario  
 - Recomendaciones personalizadas
 
- 📌 [Registro de Oportunidades](docs/descripcion.md#-registro-de-oportunidades)
+##
+
+ 📌 [Registro de Oportunidades](docs/descripcion.md)
