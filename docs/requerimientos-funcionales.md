@@ -1,7 +1,7 @@
 # 📋 Requerimientos Funcionales
 
-|----|--------|------------|
-| ID | Nombre | Descripción Ampliada | Entradas | Salidas |
+
+| ID | Nombre | Descripción  | Entradas | Salidas |
 |----|--------|----------------------|----------|---------|
 | RF-01 | Registro de preferencias | El sistema permitirá al estudiante registrar sus preferencias académicas, como cursos deseados, horarios disponibles, cantidad máxima de cursos y restricciones personales, con la finalidad de personalizar la generación de horarios de acuerdo con sus necesidades. | Preferencias del usuario | Datos almacenados en la base de datos |
 | RF-02 | Visualización de cursos | El sistema mostrará la oferta académica disponible obtenida desde la base de datos institucional, incluyendo nombre del curso, sección, docente asignado, créditos y horarios disponibles. | Consulta de cursos | Lista de cursos disponibles |
