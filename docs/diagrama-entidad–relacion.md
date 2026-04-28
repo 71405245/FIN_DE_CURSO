@@ -64,7 +64,6 @@ erDiagram
     SECCION ||--o{ DETALLE_MATRICULA : incluye
 
     CURSO ||--o{ SECCION : tiene
-    DOCENTE ||--o{ SECCION : dicta
     CICLO ||--o{ SECCION : pertenece
 
     DETALLE_MATRICULA ||--|| NOTA : genera
