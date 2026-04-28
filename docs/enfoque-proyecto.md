@@ -122,10 +122,9 @@ Se adopta la metodología ágil Scrum debido a su enfoque iterativo e incrementa
 
 ### 🔹 Distribución de Sprints:
 
-- **Sprint 0:** Análisis del problema y planificación  
 - **Sprint 1:** Diseño del sistema  
 - **Sprint 2:** Desarrollo de funcionalidades principales  
-- **Sprint 3:** Pruebas y validación  
+- **Sprint 3:** Optimizacion  
 
 Scrum facilita la organización del equipo, el seguimiento del progreso y la entrega continua de valor.
 
