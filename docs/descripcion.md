@@ -24,3 +24,4 @@ Además, la ausencia de sistemas automatizados que analicen preferencias persona
 
 ## 📌 [Oportunidades](docs/oportunidades.md)
 ## 📌 [Project Charter](docs/project-charter.md)
+enfoque-proyecto.md
