@@ -140,7 +140,7 @@ No incluye:
 
 | Nombre | Cargo | Firma | Fecha |
 |--------|------|-------|-------|
-| Job Daniel, GAMARRA MORENO | Patrocinador | _________ | 25/04/2026 |
-| Jordan, Liand, Kevin | Ejecutor | ________ | 25/04/2026 |
+| Job Daniel, GAMARRA MORENO | Patrocinador |  | 25/04/2026 |
+| Jordan, Liand, Kevin | Ejecutor |  | 25/04/2026 |
 
 ---
