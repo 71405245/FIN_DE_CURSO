@@ -8,14 +8,19 @@ Sistema web inteligente orientado a optimizar el proceso de matrícula universit
 
 ## 00.ARTEFACTOS DE INICIO DE PROYECTO
 
- - [Documento de selección del enfoque del proyecto](docs/acta-cdonstitucion.md)
- - [Declaración de la visión del proyecto](docs/acta-cdonstitucion.md)
- - [Project Charter](project-charter.md)
- - [Supuestos / Restricciones](docs/supuestos-restricciones.md)
- - [Declaración del equipo del proyecto](docs/acta-cdonstitucion.md)
- - [Documento del problema](docs/acta-cdonstitucion.md)
- - [Requerimientos funcionales](docs/requerimientos-funcionales.md)
- - [Requerimientos no funcionales](docs/requerimientos-no-funcionales.md)
+- [Documento de selección del enfoque del proyecto](docs/acta-cdonstitucion.md)
+- [Declaración de la visión del proyecto](docs/acta-cdonstitucion.md)
+- [Project Charter](project-charter.md)
+- [Supuestos / Restricciones](docs/supuestos-restricciones.md)
+- [Declaración del equipo del proyecto](docs/acta-cdonstitucion.md)
+- [Documento del problema](docs/acta-cdonstitucion.md)
+- [Requerimientos funcionales](docs/requerimientos-funcionales.md)
+- [Requerimientos no funcionales](docs/requerimientos-no-funcionales.md)
+
+## 📁 OTROS DOCUMENTOS IMPORTANTES
+
+- [Arquitectura del sistema](docs/arquitectura-sistema.md)
+
 ---
 
 ## 01. INICIO
