@@ -4,7 +4,7 @@ import itertools
 from academico.models import Seccion
 from academico.utils import recomendar_cursos
 
-MAX_CREDITOS = 22
+# MAX_CREDITOS = 24  # Usado dinámicamente desde el objeto estudiante
 
 def calcular_creditos_actuales(estudiante):
     matriculas = Matricula.objects.filter(estudiante=estudiante)
@@ -28,7 +28,18 @@ def hay_cruce(seccion, secciones_actuales):
     return False
 
 def generar_horarios_validos(estudiante):
-    cursos_recomendados = recomendar_cursos(estudiante)
+    try:
+        from matricula.models import PreferenciaHorario
+        pref = PreferenciaHorario.objects.get(estudiante=estudiante)
+        limite_cursos = pref.cantidad_cursos
+        dias_maximos_pref = pref.dias_maximos
+        turno_pref = pref.turno_preferido
+    except:
+        limite_cursos = 5
+        dias_maximos_pref = 7
+        turno_pref = 'cualquiera'
+
+    cursos_recomendados = recomendar_cursos(estudiante, limite=limite_cursos)
     
     if not cursos_recomendados:
         return []
@@ -48,7 +59,7 @@ def generar_horarios_validos(estudiante):
     for combinacion in itertools.product(*secciones_por_curso):
         # 1. Validar límite de créditos
         total_creditos = sum(sec.curso.creditos for sec in combinacion)
-        if total_creditos > MAX_CREDITOS:
+        if total_creditos > estudiante.limite_creditos:
             continue
             
         # 2. Validar cruces de horarios
@@ -90,16 +101,30 @@ def generar_horarios_validos(estudiante):
                         diff = dt_inicio - dt_fin
                         huecos_minutos += diff.total_seconds() / 60
         
-        # Guardar combinacion
-        combinaciones_validas.append({
-            'secciones': combinacion,
-            'dias_asistencia': dias_asistencia,
-            'huecos': huecos_minutos,
-            'total_creditos': total_creditos
-        })
+        # Criterio 3: Preferencia de Turno
+        penalizacion_turno = 0
+        if turno_pref != 'cualquiera':
+            for sec in combinacion:
+                hora = sec.hora_inicio.hour
+                if turno_pref == 'mañana' and hora >= 14:
+                    penalizacion_turno += 10
+                elif turno_pref == 'tarde' and (hora < 14 or hora >= 18):
+                    penalizacion_turno += 10
+                elif turno_pref == 'noche' and hora < 18:
+                    penalizacion_turno += 10
+        
+        # Guardar combinacion solo si cumple el máximo de días
+        if dias_asistencia <= dias_maximos_pref:
+            combinaciones_validas.append({
+                'secciones': combinacion,
+                'dias_asistencia': dias_asistencia,
+                'huecos': huecos_minutos,
+                'penalizacion_turno': penalizacion_turno,
+                'total_creditos': total_creditos
+            })
 
-    # Ordenar por menor cantidad de días de asistencia, luego por menos huecos
-    combinaciones_ordenadas = sorted(combinaciones_validas, key=lambda x: (x['dias_asistencia'], x['huecos']))
+    # Ordenar por penalidad de turno, menor cantidad de días de asistencia, luego por menos huecos
+    combinaciones_ordenadas = sorted(combinaciones_validas, key=lambda x: (x['penalizacion_turno'], x['dias_asistencia'], x['huecos']))
     
     # Devolver el top 5
     return combinaciones_ordenadas[:5]

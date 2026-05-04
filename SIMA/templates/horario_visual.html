@@ -1,64 +1,75 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<div class="container mt-4">
-
-    <h2 class="text-center mb-4 fw-bold text-primary">
-        📅 Mi Horario Académico
-    </h2>
-
-    <div class="table-responsive">
-
-        <table class="table table-bordered text-center shadow-lg">
-
-            <thead class="table-dark">
-                <tr>
-                    <th style="width:120px;">Hora</th>
-
-                    {% for dia in dias %}
-                        <th>{{ dia }}</th>
-                    {% endfor %}
-                </tr>
-            </thead>
-
-            <tbody>
-
-                {% for fila in matriz %}
-                <tr>
-
-                    <!-- HORA -->
-                    <td class="fw-bold bg-light">
-                        {{ fila.hora }}
-                    </td>
-
-                    <!-- DÍAS -->
-                    {% for celda in fila.dias %}
-                        <td style="height: 90px;">
-
-                            {% if celda %}
-                                <div class="p-2 rounded text-white shadow"
-                                     style="background: linear-gradient(135deg, #0d6efd, #0a58ca);">
-
-                                    <strong>{{ celda.curso }}</strong>
-                                    <br>
-                                    <small>📍 {{ celda.salon }}</small>
-
-                                </div>
-                            {% endif %}
-
-                        </td>
-                    {% endfor %}
-
-                </tr>
-                {% endfor %}
-
-            </tbody>
-
-        </table>
-
+<div class="container mt-4 mb-5">
+    <div class="card shadow-lg p-4 mb-4 bg-primary text-white rounded-4 border-0">
+        <div class="d-flex align-items-center">
+            <div class="bg-white bg-opacity-25 p-3 rounded-circle me-3">
+                <i class="fas fa-calendar-alt fa-2x"></i>
+            </div>
+            <div>
+                <h3 class="fw-bold mb-0">Mi Horario Académico</h3>
+                <p class="mb-0 opacity-75">Tu distribución semanal de clases</p>
+            </div>
+        </div>
     </div>
 
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-bordered text-center align-middle mb-0">
+                    <thead class="bg-light text-muted">
+                        <tr>
+                            <th style="width:120px;" class="py-3"><i class="far fa-clock me-1"></i> Hora</th>
+                            {% for dia in dias %}
+                                <th class="py-3">{{ dia }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for fila in matriz %}
+                        <tr class="transition-hover-row">
+                            <td class="fw-bold bg-light text-muted">
+                                {{ fila.hora }}
+                            </td>
+
+                            {% for celda in fila.dias %}
+                                <td style="height: 100px; width: 14%;">
+                                    {% if celda %}
+                                        <div class="p-2 rounded-3 text-white shadow-sm h-100 d-flex flex-column justify-content-center transition-hover-card"
+                                             style="background: linear-gradient(135deg, {{ celda.color }}, {{ celda.color }}dd);">
+                                            <strong class="d-block mb-1" style="font-size: 0.9rem;">{{ celda.curso }}</strong>
+                                            <span class="badge bg-white text-dark bg-opacity-75 rounded-pill mx-auto" style="font-size: 0.75rem;">
+                                                <i class="fas fa-door-open me-1"></i> {{ celda.salon }}
+                                            </span>
+                                        </div>
+                                    {% endif %}
+                                </td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
+<style>
+    .transition-hover-row {
+        transition: background-color 0.2s ease;
+    }
+    .transition-hover-row:hover {
+        background-color: #f8f9fa;
+    }
+    .transition-hover-card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .transition-hover-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2) !important;
+        z-index: 10;
+        position: relative;
+    }
+</style>
 {% endblock %}

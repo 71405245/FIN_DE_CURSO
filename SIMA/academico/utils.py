@@ -35,11 +35,20 @@ def puede_llevar_curso(estudiante, curso):
             if estudiante.creditos_acumulados < p.creditos_minimos:
                 return False, f"Requiere {p.creditos_minimos} créditos"
 
+    # 🚫 3. BLOQUEAR SI ES DE UN CICLO SUPERIOR Y NO TIENE PRERREQUISITOS
+    # Si el curso es de un ciclo mayor al del estudiante, y no hay ningún prerrequisito
+    # que lo habilite "naturalmente", entonces no se puede llevar.
+    # Si sí tiene prerrequisitos, la lógica anterior ya validó si los pasó o no.
+    if curso.ciclo and estudiante.ciclo_actual:
+        if curso.ciclo.numero > estudiante.ciclo_actual:
+            if not prerrequisitos.exists():
+                return False, f"Solo puedes llevar cursos hasta tu ciclo actual ({estudiante.ciclo_actual})"
+
     return True, "Puede llevar"
 
 
 # 🤖 IA: RECOMENDAR CURSOS AUTOMÁTICAMENTE
-def recomendar_cursos(estudiante):
+def recomendar_cursos(estudiante, limite=5):
 
     cursos = Curso.objects.all()
     recomendaciones = []
@@ -56,7 +65,7 @@ def recomendar_cursos(estudiante):
         key=lambda x: x.ciclo.numero if x.ciclo else 0
     )
 
-    return recomendaciones[:5]  # TOP 5
+    return recomendaciones[:limite]
 
 
 # 📊 (EXTRA PRO) CALCULAR PROMEDIO DEL ESTUDIANTE

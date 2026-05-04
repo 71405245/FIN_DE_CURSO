@@ -23,8 +23,7 @@
             <td>{% if s.salon %}{{ s.salon.numero }}{% else %}Sin asignar{% endif %}</td>
 
             <td>
-                <a href="{% url 'matricular' s.id %}" 
-                   class="btn btn-success btn-sm">
+                <a href="{% url 'matricular' s.id %}" class="btn btn-success btn-sm">
                     Elegir
                 </a>
             </td>

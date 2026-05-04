@@ -1,205 +1,285 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="container mt-4 mb-5">
 
-<div class="container mt-4">
-
-    <!-- HEADER -->
-    <div class="card shadow-lg p-4 mb-4 bg-primary text-white rounded-4">
-        <h3 class="fw-bold">🎓 SIMA - Sistema Inteligente de Matrícula</h3>
-        <p class="mb-0">Bienvenido, {{ user.username }}</p>
+    <!-- HEADER DINÁMICO -->
+    <div class="card border-0 shadow-lg mb-4 overflow-hidden rounded-4" style="background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);">
+        <div class="card-body p-4 p-md-5 text-white">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="fw-bold mb-2">¡Bienvenido de nuevo, {{ user.username }}!</h1>
+                    <p class="lead mb-0 opacity-75">Hoy es {% now "l d F Y" %}. Tienes un día productivo por delante.</p>
+                </div>
+                <div class="col-md-4 text-end d-none d-md-block">
+                    <i class="fas fa-graduation-cap fa-5x opacity-25"></i>
+                </div>
+            </div>
+        </div>
     </div>
 
     {% if user.rol == 'admin' %}
-
-    <!-- ================= ADMIN ================= -->
+    <!-- ================= ADMIN DASHBOARD ================= -->
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm rounded-4 p-3 h-100 bg-white">
+                <div class="d-flex align-items-center">
+                    <div class="bg-primary bg-opacity-10 p-3 rounded-3 me-3">
+                        <i class="fas fa-users text-primary fa-2x"></i>
+                    </div>
+                    <div>
+                        <h3 class="fw-bold mb-0">{{ total_estudiantes|default:"0" }}</h3>
+                        <p class="text-muted small mb-0">Estudiantes</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm rounded-4 p-3 h-100 bg-white">
+                <div class="d-flex align-items-center">
+                    <div class="bg-success bg-opacity-10 p-3 rounded-3 me-3">
+                        <i class="fas fa-book text-success fa-2x"></i>
+                    </div>
+                    <div>
+                        <h3 class="fw-bold mb-0">{{ total_cursos|default:"0" }}</h3>
+                        <p class="text-muted small mb-0">Cursos Activos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm rounded-4 p-3 h-100 bg-white text-decoration-none transition-hover" onclick="location.href='{% url 'panel_admin' %}'" style="cursor: pointer;">
+                <div class="d-flex align-items-center">
+                    <div class="bg-warning bg-opacity-10 p-3 rounded-3 me-3">
+                        <i class="fas fa-chart-pie text-warning fa-2x"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold mb-0">Panel Admin</h5>
+                        <p class="text-muted small mb-0">Gestionar Todo</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card border-0 shadow-sm rounded-4 p-3 h-100 bg-white text-decoration-none transition-hover" onclick="location.href='/admin/'" style="cursor: pointer;">
+                <div class="d-flex align-items-center">
+                    <div class="bg-dark bg-opacity-10 p-3 rounded-3 me-3">
+                        <i class="fas fa-cog text-dark fa-2x"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold mb-0">Configuración</h5>
+                        <p class="text-muted small mb-0">Avanzado</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="row">
-
-        <!-- PANEL ADMIN -->
-        <div class="col-md-6 mb-3">
-            <div class="card shadow-lg border-0 rounded-4 p-3">
-                <h5 class="fw-bold">👨‍💼 Administración</h5>
-
-                <a href="/admin" class="btn btn-dark w-100 mb-2">
-                    ⚙️ Django Admin
-                </a>
-
-                <a href="{% url 'panel_admin' %}" class="btn btn-primary w-100">
-                    📊 Panel Administrativo
-                </a>
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-header bg-white border-0 py-3">
+                    <h5 class="fw-bold mb-0">Acciones Rápidas</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-4 col-md-2 mb-3">
+                            <a href="{% url 'crear_estudiante' %}" class="text-decoration-none">
+                                <div class="bg-light p-3 rounded-4 mb-2 transition-hover">
+                                    <i class="fas fa-user-plus text-primary fa-lg"></i>
+                                </div>
+                                <span class="small text-dark">Nuevo Alumno</span>
+                            </a>
+                        </div>
+                        <div class="col-4 col-md-2 mb-3">
+                            <a href="{% url 'gestionar_cursos_admin' %}" class="text-decoration-none">
+                                <div class="bg-light p-3 rounded-4 mb-2 transition-hover">
+                                    <i class="fas fa-plus-circle text-success fa-lg"></i>
+                                </div>
+                                <span class="small text-dark">Añadir Curso</span>
+                            </a>
+                        </div>
+                        <div class="col-4 col-md-2 mb-3">
+                            <a href="{% url 'gestionar_salones_admin' %}" class="text-decoration-none">
+                                <div class="bg-light p-3 rounded-4 mb-2 transition-hover">
+                                    <i class="fas fa-door-open text-warning fa-lg"></i>
+                                </div>
+                                <span class="small text-dark">Salones</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <!-- INFO -->
-        <div class="col-md-6 mb-3">
-            <div class="card shadow-lg border-0 rounded-4 p-3 bg-light">
-                <h5 class="fw-bold">📌 Funciones</h5>
-
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">✔ Crear estudiantes</li>
-                    <li class="list-group-item">✔ Registrar notas</li>
-                    <li class="list-group-item">✔ Gestionar cursos</li>
-                    <li class="list-group-item">✔ Control académico</li>
-                </ul>
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm rounded-4 bg-primary text-white p-4 h-100">
+                <h5 class="fw-bold mb-3">Estado del Sistema</h5>
+                <div class="d-flex align-items-center mb-3">
+                    <div class="bg-white bg-opacity-20 p-2 rounded-circle me-3">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div>
+                        <span class="d-block small opacity-75">Base de Datos</span>
+                        <span class="fw-bold">Conectado (MySQL)</span>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center mb-3">
+                    <div class="bg-white bg-opacity-20 p-2 rounded-circle me-3">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div>
+                        <span class="d-block small opacity-75">Motor IA</span>
+                        <span class="fw-bold">Activo</span>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
 
     {% elif user.rol == 'estudiante' %}
+    <!-- ================= ESTUDIANTE DASHBOARD ================= -->
     
-    <!-- ================= ESTUDIANTE (NUEVO DASHBOARD) ================= -->
-
     <div class="row mb-4">
-        <div class="col-12">
-            <h4 class="fw-bold mb-3">Resumen del Día</h4>
-        </div>
-        
-        <!-- CLASE ACTUAL -->
-        <div class="col-md-6 mb-3">
-            <div class="card h-100 border-0 shadow-sm overflow-hidden" style="border-left: 5px solid var(--primary-purple) !important;">
-                <div class="card-body p-4">
-                    <div class="d-flex justify-content-between align-items-start mb-3">
-                        <div>
-                            <span class="badge bg-primary-subtle text-primary mb-2">EN CURSO AHORA</span>
-                            {% if clase_actual %}
-                                <h3 class="fw-bold text-primary mb-1">{{ clase_actual.curso }}</h3>
-                                <p class="text-muted mb-0"><i class="fas fa-clock me-1"></i> {{ clase_actual.rango }}</p>
-                            {% else %}
-                                <h3 class="fw-bold text-muted mb-1">Sin clases ahora</h3>
-                                <p class="text-muted mb-0">Disfruta tu tiempo libre</p>
-                            {% endif %}
-                        </div>
-                        {% if clase_actual %}
-                        <div class="bg-primary-subtle p-3 rounded-4">
-                            <i class="fas fa-chalkboard-teacher fa-2x text-primary"></i>
-                        </div>
-                        {% endif %}
-                    </div>
-                    {% if clase_actual %}
-                    <div class="d-flex align-items-center mt-3">
-                        <div class="me-4">
-                            <small class="text-muted d-block">SALÓN</small>
-                            <span class="fw-bold">{{ clase_actual.salon }}</span>
-                        </div>
-                        <a href="#" class="btn btn-primary rounded-pill px-4 ms-auto">Entrar</a>
-                    </div>
-                    {% endif %}
+        <div class="col-md-4 mb-3">
+            <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white border-start border-primary border-4">
+                <h6 class="text-muted fw-bold small text-uppercase mb-2">Créditos Acumulados</h6>
+                <div class="d-flex align-items-end">
+                    <h2 class="fw-bold mb-0 text-primary">{{ user.creditos_acumulados }}</h2>
+                    <span class="ms-2 text-muted pb-1">/ {{ user.limite_creditos }} máx.</span>
                 </div>
             </div>
         </div>
-
-        <!-- SIGUIENTE CLASE -->
-        <div class="col-md-6 mb-3">
-            <div class="card h-100 border-0 shadow-sm" style="border-left: 5px solid #8b5cf6 !important;">
-                <div class="card-body p-4">
-                    <div class="d-flex justify-content-between align-items-start mb-3">
-                        <div>
-                            <span class="badge bg-purple-subtle text-purple mb-2" style="background: #f3e8ff; color: #6b21a8;">A CONTINUACIÓN</span>
-                            {% if proxima_clase %}
-                                <h3 class="fw-bold mb-1" style="color: #6d28d9;">{{ proxima_clase.curso }}</h3>
-                                <p class="text-muted mb-0"><i class="fas fa-clock me-1"></i> {{ proxima_clase.rango }}</p>
-                            {% else %}
-                                <h3 class="fw-bold text-muted mb-1">No hay más clases</h3>
-                                <p class="text-muted mb-0">Día terminado</p>
-                            {% endif %}
-                        </div>
-                        {% if proxima_clase %}
-                        <div style="background: #f3e8ff; padding: 1rem; border-radius: 1rem;">
-                            <i class="fas fa-forward fa-2x" style="color: #6d28d9;"></i>
-                        </div>
-                        {% endif %}
+        <div class="col-md-4 mb-3">
+            <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white border-start border-success border-4">
+                <h6 class="text-muted fw-bold small text-uppercase mb-2">Ciclo Actual</h6>
+                <div class="d-flex align-items-end">
+                    <h2 class="fw-bold mb-0 text-success">{{ user.ciclo_actual }}°</h2>
+                    <span class="ms-2 text-muted pb-1">Ciclo Académico</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white border-start border-warning border-4 text-decoration-none transition-hover" onclick="location.href='{% url 'preferencias' %}'" style="cursor: pointer;">
+                <h6 class="text-muted fw-bold small text-uppercase mb-2">Preferencias IA</h6>
+                <div class="d-flex align-items-center">
+                    <div class="bg-warning bg-opacity-10 p-2 rounded-circle me-3">
+                        <i class="fas fa-sliders-h text-warning"></i>
                     </div>
-                    {% if proxima_clase %}
-                    <div class="d-flex align-items-center mt-3">
-                        <div>
-                            <small class="text-muted d-block">SALÓN</small>
-                            <span class="fw-bold">{{ proxima_clase.salon }}</span>
-                        </div>
-                        <button class="btn btn-outline-secondary rounded-pill px-4 ms-auto" disabled>Recordatorio</button>
-                    </div>
-                    {% endif %}
+                    <span class="fw-bold text-dark">Configurar mis horarios</span>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- HORARIO SEMANAL -->
-    <div class="card shadow-sm border-0 rounded-4 mb-4">
-        <div class="card-header bg-white border-0 py-3 d-flex justify-content-between align-items-center">
-            <h5 class="fw-bold mb-0">📅 Mi Horario Semanal</h5>
-            <a href="{% url 'descargar_horario' %}" class="btn btn-sm btn-outline-primary rounded-pill">
-                <i class="fas fa-download me-1"></i> PDF
-            </a>
-        </div>
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                <table class="table table-bordered mb-0 text-center">
-                    <thead class="bg-light">
-                        <tr>
-                            <th style="width: 120px;">Hora</th>
-                            {% for dia in dias %}
-                                <th>{{ dia }}</th>
-                            {% endfor %}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for fila in matriz %}
-                        <tr>
-                            <td class="fw-bold bg-light align-middle" style="font-size: 0.85rem;">{{ fila.hora }}</td>
-                            {% for celda in fila.dias %}
-                                <td style="height: 80px; width: 14%; padding: 2px;">
-                                    {% if celda %}
-                                        <div class="h-100 p-2 rounded-3 d-flex flex-column justify-content-center shadow-sm" 
-                                             style="background-color: {{ celda.color }}; border: 1px solid rgba(0,0,0,0.05);">
-                                            <div class="fw-bold" style="font-size: 0.75rem; line-height: 1.1;">{{ celda.curso }}</div>
-                                            <div class="text-muted mt-1" style="font-size: 0.65rem;">📍 {{ celda.salon }}</div>
-                                        </div>
-                                    {% endif %}
-                                </td>
-                            {% endfor %}
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+    <div class="row">
+        <div class="col-lg-7">
+            <!-- HORARIO SEMANAL SIMPLIFICADO -->
+            <div class="card shadow-sm border-0 rounded-4 mb-4">
+                <div class="card-header bg-white border-0 py-3 d-flex justify-content-between align-items-center">
+                    <h5 class="fw-bold mb-0">📅 Resumen Semanal</h5>
+                    <a href="{% url 'horario_visual' %}" class="btn btn-sm btn-link text-decoration-none">Ver completo</a>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0 text-center align-middle">
+                            <thead class="bg-light">
+                                <tr class="small text-muted">
+                                    <th>HORA</th>
+                                    <th>LUN</th><th>MAR</th><th>MIÉ</th><th>JUE</th><th>VIE</th><th>SÁB</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for fila in matriz|slice:":5" %} <!-- Solo primeras 5 filas para no saturar -->
+                                <tr>
+                                    <td class="fw-bold text-muted" style="font-size: 0.7rem;">{{ fila.hora|slice:":5" }}</td>
+                                    {% for celda in fila.dias|slice:":6" %}
+                                    <td style="height: 40px; padding: 2px;">
+                                        {% if celda %}
+                                        <div class="h-100 rounded-2 shadow-sm" style="background-color: {{ celda.color }}; opacity: 0.8;" title="{{ celda.curso }}"></div>
+                                        {% endif %}
+                                    </td>
+                                    {% endfor %}
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
-    <!-- RECOMENDACIONES (ESTILO MEJORADO) -->
-    <div class="card shadow-sm border-0 rounded-4 mb-4">
-        <div class="card-header bg-white border-0 py-3">
-            <div class="d-flex justify-content-between align-items-center">
-                <h5 class="fw-bold mb-0">🤖 Recomendaciones de IA</h5>
-                <a href="{% url 'horarios_recomendados' %}" class="btn btn-primary btn-sm rounded-pill">
-                    Generar Horario Completo
-                </a>
-            </div>
-        </div>
-        <div class="card-body">
-            {% if recomendaciones %}
-                <div class="row">
-                    {% for curso in recomendaciones %}
-                    <div class="col-md-4 mb-3">
-                        <div class="p-3 rounded-4 bg-light h-100 border transition-hover">
-                            <h6 class="fw-bold mb-2">{{ curso.nombre }}</h6>
-                            <div class="d-flex gap-2">
-                                <span class="badge bg-white text-primary border border-primary-subtle">Ciclo {{ curso.ciclo.numero }}</span>
-                                <span class="badge bg-white text-success border border-success-subtle">{{ curso.creditos }} créd.</span>
+            <!-- RECOMENDACIONES IA -->
+            <div class="card shadow-sm border-0 rounded-4 mb-4">
+                <div class="card-header bg-white border-0 py-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="fw-bold mb-0">🤖 IA Sugerencias</h5>
+                        <a href="{% url 'horarios_recomendados' %}" class="btn btn-primary btn-sm rounded-pill px-3 shadow-sm">Generar Horario</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    {% if recomendaciones %}
+                    <div class="row">
+                        {% for curso in recomendaciones|slice:":3" %}
+                        <div class="col-md-4 mb-3">
+                            <div class="p-3 rounded-4 bg-light h-100 border transition-hover">
+                                <h6 class="fw-bold small mb-2 text-truncate" title="{{ curso.nombre }}">{{ curso.nombre }}</h6>
+                                <span class="badge bg-primary bg-opacity-10 text-primary small">Ciclo {{ curso.ciclo.numero }}</span>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
+                    {% else %}
+                    <div class="text-center py-4">
+                        <i class="fas fa-robot text-muted fa-2x mb-2 opacity-25"></i>
+                        <p class="text-muted small">Configura tus preferencias para recibir sugerencias.</p>
+                    </div>
+                    {% endif %}
                 </div>
-            {% else %}
-                <p class="text-muted text-center py-3">No hay recomendaciones en este momento.</p>
-            {% endif %}
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <!-- PRÓXIMAS CLASES -->
+            <div class="card border-0 shadow-sm rounded-4 mb-4 overflow-hidden">
+                <div class="card-header bg-dark text-white py-3">
+                    <h5 class="fw-bold mb-0 small text-uppercase tracking-wider">Hoy: {{ hoy_clases|length }} Clases</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush">
+                        {% for clase in hoy_clases %}
+                        <div class="list-group-item p-4 border-0 border-bottom">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="fw-bold mb-1">{{ clase.curso }}</h6>
+                                    <p class="text-muted small mb-0"><i class="fas fa-clock me-1"></i> {{ clase.rango }}</p>
+                                </div>
+                                <span class="badge bg-light text-dark rounded-pill border">{{ clase.salon }}</span>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="p-5 text-center text-muted">
+                            <i class="fas fa-calendar-check fa-3x mb-3 opacity-25"></i>
+                            <p>No tienes clases programadas para hoy.</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
     {% endif %}
 
 </div>
 
+<style>
+    .transition-hover {
+        transition: all 0.3s ease;
+    }
+    .transition-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.05) !important;
+    }
+    .tracking-wider {
+        letter-spacing: 0.05em;
+    }
+</style>
 {% endblock %}

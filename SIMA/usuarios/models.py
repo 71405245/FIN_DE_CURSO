@@ -11,6 +11,7 @@ class Usuario(AbstractUser):
     codigo = models.CharField(max_length=10, unique=True, null=True, blank=True)
     ciclo_actual = models.IntegerField(null=True, blank=True)
     creditos_acumulados = models.IntegerField(default=0)
+    limite_creditos = models.IntegerField(default=24)
 
     def __str__(self):
         return self.username

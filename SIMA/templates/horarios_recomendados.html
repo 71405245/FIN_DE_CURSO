@@ -1,57 +1,111 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<div class="container mt-4">
-    <div class="card shadow-lg p-4 mb-4 bg-primary text-white rounded-4">
-        <h3 class="fw-bold">🤖 Generación Inteligente de Horarios</h3>
-        <p class="mb-0">La IA ha analizado tus cursos aprobados, tu ciclo actual y los cupos disponibles para generar las mejores opciones de horario para ti.</p>
+<div class="container mt-4 mb-5">
+    <div class="card shadow-lg p-4 mb-4 bg-primary text-white rounded-4 border-0">
+        <div class="d-flex align-items-center">
+            <div class="bg-white bg-opacity-25 p-3 rounded-circle me-3">
+                <i class="fas fa-robot fa-2x"></i>
+            </div>
+            <div>
+                <h3 class="fw-bold mb-0">Generación Inteligente de Horarios</h3>
+                <p class="mb-0 opacity-75">La IA ha analizado tus cursos, prerrequisitos y preferencias para generar tus mejores opciones.</p>
+            </div>
+        </div>
     </div>
 
-    <div class="mb-3">
-        <a href="{% url 'dashboard' %}" class="btn btn-secondary">⬅️ Volver al Dashboard</a>
+    {% if preferencia %}
+    <div class="card bg-info-subtle text-info-emphasis border-0 shadow-sm rounded-4 mb-4 p-3">
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <i class="fas fa-sliders-h me-2 text-info"></i>
+                <strong>Basado en tus preferencias:</strong>
+                Turno <em>{{ preferencia.get_turno_preferido_display }}</em>, 
+                máx. <em>{{ preferencia.dias_maximos }} días</em>, 
+                buscando <em>{{ preferencia.cantidad_cursos }} cursos</em>.
+            </div>
+            <a href="{% url 'preferencias' %}" class="btn btn-sm btn-outline-info rounded-pill px-3">
+                Editar Preferencias
+            </a>
+        </div>
+    </div>
+    {% else %}
+    <div class="card bg-warning-subtle text-warning-emphasis border-0 shadow-sm rounded-4 mb-4 p-3">
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <i class="fas fa-exclamation-triangle me-2 text-warning"></i>
+                <strong>Aviso:</strong> Estás viendo sugerencias por defecto.
+            </div>
+            <a href="{% url 'preferencias' %}" class="btn btn-sm btn-outline-warning rounded-pill px-3 text-dark">
+                Configurar Preferencias
+            </a>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="mb-4">
+        <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary rounded-pill px-4 transition-hover-btn">
+            <i class="fas fa-arrow-left me-1"></i> Volver al Dashboard
+        </a>
     </div>
 
     {% if messages %}
+        <div class="mb-4">
         {% for message in messages %}
-            <div class="alert alert-{{ message.tags }} mt-2">
+            <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show rounded-3 shadow-sm border-0" role="alert">
                 {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         {% endfor %}
+        </div>
     {% endif %}
 
     {% if horarios_generados %}
-        <h5 class="fw-bold mb-4">🏆 Top {{ horarios_generados|length }} Mejores Opciones Generadas</h5>
+        <h5 class="fw-bold mb-4 text-dark"><i class="fas fa-trophy text-warning me-2"></i> Top {{ horarios_generados|length }} Mejores Opciones Generadas</h5>
 
         {% for horario in horarios_generados %}
-        <div class="card shadow-sm border-0 rounded-4 mb-4">
-            <div class="card-header bg-dark text-white rounded-top-4 d-flex justify-content-between align-items-center p-3">
-                <h5 class="mb-0 fw-bold">Opción #{{ forloop.counter }}</h5>
+        <div class="card shadow-sm border-0 rounded-4 mb-4 overflow-hidden transition-hover">
+            <div class="card-header bg-dark text-white p-3 d-flex justify-content-between align-items-center">
+                <h5 class="mb-0 fw-bold"><i class="fas fa-star text-warning me-2"></i>Opción #{{ forloop.counter }}</h5>
                 <div>
-                    <span class="badge bg-info me-2">⚡ {{ horario.total_creditos }} Créditos</span>
-                    <span class="badge bg-warning text-dark me-2">📅 {{ horario.dias_asistencia }} Días</span>
-                    <span class="badge bg-danger">⏱️ {{ horario.huecos|floatformat:0 }} Min. Libres</span>
+                    <span class="badge bg-primary-subtle text-primary rounded-pill px-3 py-2 me-2">
+                        <i class="fas fa-bolt me-1"></i> {{ horario.total_creditos }} Créditos
+                    </span>
+                    <span class="badge bg-warning-subtle text-warning-emphasis rounded-pill px-3 py-2 me-2">
+                        <i class="far fa-calendar-alt me-1"></i> {{ horario.dias_asistencia }} Días
+                    </span>
+                    <span class="badge bg-danger-subtle text-danger rounded-pill px-3 py-2">
+                        <i class="fas fa-stopwatch me-1"></i> {{ horario.huecos|floatformat:0 }} Min. Libres
+                    </span>
                 </div>
             </div>
             
-            <div class="card-body">
+            <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table class="table table-hover align-middle">
-                        <thead class="table-light">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="bg-light text-muted">
                             <tr>
-                                <th>Curso</th>
+                                <th class="ps-4">Curso</th>
                                 <th>Día</th>
                                 <th>Horario</th>
-                                <th>Aula</th>
+                                <th class="pe-4">Aula</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for seccion in horario.secciones %}
                             <tr>
-                                <td><span class="fw-bold text-primary">{{ seccion.curso.nombre }}</span></td>
-                                <td>{{ seccion.dia }}</td>
-                                <td>{{ seccion.hora_inicio|time:"H:i" }} - {{ seccion.hora_fin|time:"H:i" }}</td>
-                                <td>{% if seccion.salon %}{{ seccion.salon.numero }}{% else %}Sin asignar{% endif %}</td>
+                                <td class="ps-4"><span class="fw-bold text-dark">{{ seccion.curso.nombre }}</span></td>
+                                <td>
+                                    <span class="badge bg-info-subtle text-info rounded-pill px-3 py-1">{{ seccion.dia }}</span>
+                                </td>
+                                <td><i class="far fa-clock text-muted me-1"></i> {{ seccion.hora_inicio|time:"H:i" }} - {{ seccion.hora_fin|time:"H:i" }}</td>
+                                <td class="pe-4">
+                                    {% if seccion.salon %}
+                                        <i class="fas fa-door-open text-muted me-1"></i> {{ seccion.salon.numero }}
+                                    {% else %}
+                                        <span class="text-muted">Sin asignar</span>
+                                    {% endif %}
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -59,14 +113,14 @@
                 </div>
             </div>
             
-            <div class="card-footer bg-light p-3 text-end rounded-bottom-4">
-                <form action="{% url 'matricular_horario_completo' %}" method="POST">
+            <div class="card-footer bg-light p-3 text-end">
+                <form action="{% url 'matricular_horario_completo' %}" method="POST" class="m-0">
                     {% csrf_token %}
                     {% for seccion in horario.secciones %}
                         <input type="hidden" name="secciones_ids" value="{{ seccion.id }}">
                     {% endfor %}
-                    <button type="submit" class="btn btn-success fw-bold">
-                        ✅ Matricularse en esta Opción
+                    <button type="submit" class="btn btn-success fw-bold rounded-pill px-4 shadow-sm transition-hover-btn">
+                        <i class="fas fa-check-circle me-1"></i> Matricularse en esta Opción
                     </button>
                 </form>
             </div>
@@ -74,12 +128,30 @@
         {% endfor %}
 
     {% else %}
-        <div class="alert alert-warning text-center p-4 rounded-4 shadow-sm">
-            <h4 class="fw-bold">⚠️ No se pudieron generar horarios</h4>
-            <p>Es posible que no haya suficientes cursos recomendados disponibles o que todas las combinaciones posibles tengan cruces de horario.</p>
+        <div class="card border-0 shadow-sm rounded-4 bg-light text-center p-5 mt-4">
+            <i class="fas fa-frown fa-4x text-muted mb-3"></i>
+            <h4 class="fw-bold text-dark">No pudimos generar opciones</h4>
+            <p class="text-muted mb-4">Es posible que tus preferencias sean muy estrictas, que no haya cupos, o que no tengas cursos disponibles para matricularte.</p>
+            <a href="{% url 'preferencias' %}" class="btn btn-primary rounded-pill px-4">
+                <i class="fas fa-sliders-h me-2"></i> Flexibilizar mis Preferencias
+            </a>
         </div>
     {% endif %}
-
 </div>
 
+<style>
+    .transition-hover {
+        transition: all 0.3s ease;
+    }
+    .transition-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+    }
+    .transition-hover-btn {
+        transition: all 0.2s ease;
+    }
+    .transition-hover-btn:hover {
+        transform: scale(1.05);
+    }
+</style>
 {% endblock %}

@@ -2,10 +2,13 @@ from django import forms
 from .models import HistorialAcademico, Curso
 
 class RegistrarNotaForm(forms.ModelForm):
-
     class Meta:
         model = HistorialAcademico
-        fields = ['curso', 'nota', 'estado', 'ciclo']
+        fields = ['curso', 'nota']
+        widgets = {
+            'curso': forms.Select(attrs={'class': 'form-select form-select-lg rounded-3'}),
+            'nota': forms.NumberInput(attrs={'class': 'form-control form-control-lg rounded-3', 'min': 0, 'max': 20}),
+        }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

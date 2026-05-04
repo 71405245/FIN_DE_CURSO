@@ -20,6 +20,8 @@ urlpatterns = [
 
     # Panel admin personalizado
     path('panel-admin/', user_views.panel_admin, name='panel_admin'),
+    path('panel-admin/editar-limite/<int:user_id>/', user_views.editar_limite_creditos, name='editar_limite_creditos'),
+    path('panel-admin/eliminar-estudiante/<int:user_id>/', user_views.eliminar_estudiante, name='eliminar_estudiante'),
 
     # Cursos
     path('cursos/', acad_views.lista_cursos, name='cursos'),
@@ -70,6 +72,7 @@ urlpatterns = [
     path('horario/', mat_views.horario_visual, name='horario_visual'),
     
     # IA Horarios
+    path('preferencias/', mat_views.gestionar_preferencias, name='preferencias'),
     path('horarios-recomendados/', mat_views.horarios_recomendados, name='horarios_recomendados'),
     path('matricular-horario/', mat_views.matricular_horario_completo, name='matricular_horario_completo'),
 ]

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -37,7 +37,7 @@ def logout_view(request):
 import datetime
 import calendar
 from matricula.models import Matricula
-from academico.models import Seccion
+from academico.models import Seccion, Curso, HistorialAcademico
 
 # 🏠 DASHBOARD
 @login_required
@@ -139,7 +139,7 @@ def dashboard(request):
                 fila["dias"].append(contenido)
             matriz.append(fila)
 
-    return render(request, 'dashboard.html', {
+    context = {
         'recomendaciones': recomendaciones,
         'matriz': matriz,
         'dias': ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"],
@@ -148,8 +148,16 @@ def dashboard(request):
         'anio': anio,
         'hoy_clases': hoy_clases,
         'clase_actual': clase_actual,
-        'proxima_clase': proxima_clase
-    })
+        'proxima_clase': proxima_clase,
+    }
+
+    if request.user.rol == 'admin':
+        from .models import Usuario
+        from academico.models import Curso
+        context['total_estudiantes'] = Usuario.objects.filter(rol='estudiante').count()
+        context['total_cursos'] = Curso.objects.count()
+
+    return render(request, 'dashboard.html', context)
 
 def crear_estudiante(request):
     if request.user.rol != 'admin':
@@ -158,7 +166,20 @@ def crear_estudiante(request):
     if request.method == 'POST':
         form = CrearEstudianteForm(request.POST)
         if form.is_valid():
-            form.save()
+            estudiante = form.save()
+            
+            # Asumir que aprobó los cursos de los ciclos anteriores
+            if estudiante.ciclo_actual and estudiante.ciclo_actual > 1:
+                cursos_anteriores = Curso.objects.filter(ciclo__numero__lt=estudiante.ciclo_actual)
+                for curso in cursos_anteriores:
+                    HistorialAcademico.objects.create(
+                        estudiante=estudiante,
+                        curso=curso,
+                        nota=14,  # Nota aprobatoria por defecto
+                        estado='aprobado',
+                        ciclo=curso.ciclo.numero
+                    )
+
             messages.success(request, "Estudiante creado correctamente")
             return redirect('panel_admin')
     else:
@@ -178,4 +199,41 @@ def panel_admin(request):
 
     return render(request, 'panel_admin.html', {
         'usuarios': usuarios
+    })
+
+@login_required
+def editar_limite_creditos(request, user_id):
+    if request.user.rol != 'admin':
+        return redirect('dashboard')
+
+    estudiante = get_object_or_404(Usuario, id=user_id, rol='estudiante')
+
+    if request.method == 'POST':
+        nuevo_limite = request.POST.get('limite_creditos')
+        if nuevo_limite:
+            estudiante.limite_creditos = int(nuevo_limite)
+            estudiante.save()
+            messages.success(request, f"Límite de créditos actualizado para {estudiante.username}.")
+            return redirect('panel_admin')
+
+    return render(request, 'editar_limite.html', {
+        'estudiante': estudiante
+    })
+
+@login_required
+def eliminar_estudiante(request, user_id):
+    if request.user.rol != 'admin':
+        return redirect('dashboard')
+
+    estudiante = get_object_or_404(Usuario, id=user_id, rol='estudiante')
+
+    if request.method == 'POST':
+        nombre = estudiante.username
+        estudiante.delete()
+        messages.success(request, f"Estudiante {nombre} eliminado correctamente.")
+        return redirect('panel_admin')
+
+    return render(request, 'confirmar_eliminar.html', {
+        'objeto': f"Estudiante: {estudiante.username}",
+        'cancel_url': 'panel_admin'
     })

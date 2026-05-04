@@ -20,32 +20,40 @@
     <!-- BOTONES DE ACCIÓN RÁPIDA -->
     <div class="row mb-4">
         <div class="col-md-3 mb-3">
-            <a href="{% url 'crear_estudiante' %}" class="card h-100 border-0 shadow-sm text-decoration-none transition-hover p-3 text-center bg-white rounded-4">
-                <div class="bg-success-subtle text-success p-3 rounded-circle mx-auto mb-3" style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;">
+            <a href="{% url 'crear_estudiante' %}"
+                class="card h-100 border-0 shadow-sm text-decoration-none transition-hover p-3 text-center bg-white rounded-4">
+                <div class="bg-success-subtle text-success p-3 rounded-circle mx-auto mb-3"
+                    style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;">
                     <i class="fas fa-user-plus fa-lg"></i>
                 </div>
                 <h6 class="fw-bold text-dark mb-0">Crear Estudiante</h6>
             </a>
         </div>
         <div class="col-md-3 mb-3">
-            <a href="{% url 'gestionar_cursos_admin' %}" class="card h-100 border-0 shadow-sm text-decoration-none transition-hover p-3 text-center bg-white rounded-4">
-                <div class="bg-primary-subtle text-primary p-3 rounded-circle mx-auto mb-3" style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;">
+            <a href="{% url 'gestionar_cursos_admin' %}"
+                class="card h-100 border-0 shadow-sm text-decoration-none transition-hover p-3 text-center bg-white rounded-4">
+                <div class="bg-primary-subtle text-primary p-3 rounded-circle mx-auto mb-3"
+                    style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;">
                     <i class="fas fa-book fa-lg"></i>
                 </div>
                 <h6 class="fw-bold text-dark mb-0">Gestionar Cursos</h6>
             </a>
         </div>
         <div class="col-md-3 mb-3">
-            <a href="{% url 'gestionar_salones_admin' %}" class="card h-100 border-0 shadow-sm text-decoration-none transition-hover p-3 text-center bg-white rounded-4">
-                <div class="bg-info-subtle text-info p-3 rounded-circle mx-auto mb-3" style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;">
+            <a href="{% url 'gestionar_salones_admin' %}"
+                class="card h-100 border-0 shadow-sm text-decoration-none transition-hover p-3 text-center bg-white rounded-4">
+                <div class="bg-info-subtle text-info p-3 rounded-circle mx-auto mb-3"
+                    style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;">
                     <i class="fas fa-building fa-lg"></i>
                 </div>
                 <h6 class="fw-bold text-dark mb-0">Gestionar Salones</h6>
             </a>
         </div>
         <div class="col-md-3 mb-3">
-            <a href="{% url 'gestionar_horarios_admin' %}" class="card h-100 border-0 shadow-sm text-decoration-none transition-hover p-3 text-center bg-white rounded-4">
-                <div class="bg-warning-subtle text-warning p-3 rounded-circle mx-auto mb-3" style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;">
+            <a href="{% url 'gestionar_horarios_admin' %}"
+                class="card h-100 border-0 shadow-sm text-decoration-none transition-hover p-3 text-center bg-white rounded-4">
+                <div class="bg-warning-subtle text-warning p-3 rounded-circle mx-auto mb-3"
+                    style="width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;">
                     <i class="fas fa-calendar-alt fa-lg"></i>
                 </div>
                 <h6 class="fw-bold text-dark mb-0">Gestionar Horarios</h6>
@@ -73,6 +81,7 @@
                             <th>Código</th>
                             <th>Ciclo</th>
                             <th>Créditos</th>
+                            <th>Límite Créd.</th>
                             <th class="text-end pe-4">Acciones</th>
                         </tr>
                     </thead>
@@ -81,7 +90,8 @@
                         <tr>
                             <td class="ps-4">
                                 <div class="d-flex align-items-center">
-                                    <div class="bg-purple-subtle text-purple rounded-circle me-3 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                    <div class="bg-purple-subtle text-purple rounded-circle me-3 d-flex align-items-center justify-content-center"
+                                        style="width: 40px; height: 40px;">
                                         {{ u.username|first|upper }}
                                     </div>
                                     <div class="fw-bold">{{ u.username }}</div>
@@ -98,13 +108,29 @@
                                     {{ u.creditos_acumulados }} créd.
                                 </span>
                             </td>
+                            <td>
+                                <span
+                                    class="badge {% if u.limite_creditos > 24 %}bg-success{% else %}bg-secondary{% endif %} text-white rounded-pill px-3">
+                                    {{ u.limite_creditos }}
+                                </span>
+                            </td>
                             <td class="text-end pe-4">
                                 <div class="btn-group">
-                                    <a href="{% url 'historial_estudiante_admin' u.id %}" class="btn btn-outline-primary btn-sm rounded-start-3" title="Ver Historial">
+                                    <a href="{% url 'historial_estudiante_admin' u.id %}"
+                                        class="btn btn-outline-primary btn-sm" title="Ver Historial">
                                         <i class="fas fa-history"></i>
                                     </a>
-                                    <a href="{% url 'registrar_nota' u.id %}" class="btn btn-outline-warning btn-sm rounded-end-3" title="Registrar Nota">
+                                    <a href="{% url 'registrar_nota' u.id %}" class="btn btn-outline-warning btn-sm"
+                                        title="Registrar Nota">
                                         <i class="fas fa-plus-circle"></i>
+                                    </a>
+                                    <a href="{% url 'editar_limite_creditos' u.id %}"
+                                        class="btn btn-outline-info btn-sm" title="Editar Límite">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="{% url 'eliminar_estudiante' u.id %}"
+                                        class="btn btn-outline-danger btn-sm rounded-end-3" title="Eliminar Estudiante">
+                                        <i class="fas fa-trash"></i>
                                     </a>
                                 </div>
                             </td>
@@ -128,10 +154,11 @@
     .transition-hover {
         transition: all 0.3s ease;
     }
+
     .transition-hover:hover {
         transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
     }
 </style>
 
-{% endblock %}
+{% endblock %}

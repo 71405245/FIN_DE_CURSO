@@ -1,49 +1,89 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="container mt-4 mb-5">
+    <div class="card shadow-lg p-4 mb-4 bg-primary text-white rounded-4 border-0">
+        <div class="d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+                <div class="bg-white bg-opacity-25 p-3 rounded-circle me-3">
+                    <i class="fas fa-file-invoice fa-2x"></i>
+                </div>
+                <div>
+                    <h3 class="fw-bold mb-0">Mi Historial Académico</h3>
+                    <p class="mb-0 opacity-75">Resumen de tu rendimiento académico y cursos aprobados</p>
+                </div>
+            </div>
+            <div class="text-end">
+                <h2 class="fw-bold mb-0">{{ user.creditos_acumulados }}</h2>
+                <p class="mb-0 small opacity-75">Créditos Acumulados</p>
+            </div>
+        </div>
+    </div>
 
-<h2 class="mb-4">Historial Académico</h2>
+    <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light text-muted">
+                        <tr>
+                            <th class="ps-4">Ciclo</th>
+                            <th>Código</th>
+                            <th>Curso</th>
+                            <th class="text-center">Nota</th>
+                            <th class="text-end pe-4">Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for h in historial %}
+                        <tr class="transition-hover">
+                            <td class="ps-4">
+                                <span class="badge bg-secondary-subtle text-secondary rounded-pill px-3 py-2">
+                                    Ciclo {{ h.ciclo }}
+                                </span>
+                            </td>
+                            <td><code class="text-muted">{{ h.curso.codigo }}</code></td>
+                            <td class="fw-bold text-dark">{{ h.curso.nombre }}</td>
+                            <td class="text-center">
+                                <span class="fw-bold {% if h.nota >= 11 %}text-success{% else %}text-danger{% endif %}" style="font-size: 1.1rem;">
+                                    {{ h.nota|default:"--" }}
+                                </span>
+                            </td>
+                            <td class="text-end pe-4">
+                                {% if h.estado == 'aprobado' %}
+                                    <span class="badge bg-success-subtle text-success rounded-pill px-3 py-2">
+                                        <i class="fas fa-check-circle me-1"></i> Aprobado
+                                    </span>
+                                {% elif h.estado == 'desaprobado' %}
+                                    <span class="badge bg-danger-subtle text-danger rounded-pill px-3 py-2">
+                                        <i class="fas fa-times-circle me-1"></i> Desaprobado
+                                    </span>
+                                {% else %}
+                                    <span class="badge bg-warning-subtle text-warning-emphasis rounded-pill px-3 py-2">
+                                        <i class="fas fa-clock me-1"></i> En curso
+                                    {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center py-5 text-muted">
+                                <i class="fas fa-folder-open fa-3x mb-3 opacity-25"></i>
+                                <p>No tienes historial académico registrado aún.</p>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
-<table class="table table-bordered shadow">
-
-    <thead class="table-warning">
-        <tr>
-            <th>Ciclo</th>
-            <th>Código</th>
-            <th>Curso</th>
-            <th>Nota</th>
-            <th>Estado</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        {% for h in historial %}
-        <tr>
-            <td>{{ h.ciclo }}</td>
-            <td>{{ h.curso.codigo }}</td>
-            <td>{{ h.curso.nombre }}</td>
-            <td>{{ h.nota }}</td>
-
-            <td>
-                {% if h.estado == 'aprobado' %}
-                    <span class="badge bg-success">Aprobado</span>
-                {% elif h.estado == 'desaprobado' %}
-                    <span class="badge bg-danger">Desaprobado</span>
-                {% else %}
-                    <span class="badge bg-warning">En curso</span>
-                {% endif %}
-            </td>
-
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="5" class="text-center">
-                No tienes historial académico
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-
-</table>
-
+<style>
+    .transition-hover {
+        transition: background-color 0.2s ease;
+    }
+    .transition-hover:hover {
+        background-color: #f8f9fa;
+    }
+</style>
 {% endblock %}

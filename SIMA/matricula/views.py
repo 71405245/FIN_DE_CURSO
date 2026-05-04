@@ -15,7 +15,7 @@ from reportlab.lib.styles import getSampleStyleSheet
 from xhtml2pdf import pisa
 from django.template.loader import get_template
 
-MAX_CREDITOS = 22
+# MAX_CREDITOS = 24  # Ahora se usa el campo limite_creditos del Usuario
 
 
 # 📝 MATRICULARSE
@@ -52,8 +52,8 @@ def matricularse(request, seccion_id):
         messages.error(request, "Tu primera matrícula debe ser en un curso de 1 o más créditos.")
         return redirect('cursos')
 
-    if creditos_actuales + curso.creditos > MAX_CREDITOS:
-        messages.error(request, "Excedes el límite de créditos")
+    if creditos_actuales + curso.creditos > estudiante.limite_creditos:
+        messages.error(request, f"Excedes el límite de créditos (Máximo permitido: {estudiante.limite_creditos})")
         return redirect('cursos')
 
     # 🔥 validar cruce de horarios
@@ -227,8 +227,15 @@ def horarios_recomendados(request):
 
     horarios_generados = generar_horarios_validos(estudiante)
 
+    try:
+        from matricula.models import PreferenciaHorario
+        preferencia = PreferenciaHorario.objects.get(estudiante=estudiante)
+    except:
+        preferencia = None
+
     return render(request, "horarios_recomendados.html", {
-        "horarios_generados": horarios_generados
+        "horarios_generados": horarios_generados,
+        "preferencia": preferencia
     })
 
 
@@ -256,8 +263,8 @@ def matricular_horario_completo(request):
             messages.error(request, "Debes matricularte en al menos un curso de 1 o más créditos.")
             return redirect('horarios_recomendados')
             
-        if creditos_actuales + nuevos_creditos > MAX_CREDITOS:
-            messages.error(request, "Excedes el límite de créditos.")
+        if creditos_actuales + nuevos_creditos > estudiante.limite_creditos:
+            messages.error(request, f"Excedes el límite de créditos (Máximo permitido: {estudiante.limite_creditos}).")
             return redirect('horarios_recomendados')
             
         # Matricular iterando
@@ -294,3 +301,29 @@ def rectificar_matricula(request, matricula_id):
         messages.success(request, f"Se ha rectificado (eliminado) tu matrícula del curso {matricula.seccion.curso.nombre} exitosamente.")
     
     return redirect('mis_matriculas')
+
+from .models import PreferenciaHorario
+from .forms import PreferenciaHorarioForm
+
+@login_required
+def gestionar_preferencias(request):
+    if request.user.rol != 'estudiante':
+        return redirect('dashboard')
+        
+    preferencia, created = PreferenciaHorario.objects.get_or_create(estudiante=request.user)
+    
+    if request.method == 'POST':
+        form = PreferenciaHorarioForm(request.POST, instance=preferencia)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Tus preferencias de horario se han guardado exitosamente.")
+            return redirect('preferencias')
+        else:
+            messages.error(request, "Ocurrió un error al guardar tus preferencias. Revisa los datos ingresados.")
+    else:
+        form = PreferenciaHorarioForm(instance=preferencia)
+        
+    return render(request, 'preferencias.html', {
+        'form': form,
+        'preferencia': preferencia
+    })

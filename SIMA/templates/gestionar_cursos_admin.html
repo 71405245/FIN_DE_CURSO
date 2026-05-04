@@ -32,9 +32,11 @@
                         <td><span class="badge bg-secondary">{{ c.creditos }}</span></td>
                         <td>Ciclo {{ c.ciclo.numero }}</td>
                         <td>
-                            <a href="{% url 'gestionar_secciones_admin' c.id %}" class="btn btn-info btn-sm">📅 Secciones</a>
+                            <a href="{% url 'gestionar_secciones_admin' c.id %}" class="btn btn-info btn-sm">📅
+                                Secciones</a>
                             <a href="{% url 'editar_curso_admin' c.id %}" class="btn btn-warning btn-sm">✏️ Editar</a>
-                            <a href="{% url 'eliminar_curso_admin' c.id %}" class="btn btn-danger btn-sm">🗑️ Eliminar</a>
+                            <a href="{% url 'eliminar_curso_admin' c.id %}" class="btn btn-danger btn-sm">🗑️
+                                Eliminar</a>
                         </td>
                     </tr>
                     {% empty %}

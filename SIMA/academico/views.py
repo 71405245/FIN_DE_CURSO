@@ -47,13 +47,25 @@ def registrar_nota(request, estudiante_id):
         if form.is_valid():
             historial = form.save(commit=False)
             historial.estudiante = estudiante
+            
+            # 🔥 LÓGICA AUTOMÁTICA: Asignar ciclo y estado
+            historial.ciclo = historial.curso.ciclo.numero
+            if historial.nota is not None:
+                if historial.nota >= 11:
+                    historial.estado = 'aprobado'
+                else:
+                    historial.estado = 'desaprobado'
+            else:
+                historial.estado = 'en_curso'
+            
             historial.save()
 
-            # 🔥 ACTUALIZAR CRÉDITOS AUTOMÁTICAMENTE
+            # 🔥 ACTUALIZAR CRÉDITOS DEL ESTUDIANTE
             if historial.estado == 'aprobado':
                 estudiante.creditos_acumulados += historial.curso.creditos
                 estudiante.save()
-
+            
+            messages.success(request, f"Nota registrada correctamente. Se sumaron {historial.curso.creditos} créditos a {estudiante.username}.")
             return redirect('panel_admin')
     else:
         form = RegistrarNotaForm()
