@@ -8,7 +8,7 @@ Sistema web inteligente orientado a optimizar el proceso de matrícula universit
 
 | 00. ARTEFACTOS DE INICIO DE PROYECTO | 📁OTROS DOCUMENTOS  |
 |--------------------------------------|--------------------------------|
-| - [Documento de selección del enfoque del proyecto](docs/enfoque-proyecto.md)<br> - [Declaración de la visión del proyecto](docs/vision.md)<br> - [Project Charter](docs/project-charter.md)<br> - [Supuestos / Restricciones](docs/supuestos-restricciones.md)<br> - [Declaración del equipo del proyecto](docs/equipo-proyecto.md)<br> - [Documento del problema](docs/acta-cdonstitucion.md)<br> - [Requerimientos funcionales](docs/requerimientos-funcionales.md)<br> - [Requerimientos no funcionales](docs/requerimientos-no-funcionales.md) | - [Arquitectura del Proyecto](docs/arquitectura.md)<br> - [Desarrollo del algoritmo](docs/Desarrollo-del-algoritmo)<br>- [Spec-Driven Development](docs/Desarrollo-del-software) |
+| - [Documento de selección del enfoque del proyecto](docs/enfoque-proyecto.md)<br> - [Declaración de la visión del proyecto](docs/vision.md)<br> - [Project Charter](docs/project-charter.md)<br> - [Supuestos / Restricciones](docs/supuestos-restricciones.md)<br> - [Declaración del equipo del proyecto](docs/equipo-proyecto.md)<br> - [Documento del problema](docs/acta-cdonstitucion.md)<br> - [Requerimientos funcionales](docs/requerimientos-funcionales.md)<br> - [Requerimientos no funcionales](docs/requerimientos-no-funcionales.md) | - [Arquitectura del Proyecto](docs/arquitectura.md)<br> - [Desarrollo del algoritmo](docs/Desarrollo-del-algoritmo)<br>- [Spec-Driven Development](docs/Spec-Driven Development) |
 
 ---
 
