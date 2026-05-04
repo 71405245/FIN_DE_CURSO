@@ -1,4 +1,5 @@
 Informe de Desarrollo del Algoritmo de Matrícula (SIMA)
+
 1. Introducción
 El módulo de matrícula inteligente del sistema SIMA resuelve el problema clásico de asignación de horarios y satisfacción de restricciones (CSP - Constraint Satisfaction Problem). El objetivo principal del algoritmo es generar combinaciones de secciones de cursos que no presenten cruces, respeten los requisitos académicos y optimicen las preferencias de tiempo del estudiante.
 
@@ -11,6 +12,7 @@ Antes de iniciar la búsqueda, el algoritmo recopila:
 Preferencias del estudiante: Cantidad de cursos deseada, límite de días de asistencia y turno preferido (Mañana, Tarde, Noche).
 Límites Académicos: Límite máximo de créditos permitidos para el estudiante (considerando penalidades por cursos desaprobados previamente).
 Cursos Candidatos: Lista de cursos recomendados que el estudiante ya está habilitado para llevar (prerrequisitos cumplidos).
+
 2.2. Árbol de Búsqueda (DFS)
 El algoritmo construye un árbol implícito donde cada nivel representa un curso a matricular y cada nodo (rama) representa una sección disponible de ese curso.
 
@@ -24,6 +26,7 @@ def dfs(curso_idx, combinacion_actual, creditos_acumulados, secciones_actuales):
     para cada seccion en secciones_del_curso[curso_idx]:
         si pasa_podas(seccion):
             dfs(curso_idx + 1, nueva_combinacion, ...)
+            
 3. Condiciones de Poda (Pruning)
 Para evitar la explosión combinatoria (evaluar millones de horarios imposibles), el algoritmo corta ramas enteras del árbol de búsqueda mediante dos validaciones en tiempo real:
 
