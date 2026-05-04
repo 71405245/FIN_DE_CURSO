@@ -6,5 +6,5 @@ Documento que define los principios, reglas y restricciones no negociables para 
 ---
 - [Spec](docs/Spec.md)
 
-Documento técnico que describe con precisión las funcionalidades, requisitos, comportamiento y estructura** de un componente de software o una aplicación completa, antes de que se escriba el código. Define casos de uso, interfaces, modelos de datos, flujos de trabajo y criterios de aceptación. Sirve como la única fuente de verdad para la implementación, pruebas y verificación del sistema.
+Documento técnico que describe con precisión las funcionalidades, requisitos, comportamiento y estructura de un componente de software o una aplicación completa, antes de que se escriba el código. Define casos de uso, interfaces, modelos de datos, flujos de trabajo y criterios de aceptación. Sirve como la única fuente de verdad para la implementación, pruebas y verificación del sistema.
 ---
