@@ -24,6 +24,8 @@ Este documento define los principios fundamentales, reglas globales y restriccio
 2.  **Cruce de Horarios**: El sistema debe impedir la matrícula en dos cursos cuyos horarios se traslapen, incluso por un minuto.
 3.  **Capacidad de Aula**: No se puede matricular a más alumnos de los que permite el aforo físico (o virtual) definido para la sección.
 4.  **Estado de Alumno**: Solo los alumnos con estado "Activo" pueden realizar procesos de matrícula.
+5.  **Reiterancia de Reprobación**: Si un estudiante desaprueba un mismo curso más de 3 veces (cursándolo por cuarta vez o más), su límite máximo se reduce de forma estricta a **15 créditos** en ese ciclo. Esta restricción se mantiene hasta que apruebe dicho curso, momento en el cual recuperará el límite estándar de 24 créditos.
+6.  **Generación Automática de Horarios (IA)**: Los horarios propuestos por la IA están restringidos a generar combinaciones que no presenten ningún cruce, que respeten los cupos máximos de las secciones y que se basen únicamente en los cursos permitidos por los prerequisitos del estudiante.
 
 ### 3.2 Restricciones Blandas (Soft Constraints)
 *Pueden ser flexibilizadas mediante autorización administrativa.*
