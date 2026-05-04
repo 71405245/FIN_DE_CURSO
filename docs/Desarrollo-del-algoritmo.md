@@ -1,4 +1,4 @@
- Desarrollo del Algoritmo 
+ ## Desarrollo del Algoritmo 
 
 1. Introducción
 El módulo de matrícula inteligente del sistema SIMA resuelve el problema clásico de asignación de horarios y satisfacción de restricciones (CSP - Constraint Satisfaction Problem). El objetivo principal del algoritmo es generar combinaciones de secciones de cursos que no presenten cruces, respeten los requisitos académicos y optimicen las preferencias de tiempo del estudiante.
