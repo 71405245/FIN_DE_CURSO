@@ -6,6 +6,16 @@ Sistema web inteligente orientado a optimizar el proceso de matrícula universit
 
 # 📌 📚 Índice del Proyecto
 
+## 00.ARTEFACTOS DE INICIO DE PROYECTO
+
+# - Documento de selección del enfoque del proyecto 
+# - Declaración de la visión del proyecto
+# - Project Charter
+# - Registro de supuestos y restricciones
+# - Declaración del equipo del proyecto
+# - Documento del problema 
+# - Lista de requerimientos funcionales y no funcionales
+
 ## 01. INICIO
 
 - 📄 [Acta de Constitución del Proyecto](docs/acta-constitucion.md)
