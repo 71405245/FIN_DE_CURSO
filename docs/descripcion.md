@@ -15,10 +15,4 @@ Mejorar la toma de decisiones durante la matrícula, reducir errores en la selec
 - Mejor experiencia de usuario  
 - Recomendaciones personalizadas
 
-## PROBLEMA IDENTIFICADO
-Actualmente, muchos estudiantes universitarios enfrentan dificultades durante el proceso de matrícula académica debido a la complejidad para organizar horarios compatibles entre cursos, disponibilidad limitada de secciones, cruces horarios y falta de herramientas inteligentes que faciliten la toma de decisiones.
-
-Este proceso suele realizarse de manera manual, generando pérdida de tiempo, errores en la selección de cursos, horarios poco eficientes y estrés en los estudiantes al momento de matricularse.
-
-Además, la ausencia de sistemas automatizados que analicen preferencias personales, carga académica y restricciones horarias impide que los estudiantes puedan acceder rápidamente a opciones óptimas de matrícula.
 
