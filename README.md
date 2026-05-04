@@ -25,7 +25,8 @@ Sistema web inteligente orientado a optimizar el proceso de matrícula universit
 - 📋 [Backlog del Sprint](docs/backlog_del_sprint.md)
 - 📦 [Backlog Detallado del Producto](docs/backlog-detallado-producto.md)
 - 💰 [Presupuesto del Proyecto](docs/presupuesto.md)
-- ⚠️ [Registro de Riesgos](docs/riesgos.md)
+- ⚠️ [Registro de Riesgos](docs/registro-riesgos.md)
+- ⚠️ [Registro de Oportunidades](docs/registro-oportunidades.md)
 - 🗓️ [Cronograma del proyecto](docs/cronograma-SIMA.png)
 ---
 
