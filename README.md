@@ -11,10 +11,11 @@ Sistema web inteligente orientado a optimizar el proceso de matrícula universit
  - [Documento de selección del enfoque del proyecto](docs/acta-cdonstitucion.md)
  - [Declaración de la visión del proyecto](docs/acta-cdonstitucion.md)
  - [Project Charter](docs/acta-cdonstitucion.md)
-- Registro de supuestos y restricciones
- - Declaración del equipo del proyecto
- - Documento del problema 
- - Lista de requerimientos funcionales y no funcionales
+ - [Registro de supuestos y restricciones](docs/acta-cdonstitucion.md)
+ - [Declaración del equipo del proyecto](docs/acta-cdonstitucion.md)
+ - [Documento del problema](docs/acta-cdonstitucion.md)
+ - [Requerimientos funcionales](docs/requerimientos-funcionales.md)
+ - [Requerimientos no funcionales](docs/requerimientos-no-funcionales.md)
 ---
 
 ## 01. INICIO
@@ -32,8 +33,6 @@ Sistema web inteligente orientado a optimizar el proceso de matrícula universit
 - 📦 [Backlog Detallado del Producto](docs/backlog-detallado-producto.md)
 - 💰 [Presupuesto del Proyecto](docs/presupuesto.md)
 - ⚠️ [Registro de Riesgos](docs/riesgos.md)
-- 📋 [Requerimientos funcionales](docs/requerimientos-funcionales.md)
-- 📋 [Requerimientos no funcionales](docs/requerimientos-no-funcionales.md)
 - 🚫 [Supuestos / Restricciones](docs/supuestos-restricciones.md)
 - 🗓️ [Cronograma del proyecto](docs/cronograma-SIMA.png)
 
