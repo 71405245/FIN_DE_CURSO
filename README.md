@@ -15,6 +15,7 @@ Sistema web inteligente orientado a optimizar el proceso de matrícula universit
 # - Declaración del equipo del proyecto
 # - Documento del problema 
 # - Lista de requerimientos funcionales y no funcionales
+---
 
 ## 01. INICIO
 
