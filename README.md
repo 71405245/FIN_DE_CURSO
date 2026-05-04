@@ -51,31 +51,20 @@ Sistema web inteligente orientado a optimizar el proceso de matrícula universit
 
 ## 04. REVISIÓN Y RETROSPECTIVA
 
-- 📊 [Diagrama Entidad-Relación](docs/diagrama-entidad–relacion.md)
-- 📊 [Informe de Estado del Proyecto 2](docs/informe_estado2.md)
-- 📝 [Minuta de Reunión](docs/minuta-reunion.md)
-- 📝 [Minuta de Reunión 2](docs/minuta-reunion2.md)
-- 🚧 [Registro de Impedimentos](docs/impedimentos.md)
+- 📊 [Revisión del Sprint ](docs/diagrama-entidsad–relacion.md)
+- 📊 [Retrospectiva del Sprint](docs/informe_esstado2.md)
 
 ---
 
 ## 05. LANZAMIENTO
 
-- 📊 [Diagrama Entidad-Relación](docs/diagrama-entidad–relacion.md)
-- 📊 [Informe de Estado del Proyecto 2](docs/informe_estado2.md)
-- 📝 [Minuta de Reunión](docs/minuta-reunion.md)
-- 📝 [Minuta de Reunión 2](docs/minuta-reunion2.md)
-- 🚧 [Registro de Impedimentos](docs/impedimentos.md)
+- 📊 [Retrospectiva del proyecto](docs/informe_esstado2.md)
 
 ---
 
 ## 05. CIERRE
 
-- 📊 [Diagrama Entidad-Relación](docs/diagrama-entidad–relacion.md)
-- 📊 [Informe de Estado del Proyecto 2](docs/informe_estado2.md)
-- 📝 [Minuta de Reunión](docs/minuta-reunion.md)
-- 📝 [Minuta de Reunión 2](docs/minuta-reunion2.md)
-- 🚧 [Registro de Impedimentos](docs/impedimentos.md)
+- 📊 [Acta de cierre del proyecto](docs/diagrama-entffdad–relacion.md)
 
 ---
 # 🛠️ Tecnologías y Metodología
@@ -84,16 +73,16 @@ Sistema web inteligente orientado a optimizar el proceso de matrícula universit
 - Documentación: Markdown
 - Control de versiones: Git / GitHub
 - Enfoque: Ingeniería de Software
-
+  
 ---
 
 # 📌 Estructura del proyecto
 
-El repositorio está dividido en tres fases principales:
+El repositorio está dividido en tres partes principales:
 
-- 🟢 Inicio: definición del proyecto y visión
-- 🟡 Planificación: organización de tareas, riesgos y presupuesto
-- 🔵 Implementación: seguimiento, control y reportes
+- 🟢 SIMA: Software
+- 🟡 docs: Documentación
+- 🔵 Readme: Presentación
 
 ---
 
