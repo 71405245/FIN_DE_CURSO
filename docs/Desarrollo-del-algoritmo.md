@@ -1,4 +1,4 @@
-# Documentación Técnica: Algoritmos de IA y Restricciones (SIMA)
+# Documentación de Algoritmos de IA y Restricciones 
 
 Este documento detalla a nivel técnico los algoritmos principales encargados de la generación de horarios (IA) y de la validación dinámica de créditos por reiterancia de desaprobación.
 
