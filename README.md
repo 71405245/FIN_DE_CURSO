@@ -49,12 +49,35 @@ Sistema web inteligente orientado a optimizar el proceso de matrícula universit
 
 ---
 
-# 🎯 Objetivo del Proyecto
+## 04. REVISIÓN Y RETROSPECTIVA
 
-El proyecto **FIN_DE_CURSO** tiene como objetivo estructurar y gestionar correctamente la documentación del ciclo de vida del software, aplicando metodología ágil (Scrum) y herramientas de control de versiones como GitHub.
+- 📊 [Diagrama Entidad-Relación](docs/diagrama-entidad–relacion.md)
+- 📊 [Informe de Estado del Proyecto 2](docs/informe_estado2.md)
+- 📝 [Minuta de Reunión](docs/minuta-reunion.md)
+- 📝 [Minuta de Reunión 2](docs/minuta-reunion2.md)
+- 🚧 [Registro de Impedimentos](docs/impedimentos.md)
 
 ---
 
+## 05. LANZAMIENTO
+
+- 📊 [Diagrama Entidad-Relación](docs/diagrama-entidad–relacion.md)
+- 📊 [Informe de Estado del Proyecto 2](docs/informe_estado2.md)
+- 📝 [Minuta de Reunión](docs/minuta-reunion.md)
+- 📝 [Minuta de Reunión 2](docs/minuta-reunion2.md)
+- 🚧 [Registro de Impedimentos](docs/impedimentos.md)
+
+---
+
+## 05. CIERRE
+
+- 📊 [Diagrama Entidad-Relación](docs/diagrama-entidad–relacion.md)
+- 📊 [Informe de Estado del Proyecto 2](docs/informe_estado2.md)
+- 📝 [Minuta de Reunión](docs/minuta-reunion.md)
+- 📝 [Minuta de Reunión 2](docs/minuta-reunion2.md)
+- 🚧 [Registro de Impedimentos](docs/impedimentos.md)
+
+---
 # 🛠️ Tecnologías y Metodología
 
 - Metodología: Scrum (Ágil)
