@@ -6,9 +6,9 @@ Sistema web inteligente orientado a optimizar el proceso de matrícula universit
 
 # 📌 📚 Índice del Proyecto
 
-| 00. ARTEFACTOS DE INICIO DE PROYECTO | 📁 OTROS DOCUMENTOS IMPORTANTES |
+| 00. ARTEFACTOS DE INICIO DE PROYECTO | 📁OTROS DOCUMENTOS  |
 |--------------------------------------|--------------------------------|
-| - [Documento de selección del enfoque del proyecto](docs/acta-cdonstitucion.md)<br> - [Declaración de la visión del proyecto](docs/acta-cdonstitucion.md)<br> - [Project Charter](project-charter.md)<br> - [Supuestos / Restricciones](docs/supuestos-restricciones.md)<br> - [Declaración del equipo del proyecto](docs/acta-cdonstitucion.md)<br> - [Documento del problema](docs/acta-cdonstitucion.md)<br> - [Requerimientos funcionales](docs/requerimientos-funcionales.md)<br> - [Requerimientos no funcionales](docs/requerimientos-no-funcionales.md) | - [Arquitectura del sistema](docs/arquitectura-sistema.md)<br> - [Documento adicional 2](docs/ejemplo.md) |
+| - [Documento de selección del enfoque del proyecto](docs/acta-cdonstitucion.md)<br> - [Declaración de la visión del proyecto](docs/acta-cdonstitucion.md)<br> - [Project Charter](project-charter.md)<br> - [Supuestos / Restricciones](docs/supuestos-restricciones.md)<br> - [Declaración del equipo del proyecto](docs/acta-cdonstitucion.md)<br> - [Documento del problema](docs/acta-cdonstitucion.md)<br> - [Requerimientos funcionales](docs/requerimientos-funcionales.md)<br> - [Requerimientos no funcionales](docs/requerimientos-no-funcionales.md) | - [Arquitectura del Proyecto](docs/arquitectura.md)<br> - [Documento adicional 2](docs/ejemplo.md) |
 
 ---
 
@@ -18,7 +18,6 @@ Sistema web inteligente orientado a optimizar el proceso de matrícula universit
 - 📌 [Descripción del Proyecto](docs/descripcion.md)
 - 📦 [Backlog del Producto](docs/backlog_producto.md)
 - 🎯 [Visión del Proyecto](docs/vision.md)
-- 📌 [Arquitectura del Proyecto](docs/arquitectura.md)
 ---
 
 ## 02. PLANIFICACIÓN
