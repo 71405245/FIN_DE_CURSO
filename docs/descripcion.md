@@ -23,6 +23,5 @@ Este proceso suele realizarse de manera manual, generando pérdida de tiempo, er
 Además, la ausencia de sistemas automatizados que analicen preferencias personales, carga académica y restricciones horarias impide que los estudiantes puedan acceder rápidamente a opciones óptimas de matrícula.
 
 ## 📌 [Registro de Oportunidades](oportunidades.md)
-## 📌 [Project Charter](project-charter.md)
 ## 📌 [Enfoque del proyecto](enfoque-proyecto.md)
 
