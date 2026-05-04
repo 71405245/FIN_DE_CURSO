@@ -10,7 +10,7 @@ Sistema web inteligente orientado a optimizar el proceso de matrícula universit
 
  - [Documento de selección del enfoque del proyecto](docs/acta-cdonstitucion.md)
  - [Declaración de la visión del proyecto](docs/acta-cdonstitucion.md)
- - [Project Charter](docs/acta-cdonstitucion.md)
+ - [Project Charter](project-charter.md)
  - [Registro de supuestos y restricciones](docs/acta-cdonstitucion.md)
  - [Declaración del equipo del proyecto](docs/acta-cdonstitucion.md)
  - [Documento del problema](docs/acta-cdonstitucion.md)
