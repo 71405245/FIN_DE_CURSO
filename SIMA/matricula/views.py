@@ -44,16 +44,16 @@ def matricularse(request, seccion_id):
         return redirect('cursos')
 
     # 🔥 validar créditos
-    matriculas_actuales = Matricula.objects.filter(estudiante=estudiante).select_related('seccion__curso')
-
-    creditos_actuales = sum(m.seccion.curso.creditos for m in matriculas_actuales)
+    from academico.utils import obtener_limite_creditos_personalizado, obtener_costo_real_curso
     
-    if creditos_actuales == 0 and curso.creditos < 1:
-        messages.error(request, "Tu primera matrícula debe ser en un curso de 1 o más créditos.")
-        return redirect('cursos')
+    matriculas_actuales = Matricula.objects.filter(estudiante=estudiante).select_related('seccion__curso')
+    
+    limite_actual = obtener_limite_creditos_personalizado(estudiante)
+    creditos_actuales = sum(obtener_costo_real_curso(estudiante, m.seccion.curso) for m in matriculas_actuales)
+    costo_nuevo_curso = obtener_costo_real_curso(estudiante, curso)
 
-    if creditos_actuales + curso.creditos > estudiante.limite_creditos:
-        messages.error(request, f"Excedes el límite de créditos (Máximo permitido: {estudiante.limite_creditos})")
+    if creditos_actuales + costo_nuevo_curso > limite_actual:
+        messages.error(request, f"Excedes el límite de créditos personalizado: {limite_actual} créditos. (Este curso te cuesta {costo_nuevo_curso} créditos por haberlo jalado anteriormente)")
         return redirect('cursos')
 
     # 🔥 validar cruce de horarios
@@ -225,7 +225,14 @@ def horarios_recomendados(request):
     if matriculas_actuales.exists():
         messages.warning(request, "Ya tienes cursos matriculados. Generar un horario completo no reemplazará los actuales, pero podría causar cruces si te matriculas.")
 
-    horarios_generados = generar_horarios_validos(estudiante)
+    resultado_ia = generar_horarios_validos(estudiante)
+    
+    if isinstance(resultado_ia, dict):
+        horarios_generados = resultado_ia.get("horarios", [])
+        mensaje_flex = resultado_ia.get("mensaje", None)
+    else:
+        horarios_generados = resultado_ia
+        mensaje_flex = None
 
     try:
         from matricula.models import PreferenciaHorario
@@ -235,7 +242,8 @@ def horarios_recomendados(request):
 
     return render(request, "horarios_recomendados.html", {
         "horarios_generados": horarios_generados,
-        "preferencia": preferencia
+        "preferencia": preferencia,
+        "mensaje_flex": mensaje_flex
     })
 
 
@@ -254,17 +262,16 @@ def matricular_horario_completo(request):
         secciones = Seccion.objects.filter(id__in=secciones_ids)
         
         # Validar creditos (incluyendo matriculas actuales)
+        from academico.utils import obtener_limite_creditos_personalizado, obtener_costo_real_curso
+        
+        limite_actual = obtener_limite_creditos_personalizado(estudiante)
         matriculas_actuales = Matricula.objects.filter(estudiante=estudiante).select_related('seccion__curso')
-        creditos_actuales = sum(m.seccion.curso.creditos for m in matriculas_actuales)
+        creditos_actuales = sum(obtener_costo_real_curso(estudiante, m.seccion.curso) for m in matriculas_actuales)
         
-        nuevos_creditos = sum(sec.curso.creditos for sec in secciones)
+        nuevos_creditos = sum(obtener_costo_real_curso(estudiante, sec.curso) for sec in secciones)
         
-        if creditos_actuales == 0 and nuevos_creditos < 1:
-            messages.error(request, "Debes matricularte en al menos un curso de 1 o más créditos.")
-            return redirect('horarios_recomendados')
-            
-        if creditos_actuales + nuevos_creditos > estudiante.limite_creditos:
-            messages.error(request, f"Excedes el límite de créditos (Máximo permitido: {estudiante.limite_creditos}).")
+        if creditos_actuales + nuevos_creditos > limite_actual:
+            messages.error(request, f"Excedes el límite de créditos personalizado: {limite_actual}. El total proyectado (incluyendo penalidades por cursos jalados) es {creditos_actuales + nuevos_creditos} créditos.")
             return redirect('horarios_recomendados')
             
         # Matricular iterando

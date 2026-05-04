@@ -3,235 +3,310 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIMA - Iniciar Sesión</title>
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Bootstrap 5 -->
+    <title>SIMA - Login Premium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
-            --primary-color: #7c3aed;
-            --secondary-color: #a78bfa;
-            --dark-blue: #4c1d95;
-            --glass-bg: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.2);
+            --primary: #6366f1;
+            --secondary: #a855f7;
+            --bg-dark: #0f172a;
         }
 
         body {
             font-family: 'Outfit', sans-serif;
-            background: linear-gradient(135deg, #4c1d95 0%, #1e1b4b 100%);
+            background-color: var(--bg-dark);
             height: 100vh;
+            margin: 0;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
-            margin: 0;
-            color: white;
         }
 
-        /* Background animated blobs */
-        .blob {
+        .login-wrapper {
+            width: 100%;
+            height: 100%;
+            display: flex;
+        }
+
+        /* Lado Izquierdo: Visual */
+        .login-side-visual {
+            flex: 1.2;
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-side-visual::before {
+            content: '';
             position: absolute;
+            top: -10%;
+            right: -10%;
             width: 500px;
             height: 500px;
-            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
-            filter: blur(100px);
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%);
             border-radius: 50%;
-            z-index: -1;
-            animation: move 20s infinite alternate;
-            opacity: 0.4;
         }
 
-        .blob-1 { top: -100px; left: -100px; }
-        .blob-2 { bottom: -100px; right: -100px; animation-delay: -5s; }
-
-        @keyframes move {
-            from { transform: translate(0, 0); }
-            to { transform: translate(100px, 100px); }
+        .visual-content {
+            position: relative;
+            z-index: 2;
+            animation: slideUp 1s ease-out;
         }
 
-        .login-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 3rem;
-            width: 100%;
-            max-width: 450px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            animation: fadeIn 0.8s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .brand-logo {
-            font-size: 3rem;
+        .brand-name {
+            font-size: 5rem;
             font-weight: 800;
-            background: linear-gradient(to right, #fff, #ddd6fe);
+            color: white;
+            letter-spacing: -2px;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #fff, #818cf8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-align: center;
-            margin-bottom: 0.5rem;
-            letter-spacing: -1px;
         }
 
-        .brand-subtitle {
-            text-align: center;
+        .brand-desc {
+            font-size: 1.5rem;
+            color: rgba(255,255,255,0.7);
+            max-width: 500px;
             font-weight: 300;
-            opacity: 0.8;
-            margin-bottom: 2.5rem;
-            font-size: 1.1rem;
+            line-height: 1.4;
         }
 
-        .form-label {
-            font-weight: 500;
+        /* Lado Derecho: Formulario */
+        .login-side-form {
+            flex: 1;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem;
+            border-radius: 40px 0 0 40px;
+            box-shadow: -20px 0 60px rgba(0,0,0,0.3);
+            z-index: 10;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 400px;
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .welcome-text {
+            color: #1e293b;
+            font-weight: 800;
+            font-size: 2.2rem;
             margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-            opacity: 0.9;
         }
 
-        .input-group {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            transition: all 0.3s ease;
-            overflow: hidden;
+        .subtitle-text {
+            color: #64748b;
+            margin-bottom: 2.5rem;
+        }
+
+        .custom-input-group {
             margin-bottom: 1.5rem;
         }
 
-        .input-group:focus-within {
-            border-color: var(--secondary-color);
-            box-shadow: 0 0 0 4px rgba(0, 242, 254, 0.1);
-            transform: translateY(-2px);
+        .custom-input-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #475569;
+            margin-bottom: 0.5rem;
         }
 
-        .input-group-text {
-            background: transparent;
-            border: none;
-            color: rgba(255, 255, 255, 0.6);
-            padding-left: 1.25rem;
+        .input-wrapper {
+            position: relative;
         }
 
-        .form-control {
-            background: transparent;
-            border: none;
+        .input-wrapper i {
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+            transition: color 0.3s;
+        }
+
+        .form-control-custom {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3.5rem;
+            background: #f1f5f9;
+            border: 2px solid transparent;
+            border-radius: 16px;
+            font-weight: 500;
+            color: #1e293b;
+            transition: all 0.3s;
+        }
+
+        .form-control-custom:focus {
+            outline: none;
+            background: #fff;
+            border-color: var(--primary);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.1);
+        }
+
+        .form-control-custom:focus + i {
+            color: var(--primary);
+        }
+
+        .btn-premium {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
             color: white;
-            padding: 0.75rem 1rem;
-            font-weight: 400;
-        }
-
-        .form-control:focus {
-            background: transparent;
-            box-shadow: none;
-            color: white;
-        }
-
-        .form-control::placeholder {
-            color: rgba(255, 255, 255, 0.3);
-        }
-
-        .btn-login {
-            background: linear-gradient(to right, var(--primary-color), #6d28d9);
             border: none;
-            border-radius: 12px;
-            padding: 0.8rem;
+            border-radius: 16px;
             font-weight: 700;
-            font-size: 1rem;
-            color: white;
-            transition: all 0.3s ease;
+            font-size: 1.1rem;
             margin-top: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            transition: all 0.3s;
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
         }
 
-        .btn-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px -5px rgba(0, 114, 255, 0.5);
-            background: linear-gradient(to right, var(--secondary-color), #6d28d9);
+        .btn-premium:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.4);
+            filter: brightness(1.1);
         }
 
-        .btn-login:active {
+        .btn-premium:active {
             transform: translateY(0);
         }
 
-        .alert {
-            background: rgba(220, 53, 69, 0.2);
-            border: 1px solid rgba(220, 53, 69, 0.4);
-            color: #ff8585;
+        .alert-custom {
+            background: #fef2f2;
+            border-left: 4px solid #ef4444;
+            color: #991b1b;
+            padding: 1rem;
             border-radius: 12px;
+            margin-bottom: 2rem;
             font-size: 0.9rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .footer-text {
-            text-align: center;
-            font-size: 0.85rem;
-            margin-top: 2rem;
-            opacity: 0.6;
         }
 
         /* Responsive */
-        @media (max-width: 480px) {
-            .login-card {
-                padding: 2rem;
-                margin: 1rem;
-            }
+        @media (max-width: 992px) {
+            .login-side-visual { display: none; }
+            .login-side-form { border-radius: 0; }
         }
     </style>
 </head>
 <body>
 
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-
-    <div class="login-card">
-        <div class="brand-logo">SIMA</div>
-        <div class="brand-subtitle">Gestión Académica Inteligente</div>
-
-        {% if messages %}
-            {% for message in messages %}
-                <div class="alert alert-dismissible fade show">
-                    <i class="fas fa-exclamation-circle me-2"></i> {{ message }}
+    <div class="login-wrapper">
+        <div class="login-side-visual d-none d-lg-flex">
+            <div class="visual-content">
+                <div class="brand-name">SIMA</div>
+                <p class="brand-desc">Gestión Académica Inteligente con el poder de la IA. Tu futuro comienza aquí.</p>
+                
+                <div class="mt-5">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-white bg-opacity-10 p-2 rounded-circle me-3"><i class="fas fa-check text-success"></i></div>
+                        <span class="text-white opacity-75">Optimización de Horarios</span>
+                    </div>
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-white bg-opacity-10 p-2 rounded-circle me-3"><i class="fas fa-check text-success"></i></div>
+                        <span class="text-white opacity-75">Análisis de Rendimiento</span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="bg-white bg-opacity-10 p-2 rounded-circle me-3"><i class="fas fa-check text-success"></i></div>
+                        <span class="text-white opacity-75">Soporte 24/7 con IA</span>
+                    </div>
                 </div>
-            {% endfor %}
-        {% endif %}
-
-        <form method="post">
-            {% csrf_token %}
-
-            <label class="form-label">Usuario</label>
-            <div class="input-group">
-                <span class="input-group-text"><i class="fas fa-user"></i></span>
-                <input type="text" name="username" class="form-control" placeholder="Ingresa tu usuario" required autocomplete="off">
             </div>
-
-            <label class="form-label">Contraseña</label>
-            <div class="input-group">
-                <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                <input type="password" name="password" class="form-control" placeholder="••••••••" required>
+            
+            <div class="position-absolute bottom-0 start-0 p-5 opacity-25">
+                <p class="text-white small mb-0">&copy; 2026 SIMA University System</p>
             </div>
+        </div>
 
-            <button type="submit" class="btn btn-login w-100">
-                Entrar al Sistema
-            </button>
-        </form>
+        <div class="login-side-form">
+            <div class="form-container">
+                <h2 class="welcome-text">¡Bienvenido!</h2>
+                <p class="subtitle-text">Ingresa tus credenciales para continuar.</p>
 
-        <div class="footer-text">
-            &copy; 2026 Universidad SIMA. Todos los derechos reservados.
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert-custom">
+                            <i class="fas fa-exclamation-triangle me-2"></i> {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <form method="post" id="loginForm">
+                    {% csrf_token %}
+                    <div class="custom-input-group">
+                        <label>Usuario</label>
+                        <div class="input-wrapper">
+                            <input type="text" name="username" class="form-control-custom" placeholder="Nombre de usuario" required autocomplete="off" {% if blocked %}disabled{% endif %}>
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+
+                    <div class="custom-input-group">
+                        <label>Contraseña</label>
+                        <div class="input-wrapper">
+                            <input type="password" name="password" class="form-control-custom" placeholder="••••••••" required {% if blocked %}disabled{% endif %}>
+                            <i class="fas fa-lock"></i>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-premium" id="btnSubmit" {% if blocked %}disabled{% endif %}>
+                        {% if blocked %}
+                            BLOQUEADO (<span id="timer">{{ remaining }}</span>s)
+                        {% else %}
+                            Entrar al Sistema
+                        {% endif %}
+                    </button>
+                </form>
+
+                <div class="mt-4 text-center">
+                    <p class="small text-muted">¿Problemas para entrar? <a href="#" class="text-primary text-decoration-none fw-bold">Contacta a Soporte</a></p>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Bootstrap Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        {% if blocked %}
+        let seconds = {{ remaining }};
+        const timerSpan = document.getElementById('timer');
+        const btnSubmit = document.getElementById('btnSubmit');
+        const inputs = document.querySelectorAll('#loginForm input');
+
+        const countdown = setInterval(() => {
+            seconds--;
+            if (timerSpan) timerSpan.textContent = seconds;
+            if (seconds <= 0) {
+                clearInterval(countdown);
+                if (btnSubmit) {
+                    btnSubmit.disabled = false;
+                    btnSubmit.textContent = 'Entrar al Sistema';
+                }
+                inputs.forEach(input => input.disabled = false);
+                location.reload();
+            }
+        }, 1000);
+        {% endif %}
+    </script>
 </body>
 </html>

@@ -20,6 +20,44 @@
         </div>
     </div>
 
+    <!-- 📈 SECCIÓN DE ANÁLISIS -->
+    <div class="row mb-4">
+        <div class="col-lg-7">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-header bg-white border-0 py-3">
+                    <h5 class="fw-bold mb-0 text-dark">Análisis de Rendimiento (Jales)</h5>
+                </div>
+                <div class="card-body">
+                    {% if grafico_data %}
+                        <canvas id="jaleChart" height="200"></canvas>
+                    {% else %}
+                        <div class="text-center py-5">
+                            <i class="fas fa-smile-beam fa-3x text-success mb-3 opacity-25"></i>
+                            <p class="text-muted">¡Excelente! No tienes cursos jalados registrados.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="card border-0 shadow-sm rounded-4 h-100 bg-dark text-white p-4">
+                <h5 class="fw-bold mb-3">Resumen de Restricciones</h5>
+                <div class="d-flex align-items-center mb-4">
+                    <div class="bg-primary bg-opacity-20 p-2 rounded-circle me-3">
+                        <i class="fas fa-info-circle text-primary"></i>
+                    </div>
+                    <p class="small mb-0">Si jalas un curso <strong>3 veces</strong>, tu límite se reducirá a <strong>15 créditos</strong>.</p>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="bg-warning bg-opacity-20 p-2 rounded-circle me-3">
+                        <i class="fas fa-coins text-warning"></i>
+                    </div>
+                    <p class="small mb-0">Cada curso jalado incrementa su costo en <strong>1 crédito adicional</strong> para la matrícula.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
         <div class="card-body p-0">
             <div class="table-responsive">
@@ -60,7 +98,8 @@
                                 {% else %}
                                     <span class="badge bg-warning-subtle text-warning-emphasis rounded-pill px-3 py-2">
                                         <i class="fas fa-clock me-1"></i> En curso
-                                    {% endif %}
+                                    </span>
+                                {% endif %}
                             </td>
                         </tr>
                         {% empty %}
@@ -78,12 +117,37 @@
     </div>
 </div>
 
-<style>
-    .transition-hover {
-        transition: background-color 0.2s ease;
-    }
-    .transition-hover:hover {
-        background-color: #f8f9fa;
-    }
-</style>
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    {% if grafico_data %}
+    const ctx = document.getElementById('jaleChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {{ grafico_labels|safe }},
+            datasets: [{
+                label: 'Veces Jalado',
+                data: {{ grafico_data|safe }},
+                backgroundColor: 'rgba(239, 68, 68, 0.2)',
+                borderColor: 'rgba(239, 68, 68, 1)',
+                borderWidth: 2,
+                borderRadius: 8,
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { stepSize: 1 }
+                }
+            },
+            plugins: {
+                legend: { display: false }
+            }
+        }
+    });
+    {% endif %}
+</script>
 {% endblock %}

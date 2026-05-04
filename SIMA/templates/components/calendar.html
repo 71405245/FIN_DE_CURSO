@@ -21,10 +21,13 @@
                     {% for dia in semana %}
                         <td>
                             {% if dia %}
-                                <div class="{% if dia.clases_count > 0 %}calendar-day-class{% endif %} {% if dia.es_hoy %}border border-primary{% endif %}" 
-                                     title="{% if dia.clases_count > 0 %}{{ dia.clases_count }} clases{% endif %}">
+                                <div class="{% if dia.clases_count > 0 %}calendar-day-class{% endif %} {% if dia.es_hoy %}border border-primary{% endif %} {% if dia.feriado %}bg-danger bg-opacity-10 text-danger{% endif %}" 
+                                     title="{% if dia.feriado %}{{ dia.feriado }}{% elif dia.clases_count > 0 %}{{ dia.clases_count }} clases{% endif %}"
+                                     style="position: relative; cursor: default;">
                                     {{ dia.numero }}
-                                    {% if dia.clases_count > 0 %}
+                                    {% if dia.feriado %}
+                                        <div style="font-size: 7px; position: absolute; bottom: 0; left: 0; width: 100%; text-align: center; font-weight: bold;">FER</div>
+                                    {% elif dia.clases_count > 0 %}
                                         <span class="class-count-badge">{{ dia.clases_count }}</span>
                                     {% endif %}
                                 </div>

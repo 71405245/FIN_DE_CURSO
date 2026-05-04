@@ -87,3 +87,67 @@ def calcular_promedio(estudiante):
         return 0
 
     return round(total_notas / total_creditos, 2)
+
+# 🚫 RESTRICCIÓN: LÍMITE DE CRÉDITOS DINÁMICO
+def obtener_limite_creditos_personalizado(estudiante):
+    """
+    Si un estudiante tiene un curso desaprobado 3 o más veces y AÚN no lo aprueba,
+    su límite se reduce a 15 créditos.
+    """
+    from django.db.models import Count
+    # 1. Obtener cursos aprobados para excluirlos
+    cursos_aprobados = HistorialAcademico.objects.filter(
+        estudiante=estudiante, 
+        estado='aprobado'
+    ).values_list('curso_id', flat=True)
+    
+    # 2. Contar jales solo de cursos NO aprobados aún
+    cursos_con_mas_de_3_jales_activos = HistorialAcademico.objects.filter(
+        estudiante=estudiante, 
+        estado='desaprobado'
+    ).exclude(
+        curso_id__in=cursos_aprobados
+    ).values('curso').annotate(count=Count('curso')).filter(count__gte=3)
+    
+    if cursos_con_mas_de_3_jales_activos.exists():
+        return 15
+        
+    return estudiante.limite_creditos
+
+# 💰 RESTRICCIÓN: COSTO EXTRA POR JALAR
+def obtener_costo_real_curso(estudiante, curso):
+    """
+    Si se jala un curso, la próxima vez cuesta más créditos para el límite.
+    Penalidad: +1 crédito por cada vez que se jaló.
+    Si ya se aprobó, el costo vuelve a ser el base.
+    """
+    # Si ya lo aprobó, no hay penalidad
+    ya_aprobo = HistorialAcademico.objects.filter(
+        estudiante=estudiante,
+        curso=curso,
+        estado='aprobado'
+    ).exists()
+    
+    if ya_aprobo:
+        return curso.creditos
+
+    veces_desaprobado = HistorialAcademico.objects.filter(
+        estudiante=estudiante,
+        curso=curso,
+        estado='desaprobado'
+    ).count()
+    
+    return curso.creditos + veces_desaprobado
+
+# 📈 HELPER PARA GRÁFICOS DE HISTORIAL
+def obtener_datos_grafico_jale(estudiante):
+    from django.db.models import Count
+    jales = HistorialAcademico.objects.filter(
+        estudiante=estudiante,
+        estado='desaprobado'
+    ).values('curso__nombre').annotate(cantidad=Count('id'))
+    
+    labels = [j['curso__nombre'] for j in jales]
+    data = [j['cantidad'] for j in jales]
+    
+    return labels, data

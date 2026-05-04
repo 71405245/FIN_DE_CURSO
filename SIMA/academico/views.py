@@ -26,12 +26,18 @@ def lista_cursos(request):
     })
 
 def historial_academico(request):
+    from .utils import obtener_datos_grafico_jale
+    
     historial = HistorialAcademico.objects.filter(
         estudiante=request.user
     ).order_by('ciclo')
 
+    labels, data = obtener_datos_grafico_jale(request.user)
+
     return render(request, 'historial.html', {
-        'historial': historial
+        'historial': historial,
+        'grafico_labels': labels,
+        'grafico_data': data
     })
 
 def registrar_nota(request, estudiante_id):

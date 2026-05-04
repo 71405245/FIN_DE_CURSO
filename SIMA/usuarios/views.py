@@ -2,9 +2,15 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core.cache import cache
+import time
 from .models import Usuario
 from .forms import CrearEstudianteForm
 from academico.utils import recomendar_cursos
+
+import jwt
+import datetime
+from django.conf import settings
 
 # 🔐 LOGIN
 def login_view(request):
@@ -12,26 +18,81 @@ def login_view(request):
         username = request.POST['username']
         password = request.POST['password']
 
+        # 1. Verificar si el usuario está bloqueado
+        lockout_key = f"lockout_{username}"
+        attempts_key = f"failed_attempts_{username}"
+        lockout_time = cache.get(lockout_key)
+
+        if lockout_time:
+            now = time.time()
+            if now < lockout_time:
+                remaining = int(lockout_time - now)
+                messages.error(request, f"Has fallado demasiados intentos. Por seguridad, tu cuenta ha sido bloqueada. Intenta de nuevo en {remaining} segundos.")
+                return render(request, 'login.html', {'remaining': remaining, 'blocked': True})
+            else:
+                # El tiempo pasó, limpiamos el bloqueo y los intentos
+                cache.delete(lockout_key)
+                cache.delete(attempts_key)
+        
+        # Si no hay lockout_time pero los intentos son >= 5, significa que el cache expiró
+        # pero el contador quedó alto. Reiniciamos.
+        if cache.get(attempts_key, 0) >= 5:
+            cache.delete(attempts_key)
+
+        # 2. Intentar autenticación
         user = authenticate(request, username=username, password=password)
 
         if user:
+            # ÉXITO: Limpiar intentos fallidos
+            cache.delete(f"failed_attempts_{username}")
             login(request, user)
 
-            # 🔥 REDIRECCIÓN INTELIGENTE
+            # --- GENERAR JWT TOKEN ---
+            payload = {
+                'user_id': user.id,
+                'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=24), # Expira en 24h
+                'iat': datetime.datetime.utcnow()
+            }
+            token = jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
+
+            # 🔥 REDIRECCIÓN INTELIGENTE CON COOKIE
             if user.rol == 'admin':
-                return redirect('panel_admin')
+                response = redirect('panel_admin')
             else:
-                return redirect('dashboard')
+                response = redirect('dashboard')
+            
+            # Establecer la cookie de forma segura
+            response.set_cookie(
+                key='access_token',
+                value=token,
+                httponly=True,  # No accesible por JS
+                secure=False,   # Cambiar a True en producción con HTTPS
+                samesite='Lax'
+            )
+            return response
 
         else:
-            messages.error(request, "Usuario o contraseña incorrectos")
+            # ERROR: Incrementar intentos fallidos
+            attempts_key = f"failed_attempts_{username}"
+            attempts = cache.get(attempts_key, 0) + 1
+            cache.set(attempts_key, attempts, timeout=300) # Mantener intentos por 5 min
+
+            if attempts >= 5:
+                # Bloquear por 1 minuto (60 segundos)
+                cache.set(lockout_key, time.time() + 60, timeout=60)
+                messages.error(request, "Has fallado 5 intentos. Tu cuenta ha sido bloqueada por 1 minuto.")
+                return render(request, 'login.html', {'remaining': 60, 'blocked': True})
+            else:
+                messages.error(request, f"Usuario o contraseña incorrectos. Intento {attempts}/5")
 
     return render(request, 'login.html')
 
 # 🚪 LOGOUT
 def logout_view(request):
     logout(request)
-    return redirect('login')
+    response = redirect('login')
+    response.delete_cookie('access_token')
+    return response
 
 
 import datetime
@@ -57,8 +118,34 @@ def dashboard(request):
     anio = now.year
     mes_nombre = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"][mes_num-1]
 
+    # 📅 Festividades Perú 2026
+    feriados_2026 = {
+        (1, 1): "Año Nuevo",
+        (2, 4): "Jueves Santo",
+        (3, 4): "Viernes Santo",
+        (1, 5): "Día del Trabajo",
+        (7, 6): "Batalla de Arica",
+        (29, 6): "San Pedro y San Pablo",
+        (28, 7): "Fiestas Patrias",
+        (29, 7): "Fiestas Patrias",
+        (6, 8): "Batalla de Junín",
+        (30, 8): "Santa Rosa de Lima",
+        (8, 10): "Combate de Angamos",
+        (1, 11): "Todos los Santos",
+        (8, 12): "Inmaculada Concepción",
+        (9, 12): "Batalla de Ayacucho",
+        (25, 12): "Navidad",
+    }
+
     if user.rol == 'estudiante':
-        recomendaciones = recomendar_cursos(user)
+        from academico.utils import obtener_limite_creditos_personalizado
+        from matricula.utils import calcular_creditos_actuales
+        
+        limite_personalizado = obtener_limite_creditos_personalizado(user)
+        es_restringido = (limite_personalizado == 15)
+        creditos_matriculados = calcular_creditos_actuales(user)
+        
+        recomendaciones = recomendar_cursos(user, limite=10) # Buscamos más para mostrar 6
         
         # 1. Obtener Matrículas
         matriculas = Matricula.objects.filter(estudiante=user).select_related('seccion__curso', 'seccion__salon')
@@ -92,11 +179,13 @@ def dashboard(request):
                     weekday_idx = dt.weekday() # 0=Lunes, 6=Domingo
                     
                     count = clases_por_dia_semana.get(weekday_idx, 0)
+                    feriado = feriados_2026.get((d, mes_num))
                     
                     semana_data.append({
                         "numero": d,
                         "es_hoy": (d == hoy_num),
-                        "clases_count": count
+                        "clases_count": count,
+                        "feriado": feriado
                     })
             calendario_semanas.append(semana_data)
 
@@ -109,9 +198,6 @@ def dashboard(request):
 
         for h_slot in horas_slots:
             fila = {"hora": h_slot, "dias": []}
-            h_start_str = h_slot.split(" - ")[0]
-            h_start_time = datetime.datetime.strptime(h_start_str, "%H:%M").time()
-
             for d_name in dias_nombres:
                 contenido = None
                 for m in matriculas:
@@ -127,20 +213,65 @@ def dashboard(request):
                         # Si es hoy, agregar a hoy_clases
                         if d_name == dia_hoy_nombre:
                             hoy_clases.append(contenido)
-                            
-                            # Determinar clase actual o próxima
                             current_time = now.time()
+                            
+                            # Lógica de "Falta tanto para esta clase" (Hoy)
+                            if sec.hora_inicio > current_time:
+                                diff_min = (datetime.datetime.combine(datetime.date.today(), sec.hora_inicio) - datetime.datetime.combine(datetime.date.today(), current_time)).total_seconds() / 60
+                                if diff_min < 1440: # Menos de 24 horas
+                                    horas = int(diff_min // 60)
+                                    mins = int(diff_min % 60)
+                                    contenido['tiempo_restante'] = f"En {horas}h {mins}m" if horas > 0 else f"En {mins}m"
+
                             if sec.hora_inicio <= current_time <= sec.hora_fin:
                                 clase_actual = contenido
                             elif sec.hora_inicio > current_time:
                                 if not proxima_clase or sec.hora_inicio < datetime.datetime.strptime(proxima_clase['rango'].split(" - ")[0], "%H:%M").time():
                                     proxima_clase = contenido
+                        
+                        # Lógica para clases de MAÑANA (Dentro de 24h)
+                        dia_mañana_nombre = dias_nombres[(now.weekday() + 1) % 7]
+                        if d_name == dia_mañana_nombre:
+                            diff_seg = (datetime.datetime.combine(datetime.date.today() + datetime.timedelta(days=1), sec.hora_inicio) - now).total_seconds()
+                            if 0 < diff_seg < 86400: # Entre 0 y 24 horas
+                                horas = int(diff_seg // 3600)
+                                mins = int((diff_seg % 3600) // 60)
+                                contenido['tiempo_restante'] = f"En {horas}h {mins}m"
+                                hoy_clases.append(contenido) # Lo agregamos a la lista visual de recordatorios
 
                 fila["dias"].append(contenido)
             matriz.append(fila)
 
+    es_restringido = False
+    creditos_matriculados = 0
+    creditos_aprobados = 0
+    recomendaciones_data = []
+
+    if user.rol == 'estudiante':
+        from academico.utils import obtener_limite_creditos_personalizado, obtener_costo_real_curso
+        from matricula.utils import calcular_creditos_actuales
+        from academico.models import HistorialAcademico
+        from django.db.models import Sum
+        
+        limite_personalizado = obtener_limite_creditos_personalizado(user)
+        es_restringido = (limite_personalizado == 15)
+        creditos_matriculados = calcular_creditos_actuales(user)
+        
+        # Calcular créditos aprobados reales desde el historial
+        creditos_aprobados = HistorialAcademico.objects.filter(
+            estudiante=user, 
+            estado='aprobado'
+        ).aggregate(total=Sum('curso__creditos'))['total'] or 0
+        
+        cursos_recom = recomendar_cursos(user, limite=10)
+        for c in cursos_recom:
+            recomendaciones_data.append({
+                'curso': c,
+                'costo_real': obtener_costo_real_curso(user, c)
+            })
+
     context = {
-        'recomendaciones': recomendaciones,
+        'recomendaciones': recomendaciones_data,
         'matriz': matriz,
         'dias': ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"],
         'calendario_semanas': calendario_semanas,
@@ -149,6 +280,9 @@ def dashboard(request):
         'hoy_clases': hoy_clases,
         'clase_actual': clase_actual,
         'proxima_clase': proxima_clase,
+        'es_restringido': es_restringido,
+        'creditos_matriculados': creditos_matriculados,
+        'creditos_aprobados': creditos_aprobados,
     }
 
     if request.user.rol == 'admin':

@@ -1,201 +1,236 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container mt-4 mb-5">
+<!-- ANIMACIONES CSS PERSONALIZADAS -->
+<style>
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes glow { 0% { box-shadow: 0 0 5px rgba(99, 102, 241, 0.2); } 50% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.4); } 100% { box-shadow: 0 0 5px rgba(99, 102, 241, 0.2); } }
+    
+    .animate-fade-in { animation: fadeIn 0.6s ease-out forwards; }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
 
-    <!-- HEADER DINÁMICO -->
-    <div class="card border-0 shadow-lg mb-4 overflow-hidden rounded-4" style="background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);">
-        <div class="card-body p-4 p-md-5 text-white">
+    .glass-card {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .glass-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08) !important;
+    }
+
+    .hero-gradient {
+        background: radial-gradient(circle at top right, #6366f1, #4f46e5);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-gradient::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -10%;
+        width: 400px;
+        height: 400px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        filter: blur(80px);
+    }
+
+    .stats-icon {
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        margin-bottom: 1rem;
+    }
+
+    .status-dot {
+        height: 10px;
+        width: 10px;
+        background-color: #10b981;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 5px;
+        box-shadow: 0 0 8px #10b981;
+    }
+
+    .schedule-table th {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        background-color: #f8fafc;
+        border: none;
+    }
+
+    .schedule-table td {
+        border-color: #f1f5f9;
+    }
+</style>
+
+<div class="container-fluid px-2 py-2 mt-1">
+    <!-- 🚀 HERO SECTION -->
+    <div class="card border-0 shadow-lg mb-3 hero-gradient rounded-4 animate-fade-in">
+        <div class="card-body p-3 text-white">
             <div class="row align-items-center">
-                <div class="col-md-8">
-                    <h1 class="fw-bold mb-2">¡Bienvenido de nuevo, {{ user.username }}!</h1>
-                    <p class="lead mb-0 opacity-75">Hoy es {% now "l d F Y" %}. Tienes un día productivo por delante.</p>
+                <div class="col-md-9">
+                    <span class="badge bg-white bg-opacity-20 rounded-pill px-2 py-1 mb-1 x-small fw-bold">
+                        <i class="fas fa-sparkles me-1 text-warning"></i> Ciclo Académico 2026-I
+                    </span>
+                    <h4 class="fw-bold mb-1">Hola de nuevo, {{ user.username }} 👋</h4>
+                    <p class="mb-0 opacity-90 x-small">Hoy es <span class="fw-bold">{% now "l d F" %}</span>. Estás a <span class="text-warning fw-bold">12 créditos</span> de tu meta anual.</p>
                 </div>
-                <div class="col-md-4 text-end d-none d-md-block">
-                    <i class="fas fa-graduation-cap fa-5x opacity-25"></i>
+                <div class="col-md-3 text-end d-none d-lg-block">
+                    <i class="fas fa-graduation-cap fa-2x opacity-25"></i>
                 </div>
             </div>
         </div>
     </div>
 
     {% if user.rol == 'admin' %}
-    <!-- ================= ADMIN DASHBOARD ================= -->
-    <div class="row mb-4">
-        <div class="col-md-3 mb-3">
-            <div class="card border-0 shadow-sm rounded-4 p-3 h-100 bg-white">
+    <!-- ================= ADMIN SECTION ================= -->
+    <div class="row mb-4 g-3 animate-fade-in delay-1">
+        <div class="col-xl-3 col-md-6">
+            <div class="card glass-card border-0 shadow-sm p-3 h-100 rounded-4">
+                <div class="stats-icon bg-primary bg-opacity-10 text-primary mb-2">
+                    <i class="fas fa-user-graduate fa-lg"></i>
+                </div>
+                <h6 class="text-muted fw-bold small text-uppercase mb-1">Estudiantes</h6>
                 <div class="d-flex align-items-center">
-                    <div class="bg-primary bg-opacity-10 p-3 rounded-3 me-3">
-                        <i class="fas fa-users text-primary fa-2x"></i>
-                    </div>
-                    <div>
-                        <h3 class="fw-bold mb-0">{{ total_estudiantes|default:"0" }}</h3>
-                        <p class="text-muted small mb-0">Estudiantes</p>
-                    </div>
+                    <h3 class="fw-bold mb-0 me-2">{{ total_estudiantes|default:"0" }}</h3>
+                    <span class="badge bg-success-subtle text-success rounded-pill x-small">+2 hoy</span>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 mb-3">
-            <div class="card border-0 shadow-sm rounded-4 p-3 h-100 bg-white">
+        <div class="col-xl-3 col-md-6">
+            <div class="card glass-card border-0 shadow-sm p-3 h-100 rounded-4">
+                <div class="stats-icon bg-indigo bg-opacity-10 text-indigo mb-2" style="color: #6366f1;">
+                    <i class="fas fa-book-open fa-lg"></i>
+                </div>
+                <h6 class="text-muted fw-bold small text-uppercase mb-1">Cursos</h6>
                 <div class="d-flex align-items-center">
-                    <div class="bg-success bg-opacity-10 p-3 rounded-3 me-3">
-                        <i class="fas fa-book text-success fa-2x"></i>
-                    </div>
-                    <div>
-                        <h3 class="fw-bold mb-0">{{ total_cursos|default:"0" }}</h3>
-                        <p class="text-muted small mb-0">Cursos Activos</p>
-                    </div>
+                    <h3 class="fw-bold mb-0 me-2">{{ total_cursos|default:"0" }}</h3>
+                    <span class="badge bg-primary-subtle text-primary rounded-pill x-small">Ciclo I-X</span>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 mb-3">
-            <div class="card border-0 shadow-sm rounded-4 p-3 h-100 bg-white text-decoration-none transition-hover" onclick="location.href='{% url 'panel_admin' %}'" style="cursor: pointer;">
-                <div class="d-flex align-items-center">
-                    <div class="bg-warning bg-opacity-10 p-3 rounded-3 me-3">
-                        <i class="fas fa-chart-pie text-warning fa-2x"></i>
-                    </div>
-                    <div>
-                        <h5 class="fw-bold mb-0">Panel Admin</h5>
-                        <p class="text-muted small mb-0">Gestionar Todo</p>
-                    </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card glass-card border-0 shadow-sm p-3 h-100 rounded-4 cursor-pointer" onclick="location.href='{% url 'panel_admin' %}'">
+                <div class="stats-icon bg-warning bg-opacity-10 text-warning mb-2">
+                    <i class="fas fa-cog fa-lg"></i>
                 </div>
+                <h6 class="text-muted fw-bold small text-uppercase mb-1">Configuración</h6>
+                <h5 class="fw-bold mb-0 small">Gestión Global</h5>
             </div>
         </div>
-        <div class="col-md-3 mb-3">
-            <div class="card border-0 shadow-sm rounded-4 p-3 h-100 bg-white text-decoration-none transition-hover" onclick="location.href='/admin/'" style="cursor: pointer;">
-                <div class="d-flex align-items-center">
-                    <div class="bg-dark bg-opacity-10 p-3 rounded-3 me-3">
-                        <i class="fas fa-cog text-dark fa-2x"></i>
-                    </div>
-                    <div>
-                        <h5 class="fw-bold mb-0">Configuración</h5>
-                        <p class="text-muted small mb-0">Avanzado</p>
-                    </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card glass-card border-0 shadow-sm p-3 h-100 rounded-4">
+                <div class="stats-icon bg-danger bg-opacity-10 text-danger mb-2">
+                    <i class="fas fa-shield-alt fa-lg"></i>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-8">
-            <div class="card border-0 shadow-sm rounded-4 mb-4">
-                <div class="card-header bg-white border-0 py-3">
-                    <h5 class="fw-bold mb-0">Acciones Rápidas</h5>
-                </div>
-                <div class="card-body">
-                    <div class="row text-center">
-                        <div class="col-4 col-md-2 mb-3">
-                            <a href="{% url 'crear_estudiante' %}" class="text-decoration-none">
-                                <div class="bg-light p-3 rounded-4 mb-2 transition-hover">
-                                    <i class="fas fa-user-plus text-primary fa-lg"></i>
-                                </div>
-                                <span class="small text-dark">Nuevo Alumno</span>
-                            </a>
-                        </div>
-                        <div class="col-4 col-md-2 mb-3">
-                            <a href="{% url 'gestionar_cursos_admin' %}" class="text-decoration-none">
-                                <div class="bg-light p-3 rounded-4 mb-2 transition-hover">
-                                    <i class="fas fa-plus-circle text-success fa-lg"></i>
-                                </div>
-                                <span class="small text-dark">Añadir Curso</span>
-                            </a>
-                        </div>
-                        <div class="col-4 col-md-2 mb-3">
-                            <a href="{% url 'gestionar_salones_admin' %}" class="text-decoration-none">
-                                <div class="bg-light p-3 rounded-4 mb-2 transition-hover">
-                                    <i class="fas fa-door-open text-warning fa-lg"></i>
-                                </div>
-                                <span class="small text-dark">Salones</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="card border-0 shadow-sm rounded-4 bg-primary text-white p-4 h-100">
-                <h5 class="fw-bold mb-3">Estado del Sistema</h5>
-                <div class="d-flex align-items-center mb-3">
-                    <div class="bg-white bg-opacity-20 p-2 rounded-circle me-3">
-                        <i class="fas fa-check"></i>
-                    </div>
-                    <div>
-                        <span class="d-block small opacity-75">Base de Datos</span>
-                        <span class="fw-bold">Conectado (MySQL)</span>
-                    </div>
-                </div>
-                <div class="d-flex align-items-center mb-3">
-                    <div class="bg-white bg-opacity-20 p-2 rounded-circle me-3">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <div>
-                        <span class="d-block small opacity-75">Motor IA</span>
-                        <span class="fw-bold">Activo</span>
-                    </div>
-                </div>
+                <h6 class="text-muted fw-bold small text-uppercase mb-1">Seguridad</h6>
+                <h5 class="fw-bold mb-0 small">Protegido</h5>
             </div>
         </div>
     </div>
 
     {% elif user.rol == 'estudiante' %}
-    <!-- ================= ESTUDIANTE DASHBOARD ================= -->
-    
-    <div class="row mb-4">
-        <div class="col-md-4 mb-3">
-            <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white border-start border-primary border-4">
-                <h6 class="text-muted fw-bold small text-uppercase mb-2">Créditos Acumulados</h6>
-                <div class="d-flex align-items-end">
-                    <h2 class="fw-bold mb-0 text-primary">{{ user.creditos_acumulados }}</h2>
-                    <span class="ms-2 text-muted pb-1">/ {{ user.limite_creditos }} máx.</span>
+    <!-- ================= ESTUDIANTE SECTION ================= -->
+    <div class="row g-3 mb-4 animate-fade-in delay-1">
+        <div class="col-md-4">
+            <div class="card glass-card border-0 shadow-sm p-3 h-100 rounded-4 border-start border-4 border-primary">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <h6 class="text-muted fw-bold small text-uppercase mb-0">Tu Progreso</h6>
+                    {% if es_restringido %}
+                        <span class="badge bg-danger rounded-pill x-small pulse">RESTRICCIÓN 15 CR</span>
+                    {% endif %}
+                </div>
+                <div class="d-flex align-items-baseline mb-2">
+                    <h3 class="fw-bold mb-0 text-primary">{{ creditos_aprobados }}</h3>
+                    <span class="ms-1 text-muted x-small">aprobados</span>
+                    <h5 class="ms-3 fw-bold mb-0 text-info">+{{ creditos_matriculados }}</h5>
+                    <span class="ms-1 text-muted x-small">actuales</span>
+                </div>
+                <div class="progress rounded-pill mb-2" style="height: 6px; background-color: #f1f5f9;">
+                    <div class="progress-bar bg-primary" style="width: {% widthratio creditos_aprobados user.limite_creditos 100 %}%"></div>
+                    <div class="progress-bar bg-info" style="width: {% widthratio creditos_matriculados user.limite_creditos 100 %}%"></div>
+                </div>
+                <div class="d-flex justify-content-between x-small text-muted">
+                    <span>Límite: {{ user.limite_creditos }} CR</span>
+                    <span>Meta Ciclo: 100%</span>
                 </div>
             </div>
         </div>
-        <div class="col-md-4 mb-3">
-            <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white border-start border-success border-4">
-                <h6 class="text-muted fw-bold small text-uppercase mb-2">Ciclo Actual</h6>
-                <div class="d-flex align-items-end">
-                    <h2 class="fw-bold mb-0 text-success">{{ user.ciclo_actual }}°</h2>
-                    <span class="ms-2 text-muted pb-1">Ciclo Académico</span>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-3">
-            <div class="card border-0 shadow-sm rounded-4 p-4 h-100 bg-white border-start border-warning border-4 text-decoration-none transition-hover" onclick="location.href='{% url 'preferencias' %}'" style="cursor: pointer;">
-                <h6 class="text-muted fw-bold small text-uppercase mb-2">Preferencias IA</h6>
+        <div class="col-md-4">
+            <div class="card glass-card border-0 shadow-sm p-3 h-100 rounded-4 border-start border-4 border-success">
+                <h6 class="text-muted fw-bold small text-uppercase mb-2">Nivel Académico</h6>
                 <div class="d-flex align-items-center">
-                    <div class="bg-warning bg-opacity-10 p-2 rounded-circle me-3">
-                        <i class="fas fa-sliders-h text-warning"></i>
+                    <div class="bg-success bg-opacity-10 p-2 rounded-4 me-3 text-success">
+                        <i class="fas fa-award fa-xl"></i>
                     </div>
-                    <span class="fw-bold text-dark">Configurar mis horarios</span>
+                    <div>
+                        <h4 class="fw-bold mb-0 text-success">{{ user.ciclo_actual }}° Ciclo</h4>
+                        <span class="text-muted small">Ingeniería de Sistemas</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card glass-card border-0 shadow-sm p-3 h-100 rounded-4 border-start border-4 border-warning cursor-pointer" onclick="location.href='{% url 'preferencias' %}'">
+                <h6 class="text-muted fw-bold small text-uppercase mb-2">Personalización IA</h6>
+                <div class="d-flex align-items-center">
+                    <div class="bg-warning bg-opacity-10 p-2 rounded-4 me-3 text-warning">
+                        <i class="fas fa-magic fa-xl"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold mb-0">Algoritmo 2026</h6>
+                        <p class="text-muted x-small mb-0">Configurar mis preferencias <i class="fas fa-chevron-right ms-1"></i></p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-lg-7">
-            <!-- HORARIO SEMANAL SIMPLIFICADO -->
-            <div class="card shadow-sm border-0 rounded-4 mb-4">
-                <div class="card-header bg-white border-0 py-3 d-flex justify-content-between align-items-center">
-                    <h5 class="fw-bold mb-0">📅 Resumen Semanal</h5>
-                    <a href="{% url 'horario_visual' %}" class="btn btn-sm btn-link text-decoration-none">Ver completo</a>
+    <div class="row g-4 animate-fade-in delay-2">
+        <div class="col-lg-8">
+            <!-- HORARIO SEMANAL DINÁMICO -->
+            <div class="card border-0 shadow-sm rounded-4 mb-4 overflow-hidden">
+                <div class="card-header bg-white border-0 py-3 px-4 d-flex justify-content-between align-items-center">
+                    <h6 class="fw-bold mb-0 text-slate-800">📅 Mi Agenda Semanal</h6>
+                    <div class="btn-group btn-group-sm">
+                        <button class="btn btn-outline-secondary active">Resumen</button>
+                        <button class="btn btn-outline-secondary" onclick="location.href='{% url 'mis_matriculas' %}'">Ver Todo</button>
+                    </div>
                 </div>
                 <div class="card-body p-0">
                     <div class="table-responsive">
-                        <table class="table table-hover mb-0 text-center align-middle">
-                            <thead class="bg-light">
-                                <tr class="small text-muted">
-                                    <th>HORA</th>
-                                    <th>LUN</th><th>MAR</th><th>MIÉ</th><th>JUE</th><th>VIE</th><th>SÁB</th>
+                        <table class="table schedule-table table-hover mb-0 text-center align-middle">
+                            <thead>
+                                <tr class="text-muted">
+                                    <th class="py-3">Hora</th>
+                                    <th>Lun</th><th>Mar</th><th>Mié</th><th>Jue</th><th>Vie</th><th>Sáb</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for fila in matriz|slice:":5" %} <!-- Solo primeras 5 filas para no saturar -->
+                                {% for fila in matriz|slice:":6" %}
                                 <tr>
-                                    <td class="fw-bold text-muted" style="font-size: 0.7rem;">{{ fila.hora|slice:":5" }}</td>
+                                    <td class="fw-bold text-slate-500 py-3">{{ fila.hora|slice:":5" }}</td>
                                     {% for celda in fila.dias|slice:":6" %}
-                                    <td style="height: 40px; padding: 2px;">
+                                    <td class="p-1">
                                         {% if celda %}
-                                        <div class="h-100 rounded-2 shadow-sm" style="background-color: {{ celda.color }}; opacity: 0.8;" title="{{ celda.curso }}"></div>
+                                        <div class="p-2 rounded-3 shadow-sm h-100 border-start border-3" 
+                                             style="background-color: {{ celda.color }}; border-color: rgba(0,0,0,0.1); opacity: 0.95;" 
+                                             title="{{ celda.curso }}">
+                                            <div class="fw-bold text-dark text-truncate" style="font-size: 0.6rem;">{{ celda.curso|slice:":8" }}..</div>
+                                        </div>
+                                        {% else %}
+                                        <div class="py-3 text-transparent">-</div>
                                         {% endif %}
                                     </td>
                                     {% endfor %}
@@ -207,79 +242,112 @@
                 </div>
             </div>
 
-            <!-- RECOMENDACIONES IA -->
-            <div class="card shadow-sm border-0 rounded-4 mb-4">
-                <div class="card-header bg-white border-0 py-3">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h5 class="fw-bold mb-0">🤖 IA Sugerencias</h5>
-                        <a href="{% url 'horarios_recomendados' %}" class="btn btn-primary btn-sm rounded-pill px-3 shadow-sm">Generar Horario</a>
+            <!-- IA SUGERENCIAS CAROUSEL-STYLE -->
+            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                <div class="card-header bg-white border-0 py-3 px-4 d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="fw-bold mb-0">🤖 Inteligencia de Recomendación</h6>
+                        <p class="text-muted x-small mb-0">Cursos disponibles según tu historial</p>
                     </div>
+                    <a href="{% url 'horarios_recomendados' %}" class="btn btn-primary rounded-pill px-4 btn-sm shadow-sm">Generar Horario IA</a>
                 </div>
-                <div class="card-body">
-                    {% if recomendaciones %}
-                    <div class="row">
-                        {% for curso in recomendaciones|slice:":3" %}
-                        <div class="col-md-4 mb-3">
-                            <div class="p-3 rounded-4 bg-light h-100 border transition-hover">
-                                <h6 class="fw-bold small mb-2 text-truncate" title="{{ curso.nombre }}">{{ curso.nombre }}</h6>
-                                <span class="badge bg-primary bg-opacity-10 text-primary small">Ciclo {{ curso.ciclo.numero }}</span>
+                <div class="card-body px-4 pb-4">
+                    <div class="row g-3">
+                        {% for item in recomendaciones|slice:":6" %}
+                        <div class="col-md-4">
+                            <div class="p-3 rounded-4 bg-slate-50 border h-100 transition-hover d-flex flex-column justify-content-between">
+                                <div>
+                                    <div class="badge bg-white text-primary border mb-2 small">Ciclo {{ item.curso.ciclo.numero }}</div>
+                                    <h6 class="fw-bold text-slate-800 mb-2 text-truncate">{{ item.curso.nombre }}</h6>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="fw-bold text-primary">{{ item.costo_real }} CR</span>
+                                    {% if item.costo_real > item.curso.creditos %}
+                                        <i class="fas fa-exclamation-triangle text-danger" title="Penalidad por jale aplicada"></i>
+                                    {% else %}
+                                        <i class="fas fa-check-circle text-success small opacity-50"></i>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
                         {% endfor %}
                     </div>
-                    {% else %}
-                    <div class="text-center py-4">
-                        <i class="fas fa-robot text-muted fa-2x mb-2 opacity-25"></i>
-                        <p class="text-muted small">Configura tus preferencias para recibir sugerencias.</p>
-                    </div>
-                    {% endif %}
                 </div>
             </div>
         </div>
 
-        <div class="col-lg-5">
-            <!-- PRÓXIMAS CLASES -->
-            <div class="card border-0 shadow-sm rounded-4 mb-4 overflow-hidden">
-                <div class="card-header bg-dark text-white py-3">
-                    <h5 class="fw-bold mb-0 small text-uppercase tracking-wider">Hoy: {{ hoy_clases|length }} Clases</h5>
+        <div class="col-lg-4">
+            <!-- PRÓXIMAS CLASES (24H REMINDERS) -->
+            <div class="card border-0 shadow-sm rounded-4 mb-4 overflow-hidden bg-white">
+                <div class="card-header bg-slate-900 text-white py-4 px-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="fw-bold mb-0">Próximos Eventos</h5>
+                        <span class="badge bg-primary rounded-pill">{{ hoy_clases|length }} hoy</span>
+                    </div>
                 </div>
                 <div class="card-body p-0">
                     <div class="list-group list-group-flush">
                         {% for clase in hoy_clases %}
-                        <div class="list-group-item p-4 border-0 border-bottom">
+                        <div class="list-group-item p-4 border-0 border-bottom bg-transparent transition-hover">
                             <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <h6 class="fw-bold mb-1">{{ clase.curso }}</h6>
-                                    <p class="text-muted small mb-0"><i class="fas fa-clock me-1"></i> {{ clase.rango }}</p>
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-indigo bg-opacity-10 text-indigo p-3 rounded-4 me-3" style="color: #6366f1;">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="fw-bold mb-1">{{ clase.curso }}</h6>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <span class="text-muted small">{{ clase.rango }}</span>
+                                            {% if clase.tiempo_restante %}
+                                                <span class="badge bg-indigo bg-opacity-10 text-indigo rounded-pill" style="font-size: 0.6rem; color: #6366f1;">
+                                                    {{ clase.tiempo_restante }}
+                                                </span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
                                 </div>
-                                <span class="badge bg-light text-dark rounded-pill border">{{ clase.salon }}</span>
+                                <span class="badge bg-light text-slate-600 border px-3 rounded-pill">Aula {{ clase.salon }}</span>
                             </div>
                         </div>
                         {% empty %}
                         <div class="p-5 text-center text-muted">
-                            <i class="fas fa-calendar-check fa-3x mb-3 opacity-25"></i>
-                            <p>No tienes clases programadas para hoy.</p>
+                            <div class="mb-3 opacity-25">
+                                <i class="fas fa-calendar-check fa-4x"></i>
+                            </div>
+                            <h6 class="fw-bold">Todo en orden</h6>
+                            <p class="small">No tienes clases en las próximas 24 horas.</p>
                         </div>
                         {% endfor %}
                     </div>
+                </div>
+                <div class="card-footer bg-light border-0 py-3 text-center">
+                    <a href="{% url 'mis_matriculas' %}" class="small text-indigo text-decoration-none fw-bold" style="color: #6366f1;">Ver horario completo <i class="fas fa-arrow-right ms-1"></i></a>
                 </div>
             </div>
         </div>
     </div>
     {% endif %}
-
 </div>
 
+<!-- ESTILOS ADICIONALES PARA SLATE Y COLORES 2026 -->
 <style>
-    .transition-hover {
-        transition: all 0.3s ease;
+    .bg-slate-50 { background-color: #f8fafc; }
+    .bg-slate-900 { background-color: #0f172a; }
+    .text-slate-800 { color: #1e293b; }
+    .text-slate-600 { color: #475569; }
+    .text-slate-500 { color: #64748b; }
+    .text-transparent { color: transparent; }
+    .cursor-pointer { cursor: pointer; }
+    .x-small { font-size: 0.7rem; }
+    
+    .pulse {
+        animation: pulse-red 2s infinite;
     }
-    .transition-hover:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.05) !important;
-    }
-    .tracking-wider {
-        letter-spacing: 0.05em;
+
+    @keyframes pulse-red {
+        0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7); }
+        70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(220, 38, 38, 0); }
+        100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
     }
 </style>
 {% endblock %}
