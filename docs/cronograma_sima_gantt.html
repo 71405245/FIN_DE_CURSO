@@ -1,0 +1,172 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans, sans-serif); }
+.gantt-wrap { padding: 1rem 0; width: 100%; overflow-x: auto; }
+.gantt-container { min-width: 720px; }
+.gantt-header { display: flex; margin-left: 160px; border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 4px; }
+.gantt-header-cell { font-size: 11px; color: var(--color-text-secondary); text-align: center; padding-bottom: 4px; }
+.gantt-row { display: flex; align-items: center; min-height: 28px; margin-bottom: 3px; }
+.gantt-label { width: 160px; min-width: 160px; font-size: 12px; color: var(--color-text-primary); padding-right: 10px; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.gantt-label.section { font-size: 11px; color: var(--color-text-secondary); font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 6px; }
+.gantt-label.epic { font-size: 12px; font-weight: 500; }
+.gantt-label.hu { font-size: 11px; color: var(--color-text-secondary); padding-left: 8px; }
+.gantt-track { flex: 1; position: relative; height: 22px; }
+.gantt-bar { position: absolute; height: 18px; top: 2px; border-radius: 4px; display: flex; align-items: center; padding: 0 6px; font-size: 10px; font-weight: 500; white-space: nowrap; overflow: hidden; cursor: pointer; transition: opacity 0.15s; }
+.gantt-bar:hover { opacity: 0.82; }
+.gantt-bar.sprint { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-secondary); color: var(--color-text-secondary); height: 22px; top: 0; border-radius: 6px; }
+.gantt-bar.epic1 { background: #B5D4F4; color: #0C447C; }
+.gantt-bar.epic2 { background: #C0DD97; color: #27500A; }
+.gantt-bar.epic3 { background: #F4C0D1; color: #72243E; }
+.gantt-bar.hu1 { background: #E6F1FB; border: 0.5px solid #85B7EB; color: #185FA5; height: 16px; top: 3px; border-radius: 3px; }
+.gantt-bar.hu2 { background: #EAF3DE; border: 0.5px solid #97C459; color: #3B6D11; height: 16px; top: 3px; border-radius: 3px; }
+.gantt-bar.hu3 { background: #FBEAF0; border: 0.5px solid #ED93B1; color: #993556; height: 16px; top: 3px; border-radius: 3px; }
+.today-line { position: absolute; top: 0; bottom: 0; width: 1.5px; background: #E24B4A; opacity: 0.7; z-index: 10; }
+.today-label { position: absolute; top: -16px; font-size: 9px; color: #E24B4A; transform: translateX(-50%); white-space: nowrap; }
+.legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 14px; margin-left: 160px; }
+.legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--color-text-secondary); }
+.legend-dot { width: 12px; height: 12px; border-radius: 3px; }
+.divider { height: 0.5px; background: var(--color-border-tertiary); margin: 5px 0 5px 160px; }
+</style>
+
+<div class="gantt-wrap">
+<div class="gantt-container" id="gc"></div>
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#B5D4F4;border:0.5px solid #85B7EB"></div>Épica 1 - Planificación de Horarios</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#C0DD97;border:0.5px solid #97C459"></div>Épica 2 - Experiencia de usuario</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#F4C0D1;border:0.5px solid #ED93B1"></div>Épica 3 - Plataforma y calidad</div>
+</div>
+</div>
+
+<script>
+const START = new Date('2026-04-01');
+const END   = new Date('2026-07-05');
+const TOTAL = (END - START) / 86400000;
+
+function pct(d) { return ((new Date(d) - START) / 86400000 / TOTAL * 100).toFixed(2) + '%'; }
+function width(s, e) { return (((new Date(e) - new Date(s)) / 86400000) / TOTAL * 100).toFixed(2) + '%'; }
+
+const weeks = [];
+let cur = new Date(START);
+while (cur <= END) {
+  weeks.push(new Date(cur));
+  cur = new Date(cur.getTime() + 7*86400000);
+}
+
+const monthNames = ['Ene','Feb','Mar','Abr','May','Jun','Jul'];
+const months = [];
+let mc = new Date(START);
+while (mc <= END) {
+  months.push({ label: monthNames[mc.getMonth()] + ' ' + mc.getDate(), d: new Date(mc) });
+  mc = new Date(mc.getFullYear(), mc.getMonth()+1, 1);
+}
+
+const today = new Date('2026-05-03');
+const todayPct = ((today - START)/86400000/TOTAL*100).toFixed(2)+'%';
+
+const rows = [
+  { type:'sprint', label:'Sprint 1', s:'2026-04-01', e:'2026-04-27', cls:'sprint' },
+  { type:'sprint', label:'Sprint 2', s:'2026-04-27', e:'2026-05-18', cls:'sprint' },
+  { type:'sprint', label:'Sprint 3', s:'2026-05-18', e:'2026-07-05', cls:'sprint' },
+  { type:'divider' },
+  { type:'label', label:'ÉPICA 1 — Planificación', cls:'epic' },
+  { type:'bar', label:'SIMA-14 (épica)', s:'2026-04-01', e:'2026-07-05', cls:'epic1' },
+  { type:'bar', label:'SIMA-3 Ver cursos', s:'2026-04-01', e:'2026-04-27', cls:'hu1', hu:true },
+  { type:'bar', label:'SIMA-4 Detectar cruces', s:'2026-04-01', e:'2026-04-27', cls:'hu1', hu:true },
+  { type:'bar', label:'SIMA-5 Generar comb.', s:'2026-04-01', e:'2026-04-27', cls:'hu1', hu:true },
+  { type:'bar', label:'SIMA-10 Optimizar gen.', s:'2026-05-18', e:'2026-07-05', cls:'hu1', hu:true },
+  { type:'divider' },
+  { type:'label', label:'ÉPICA 2 — Experiencia', cls:'epic' },
+  { type:'bar', label:'SIMA-16 (épica)', s:'2026-04-01', e:'2026-07-05', cls:'epic2' },
+  { type:'bar', label:'SIMA-2 Editar pref.', s:'2026-04-27', e:'2026-05-18', cls:'hu2', hu:true },
+  { type:'bar', label:'SIMA-6 Recomendar', s:'2026-04-27', e:'2026-05-18', cls:'hu2', hu:true },
+  { type:'bar', label:'SIMA-7 Ver horario grác.', s:'2026-04-27', e:'2026-05-18', cls:'hu2', hu:true },
+  { type:'bar', label:'SIMA-8 Exportar horario', s:'2026-04-27', e:'2026-05-18', cls:'hu2', hu:true },
+  { type:'bar', label:'SIMA-1 Registrar pref.', s:'2026-05-18', e:'2026-07-05', cls:'hu2', hu:true },
+  { type:'divider' },
+  { type:'label', label:'ÉPICA 3 — Plataforma', cls:'epic' },
+  { type:'bar', label:'SIMA-17 (épica)', s:'2026-04-01', e:'2026-07-05', cls:'epic3' },
+  { type:'bar', label:'SIMA-9 Autenticación', s:'2026-04-01', e:'2026-04-27', cls:'hu3', hu:true },
+  { type:'bar', label:'SIMA-11 Soporte nav.', s:'2026-05-18', e:'2026-07-05', cls:'hu3', hu:true },
+  { type:'bar', label:'SIMA-12 Flujo sencillo', s:'2026-05-18', e:'2026-07-05', cls:'hu3', hu:true },
+];
+
+const gc = document.getElementById('gc');
+
+// Header months
+const hdr = document.createElement('div');
+hdr.className = 'gantt-header';
+hdr.style.position = 'relative';
+months.forEach((m, i) => {
+  const next = months[i+1] ? months[i+1].d : END;
+  const w = ((next - m.d)/86400000/TOTAL*100).toFixed(2)+'%';
+  const cell = document.createElement('div');
+  cell.className = 'gantt-header-cell';
+  cell.style.width = w;
+  cell.style.minWidth = w;
+  cell.textContent = m.label;
+  hdr.appendChild(cell);
+});
+gc.appendChild(hdr);
+
+rows.forEach(row => {
+  if (row.type === 'divider') {
+    const d = document.createElement('div');
+    d.className = 'divider';
+    gc.appendChild(d);
+    return;
+  }
+  if (row.type === 'label') {
+    const r = document.createElement('div');
+    r.className = 'gantt-row';
+    r.style.minHeight = '20px';
+    const lbl = document.createElement('div');
+    lbl.className = 'gantt-label section';
+    lbl.textContent = row.label;
+    r.appendChild(lbl);
+    const trk = document.createElement('div');
+    trk.className = 'gantt-track';
+    r.appendChild(trk);
+    gc.appendChild(r);
+    return;
+  }
+
+  const r = document.createElement('div');
+  r.className = 'gantt-row';
+
+  const lbl = document.createElement('div');
+  lbl.className = 'gantt-label' + (row.hu ? ' hu' : '');
+  lbl.textContent = row.label;
+  r.appendChild(lbl);
+
+  const trk = document.createElement('div');
+  trk.className = 'gantt-track';
+  trk.style.position = 'relative';
+
+  // today line only on first sprint row
+  if (row.label === 'Sprint 1') {
+    const tl = document.createElement('div');
+    tl.className = 'today-line';
+    tl.style.left = todayPct;
+    const tlbl = document.createElement('div');
+    tlbl.className = 'today-label';
+    tlbl.style.left = todayPct;
+    tlbl.textContent = 'hoy';
+    trk.appendChild(tl);
+    trk.appendChild(tlbl);
+  }
+
+  const bar = document.createElement('div');
+  bar.className = 'gantt-bar ' + row.cls;
+  bar.style.left = pct(row.s);
+  bar.style.width = width(row.s, row.e);
+  if (row.type === 'sprint') {
+    const s1 = new Date(row.s), s2 = new Date(row.e);
+    const dias = Math.round((s2-s1)/86400000);
+    bar.textContent = `${dias}d`;
+  }
+  trk.appendChild(bar);
+  r.appendChild(trk);
+  gc.appendChild(r);
+});
+</script>
