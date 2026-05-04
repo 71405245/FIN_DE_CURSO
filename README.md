@@ -45,12 +45,12 @@ Sistema web inteligente orientado a optimizar el proceso de matrícula universit
 
 ## 05. LANZAMIENTO
 
-- 📊 [Retrospectiva del proyecto](docs/informe_esstado2.md)
+- 📊 [Retrospectiva del proyecto](docs/informe_estado2.md)
 ---
 
 ## 05. CIERRE
 
-- 📊 [Acta de cierre del proyecto](docs/diagrama-entffdad–relacion.md)
+- 📊 [Acta de cierre del proyecto](docs/diagrama-entidad–relacion.md)
 ---
 # 🛠️ Tecnologías y Metodología
 
