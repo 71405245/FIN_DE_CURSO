@@ -35,7 +35,6 @@
 | 6.1      | Lógica de recomendación  | HU06        | Jordan      | En Progreso  | 15   | 15 | 14 | 12 | 10 | 8  | 6  | 4  | 2  | 1  | 0   |
 | 7.1      | Vista horario gráfico    | HU07        | Kevin       | Terminado    | 15   | 15 | 13 | 11 | 9  | 7  | 5  | 3  | 2  | 1  | 0   |
 | 8.1      | Exportar PDF             | HU08        | Jordan      | Terminado    | 12   | 12 | 12 | 10 | 8  | 6  | 4  | 3  | 2  | 1  | 0   |
-| 10.1     | Optimizar algoritmo      | HU10        | Kevin       | En Progreso  | 18   | 18 | 16 | 14 | 12 | 9  | 6  | 4  | 2  | 1  | 0   |
 
 
 ---
@@ -54,5 +53,6 @@
 |----------|--------------------------|-------------|-------------|-------------|------|
 | 1.1      | Formulario preferencias  | HU01        | Kevin       | Por Hacer   | 15   |
 | 2.1      | Editar preferencias      | HU02        | Jordan      | Por Hacer   | 13   |
+| 10.1     | Optimizar algoritmo      | HU10        | Kevin       | En Progreso  | 18  |
 | 11.1     | Soporte navegadores      | HU11        | Kevin       | Por Hacer   | 10   |
 | 12.1     | Mejorar flujo UX         | HU12        | Jordan      | Por Hacer   | 10   |
