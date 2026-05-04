@@ -24,7 +24,7 @@ Sistema web inteligente orientado a optimizar el proceso de matrícula universit
 - 📋 [Requerimientos funcionales](docs/requerimientos-funcionales.md)
 - 📋 [Requerimientos no funcionales](docs/requerimientos-no-funcionales.md)
 - 🚫 [Supuestos / Restricciones](docs/supuestos-restricciones.md)
-
+- 🗓️ [Cronograma del proyecto](docs/cronograma-SIMA.png)
 
   
 ---
