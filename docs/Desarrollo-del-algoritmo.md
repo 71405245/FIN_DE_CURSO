@@ -122,4 +122,5 @@ def obtener_limite_creditos_personalizado(estudiante):
 ```
 
 ### 2.2 Penalidad por Costo de Curso
+
 Como complemento, el sistema tiene una función `obtener_costo_real_curso` que aumenta el "peso" (costo en créditos) de un curso en base a cuántas veces se ha jalado (`curso.creditos + veces_desaprobado`). Esto obliga al motor DFS a priorizar que el estudiante lleve solo lo necesario.
