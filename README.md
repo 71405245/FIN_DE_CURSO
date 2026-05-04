@@ -11,7 +11,7 @@ Sistema web inteligente orientado a optimizar el proceso de matrícula universit
  - [Documento de selección del enfoque del proyecto](docs/acta-cdonstitucion.md)
  - [Declaración de la visión del proyecto](docs/acta-cdonstitucion.md)
  - [Project Charter](project-charter.md)
- - [Registro de supuestos y restricciones](docs/acta-cdonstitucion.md)
+ - [Supuestos / Restricciones](docs/supuestos-restricciones.md)
  - [Declaración del equipo del proyecto](docs/acta-cdonstitucion.md)
  - [Documento del problema](docs/acta-cdonstitucion.md)
  - [Requerimientos funcionales](docs/requerimientos-funcionales.md)
@@ -33,10 +33,7 @@ Sistema web inteligente orientado a optimizar el proceso de matrícula universit
 - 📦 [Backlog Detallado del Producto](docs/backlog-detallado-producto.md)
 - 💰 [Presupuesto del Proyecto](docs/presupuesto.md)
 - ⚠️ [Registro de Riesgos](docs/riesgos.md)
-- 🚫 [Supuestos / Restricciones](docs/supuestos-restricciones.md)
 - 🗓️ [Cronograma del proyecto](docs/cronograma-SIMA.png)
-
-  
 ---
 
 ## 03. IMPLEMENTACIÓN
@@ -46,26 +43,22 @@ Sistema web inteligente orientado a optimizar el proceso de matrícula universit
 - 📝 [Minuta de Reunión](docs/minuta-reunion.md)
 - 📝 [Minuta de Reunión 2](docs/minuta-reunion2.md)
 - 🚧 [Registro de Impedimentos](docs/impedimentos.md)
-
 ---
 
 ## 04. REVISIÓN Y RETROSPECTIVA
 
 - 📊 [Revisión del Sprint ](docs/diagrama-entidsad–relacion.md)
 - 📊 [Retrospectiva del Sprint](docs/informe_esstado2.md)
-
 ---
 
 ## 05. LANZAMIENTO
 
 - 📊 [Retrospectiva del proyecto](docs/informe_esstado2.md)
-
 ---
 
 ## 05. CIERRE
 
 - 📊 [Acta de cierre del proyecto](docs/diagrama-entffdad–relacion.md)
-
 ---
 # 🛠️ Tecnologías y Metodología
 
@@ -73,8 +66,7 @@ Sistema web inteligente orientado a optimizar el proceso de matrícula universit
 - Documentación: Markdown
 - Control de versiones: Git / GitHub
 - Enfoque: Ingeniería de Software
-  
----
+  ---
 
 # 📌 Estructura del proyecto
 
@@ -83,12 +75,10 @@ El repositorio está dividido en tres partes principales:
 - 🟢 SIMA: Software
 - 🟡 docs: Documentación
 - 🔵 Readme: Presentación
-
 ---
 
 # 👥 Equipo del Proyecto
 
 - [Equipo del proyecto](docs/equipo-proyecto.md)
-
 
 ---
