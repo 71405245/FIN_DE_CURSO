@@ -1,6 +1,6 @@
 ## Spec-Driven Development (SDD)
 
-- [Constitution](docs/constitution.md)
+- [Constitution](constitution.md)
 
 Documento que define los principios, reglas y restricciones no negociables para un proyecto específico. Actúa como la "constitución" del proyecto: establece los estándares arquitectónicos, las decisiones tecnológicas fundamentales, las guías de estilo, los contratos de API y las políticas de calidad que todo el código debe respetar. Tiene precedencia sobre cualquier otra consideración técnica.
 ---
