@@ -1,0 +1,56 @@
+﻿codigo,asignatura,creditos,prerrequisitos,tipo,estado,nota,veces llevado,area,ciclo
+TFR001,Comprensión y Producción de Textos 1,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 01
+TFR002,Laboratorio de Liderazgo e Innovación,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 01
+TFR003,Estrategias y Herramientas Digitales para el Aprendizaje,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 01
+TFR004,Fundamentos de Matemática,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 01
+TFR005,Biología en Salud,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 01
+TFR006,Química en Salud,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 01
+TFR007,Introducción a la Terapia Física y Rehabilitación,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 01
+TFR008,Comprensión y Producción de Textos 2,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 02
+TFR009,Determinantes Sociales de la Salud,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 02
+TFR010,Morfofisiología,12,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 02
+TFR011,Electivo General 1,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 02
+TFR012,Estadística y Probabilidades,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 03
+TFR013,Laboratorio de Liderazgo e Innovación Intermedio,2,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 03
+TFR014,Psicología Aplicada a las Ciencias de la Salud,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 03
+TFR015,Principios del Auxilio Inmediato,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 03
+TFR016,Anatomía Funcional y Palpatoria,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 03
+TFR017,Control y Aprendizaje Motor,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 03
+TFR018,Electivo General 2,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 03
+TFR019,English Course 1,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 04
+TFR020,Patología General,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 04
+TFR021,Farmacología General,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 04
+TFR022,Desarrollo y Afecciones Pediátricas,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 04
+TFR023,Biomecánica Funcional,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 04
+TFR024,Electivo General 3,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 04
+TFR025,Electivo General 4,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 04
+TFR026,English Course 2,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 05
+TFR027,Laboratorio de Liderazgo e Innovación Avanzado,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 05
+TFR028,Ética y Deontología en Tecnología Médica,2,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 05
+TFR029,Epidemiología,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 05
+TFR030,Agentes Físicos,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 05
+TFR031,Bases Fisiológicas del Ejercicio,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 05
+TFR032,Evaluación y Diagnóstico Fisioterapeútico,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 05
+TFR033,Investigación Académica,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 06
+TFR034,English Course 3,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 06
+TFR035,Funciones esenciales de la Salud Pública,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 06
+TFR036,Fisioterapia en Pediatría 1,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 06
+TFR037,Razonamiento Fisioterapeútico,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 06
+TFR038,Diagnóstico por Imágenes,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 06
+TFR039,Terapia Manual en Disfunciones Musculoesqueléticas,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 06
+TFR040,English Course 4,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 07
+TFR041,Taller de Investigación en Salud 1,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 07
+TFR042,Fisioterapia en Patologías Oseas y Partes Blandas,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 07
+TFR043,Fisioterapia en Pediatría 2,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 07
+TFR044,Neurorehabilitación en Adultos,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 07
+TFR045,Fisioterapia en Atención Primaria y Comunitaria,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 07
+TFR046,Electivo General 5,1,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 07
+TFR047,Gestión y Administración en Servicios de Salud en Tecnología Médica,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 08
+TFR048,Taller de Investigación en Salud 2,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 08
+TFR049,Fisioterapia Cardiorrespiratoria,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 08
+TFR050,Fisioterapia en el Adulto Mayor,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 08
+TFR051,Fisioterapia Deportiva,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 08
+TFR052,Ayudas Biomecánicas y Salud Ocupacional,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 08
+TFR053,Electivo Transversal 1,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 08
+TFR054,Internado en Terapia Física y Rehabilitación 1,22,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 09
+TFR055,Internado en Terapia Física y Rehabilitación 2,22,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 10

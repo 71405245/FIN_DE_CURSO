@@ -1,0 +1,70 @@
+codigo,asignatura,creditos,prerrequisitos,tipo,estado,nota,veces llevado,area,ciclo
+MINA0101,Matemática Superior,4,Ninguno,Obligatorio,Pendiente,0,0,Ingeniería,1
+MINA0102,Habilidades Comunicativas,4,Ninguno,Obligatorio,Pendiente,0,0,Ingeniería,1
+MINA0103,Gestión del Aprendizaje,3,Ninguno,Obligatorio,Pendiente,0,0,Ingeniería,1
+MINA0104,Introducción a la Ingeniería de Minas,3,Ninguno,Obligatorio,Pendiente,0,0,Ingeniería,1
+MINA0105,Química 1,4,Ninguno,Obligatorio,Pendiente,0,0,Ingeniería,1
+MINA0106,Laboratorio de Liderazgo,3,Ninguno,Obligatorio,Pendiente,0,0,Ingeniería,1
+
+MINA0201,Álgebra Lineal y Geometría Analítica,4,MINA0101,Obligatorio,Pendiente,0,0,Ingeniería,2
+MINA0202,Fundamentos del Cálculo,4,MINA0101,Obligatorio,Pendiente,0,0,Ingeniería,2
+MINA0203,Algoritmia,3,Ninguno,Obligatorio,Pendiente,0,0,Ingeniería,2
+MINA0204,Comunicación Efectiva,4,MINA0102,Obligatorio,Pendiente,0,0,Ingeniería,2
+MINA0205,Dibujo en Ingeniería,4,Ninguno,Obligatorio,Pendiente,0,0,Ingeniería,2
+MINA0206,Electivo General 1,3,Ninguno,Electivo,Pendiente,0,0,Ingeniería,2
+
+MINA0301,Cálculo Diferencial,4,MINA0202,Obligatorio,Pendiente,0,0,Ingeniería,3
+MINA0302,Física 1,4,MINA0202,Obligatorio,Pendiente,0,0,Ingeniería,3
+MINA0303,Programación Aplicada,3,MINA0203,Obligatorio,Pendiente,0,0,Ingeniería,3
+MINA0304,Estadística y Probabilidades,4,MINA0202,Obligatorio,Pendiente,0,0,Ingeniería,3
+MINA0305,Geología General,4,MINA0105,Obligatorio,Pendiente,0,0,Ingeniería,3
+MINA0306,Laboratorio de Liderazgo e Innovación Intermedio,2,MINA0106,Obligatorio,Pendiente,0,0,Ingeniería,3
+
+MINA0401,Cálculo Integral,4,MINA0301,Obligatorio,Pendiente,0,0,Ingeniería,4
+MINA0402,Física 2,4,MINA0302,Obligatorio,Pendiente,0,0,Ingeniería,4
+MINA0403,Mecánica Vectorial - Estática,4,MINA0302,Obligatorio,Pendiente,0,0,Ingeniería,4
+MINA0404,English Course 1,3,40 Créditos,Obligatorio,Pendiente,0,0,Ingeniería,4
+MINA0405,Mineralogía y Petrología,4,MINA0305,Obligatorio,Pendiente,0,0,Ingeniería,4
+MINA0406,Electivo General 2,3,Ninguno,Electivo,Pendiente,0,0,Ingeniería,4
+
+MINA0501,Ecuaciones Diferenciales,4,MINA0401,Obligatorio,Pendiente,0,0,Ingeniería,5
+MINA0502,Topografía Minera,4,MINA0205,Obligatorio,Pendiente,0,0,Ingeniería,5
+MINA0503,Mecánica Vectorial - Dinámica,4,MINA0403,Obligatorio,Pendiente,0,0,Ingeniería,5
+MINA0504,Geología Estructural,4,MINA0405,Obligatorio,Pendiente,0,0,Ingeniería,5
+MINA0505,Laboratorio de Liderazgo e Innovación Avanzado,3,MINA0306,Obligatorio,Pendiente,0,0,Ingeniería,5
+MINA0506,English Course 2,3,MINA0404,Obligatorio,Pendiente,0,0,Ingeniería,5
+
+MINA0601,Mecánica de Rocas 1,4,MINA0403,Obligatorio,Pendiente,0,0,Ingeniería,6
+MINA0602,Minería Subterránea,4,MINA0104,Obligatorio,Pendiente,0,0,Ingeniería,6
+MINA0603,Resistencia de Materiales,4,MINA0503,Obligatorio,Pendiente,0,0,Ingeniería,6
+MINA0604,Estadística Aplicada para la Ingeniería,3,MINA0304,Obligatorio,Pendiente,0,0,Ingeniería,6
+MINA0605,Investigación Académica,3,MINA0204,Obligatorio,Pendiente,0,0,Ingeniería,6
+MINA0606,English Course 3,3,MINA0506,Obligatorio,Pendiente,0,0,Ingeniería,6
+
+MINA0701,Mecánica de Rocas 2,4,MINA0601,Obligatorio,Pendiente,0,0,Ingeniería,7
+MINA0702,Minería superficial,4,MINA0602,Obligatorio,Pendiente,0,0,Ingeniería,7
+MINA0703,Termodinámica Aplicada,4,MINA0402,Obligatorio,Pendiente,0,0,Ingeniería,7
+MINA0704,Perforación y Voladura de Rocas,4,MINA0601,Obligatorio,Pendiente,0,0,Ingeniería,7
+MINA0705,Seguridad y Salud Ocupacional en Minería,3,MINA0602,Obligatorio,Pendiente,0,0,Ingeniería,7
+MINA0706,English Course 4,3,MINA0606,Obligatorio,Pendiente,0,0,Ingeniería,7
+
+MINA0801,Planeamiento de Minado,4,MINA0702,Obligatorio,Pendiente,0,0,Ingeniería,8
+MINA0802,Ventilación de Minas,4,MINA0703,Obligatorio,Pendiente,0,0,Ingeniería,8
+MINA0803,Concentración y Flotación de Minerales,4,MINA0405,Obligatorio,Pendiente,0,0,Ingeniería,8
+MINA0804,Gestión de Proyectos,3,Ninguno,Obligatorio,Pendiente,0,0,Ingeniería,8
+MINA0805,Economía Minera y Valuación de Minas,3,MINA0702,Obligatorio,Pendiente,0,0,Ingeniería,8
+MINA0806,Electivo de Especialidad 1,3,Ninguno,Electivo,Pendiente,0,0,Ingeniería,8
+
+MINA0901,Transporte y Servicios Auxiliares en Minería,4,MINA0801,Obligatorio,Pendiente,0,0,Ingeniería,9
+MINA0902,Taller de Investigación 1,4,MINA0605,Obligatorio,Pendiente,0,0,Ingeniería,9
+MINA0903,Software Minero Aplicado,4,MINA0801,Obligatorio,Pendiente,0,0,Ingeniería,9
+MINA0904,Relaciones Comunitarias y Responsabilidad Social,3,Ninguno,Obligatorio,Pendiente,0,0,Ingeniería,9
+MINA0905,Derecho y Legislación Minera,2,Ninguno,Obligatorio,Pendiente,0,0,Ingeniería,9
+MINA0906,Electivo de Especialidad 2,3,Ninguno,Electivo,Pendiente,0,0,Ingeniería,9
+
+MINA1001,Gestión Estratégica en Minería,3,MINA0804,Obligatorio,Pendiente,0,0,Ingeniería,10
+MINA1002,Taller de Investigación 2,4,MINA0902,Obligatorio,Pendiente,0,0,Ingeniería,10
+MINA1003,Gestión Ambiental en Minería,3,MINA0504,Obligatorio,Pendiente,0,0,Ingeniería,10
+MINA1004,Ética Profesional,2,Ninguno,Obligatorio,Pendiente,0,0,Ingeniería,10
+MINA1005,Cierre de Minas,3,MINA1003,Obligatorio,Pendiente,0,0,Ingeniería,10
+MINA1006,Electivo de Especialidad 3,3,Ninguno,Electivo,Pendiente,0,0,Ingeniería,10

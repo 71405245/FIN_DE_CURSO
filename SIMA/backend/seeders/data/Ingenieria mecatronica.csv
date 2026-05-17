@@ -1,0 +1,70 @@
+codigo,asignatura,creditos,prerrequisitos,tipo,estado,nota,veces llevado,area,ciclo
+MECT0101,Matemática Superior,4,Ninguno,Obligatorio,Pendiente,0,0,Ingeniería,1
+MECT0102,Habilidades Comunicativas,4,Ninguno,Obligatorio,Pendiente,0,0,Ingeniería,1
+MECT0103,Gestión del Aprendizaje,3,Ninguno,Obligatorio,Pendiente,0,0,Ingeniería,1
+MECT0104,Introducción a la Ingeniería Mecatrónica,3,Ninguno,Obligatorio,Pendiente,0,0,Ingeniería,1
+MECT0105,Química 1,4,Ninguno,Obligatorio,Pendiente,0,0,Ingeniería,1
+MECT0106,Laboratorio de Liderazgo,3,Ninguno,Obligatorio,Pendiente,0,0,Ingeniería,1
+
+MECT0201,Álgebra Lineal y Geometría Analítica,4,MECT0101,Obligatorio,Pendiente,0,0,Ingeniería,2
+MECT0202,Fundamentos del Cálculo,4,MECT0101,Obligatorio,Pendiente,0,0,Ingeniería,2
+MECT0203,Algoritmia,3,Ninguno,Obligatorio,Pendiente,0,0,Ingeniería,2
+MECT0204,Comunicación Efectiva,4,MECT0102,Obligatorio,Pendiente,0,0,Ingeniería,2
+MECT0205,Dibujo en Ingeniería,4,Ninguno,Obligatorio,Pendiente,0,0,Ingeniería,2
+MECT0206,Electivo General 1,3,Ninguno,Electivo,Pendiente,0,0,Ingeniería,2
+
+MECT0301,Cálculo Diferencial,4,MECT0202,Obligatorio,Pendiente,0,0,Ingeniería,3
+MECT0302,Física 1,4,MECT0202,Obligatorio,Pendiente,0,0,Ingeniería,3
+MECT0303,Programación Aplicada,3,MECT0203,Obligatorio,Pendiente,0,0,Ingeniería,3
+MECT0304,Estadística y Probabilidades,4,MECT0202,Obligatorio,Pendiente,0,0,Ingeniería,3
+MECT0305,Variable Compleja y Transformadas,3,MECT0201,Obligatorio,Pendiente,0,0,Ingeniería,3
+MECT0306,Laboratorio de Liderazgo e Innovación Intermedio,2,MECT0106,Obligatorio,Pendiente,0,0,Ingeniería,3
+
+MECT0401,Cálculo Integral,4,MECT0301,Obligatorio,Pendiente,0,0,Ingeniería,4
+MECT0402,Física 2,4,MECT0302,Obligatorio,Pendiente,0,0,Ingeniería,4
+MECT0403,Mecánica Vectorial - Estática,4,MECT0302,Obligatorio,Pendiente,0,0,Ingeniería,4
+MECT0404,English Course 1,3,40 Créditos,Obligatorio,Pendiente,0,0,Ingeniería,4
+MECT0405,Circuitos Eléctricos 1,5,MECT0305,Obligatorio,Pendiente,0,0,Ingeniería,4
+MECT0406,Electivo General 2,3,Ninguno,Electivo,Pendiente,0,0,Ingeniería,4
+
+MECT0501,Ecuaciones Diferenciales,4,MECT0401,Obligatorio,Pendiente,0,0,Ingeniería,5
+MECT0502,Física Electromagnética,4,MECT0402,Obligatorio,Pendiente,0,0,Ingeniería,5
+MECT0503,Circuitos Eléctricos 2,5,MECT0405,Obligatorio,Pendiente,0,0,Ingeniería,5
+MECT0504,Mecánica Vectorial - Dinámica,4,MECT0403,Obligatorio,Pendiente,0,0,Ingeniería,5
+MECT0505,Laboratorio de Liderazgo e Innovación Avanzado,3,MECT0306,Obligatorio,Pendiente,0,0,Ingeniería,5
+MECT0506,Tecnología de Materiales,4,MECT0105,Obligatorio,Pendiente,0,0,Ingeniería,5
+
+MECT0601,Máquinas Eléctricas,4,MECT0503,Obligatorio,Pendiente,0,0,Ingeniería,6
+MECT0602,Semiconductores y Dispositivos Electrónicos,3,MECT0503,Obligatorio,Pendiente,0,0,Ingeniería,6
+MECT0603,Mecánica de Sólidos,4,MECT0403,Obligatorio,Pendiente,0,0,Ingeniería,6
+MECT0604,Estadística para Ingeniería,3,MECT0304,Obligatorio,Pendiente,0,0,Ingeniería,6
+MECT0605,Investigación Académica,3,MECT0204,Obligatorio,Pendiente,0,0,Ingeniería,6
+MECT0606,Fundamentos de Termodinámica y Fluidos,4,MECT0504,Obligatorio,Pendiente,0,0,Ingeniería,6
+
+MECT0701,Ingeniería de Control 1,3,MECT0501,Obligatorio,Pendiente,0,0,Ingeniería,7
+MECT0702,Sistemas Digitales,4,MECT0602,Obligatorio,Pendiente,0,0,Ingeniería,7
+MECT0703,Diseño de Elementos de Máquinas,4,MECT0603,Obligatorio,Pendiente,0,0,Ingeniería,7
+MECT0704,Sensores y Actuadores,3,MECT0602,Obligatorio,Pendiente,0,0,Ingeniería,7
+MECT0705,Sistemas Hidráulicos y Neumáticos,3,"MECT0606;MECT0603",Obligatorio,Pendiente,0,0,Ingeniería,7
+MECT0706,English Course 2,3,MECT0404,Obligatorio,Pendiente,0,0,Ingeniería,7
+
+MECT0801,Ingeniería de Control 2,3,MECT0701,Obligatorio,Pendiente,0,0,Ingeniería,8
+MECT0802,Microcontroladores y Microprocesadores,4,MECT0702,Obligatorio,Pendiente,0,0,Ingeniería,8
+MECT0803,Mecanismos y Máquinas,4,"MECT0703;MECT0403",Obligatorio,Pendiente,0,0,Ingeniería,8
+MECT0804,Electrónica de Potencia,3,MECT0602,Obligatorio,Pendiente,0,0,Ingeniería,8
+MECT0805,Gestión de Proyectos en Ingeniería,3,Ninguno,Obligatorio,Pendiente,0,0,Ingeniería,8
+MECT0806,Electivo de Especialidad 1,3,Ninguno,Electivo,Pendiente,0,0,Ingeniería,8
+
+MECT0901,Robótica Manipuladora,4,MECT0801,Obligatorio,Pendiente,0,0,Ingeniería,9
+MECT0902,Taller de Investigación 1,4,MECT0605,Obligatorio,Pendiente,0,0,Ingeniería,9
+MECT0903,Automatización Industrial,4,"MECT0701;MECT0704",Obligatorio,Pendiente,0,0,Ingeniería,9
+MECT0904,Diseño Mecatrónico 1,4,MECT0803,Obligatorio,Pendiente,0,0,Ingeniería,9
+MECT0905,Manufactura Integrada por Computador (CIM),3,MECT0705,Obligatorio,Pendiente,0,0,Ingeniería,9
+MECT0906,Electivo de Especialidad 2,3,Ninguno,Electivo,Pendiente,0,0,Ingeniería,9
+
+MECT1001,Diseño Mecatrónico 2,4,MECT0904,Obligatorio,Pendiente,0,0,Ingeniería,10
+MECT1002,Taller de Investigación 2,4,MECT0902,Obligatorio,Pendiente,0,0,Ingeniería,10
+MECT1003,Inteligencia Artificial aplicada a la Robótica,3,MECT0901,Obligatorio,Pendiente,0,0,Ingeniería,10
+MECT1004,Ética Profesional,2,Ninguno,Obligatorio,Pendiente,0,0,Ingeniería,10
+MECT1005,Mantenimiento y Seguridad Industrial,3,Ninguno,Obligatorio,Pendiente,0,0,Ingeniería,10
+MECT1006,Electivo de Especialidad 3,3,Ninguno,Electivo,Pendiente,0,0,Ingeniería,10

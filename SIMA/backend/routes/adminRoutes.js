@@ -10,6 +10,7 @@ router.delete('/carreras/:id', adminController.deleteCarrera);
 
 // Estudiantes
 router.post('/estudiantes', adminController.createEstudiante);
+router.post('/estudiantes/importar', adminController.importarEstudiantes);
 router.get('/estudiantes', adminController.getEstudiantes);
 router.put('/estudiantes/:id', adminController.updateEstudiante);
 router.delete('/estudiantes/:id', adminController.deleteEstudiante);

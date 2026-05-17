@@ -1,0 +1,59 @@
+codigo,asignatura,creditos,prerrequisitos,tipo,estado,nota,veces llevado,area,ciclo
+FAR001,Comprensión y Producción de Textos 1,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 01
+FAR002,Laboratorio de Liderazgo e Innovación,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 01
+FAR003,Estrategias y Herramientas Digitales para el Aprendizaje,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 01
+FAR004,Fundamentos de Matemática,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 01
+FAR005,Biología en Salud,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 01
+FAR006,Química en Salud,2,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 01
+FAR007,Introducción a Farmacia y Bioquímica,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 01
+FAR008,Comprensión y Producción de Textos 2,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 02
+FAR009,Determinantes Sociales de la Salud,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 02
+FAR010,Química Analítica 1,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 02
+FAR011,Botánica Farmacéutica,1,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 02
+FAR012,Biofísica y Fisicoquímica,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 02
+FAR013,Electivo General 1,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 02
+FAR014,Estadística y Probabilidades,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 03
+FAR015,Laboratorio de Liderazgo e Innovación Intermedio,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 03
+FAR016,Psicología Aplicada a las Ciencias de la Salud,2,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 03
+FAR017,Estructura y Función,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 03
+FAR018,Electivo General 2,2,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 03
+FAR019,English Course 1,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 04
+FAR020,Química Orgánica 1,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 04
+FAR021,Microbiología y Parasitología para Farmacia y Bioquímica,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 04
+FAR022,Química Analítica 2,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 04
+FAR023,Bioquímica Básica,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 04
+FAR024,Electivo General 3,2,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 04
+FAR025,Electivo General 4,2,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 04
+FAR026,English Course 2,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 05
+FAR027,Laboratorio de Liderazgo e Innovación Avanzado,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 05
+FAR028,Ética y Deontología en Farmacia y Bioquímica,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 05
+FAR029,Epidemiología,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 05
+FAR030,Química Orgánica 2,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 05
+FAR031,Bioquímica y Biología Molecular,2,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 05
+FAR032,Conociendo una Farmacia,2,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 05
+FAR033,Investigación Académica,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 06
+FAR034,English Course 3,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 06
+FAR035,Funciones Esenciales de la Salud Pública,5,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 06
+FAR036,Tecnología Farmacéutica 1,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 06
+FAR037,Farmacocinética,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 06
+FAR038,Farmacología 1,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 06
+FAR039,Conociendo la Industria Farmacéutica,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 06
+FAR040,English Course 4,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 07
+FAR041,Taller de Investigación en Farmacia y Bioquímica 1,1,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 07
+FAR042,Gestión y Control de Calidad Farmacéutico,6,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 07
+FAR043,Farmacia Asistencial,2,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 07
+FAR044,Farmacología 2,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 07
+FAR045,Tecnología Farmacéutica 2,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 07
+FAR046,Legislación Farmacéutica,2,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 07
+FAR047,Electivo General 5,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 07
+FAR048,Gestión y Administración en Servicios Farmacéuticos,6,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 08
+FAR049,Taller de Investigación en Farmacia y Bioquímica 2,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 08
+FAR050,Biotecnología,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 08
+FAR051,Bromatología,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 08
+FAR052,Farmacoterapia,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 08
+FAR053,Farmacia Hospitalaria,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 08
+FAR054,Electivo Interdisciplinario 1,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 08
+FAR055,Toxicología,6,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 09
+FAR056,Internado en Farmacia Comunitaria,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 09
+FAR057,Internado Asistencial,6,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 10
+FAR058,Trabajo de Investigación - Farmacia y Bioquímica,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 10

@@ -30,10 +30,17 @@ exports.calificar = async (req, res) => {
       return res.json({ msg: 'Calificación actualizada', calificacion });
     }
 
+    // Obtener la sección para extraer el curso obligatorio
+    const seccion = await Seccion.findById(seccionId);
+    if (!seccion) {
+      return res.status(404).json({ msg: 'Sección no encontrada' });
+    }
+
     // Crear nueva
     calificacion = new Calificacion({
       estudiante: estudianteId,
       seccion: seccionId,
+      curso: seccion.curso,
       docente: docenteId,
       nota,
       comentarios
@@ -42,6 +49,17 @@ exports.calificar = async (req, res) => {
     await calificacion.save();
     res.json({ msg: 'Calificación registrada', calificacion });
   } catch (err) {
+    console.error(err);
     res.status(500).send('Error al registrar calificación');
+  }
+};
+
+exports.getCalificacionesSeccion = async (req, res) => {
+  try {
+    const { seccionId } = req.params;
+    const calificaciones = await Calificacion.find({ seccion: seccionId });
+    res.json(calificaciones);
+  } catch (err) {
+    res.status(500).send('Error al obtener calificaciones');
   }
 };

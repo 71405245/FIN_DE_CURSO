@@ -5,5 +5,6 @@ const auth = require('../middleware/auth');
 
 router.get('/mis-secciones', auth, docenteController.misSecciones);
 router.post('/calificar', auth, docenteController.calificar);
+router.get('/secciones/:seccionId/calificaciones', auth, docenteController.getCalificacionesSeccion);
 
 module.exports = router;

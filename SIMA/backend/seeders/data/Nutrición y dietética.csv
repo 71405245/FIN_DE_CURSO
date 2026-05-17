@@ -1,0 +1,58 @@
+﻿codigo,asignatura,creditos,prerrequisitos,tipo,estado,nota,veces llevado,area,ciclo
+NUT001,Comprensión y Producción de Textos 1,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 01
+NUT002,Laboratorio de Liderazgo e Innovación,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 01
+NUT003,Estrategias y Herramientas Digitales para el Aprendizaje,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 01
+NUT004,Fundamentos de Matemática,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 01
+NUT005,Biología en Salud,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 01
+NUT006,Química en Salud,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 01
+NUT007,Introducción a la Nutrición y Dietética,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 01
+NUT008,Comprensión y Producción de Textos 2,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 02
+NUT009,Determinantes Sociales de la Salud,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 02
+NUT010,Bioquímica y Biología Celular,8,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 02
+NUT011,Composición de los Alimentos y Técnicas Dietéticas,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 02
+NUT012,Valoración del Estado Nutricional 1: Antropometría,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 02
+NUT013,Electivo General 1,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 02
+NUT014,Estadística y Probabilidades,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 03
+NUT015,Laboratorio de Liderazgo e Innovación Intermedio,2,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 03
+NUT016,Psicología Aplicada a las Ciencias de la Salud,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 03
+NUT017,Estructura y Función,12,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 03
+NUT018,Electivo General 2,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 03
+NUT019,English Course 1,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 04
+NUT020,Análisis y Control de la Calidad de Alimentos,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 04
+NUT021,Valoración del Estado Nutricional 2: Consumo de Alimentos,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 04
+NUT022,Alimentación y Nutrición por Ciclo de Vida 1,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 04
+NUT023,Farmacología Aplicada a la Nutrición,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 04
+NUT024,Electivo General 3,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 04
+NUT025,Electivo General 4,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 04
+NUT026,English Course 2,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 05
+NUT027,Laboratorio de Liderazgo e Innovación Avanzado,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 05
+NUT028,Ética y Deontología en Nutrición,2,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 05
+NUT029,Epidemiología,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 05
+NUT030,Alimentación y Nutrición por Ciclo de Vida 2,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 05
+NUT031,Higiene y Calidad de Alimentos,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 05
+NUT032,Valoración del Estado Nutricional 3: Indicadores Bioquímicos,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 05
+NUT033,Investigación Académica,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 06
+NUT034,English Course 3,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 06
+NUT035,Funciones Esenciales de la Salud Pública,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 06
+NUT036,Seguridad Alimentaria y Nutricional,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 06
+NUT037,Fisiopatología Aplica a la Nutrición,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 06
+NUT038,Alimentación y Nutrición por Ciclo de Vida 3,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 06
+NUT039,Administración y Gestión de Servicios de Alimentación,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 06
+NUT040,English Course 4,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 07
+NUT041,Taller de Investigación en Nutrición 1,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 07
+NUT042,Dietoterapia 1,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 07
+NUT043,Nutrición y Deporte 1,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 07
+NUT044,Soporte Nutricional,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 07
+NUT045,Antropología y Nutrición,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 07
+NUT046,Educación en Alimentación y Nutrición,2,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 07
+NUT047,Electivo General 5,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 07
+NUT048,Dietoterapia 2,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 08
+NUT049,Taller de Investigación en Nutrición 2,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 08
+NUT050,Nutrición y Promoción de la Salud,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 08
+NUT051,Marco Legal y Auditoría en Alimentación y Nutrición,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 08
+NUT052,Nutrición y Deporte 2,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 08
+NUT053,Políticas Públicas y Programas en Salud y Nutrición,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 08
+NUT054,Electivo Transversal 1,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 08
+NUT055,Internado en Nutrición 1,22,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 09
+NUT056,Internado en Nutrición 2,21,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 10
+NUT057,Trabajo de Investigación - Nutrición y Dietética,1,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 10

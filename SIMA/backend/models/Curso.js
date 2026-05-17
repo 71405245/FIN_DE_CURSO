@@ -5,10 +5,12 @@ const cursoSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+    trim: true,
   },
   nombre: {
     type: String,
     required: true,
+    trim: true,
   },
   creditos: {
     type: Number,
@@ -23,9 +25,23 @@ const cursoSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  descripcion: {
+  // Códigos de cursos prerrequisito (ej: ["MAT101", "CS101"])
+  prerrequisitos: {
+    type: [String],
+    default: [],
+  },
+  // Área académica (ej: "Formación General", "Especialidad", "Electivo")
+  area: {
     type: String,
-  }
+    trim: true,
+  },
+  // Tipo de curso (ej: "Obligatorio", "Electivo", "Libre")
+  tipo: {
+    type: String,
+    trim: true,
+  },
+}, {
+  timestamps: true,
 });
 
 module.exports = mongoose.model('Curso', cursoSchema);

@@ -16,8 +16,18 @@ const seccionSchema = new mongoose.Schema({
     required: true, // Asignado por el Admin
   },
   horario: {
-    type: String, // Ej: "Lunes y Miercoles 10:00 - 12:00"
+    type: String, // Ej: "Lunes y Miércoles 10:00 - 12:00"
     required: true,
+  },
+  dias: {
+    type: [String], // Ej: ["Lunes", "Miércoles"]
+    default: [],
+  },
+  horaInicio: {
+    type: String, // Ej: "10:00"
+  },
+  horaFin: {
+    type: String, // Ej: "12:00"
   },
   aula: {
     type: String, // Ej: "Pabellon B - 301"

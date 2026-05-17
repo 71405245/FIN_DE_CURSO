@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { LogOut, BookOpen, Users, Layers, GraduationCap, Building, LayoutDashboard, ChevronRight } from 'lucide-react';
 import CarrerasManager from '../components/admin/CarrerasManager';
 import CursosManager from '../components/admin/CursosManager';
@@ -10,14 +11,22 @@ import SeccionesManager from '../components/admin/SeccionesManager';
 function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('carreras');
   const [isHovered, setIsHovered] = useState(false);
+  const [stats, setStats] = useState({ carreras: 0, cursos: 0, alumnos: 0, docentes: 0, secciones: 0 });
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user'));
 
   useEffect(() => {
     if (!user || user.rol !== 'ADMIN') {
       navigate('/login');
+      return;
     }
-  }, [navigate]);
+    // Cargar estadísticas en tiempo real
+    axios.get('http://localhost:5000/api/admin/carreras').then(res => setStats(prev => ({ ...prev, carreras: res.data.length }))).catch(() => {});
+    axios.get('http://localhost:5000/api/admin/cursos').then(res => setStats(prev => ({ ...prev, cursos: res.data.length }))).catch(() => {});
+    axios.get('http://localhost:5000/api/admin/estudiantes').then(res => setStats(prev => ({ ...prev, alumnos: res.data.length }))).catch(() => {});
+    axios.get('http://localhost:5000/api/admin/docentes').then(res => setStats(prev => ({ ...prev, docentes: res.data.length }))).catch(() => {});
+    axios.get('http://localhost:5000/api/admin/secciones').then(res => setStats(prev => ({ ...prev, secciones: res.data.length }))).catch(() => {});
+  }, [navigate, activeTab]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -63,13 +72,13 @@ function AdminDashboard() {
         </div>
 
         <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', padding: '1.5rem 0', flex: 1 }}>
-          <TabButton active={activeTab === 'carreras'} onClick={() => setActiveTab('carreras')} icon={<Building size={20}/>} text="Gestión de Carreras" isHovered={isHovered} />
-          <TabButton active={activeTab === 'cursos'} onClick={() => setActiveTab('cursos')} icon={<BookOpen size={20}/>} text="Plan de Estudios" isHovered={isHovered} />
+          <TabButton active={activeTab === 'carreras'} onClick={() => setActiveTab('carreras')} icon={<Building size={20}/>} text="Gestión de Carreras" isHovered={isHovered} badge={stats.carreras} />
+          <TabButton active={activeTab === 'cursos'} onClick={() => setActiveTab('cursos')} icon={<BookOpen size={20}/>} text="Plan de Estudios" isHovered={isHovered} badge={stats.cursos} />
           <div style={{ height: '1px', background: 'var(--border)', margin: '1rem 1.5rem' }} />
-          <TabButton active={activeTab === 'alumnos'} onClick={() => setActiveTab('alumnos')} icon={<GraduationCap size={20}/>} text="Alumnos" isHovered={isHovered} />
-          <TabButton active={activeTab === 'docentes'} onClick={() => setActiveTab('docentes')} icon={<Users size={20}/>} text="Personal Docente" isHovered={isHovered} />
+          <TabButton active={activeTab === 'alumnos'} onClick={() => setActiveTab('alumnos')} icon={<GraduationCap size={20}/>} text="Alumnos" isHovered={isHovered} badge={stats.alumnos} />
+          <TabButton active={activeTab === 'docentes'} onClick={() => setActiveTab('docentes')} icon={<Users size={20}/>} text="Personal Docente" isHovered={isHovered} badge={stats.docentes} />
           <div style={{ height: '1px', background: 'var(--border)', margin: '1rem 1.5rem' }} />
-          <TabButton active={activeTab === 'secciones'} onClick={() => setActiveTab('secciones')} icon={<Layers size={20}/>} text="Salones y Horarios" isHovered={isHovered} />
+          <TabButton active={activeTab === 'secciones'} onClick={() => setActiveTab('secciones')} icon={<Layers size={20}/>} text="Salones y Horarios" isHovered={isHovered} badge={stats.secciones} />
         </nav>
 
         <div style={{ padding: '1.5rem 0', borderTop: '1px solid var(--border)' }}>
@@ -114,7 +123,7 @@ function AdminDashboard() {
 }
 
 // Sidebar Button Component
-const TabButton = ({ active, onClick, icon, text, isHovered }) => {
+const TabButton = ({ active, onClick, icon, text, isHovered, badge }) => {
   const [hovered, setHovered] = useState(false);
   
   return (
@@ -136,7 +145,23 @@ const TabButton = ({ active, onClick, icon, text, isHovered }) => {
         {icon}
       </div>
       <span style={{ opacity: isHovered ? 1 : 0, transition: 'opacity 0.3s', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flex: 1, paddingRight: '1rem' }}>
-        {text}
+        <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          {text}
+          {badge !== undefined && badge !== null && badge > 0 && (
+            <span style={{ 
+              background: active ? 'var(--primary-purple)' : 'var(--primary-alpha)', 
+              color: active ? 'white' : 'var(--primary-purple)', 
+              fontSize: '0.72rem', 
+              padding: '2px 7px', 
+              borderRadius: '20px', 
+              fontWeight: '800',
+              marginLeft: '4px',
+              transition: 'all 0.2s ease'
+            }}>
+              {badge.toLocaleString()}
+            </span>
+          )}
+        </span>
         {active && <ChevronRight size={16} />}
       </span>
     </button>

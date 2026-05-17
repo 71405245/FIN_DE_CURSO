@@ -6,6 +6,11 @@ const calificacionSchema = new mongoose.Schema({
     ref: 'User',
     required: true,
   },
+  curso: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Curso',
+    required: true,
+  },
   seccion: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Seccion',
@@ -14,11 +19,21 @@ const calificacionSchema = new mongoose.Schema({
   docente: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true, // Quien califica
+    required: true,
   },
   nota: {
     type: Number,
     required: true,
+    min: 0,
+    max: 20,
+  },
+  // true si nota >= 11 (escala vigesimal peruana)
+  aprobado: {
+    type: Boolean,
+    default: false,
+  },
+  periodo: {
+    type: String, // Ej: "2025-I", "2025-II"
   },
   comentarios: {
     type: String,
@@ -26,7 +41,13 @@ const calificacionSchema = new mongoose.Schema({
   fechaRegistro: {
     type: Date,
     default: Date.now,
-  }
+  },
+});
+
+// Calcular automáticamente si aprobó antes de guardar
+calificacionSchema.pre('save', function (next) {
+  this.aprobado = this.nota >= 11;
+  next();
 });
 
 module.exports = mongoose.model('Calificacion', calificacionSchema);

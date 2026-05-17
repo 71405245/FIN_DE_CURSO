@@ -1,16 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Plus, Layers, Edit2, Trash2 } from 'lucide-react';
+import { Plus, Layers, Edit2, Trash2, Calendar, Clock, MapPin, Users, Check } from 'lucide-react';
+
+const DIAS_SEMANA = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+
+const EMPTY_FORM = {
+  curso: '',
+  docente: '',
+  codigoSeccion: '',
+  dias: [],
+  horaInicio: '',
+  horaFin: '',
+  aula: '',
+  cupoMaximo: 30
+};
 
 function SeccionesManager() {
   const [secciones, setSecciones] = useState([]);
   const [cursos, setCursos] = useState([]);
   const [docentes, setDocentes] = useState([]);
-  const [form, setForm] = useState({ curso: '', docente: '', codigoSeccion: '', horario: '', aula: '', cupoMaximo: 30 });
+  const [form, setForm] = useState(EMPTY_FORM);
   const [editId, setEditId] = useState(null);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
-  useEffect(() => { 
-    fetchSecciones(); 
+  useEffect(() => {
+    fetchSecciones();
     axios.get('http://localhost:5000/api/admin/cursos').then(res => setCursos(res.data));
     axios.get('http://localhost:5000/api/admin/docentes').then(res => setDocentes(res.data));
   }, []);
@@ -20,32 +35,82 @@ function SeccionesManager() {
     setSecciones(res.data);
   };
 
+  const formatearHorario = (dias, inicio, fin) => {
+    if (!dias || dias.length === 0 || !inicio || !fin) return '';
+    let diasStr = '';
+    if (dias.length === 1) {
+      diasStr = dias[0];
+    } else {
+      diasStr = dias.slice(0, -1).join(', ') + ' y ' + dias[dias.length - 1];
+    }
+    return `${diasStr} ${inicio} - ${fin}`;
+  };
+
+  const handleDiaToggle = (dia) => {
+    setForm(prev => {
+      const dias = prev.dias.includes(dia)
+        ? prev.dias.filter(d => d !== dia)
+        : [...prev.dias, dia];
+      // Ordenar los días según el orden de la semana
+      const diasOrdenados = DIAS_SEMANA.filter(d => dias.includes(d));
+      return { ...prev, dias: diasOrdenados };
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    setSuccess('');
+
+    if (form.dias.length === 0) {
+      setError('Por favor, selecciona al menos un día para el horario.');
+      return;
+    }
+    if (!form.horaInicio || !form.horaFin) {
+      setError('Por favor, define la hora de inicio y la hora de fin.');
+      return;
+    }
+    if (form.horaInicio >= form.horaFin) {
+      setError('La hora de fin debe ser posterior a la hora de inicio.');
+      return;
+    }
+
     try {
+      const horarioFormateado = formatearHorario(form.dias, form.horaInicio, form.horaFin);
+      const payload = {
+        ...form,
+        horario: horarioFormateado
+      };
+
       if (editId) {
-        await axios.put(`http://localhost:5000/api/admin/secciones/${editId}`, form);
+        await axios.put(`http://localhost:5000/api/admin/secciones/${editId}`, payload);
+        setSuccess('Salón actualizado correctamente.');
         setEditId(null);
       } else {
-        await axios.post('http://localhost:5000/api/admin/secciones', form);
+        await axios.post('http://localhost:5000/api/admin/secciones', payload);
+        setSuccess('Salón aperturado correctamente.');
       }
-      setForm({ curso: '', docente: '', codigoSeccion: '', horario: '', aula: '', cupoMaximo: 30 });
+      setForm(EMPTY_FORM);
       fetchSecciones();
+      setTimeout(() => setSuccess(''), 3000);
     } catch (err) {
-      alert(err.response?.data?.msg || 'Error al guardar');
+      setError(err.response?.data?.msg || 'Error al guardar el salón.');
     }
   };
 
   const handleEdit = (s) => {
-    setForm({ 
-      curso: s.curso?._id, 
-      docente: s.docente?._id, 
-      codigoSeccion: s.codigoSeccion, 
-      horario: s.horario, 
-      aula: s.aula, 
-      cupoMaximo: s.cupoMaximo 
+    setForm({
+      curso: s.curso?._id || '',
+      docente: s.docente?._id || '',
+      codigoSeccion: s.codigoSeccion || '',
+      dias: s.dias || [],
+      horaInicio: s.horaInicio || '',
+      horaFin: s.horaFin || '',
+      aula: s.aula || '',
+      cupoMaximo: s.cupoMaximo || 30
     });
     setEditId(s._id);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleDelete = async (id) => {
@@ -53,75 +118,254 @@ function SeccionesManager() {
     try {
       await axios.delete(`http://localhost:5000/api/admin/secciones/${id}`);
       fetchSecciones();
+      setSuccess('Salón eliminado correctamente.');
+      setTimeout(() => setSuccess(''), 3000);
     } catch (err) {
       alert(err.response?.data?.msg || 'Error al eliminar');
     }
   };
 
+  const handleCancel = () => {
+    setEditId(null);
+    setForm(EMPTY_FORM);
+    setError('');
+  };
+
+  const vistaPreviaHorario = formatearHorario(form.dias, form.horaInicio, form.horaFin);
+
   return (
     <div className="animate-fade-in">
+      {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '2rem' }}>
         <div style={{ padding: '10px', background: 'var(--primary-alpha)', borderRadius: '12px', color: 'var(--primary-purple)' }}>
           <Layers size={24} />
         </div>
         <div>
           <h2 style={{ color: 'var(--text-main)', fontSize: '1.5rem', fontWeight: '700' }}>Gestión de Salones (Secciones)</h2>
-          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Abre salones asignando un curso, docente, aula y cupo.</p>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Abre nuevos salones asignando docentes, cursos, aulas y horarios con precisión.</p>
         </div>
       </div>
 
+      {/* Alertas */}
+      {error && (
+        <div style={{ background: '#fef2f2', border: '1px solid #fca5a5', borderRadius: '8px', padding: '0.75rem 1rem', marginBottom: '1.5rem', color: '#dc2626', fontSize: '0.9rem' }}>
+          {error}
+        </div>
+      )}
+      {success && (
+        <div style={{ background: '#ecfdf5', border: '1px solid #a7f3d0', borderRadius: '8px', padding: '0.75rem 1rem', marginBottom: '1.5rem', color: '#059669', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <Check size={16}/> {success}
+        </div>
+      )}
+
+      {/* Formulario */}
       <div className="modern-card" style={{ marginBottom: '2rem' }}>
-        <h3 style={{ marginBottom: '1.25rem', fontSize: '1.1rem' }}>{editId ? 'Editar Salón' : 'Abrir Nuevo Salón'}</h3>
-        <form onSubmit={handleSubmit} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', alignItems: 'end' }}>
-          <div style={{ gridColumn: 'span 2' }}>
-            <label style={labelStyle}>Curso / Asignatura</label>
-            <select value={form.curso} onChange={e=>setForm({...form, curso: e.target.value})} required>
-              <option value="">Seleccione Curso</option>
-              {cursos.map(c => <option key={c._id} value={c._id}>{c.nombre} (Ciclo {c.ciclo})</option>)}
-            </select>
+        <h3 style={{ marginBottom: '1.5rem', fontSize: '1.1rem', fontWeight: '700' }}>
+          {editId ? 'Editar Configuración de Salón' : 'Aperturar Nuevo Salón'}
+        </h3>
+        <form onSubmit={handleSubmit}>
+          
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem', marginBottom: '1.25rem' }}>
+            {/* Curso */}
+            <div>
+              <label style={labelStyle}>Curso / Asignatura *</label>
+              <select value={form.curso} onChange={e => setForm({ ...form, curso: e.target.value })} required>
+                <option value="">Seleccione Curso</option>
+                {cursos.map(c => (
+                  <option key={c._id} value={c._id}>
+                    [{c.codigo}] {c.nombre} ({c.carrera?.nombre || 'General'} - Ciclo {c.ciclo})
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Docente */}
+            <div>
+              <label style={labelStyle}>Docente Asignado *</label>
+              <select value={form.docente} onChange={e => setForm({ ...form, docente: e.target.value })} required>
+                <option value="">Seleccione Docente</option>
+                {docentes.map(d => (
+                  <option key={d._id} value={d._id}>
+                    {d.nombre} {d.apellidos} ({d.email})
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
-          <div style={{ gridColumn: 'span 2' }}>
-            <label style={labelStyle}>Docente Asignado</label>
-            <select value={form.docente} onChange={e=>setForm({...form, docente: e.target.value})} required>
-              <option value="">Seleccione Docente</option>
-              {docentes.map(d => <option key={d._id} value={d._id}>{d.nombre} {d.apellidos}</option>)}
-            </select>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr 1fr', gap: '1.25rem', marginBottom: '1.25rem' }}>
+            {/* Código de Sección */}
+            <div>
+              <label style={labelStyle}>Código de Salón * (Ej: Secc A, Secc 101)</label>
+              <input placeholder="Ej. A1" value={form.codigoSeccion} onChange={e => setForm({ ...form, codigoSeccion: e.target.value })} required />
+            </div>
+
+            {/* Aula */}
+            <div>
+              <label style={labelStyle}>Aula / Laboratorio / Virtual *</label>
+              <input placeholder="Ej. Pabellón B - Aula 302" value={form.aula} onChange={e => setForm({ ...form, aula: e.target.value })} required />
+            </div>
+
+            {/* Cupos */}
+            <div>
+              <label style={labelStyle}>Cupo Máximo (Mínimo 25) *</label>
+              <input type="number" min="25" max="60" placeholder="30" value={form.cupoMaximo} onChange={e => setForm({ ...form, cupoMaximo: Number(e.target.value) })} required />
+            </div>
           </div>
-          <div><label style={labelStyle}>Código (Ej. A1)</label><input placeholder="Código" value={form.codigoSeccion} onChange={e=>setForm({...form, codigoSeccion: e.target.value})} required /></div>
-          <div><label style={labelStyle}>Horario</label><input placeholder="Ej. L-M 10am" value={form.horario} onChange={e=>setForm({...form, horario: e.target.value})} required /></div>
-          <div><label style={labelStyle}>Aula</label><input placeholder="Ej. Lab 3" value={form.aula} onChange={e=>setForm({...form, aula: e.target.value})} required /></div>
-          <div><label style={labelStyle}>Cupos Mín 25</label><input type="number" placeholder="30" value={form.cupoMaximo} onChange={e=>setForm({...form, cupoMaximo: e.target.value})} min="25" required /></div>
-          <div style={{ display: 'flex', gap: '0.5rem' }}>
-            <button type="submit" style={btnStyle}><Plus size={18}/> {editId ? 'Guardar' : 'Aperturar'}</button>
-            {editId && <button type="button" onClick={() => { setEditId(null); setForm({ curso: '', docente: '', codigoSeccion: '', horario: '', aula: '', cupoMaximo: 30 }); }} style={{...btnStyle, background: 'var(--text-muted)'}}>Cancelar</button>}
+
+          {/* Horario Inteligente (Inicio / Fin) */}
+          <div style={{ background: '#f8fafc', padding: '1.5rem', borderRadius: '12px', border: '1px solid var(--border-color)', marginBottom: '1.5rem' }}>
+            <h4 style={{ margin: '0 0 1rem 0', fontSize: '0.9rem', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <Clock size={16} color="var(--primary-purple)"/> Planificador de Horario
+            </h4>
+            
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '2rem', alignItems: 'start' }}>
+              {/* Días */}
+              <div>
+                <label style={{ ...labelStyle, marginBottom: '0.75rem' }}>Días de clase *</label>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                  {DIAS_SEMANA.map(dia => {
+                    const seleccionado = form.dias.includes(dia);
+                    return (
+                      <button
+                        key={dia}
+                        type="button"
+                        onClick={() => handleDiaToggle(dia)}
+                        style={{
+                          padding: '6px 12px',
+                          borderRadius: '20px',
+                          border: seleccionado ? '1.5px solid var(--primary-purple)' : '1.5px solid #cbd5e1',
+                          background: seleccionado ? 'var(--primary-alpha)' : 'white',
+                          color: seleccionado ? 'var(--primary-dark)' : 'var(--text-muted)',
+                          fontSize: '0.85rem',
+                          fontWeight: '600',
+                          cursor: 'pointer',
+                          transition: 'all 0.15s'
+                        }}
+                      >
+                        {dia}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Horas */}
+              <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                <div>
+                  <label style={labelStyle}>Hora de Inicio *</label>
+                  <input
+                    type="time"
+                    value={form.horaInicio}
+                    onChange={e => setForm({ ...form, horaInicio: e.target.value })}
+                    style={{ width: '130px', padding: '8px 12px', fontSize: '0.9rem' }}
+                    required
+                  />
+                </div>
+                <span style={{ marginTop: '1.5rem', color: 'var(--text-muted)', fontWeight: 'bold' }}>a</span>
+                <div>
+                  <label style={labelStyle}>Hora de Fin *</label>
+                  <input
+                    type="time"
+                    value={form.horaFin}
+                    onChange={e => setForm({ ...form, horaFin: e.target.value })}
+                    style={{ width: '130px', padding: '8px 12px', fontSize: '0.9rem' }}
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Vista Previa en Vivo */}
+            {vistaPreviaHorario && (
+              <div style={{ marginTop: '1.25rem', padding: '10px 15px', background: 'white', borderRadius: '8px', borderLeft: '3px solid var(--primary-purple)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <span style={{ fontSize: '0.82rem', fontWeight: '700', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Vista Previa:</span>
+                <span style={{ fontSize: '0.9rem', fontWeight: '600', color: 'var(--text-main)' }}>{vistaPreviaHorario}</span>
+              </div>
+            )}
+          </div>
+
+          {/* Botones de acción */}
+          <div style={{ display: 'flex', gap: '0.75rem' }}>
+            <button type="submit" style={btnStyle}>
+              <Plus size={18}/> {editId ? 'Guardar Cambios' : 'Aperturar Salón'}
+            </button>
+            {editId && (
+              <button type="button" onClick={handleCancel} style={{ ...btnStyle, background: 'var(--bg-card)', color: 'var(--text-muted)', border: '1px solid var(--border-color)' }}>
+                Cancelar
+              </button>
+            )}
           </div>
         </form>
       </div>
 
+      {/* Lista de Salones Abiertos */}
       <div className="modern-card" style={{ padding: '0', overflow: 'hidden' }}>
         <table className="modern-table" style={{ marginTop: 0 }}>
-          <thead><tr><th>Código</th><th>Curso</th><th>Docente</th><th>Horario / Aula</th><th>Matrícula</th><th>Acciones</th></tr></thead>
+          <thead>
+            <tr>
+              <th style={{ paddingLeft: '1.5rem' }}>Código</th>
+              <th>Asignatura</th>
+              <th>Docente</th>
+              <th>Horario</th>
+              <th>Aula</th>
+              <th style={{ textAlign: 'center' }}>Matrícula</th>
+              <th style={{ width: '90px' }}>Acciones</th>
+            </tr>
+          </thead>
           <tbody>
             {secciones.length === 0 ? (
-              <tr><td colSpan="6" style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-muted)' }}>No hay salones abiertos.</td></tr>
+              <tr>
+                <td colSpan="7" style={{ textAlign: 'center', padding: '3.5rem', color: 'var(--text-muted)' }}>
+                  No hay salones (secciones) abiertas actualmente.
+                </td>
+              </tr>
             ) : (
               secciones.map(s => {
-                const isFull = s.estudiantesMatriculados?.length >= s.cupoMaximo;
+                const matriculadosCount = s.estudiantesMatriculados?.length || 0;
+                const isFull = matriculadosCount >= s.cupoMaximo;
                 return (
                   <tr key={s._id}>
-                    <td><span className="badge badge-gray">{s.codigoSeccion}</span></td>
-                    <td style={{ fontWeight: '500' }}>{s.curso?.nombre}</td>
-                    <td>{s.docente?.nombre} {s.docente?.apellidos}</td>
-                    <td style={{ color: 'var(--text-muted)' }}>{s.horario}<br/>{s.aula}</td>
+                    <td style={{ paddingLeft: '1.5rem' }}>
+                      <span className="badge badge-gray" style={{ fontWeight: '700' }}>{s.codigoSeccion}</span>
+                    </td>
                     <td>
-                      <span className={`badge ${isFull ? 'badge-gray' : 'badge-green'}`} style={{ color: isFull ? 'red' : '' }}>
-                        {s.estudiantesMatriculados?.length || 0} / {s.cupoMaximo}
+                      <div style={{ fontWeight: '600', color: 'var(--text-main)' }}>{s.curso?.nombre}</div>
+                      <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontFamily: 'monospace' }}>{s.curso?.codigo}</div>
+                    </td>
+                    <td>
+                      <div style={{ fontWeight: '500' }}>{s.docente ? `${s.docente.nombre} ${s.docente.apellidos}` : 'No asignado'}</div>
+                    </td>
+                    <td>
+                      <span style={{ fontSize: '0.9rem', color: 'var(--text-main)', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                        <Clock size={14} style={{ color: 'var(--primary-purple)' }}/> {s.horario}
                       </span>
                     </td>
                     <td>
-                      <div style={{ display: 'flex', gap: '0.5rem' }}>
-                        <button onClick={() => handleEdit(s)} style={actionBtnStyle} title="Editar"><Edit2 size={16}/></button>
-                        <button onClick={() => handleDelete(s._id)} style={{...actionBtnStyle, color: '#ef4444'}} title="Eliminar"><Trash2 size={16}/></button>
+                      <span style={{ fontSize: '0.88rem', color: 'var(--text-muted)', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                        <MapPin size={14} style={{ color: '#ef4444' }}/> {s.aula}
+                      </span>
+                    </td>
+                    <td style={{ textAlign: 'center' }}>
+                      <span
+                        className={`badge ${isFull ? 'badge-gray' : 'badge-green'}`}
+                        style={{
+                          padding: '4px 10px',
+                          color: isFull ? '#ef4444' : '#059669',
+                          fontWeight: '700'
+                        }}
+                      >
+                        {matriculadosCount} / {s.cupoMaximo}
+                      </span>
+                    </td>
+                    <td>
+                      <div style={{ display: 'flex', gap: '0.4rem' }}>
+                        <button onClick={() => handleEdit(s)} style={actionBtnStyle} title="Editar">
+                          <Edit2 size={15}/>
+                        </button>
+                        <button onClick={() => handleDelete(s._id)} style={{ ...actionBtnStyle, color: '#ef4444' }} title="Eliminar">
+                          <Trash2 size={15}/>
+                        </button>
                       </div>
                     </td>
                   </tr>
@@ -135,8 +379,37 @@ function SeccionesManager() {
   );
 }
 
-const labelStyle = { display: 'block', fontSize: '0.8rem', fontWeight: '600', color: 'var(--text-muted)', marginBottom: '0.4rem', textTransform: 'uppercase', letterSpacing: '0.05em' };
-const btnStyle = { padding: '12px 20px', height: '46px', borderRadius: 'var(--radius-sm)', border: 'none', background: 'var(--text-main)', color: 'white', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' };
-const actionBtnStyle = { padding: '6px', background: 'transparent', border: 'none', cursor: 'pointer', color: 'var(--text-muted)' };
+const labelStyle = {
+  display: 'block',
+  fontSize: '0.78rem',
+  fontWeight: '600',
+  color: 'var(--text-muted)',
+  marginBottom: '0.4rem',
+  textTransform: 'uppercase',
+  letterSpacing: '0.05em'
+};
+
+const btnStyle = {
+  padding: '11px 20px',
+  borderRadius: 'var(--radius-sm)',
+  border: 'none',
+  background: 'var(--text-main)',
+  color: 'white',
+  fontWeight: '600',
+  cursor: 'pointer',
+  display: 'flex',
+  alignItems: 'center',
+  gap: '0.5rem',
+  fontSize: '0.9rem'
+};
+
+const actionBtnStyle = {
+  padding: '6px',
+  background: 'transparent',
+  border: 'none',
+  cursor: 'pointer',
+  color: 'var(--text-muted)',
+  borderRadius: '6px'
+};
 
 export default SeccionesManager;

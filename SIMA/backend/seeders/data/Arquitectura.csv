@@ -1,0 +1,70 @@
+codigo,asignatura,creditos,prerrequisitos,tipo,estado,nota,veces llevado,area,ciclo
+ARQU0101,Matemática Superior,4,Ninguno,Obligatorio,Pendiente,0,0,Ingeniería,1
+ARQU0102,Habilidades Comunicativas,4,Ninguno,Obligatorio,Pendiente,0,0,Ingeniería,1
+ARQU0103,Gestión del Aprendizaje,3,Ninguno,Obligatorio,Pendiente,0,0,Ingeniería,1
+ARQU0104,Introducción a la Arquitectura,3,Ninguno,Obligatorio,Pendiente,0,0,Ingeniería,1
+ARQU0105,Dibujo Artístico,3,Ninguno,Obligatorio,Pendiente,0,0,Ingeniería,1
+ARQU0106,Laboratorio de Liderazgo,3,Ninguno,Obligatorio,Pendiente,0,0,Ingeniería,1
+
+ARQU0201,Geometría Descriptiva,4,ARQU0101,Obligatorio,Pendiente,0,0,Ingeniería,2
+ARQU0202,Taller de Diseño Arquitectónico 1,4,ARQU0104,Obligatorio,Pendiente,0,0,Ingeniería,2
+ARQU0203,Historia de la Arquitectura 1,3,Ninguno,Obligatorio,Pendiente,0,0,Ingeniería,2
+ARQU0204,Comunicación Efectiva,4,ARQU0102,Obligatorio,Pendiente,0,0,Ingeniería,2
+ARQU0205,Dibujo Arquitectónico 1,4,ARQU0105,Obligatorio,Pendiente,0,0,Ingeniería,2
+ARQU0206,Electivo General 1,3,Ninguno,Electivo,Pendiente,0,0,Ingeniería,2
+
+ARQU0301,Matemática para Arquitectos,4,ARQU0101,Obligatorio,Pendiente,0,0,Ingeniería,3
+ARQU0302,Taller de Diseño Arquitectónico 2,4,ARQU0202,Obligatorio,Pendiente,0,0,Ingeniería,3
+ARQU0303,Historia de la Arquitectura 2,3,ARQU0203,Obligatorio,Pendiente,0,0,Ingeniería,3
+ARQU0304,Estadística y Probabilidades,4,ARQU0101,Obligatorio,Pendiente,0,0,Ingeniería,3
+ARQU0305,Dibujo Arquitectónico 2,4,ARQU0205,Obligatorio,Pendiente,0,0,Ingeniería,3
+ARQU0306,Laboratorio de Liderazgo e Innovación Intermedio,2,ARQU0106,Obligatorio,Pendiente,0,0,Ingeniería,3
+
+ARQU0401,Física para Arquitectos,4,ARQU0301,Obligatorio,Pendiente,0,0,Ingeniería,4
+ARQU0402,Taller de Diseño Arquitectónico 3,4,ARQU0302,Obligatorio,Pendiente,0,0,Ingeniería,4
+ARQU0403,Historia de la Arquitectura 3,3,ARQU0303,Obligatorio,Pendiente,0,0,Ingeniería,4
+ARQU0404,English Course 1,3,40 Créditos,Obligatorio,Pendiente,0,0,Ingeniería,4
+ARQU0405,Modelado Digital de Edificaciones 1,3,ARQU0305,Obligatorio,Pendiente,0,0,Ingeniería,4
+ARQU0406,Electivo General 2,3,Ninguno,Electivo,Pendiente,0,0,Ingeniería,4
+
+ARQU0501,Estructuras 1,4,ARQU0401,Obligatorio,Pendiente,0,0,Ingeniería,5
+ARQU0502,Taller de Diseño Arquitectónico 4,4,ARQU0402,Obligatorio,Pendiente,0,0,Ingeniería,5
+ARQU0503,Urbanismo 1,3,ARQU0402,Obligatorio,Pendiente,0,0,Ingeniería,5
+ARQU0504,Materiales y Procesos Constructivos 1,4,ARQU0104,Obligatorio,Pendiente,0,0,Ingeniería,5
+ARQU0505,Modelado Digital de Edificaciones 2,3,ARQU0405,Obligatorio,Pendiente,0,0,Ingeniería,5
+ARQU0506,Laboratorio de Liderazgo e Innovación Avanzado,3,ARQU0306,Obligatorio,Pendiente,0,0,Ingeniería,5
+
+ARQU0601,Estructuras 2,4,ARQU0501,Obligatorio,Pendiente,0,0,Ingeniería,6
+ARQU0602,Taller de Diseño Arquitectónico 5,4,ARQU0502,Obligatorio,Pendiente,0,0,Ingeniería,6
+ARQU0603,Urbanismo 2,3,ARQU0503,Obligatorio,Pendiente,0,0,Ingeniería,6
+ARQU0604,Materiales y Procesos Constructivos 2,4,ARQU0504,Obligatorio,Pendiente,0,0,Ingeniería,6
+ARQU0605,Investigación Académica,3,ARQU0204,Obligatorio,Pendiente,0,0,Ingeniería,6
+ARQU0606,Topografía,3,ARQU0301,Obligatorio,Pendiente,0,0,Ingeniería,6
+
+ARQU0701,Estructuras 3,4,ARQU0601,Obligatorio,Pendiente,0,0,Ingeniería,7
+ARQU0702,Taller de Diseño Arquitectónico 6,4,ARQU0602,Obligatorio,Pendiente,0,0,Ingeniería,7
+ARQU0703,Acondicionamiento Ambiental 1,3,ARQU0401,Obligatorio,Pendiente,0,0,Ingeniería,7
+ARQU0704,Instalaciones en Edificaciones 1,3,ARQU0604,Obligatorio,Pendiente,0,0,Ingeniería,7
+ARQU0705,Teoría de la Arquitectura,3,ARQU0403,Obligatorio,Pendiente,0,0,Ingeniería,7
+ARQU0706,English Course 2,3,ARQU0404,Obligatorio,Pendiente,0,0,Ingeniería,7
+
+ARQU0801,Taller de Diseño Arquitectónico 7,4,ARQU0702,Obligatorio,Pendiente,0,0,Ingeniería,8
+ARQU0802,Acondicionamiento Ambiental 2,3,ARQU0703,Obligatorio,Pendiente,0,0,Ingeniería,8
+ARQU0803,Instalaciones en Edificaciones 2,3,ARQU0704,Obligatorio,Pendiente,0,0,Ingeniería,8
+ARQU0804,Planificación Urbana y Regional,4,ARQU0603,Obligatorio,Pendiente,0,0,Ingeniería,8
+ARQU0805,Gestión de Proyectos,3,Ninguno,Obligatorio,Pendiente,0,0,Ingeniería,8
+ARQU0806,Electivo de Especialidad 1,3,Ninguno,Electivo,Pendiente,0,0,Ingeniería,8
+
+ARQU0901,Taller de Diseño Arquitectónico 8,5,ARQU0801,Obligatorio,Pendiente,0,0,Ingeniería,9
+ARQU0902,Taller de Investigación 1,4,ARQU0605,Obligatorio,Pendiente,0,0,Ingeniería,9
+ARQU0903,Costos y Presupuestos en Edificaciones,3,ARQU0604,Obligatorio,Pendiente,0,0,Ingeniería,9
+ARQU0904,Restauración y Conservación de Monumentos,3,ARQU0403,Obligatorio,Pendiente,0,0,Ingeniería,9
+ARQU0905,Paisajismo,3,ARQU0804,Obligatorio,Pendiente,0,0,Ingeniería,9
+ARQU0906,Electivo de Especialidad 2,3,Ninguno,Electivo,Pendiente,0,0,Ingeniería,9
+
+ARQU1001,Taller de Diseño Arquitectónico 9 (Tesis),6,ARQU0901,Obligatorio,Pendiente,0,0,Ingeniería,10
+ARQU1002,Taller de Investigación 2,4,ARQU0902,Obligatorio,Pendiente,0,0,Ingeniería,10
+ARQU1003,Ética y Deontología Profesional,2,Ninguno,Obligatorio,Pendiente,0,0,Ingeniería,10
+ARQU1004,Legislación en Arquitectura y Urbanismo,3,Ninguno,Obligatorio,Pendiente,0,0,Ingeniería,10
+ARQU1005,Prácticas Pre-Profesionales,4,160 Créditos,Obligatorio,Pendiente,0,0,Ingeniería,10
+ARQU1006,Electivo de Especialidad 3,3,Ninguno,Electivo,Pendiente,0,0,Ingeniería,10

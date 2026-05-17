@@ -1,0 +1,57 @@
+﻿codigo,asignatura,creditos,prerrequisitos,tipo,estado,nota,veces llevado,area,ciclo
+COM001,Comprensión y Producción de Textos 1,3,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 01
+COM002,Laboratorio de Liderazgo e Innovación,3,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 01
+COM003,Estrategias y Herramientas Digitales para el Aprendizaje,4,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 01
+COM004,Fundamentos de Matemática,4,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 01
+COM005,Introducción a las Comunicaciones,5,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 01
+COM006,Apreciación Artística y Estética Audiovisual,4,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 01
+COM007,Comprensión y Producción de Textos 2,4,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 02
+COM008,Globalización y Mundo Contemporáneo,3,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 02
+COM009,Fundamentos del Lenguaje Visual,4,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 02
+COM010,Procesos Creativos y Lenguaje de los Medios,4,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 02
+COM011,Electivo Transversal 1,3,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 02
+COM012,Electivo General 1,3,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 02
+COM013,Estadística y Probabilidades,4,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 03
+COM014,Laboratorio de Liderazgo e Innovación Intermedio,2,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 03
+COM015,Teorías de la Comunicación,4,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 03
+COM016,Narrativa Visual,4,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 03
+COM017,Fundamentos de Gestión Organizacional,5,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 03
+COM018,Electivo General 2,3,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 03
+COM019,English Course 1,3,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 04
+COM020,Semiótica para las Comunicaciones,4,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 04
+COM021,Introducción a la Filosofía,4,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 04
+COM022,Composición y Edición Fotográfica,5,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 04
+COM023,Electivo General 3,3,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 04
+COM024,Electivo General 4,3,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 04
+COM025,English Course 2,3,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 05
+COM026,Laboratorio de Liderazgo e Innovación Avanzado,3,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 05
+COM027,Fundamentos de Publicidad y Marketing,3,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 05
+COM028,Comunicación y Gestión Estratégica,4,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 05
+COM029,Storytelling y Narrativa Audiovisual,4,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 05
+COM030,Investigación Cuantitativa para las Comunicaciones,5,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 05
+COM031,Investigación Académica,3,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 06
+COM032,English Course 3,3,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 06
+COM033,Taller de Diseño Sonoro y Musicalización,4,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 06
+COM034,Creatividad Publicitaria,5,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 06
+COM035,Diseño Gráfico Publicitario,4,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 06
+COM036,Psicología de la Comunicación Social,3,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 06
+COM037,English Course 4,3,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 07
+COM038,Investigación Cualitativa y Mixta para las Comunicaciones,5,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 07
+COM039,Taller de Redacción y Corrección de Estilo 1,5,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 07
+COM040,Electivo General 5,3,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 07
+COM041,Electivo de Especialidad 1,3,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 07
+COM042,Electivo de Especialidad 2,3,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 07
+COM043,Taller de Redacción y Corrección de Estilo 2,3,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 08
+COM044,Ética Profesional y Legislación en las Comunicaciones,4,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 08
+COM045,Electivo de Especialidad 3,3,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 08
+COM046,Electivo de Especialidad 4,6,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 08
+COM047,Electivo de Especialidad 5,6,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 08
+COM048,Taller de Investigación 1 en Comunicaciones,4,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 09
+COM049,Dirección Estratégica de la Comunicación,4,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 09
+COM050,Electivo de Especialidad 6,6,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 09
+COM051,Electivo de Especialidad 7,6,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 09
+COM052,Electivo Transversal 2,3,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 09
+COM053,Taller de Investigación 2 en Comunicaciones,5,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 10
+COM054,Electivo Transversal 3,3,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 10
+COM055,Electivo de Especialidad 8,6,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 10
+COM056,Electivo de Especialidad 9,6,Ninguno,Obligatorio,Pendiente,0,0,Comunicaciones,Ciclo 10

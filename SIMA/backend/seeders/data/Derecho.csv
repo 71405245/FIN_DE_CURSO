@@ -1,0 +1,74 @@
+﻿codigo,asignatura,creditos,prerrequisitos,tipo,estado,nota,veces llevado,area,ciclo
+DER001,Comprensión y Producción de Textos 1,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 01
+DER002,Laboratorio de Liderazgo e Innovación,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 01
+DER003,Estrategias y Herramientas Digitales para el Aprendizaje,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 01
+DER004,Fundamentos de Matemática,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 01
+DER005,Introducción al Derecho,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 01
+DER006,Antropología y Sociología Jurídica,5,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 01
+DER007,Comprensión y Producción de Textos 2,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 02
+DER008,Derecho Constitucional I,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 02
+DER009,Historia del Derecho y Derecho Romano,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 02
+DER010,Derecho de Personas,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 02
+DER011,Electivo General 1,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 02
+DER012,Electivo Transversal 1,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 02
+DER013,Estadística y Probabilidades,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 03
+DER014,Laboratorio de Liderazgo e Innovación Intermedio,2,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 03
+DER015,Derecho Penal: Parte General,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 03
+DER016,Derecho Constitucional II,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 03
+DER017,Acto Jurídico,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 03
+DER018,Electivo General 2,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 03
+DER019,English Course 1,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 04
+DER020,Derecho Procesal Constitucional,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 04
+DER021,Teoría General del Proceso,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 04
+DER022,Derecho Penal: Parte Especial I,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 04
+DER023,Electivo General 3,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 04
+DER024,Electivo General 4,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 04
+DER025,English Course 2,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 05
+DER026,Laboratorio de Liderazgo e Innovación Avanzado,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 05
+DER027,Obligaciones,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 05
+DER028,Derecho Penal: Parte Especial II,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 05
+DER029,Deontología Jurídica,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 05
+DER030,Derecho Procesal Civil I,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 05
+DER031,Investigación Académica,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 06
+DER032,English Course 3,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 06
+DER033,Reales,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 06
+DER034,Derecho Procesal Civil II,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 06
+DER035,Derecho Procesal Penal I,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 06
+DER036,Fundamentos Económicos y Contables,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 06
+DER037,English Course 4,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 07
+DER038,Derecho Laboral I,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 07
+DER039,Derecho Administrativo,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 07
+DER040,Contratos,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 07
+DER041,Análisis Económico del Derecho,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 07
+DER042,Filosofía del Derecho,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 07
+DER043,Electivo General 5,1,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 07
+DER044,Derecho Procesal Penal II,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 08
+DER045,Derecho Procesal Administrativo,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 08
+DER046,Derecho Laboral II,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 08
+DER047,Derecho de Familia,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 08
+DER048,Derecho Societario y Corporativo,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 08
+DER049,Mecanismos Alternativos para la Resolución de Conflictos,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 08
+DER050,Derecho Tributario I,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 09
+DER051,Derecho de Sucesiones,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 09
+DER052,Derecho Procesal Laboral,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 09
+DER053,Litigación Oral,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 09
+DER054,Notariado y Registro Público,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 09
+DER055,Electivo Transversal o de Especialidad 1,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 09
+DER056,Razonamiento y Argumentación Jurídica,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 10
+DER057,Derecho Internacional Público,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 10
+DER058,Derecho Tributario II,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 10
+DER059,Contrataciones con el Estado,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 10
+DER060,Derecho de la Competencia y del Consumo,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 10
+DER061,Electivo Transversal o de Especialidad 2,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 10
+DER062,Taller de Investigación 1 Derecho,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 11
+DER063,Seminario de Penal y Procesal Penal,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 11
+DER064,Derecho de la Regulación,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 11
+DER065,Comercio Internacional,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 11
+DER066,Seminario de Responsabilidad Civil,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 11
+DER067,Electivo de Especialidad 3,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 11
+DER068,Taller de Investigación 2 Derecho,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 12
+DER069,Derecho Ambiental y de Minería,4,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 12
+DER070,Cibercrimen y Delitos Informáticos,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 12
+DER071,Derecho Internacional Privado,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 12
+DER072,Seminario de Civil y Procesal Civil,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 12
+DER073,Derechos Humanos y Derecho Comunitario,3,Ninguno,Obligatorio,Pendiente,0,0,Derecho,Ciclo 12

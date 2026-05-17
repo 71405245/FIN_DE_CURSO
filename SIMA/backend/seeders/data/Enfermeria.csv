@@ -1,0 +1,56 @@
+codigo,asignatura,creditos,prerrequisitos,tipo,estado,nota,veces llevado,area,ciclo
+ENF001,Comprensión y Producción de Textos 1,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 01
+ENF002,Laboratorio Liderazgo Innovación,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 01
+ENF003,Estrategias y Herramientas Digitales para el Aprendizaje,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 01
+ENF004,Fundamentos de Matemática,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 01
+ENF005,Biología en Salud,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 01
+ENF006,Química en Salud,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 01
+ENF007,Enfermería Básica 1,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 01
+ENF008,Comprensión y Producción de Textos 2,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 02
+ENF009,Determinantes Sociales de la Salud,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 02
+ENF010,Enfermería Básica 2,6,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 02
+ENF011,Nutrición y Dietoterapia,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 02
+ENF012,Anatomía y Fisiología Humana 1,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 02
+ENF013,Electivo General 1,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 02
+ENF014,Estadística y Probabilidades,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 03
+ENF015,Laboratorio de Liderazgo e Innovación Intermedio,2,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 03
+ENF016,Psicología Aplicada a las Ciencias de la Salud,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 03
+ENF017,Enfermería en el Cuidado del Adulto 1,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 03
+ENF018,Microbiología Clínica,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 03
+ENF019,Anatomía y Fisiología Humana 2,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 03
+ENF020,Electivo General 2,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 03
+ENF021,English Course 1,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 04
+ENF022,Farmacología General,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 04
+ENF023,Enfermería en el Cuidado del Adulto 2,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 04
+ENF024,Enfermería Materno Infantil,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 04
+ENF025,Medicina Complementaria y Alternativa,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 04
+ENF026,Electivo General 3,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 04
+ENF027,Electivo General 4,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 04
+ENF028,English Course 2,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 05
+ENF029,Laboratorio de Liderazgo e Innovación Avanzado,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 05
+ENF030,Epidemiología,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 05
+ENF031,Legislación en Salud,2,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 05
+ENF032,Crecimiento y Desarrollo del Niño y del Adolescente,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 05
+ENF033,Enfermería Familiar y Comunitaria,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 05
+ENF034,Proceso de Atención de Enfermería,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 05
+ENF035,Investigación Académica,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 06
+ENF036,English Course 3,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 06
+ENF037,Dimensiones Sociales de la Salud Pública,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 06
+ENF038,Ética y Deontología en Enfermería,2,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 06
+ENF039,Enfermería en el Cuidado del Neonato,6,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 06
+ENF040,Enfermería Comunitaria 1,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 06
+ENF041,Enfermería en Salud Mental y Psiquiatría,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 06
+ENF042,English Course 4,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 07
+ENF043,Taller de Investigación en Salud 1,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 07
+ENF044,Enfermería Comunitaria 2,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 07
+ENF045,Enfermería en Cuidados Críticos,6,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 07
+ENF046,Enfermería en el Cuidado Pediátrico,6,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 07
+ENF047,Electivo General 5,1,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 07
+ENF048,Taller de Investigación en Salud 2,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 08
+ENF049,Enfermería en el Cuidado del Adulto Mayor,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 08
+ENF050,Enfermería Escolar,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 08
+ENF051,Gestión y Administración de los Servicios de Salud,4,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 08
+ENF052,Enfermería en Emergencias y Desastres,6,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 08
+ENF053,Electivo Transversal,3,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 08
+ENF054,Internado Comunitario,22,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 09
+ENF055,Internado Intrahospitalario,22,Ninguno,Obligatorio,Pendiente,0,0,Salud,Ciclo 10
