@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { LogOut, BookOpen, CheckCircle, GraduationCap, Clock, MapPin, Users, Award, Sparkles } from 'lucide-react';
+import { LogOut, BookOpen, CheckCircle, GraduationCap, Clock, MapPin, Users, Award, Sparkles, Download, Cpu, Trash2 } from 'lucide-react';
 import '../App.css';
 
 function EstudianteDashboard() {
@@ -11,6 +11,11 @@ function EstudianteDashboard() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(true);
+  const [isGeneratingIA, setIsGeneratingIA] = useState(false);
+  const [showPrefsModal, setShowPrefsModal] = useState(false);
+  const [showResultsModal, setShowResultsModal] = useState(false);
+  const [iaPrefs, setIaPrefs] = useState({ turno: 'MIXTO', cantidadCursos: 5, diasPorSemana: 5 });
+  const [iaResult, setIaResult] = useState(null);
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user'));
 
@@ -56,6 +61,95 @@ function EstudianteDashboard() {
     } catch (err) {
       setError(err.response?.data?.msg || 'Error al matricular');
       setSuccess('');
+      setTimeout(() => setError(''), 4000);
+    }
+  };
+
+  const handleRectificar = async (seccionId) => {
+    if (!window.confirm('¿Estás seguro de que deseas retirarte de este curso?')) return;
+    try {
+      const token = localStorage.getItem('token');
+      const config = { headers: { 'x-auth-token': token } };
+      await axios.post('http://localhost:5000/api/estudiante/rectificar', { seccionId }, config);
+      setSuccess('Te has retirado del curso correctamente.');
+      setError('');
+      fetchData();
+      
+      setTimeout(() => setSuccess(''), 4000);
+    } catch (err) {
+      setError(err.response?.data?.msg || 'Error al rectificar la matrícula');
+      setSuccess('');
+      setTimeout(() => setError(''), 4000);
+    }
+  };
+
+  const handleDownloadPDF = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.get('http://localhost:5000/api/estudiante/horario-pdf', {
+        headers: { 'x-auth-token': token },
+        responseType: 'blob'
+      });
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'mi_horario_sima.pdf');
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
+      setSuccess('PDF descargado correctamente.');
+      setTimeout(() => setSuccess(''), 4000);
+    } catch (err) {
+      setError('Error al generar el PDF del horario.');
+      setTimeout(() => setError(''), 4000);
+    }
+  };
+
+  const handleGenerarIA = async () => {
+    try {
+      setIsGeneratingIA(true);
+      const token = localStorage.getItem('token');
+      const res = await axios.post('http://localhost:5000/api/estudiante/generar-horario-ia', iaPrefs, {
+        headers: { 'x-auth-token': token }
+      });
+      
+      setIaResult(res.data);
+      if(res.data.success) {
+         setSuccess(res.data.message);
+         setTimeout(() => setSuccess(''), 5000);
+      }
+      setShowResultsModal(true);
+      setIsGeneratingIA(false);
+    } catch (err) {
+      setError('Error al generar sugerencias con IA.');
+      setIsGeneratingIA(false);
+      setTimeout(() => setError(''), 4000);
+    }
+  };
+
+  const aplicarAlternativa = async (alternativa) => {
+    try {
+      setLoading(true);
+      const token = localStorage.getItem('token');
+      const config = { headers: { 'x-auth-token': token } };
+      
+      // Matricular en cada curso sugerido de la alternativa
+      for (const h of alternativa.horarioGenerado) {
+        try {
+          await axios.post('http://localhost:5000/api/estudiante/matricular', { seccionId: h.seccion._id }, config);
+        } catch (e) {
+          console.warn('Posible curso ya matriculado o cruce:', e);
+        }
+      }
+      
+      setSuccess('¡Horario aplicado exitosamente! Te has matriculado en los cursos.');
+      setShowResultsModal(false);
+      setIaResult(null);
+      fetchData(); // Refrescar datos
+      setTimeout(() => setSuccess(''), 4000);
+    } catch (err) {
+      setError('Hubo un error al aplicar todo el horario.');
+      setLoading(false);
       setTimeout(() => setError(''), 4000);
     }
   };
@@ -274,14 +368,32 @@ function EstudianteDashboard() {
           </div>
 
           {/* Card 3: Personalización IA */}
-          <div className="glass-card p-5" style={{ borderLeft: '5px solid #f59e0b', display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-            <div style={{ background: 'rgba(245,158,11,0.1)', padding: '12px', borderRadius: '14px', color: '#f59e0b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Sparkles size={28} />
+          <div className="glass-card p-5" style={{ borderLeft: '5px solid #f59e0b', display: 'flex', alignItems: 'center', gap: '1.25rem', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
+              <div style={{ background: 'rgba(245,158,11,0.1)', padding: '12px', borderRadius: '14px', color: '#f59e0b', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Cpu size={28} />
+              </div>
+              <div>
+                <span style={{ fontSize: '0.8rem', color: '#64748b', fontWeight: '700', textTransform: 'uppercase', display: 'block', marginBottom: '0.25rem' }}>Algoritmo Inteligente</span>
+                <h3 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', margin: '0 0 0.15rem 0' }}>Matrícula Automatizada</h3>
+                <p style={{ color: '#64748b', fontSize: '0.85rem', margin: 0 }}>Genera un horario sin colisiones</p>
+              </div>
             </div>
-            <div>
-              <span style={{ fontSize: '0.8rem', color: '#64748b', fontWeight: '700', textTransform: 'uppercase', display: 'block', marginBottom: '0.25rem' }}>Algoritmo Inteligente</span>
-              <h3 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0f172a', margin: '0 0 0.15rem 0' }}>Matrícula Cruzada Activa</h3>
-              <p style={{ color: '#64748b', fontSize: '0.85rem', margin: 0 }}>Horarios y Aulas Optimizadas</p>
+            <div style={{ display: 'flex', gap: '0.5rem', flexDirection: 'column' }}>
+              <button 
+                onClick={handleGenerarIA}
+                disabled={isGeneratingIA}
+                style={{ padding: '8px 14px', borderRadius: '8px', border: 'none', background: '#f59e0b', color: 'white', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', transition: 'all 0.2s', opacity: isGeneratingIA ? 0.7 : 1 }}
+              >
+                {isGeneratingIA ? <div style={{ border: '2px solid white', borderTop: '2px solid transparent', borderRadius: '50%', width: '14px', height: '14px', animation: 'spin 1s linear infinite' }} /> : <Sparkles size={14} />}
+                Generar Horario
+              </button>
+              <button 
+                onClick={() => setShowPrefsModal(true)}
+                style={{ padding: '8px 14px', borderRadius: '8px', border: '1px solid #e2e8f0', background: 'white', color: '#64748b', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', transition: 'all 0.2s' }}
+              >
+                <Cpu size={14} /> Preferencias
+              </button>
             </div>
           </div>
 
@@ -300,6 +412,9 @@ function EstudianteDashboard() {
                   <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: '0 0 0.25rem 0' }}>📅 Mi Agenda Semanal</h3>
                   <p style={{ color: '#64748b', fontSize: '0.85rem', margin: 0 }}>Tus clases matriculadas distribuidas en el calendario</p>
                 </div>
+                <button onClick={handleDownloadPDF} style={{ padding: '8px 16px', borderRadius: '8px', border: '1px solid #e2e8f0', background: 'white', color: '#475569', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem', transition: 'all 0.2s', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }} className="hover:bg-slate-50">
+                  <Download size={16} /> Exportar PDF
+                </button>
               </div>
               
               <div style={{ overflowX: 'auto' }}>
@@ -323,12 +438,20 @@ function EstudianteDashboard() {
                           if (seccion) {
                             const colors = getPastelColor(seccion.curso?._id);
                             return (
-                              <td key={dia} style={{ backgroundColor: colors.bg, border: `1px solid ${colors.border}`, padding: '4px' }}>
-                                <div style={{ fontSize: '0.65rem', fontWeight: '800', color: colors.text, textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }} title={seccion.curso?.nombre}>
+                              <td key={dia} style={{ backgroundColor: colors.bg, border: `1px solid ${colors.border}`, padding: '6px', borderRadius: '4px' }}>
+                                <div style={{ fontSize: '0.7rem', fontWeight: '800', color: colors.text, textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap', marginBottom: '4px' }} title={seccion.curso?.nombre}>
                                   {seccion.curso?.nombre}
                                 </div>
-                                <div style={{ fontSize: '0.6rem', color: '#475569', fontWeight: '600', marginTop: '2px' }}>
-                                  Aula: {seccion.aula}
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                                  <div style={{ display: 'flex', alignItems: 'center', gap: '2px', fontSize: '0.6rem', color: '#475569', fontWeight: '600' }}>
+                                    <Clock size={10} color={colors.text}/> {seccion.horario || `${seccion.horaInicio}-${seccion.horaFin}`}
+                                  </div>
+                                  <div style={{ display: 'flex', alignItems: 'center', gap: '2px', fontSize: '0.6rem', color: '#475569', fontWeight: '600' }}>
+                                    <MapPin size={10} color={colors.text}/> Aula {seccion.aula}
+                                  </div>
+                                  <div style={{ display: 'flex', alignItems: 'center', gap: '2px', fontSize: '0.6rem', color: '#475569', fontWeight: '600', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }} title={seccion.docente?.nombre}>
+                                    <Users size={10} color={colors.text}/> {seccion.docente?.apellidos || 'Por Asignar'}
+                                  </div>
                                 </div>
                               </td>
                             );
@@ -451,9 +574,14 @@ function EstudianteDashboard() {
                         <h5 style={{ fontSize: '0.85rem', fontWeight: '700', color: '#334155', margin: '0 0 0.15rem 0' }}>{s.curso?.nombre}</h5>
                         <p style={{ fontSize: '0.75rem', color: '#64748b', margin: 0 }}>Sección {s.codigoSeccion} • Aula {s.aula}</p>
                       </div>
-                      <span style={{ color: '#4f46e5', fontWeight: '800', fontSize: '0.75rem' }}>
-                        {s.curso?.creditos} CR
-                      </span>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                        <span style={{ color: '#4f46e5', fontWeight: '800', fontSize: '0.75rem', background: '#f1f5f9', padding: '2px 6px', borderRadius: '6px' }}>
+                          {s.curso?.creditos} CR
+                        </span>
+                        <button onClick={() => handleRectificar(s._id)} style={{ background: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', border: 'none', padding: '6px', borderRadius: '6px', cursor: 'pointer', transition: 'all 0.2s', display: 'flex', alignItems: 'center', justifyContent: 'center' }} title="Retirarme del curso">
+                          <Trash2 size={14} />
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -463,6 +591,88 @@ function EstudianteDashboard() {
           </div>
 
         </div>
+
+        {/* Preferencias Modal */}
+        {showPrefsModal && (
+          <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(15,23,42,0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, overflowY: 'auto' }}>
+            <div className="glass-card" style={{ background: 'white', width: '90%', maxWidth: '500px', borderRadius: '24px', overflow: 'hidden', margin: 'auto' }}>
+              <div style={{ padding: '1.5rem 2rem', borderBottom: '1px solid #f1f5f9', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#f8fafc' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                   <div style={{ background: 'rgba(245,158,11,0.1)', padding: '8px', borderRadius: '10px', color: '#f59e0b' }}><Cpu size={20} /></div>
+                   <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: '800', color: '#0f172a' }}>Preferencias de IA</h3>
+                </div>
+                <button onClick={() => setShowPrefsModal(false)} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#94a3b8' }}><LogOut size={20}/></button>
+              </div>
+              
+              <div style={{ padding: '2rem' }}>
+                <p style={{ color: '#64748b', marginBottom: '1.5rem' }}>Configura tus preferencias para que el algoritmo busque la mejor combinación de cursos y horarios disponibles sin colisiones.</p>
+                
+                <div style={{ marginBottom: '1.5rem' }}>
+                  <label style={{ display: 'block', fontWeight: '700', color: '#334155', marginBottom: '0.5rem' }}>Turno Preferido</label>
+                  <select value={iaPrefs.turno} onChange={(e) => setIaPrefs({...iaPrefs, turno: e.target.value})} style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #e2e8f0', background: 'white', color: '#0f172a' }}>
+                    <option value="MIXTO">Indiferente (Mixto)</option>
+                    <option value="MAÑANA">Mañana (07:00 - 13:00)</option>
+                    <option value="TARDE">Tarde (13:00 - 18:00)</option>
+                    <option value="NOCHE">Noche (18:00 - 22:00)</option>
+                  </select>
+                </div>
+
+                <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem' }}>
+                  <div style={{ flex: 1 }}>
+                    <label style={{ display: 'block', fontWeight: '700', color: '#334155', marginBottom: '0.5rem' }}>Cantidad de Cursos</label>
+                    <input type="number" min="1" max="7" value={iaPrefs.cantidadCursos} onChange={(e) => setIaPrefs({...iaPrefs, cantidadCursos: Number(e.target.value)})} style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #e2e8f0', background: 'white', color: '#0f172a' }} />
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <label style={{ display: 'block', fontWeight: '700', color: '#334155', marginBottom: '0.5rem' }}>Días a la semana (Máx)</label>
+                    <input type="number" min="1" max="7" value={iaPrefs.diasPorSemana} onChange={(e) => setIaPrefs({...iaPrefs, diasPorSemana: Number(e.target.value)})} style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #e2e8f0', background: 'white', color: '#0f172a' }} />
+                  </div>
+                </div>
+
+                <button onClick={() => setShowPrefsModal(false)} style={{ width: '100%', padding: '12px', borderRadius: '10px', border: 'none', background: '#3b82f6', color: 'white', fontWeight: '800', fontSize: '1rem', cursor: 'pointer', transition: 'all 0.2s' }}>
+                  Guardar Preferencias
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* IA Resultados Modal */}
+        {showResultsModal && iaResult && (
+          <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(15,23,42,0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, overflowY: 'auto' }}>
+            <div className="glass-card" style={{ background: 'white', width: '90%', maxWidth: '700px', borderRadius: '24px', overflow: 'hidden', margin: 'auto' }}>
+              <div style={{ padding: '1.5rem 2rem', borderBottom: '1px solid #f1f5f9', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#f8fafc' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                   <div style={{ background: 'rgba(245,158,11,0.1)', padding: '8px', borderRadius: '10px', color: '#f59e0b' }}><Sparkles size={20} /></div>
+                   <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: '800', color: '#0f172a' }}>Opciones de Horario</h3>
+                </div>
+                <button onClick={() => setShowResultsModal(false)} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#94a3b8' }}><LogOut size={20}/></button>
+              </div>
+              
+              <div style={{ padding: '2rem' }}>
+                <div style={{ padding: '1rem', borderRadius: '12px', background: iaResult.success ? '#ecfdf5' : '#fffbeb', border: `1px solid ${iaResult.success ? '#a7f3d0' : '#fde68a'}`, marginBottom: '1.5rem' }}>
+                  <p style={{ margin: 0, fontWeight: '700', color: iaResult.success ? '#065f46' : '#d97706' }}>{iaResult.message}</p>
+                </div>
+
+                <div style={{ maxHeight: '350px', overflowY: 'auto', paddingRight: '0.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  {iaResult.alternativas.length > 0 ? iaResult.alternativas.map((alt, idx) => (
+                    <div key={idx} style={{ padding: '1.25rem', border: '1px solid #e2e8f0', borderRadius: '12px', background: '#f8fafc', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                      <p style={{ margin: '0', fontWeight: '600', color: '#334155', fontSize: '0.9rem', lineHeight: '1.4' }}>{alt.descripcion}</p>
+                      <button onClick={() => aplicarAlternativa(alt)} style={{ width: '100%', padding: '10px', background: '#4f46e5', color: 'white', border: 'none', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', transition: 'background 0.2s' }}>
+                        Aplicar Alternativa {idx + 1}
+                      </button>
+                    </div>
+                  )) : (
+                    <p style={{ textAlign: 'center', color: '#64748b' }}>No se encontraron alternativas.</p>
+                  )}
+                </div>
+
+                <button onClick={() => setShowResultsModal(false)} style={{ marginTop: '1.5rem', width: '100%', padding: '10px', background: 'transparent', color: '#64748b', border: '1px solid #cbd5e1', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', transition: 'background 0.2s' }}>
+                  Cancelar
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
       </main>
     </div>

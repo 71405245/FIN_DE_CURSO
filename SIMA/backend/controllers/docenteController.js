@@ -19,21 +19,32 @@ exports.calificar = async (req, res) => {
     const { estudianteId, seccionId, nota, comentarios } = req.body;
     const docenteId = req.user.id;
 
+    // Validar nota
+    const notaNum = Number(nota);
+    if (isNaN(notaNum) || notaNum < 0 || notaNum > 20) {
+       return res.status(400).json({ msg: 'La nota debe ser un número entre 0 y 20.' });
+    }
+
+    // Obtener la sección para extraer el curso
+    const seccion = await Seccion.findById(seccionId);
+    if (!seccion) {
+      return res.status(404).json({ msg: 'Sección no encontrada' });
+    }
+    
+    if (!seccion.curso) {
+      return res.status(400).json({ msg: 'Esta sección está corrupta (no tiene curso asociado).' });
+    }
+
     // Verificar si ya existe una calificación
     let calificacion = await Calificacion.findOne({ estudiante: estudianteId, seccion: seccionId });
 
     if (calificacion) {
       // Actualizar
-      calificacion.nota = nota;
-      calificacion.comentarios = comentarios;
+      calificacion.nota = notaNum;
+      calificacion.comentarios = comentarios || '';
+      calificacion.docente = docenteId; // Actualizar quién la modificó
       await calificacion.save();
       return res.json({ msg: 'Calificación actualizada', calificacion });
-    }
-
-    // Obtener la sección para extraer el curso obligatorio
-    const seccion = await Seccion.findById(seccionId);
-    if (!seccion) {
-      return res.status(404).json({ msg: 'Sección no encontrada' });
     }
 
     // Crear nueva
@@ -42,15 +53,15 @@ exports.calificar = async (req, res) => {
       seccion: seccionId,
       curso: seccion.curso,
       docente: docenteId,
-      nota,
-      comentarios
+      nota: notaNum,
+      comentarios: comentarios || ''
     });
 
     await calificacion.save();
     res.json({ msg: 'Calificación registrada', calificacion });
   } catch (err) {
-    console.error(err);
-    res.status(500).send('Error al registrar calificación');
+    console.error('Error detallado en calificar:', err);
+    res.status(500).json({ error: err.message || 'Error interno al registrar calificación' });
   }
 };
 

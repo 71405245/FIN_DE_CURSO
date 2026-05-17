@@ -98,6 +98,30 @@ exports.matricular = async (req, res) => {
   }
 };
 
+// ── Rectificar Matrícula (Retirarse de un curso) ──────────────────────────────
+exports.rectificar = async (req, res) => {
+  try {
+    const { seccionId } = req.body;
+    const estudianteId = req.user.id;
+
+    const seccion = await Seccion.findById(seccionId);
+    if (!seccion) return res.status(404).json({ msg: 'Sección no encontrada' });
+
+    const index = seccion.estudiantesMatriculados.indexOf(estudianteId);
+    if (index === -1) {
+      return res.status(400).json({ msg: 'No estás matriculado en esta sección' });
+    }
+
+    seccion.estudiantesMatriculados.splice(index, 1);
+    await seccion.save();
+
+    res.json({ msg: 'Rectificación exitosa, te has retirado del curso' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error en el servidor');
+  }
+};
+
 // Perfil de estudiante completo con estadísticas
 exports.getPerfil = async (req, res) => {
   try {
@@ -249,78 +273,180 @@ exports.getHistorial = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send('Error en el servidor');
-  }
-};
+// ── Helper functions for AI Scheduler ──────────────────────────────
+function checkOverlap(s1, s2) {
+  if (!s1 || !s2 || !s1.dias || !s2.dias) return false;
+  const commonDays = s1.dias.filter(d => s2.dias.includes(d));
+  if (commonDays.length === 0) return false;
+  if (!s1.horaInicio || !s2.horaInicio || !s1.horaFin || !s2.horaFin) return false;
+  return (s1.horaInicio < s2.horaFin && s2.horaInicio < s1.horaFin);
+}
 
-// ── Generador de Horario "IA" (heurístico inteligente) ────────────────────────
+function checkTurno(s, turno) {
+  if (!s || !s.horaInicio) return true;
+  if (turno === 'MAÑANA') return s.horaInicio < '13:00';
+  if (turno === 'TARDE') return s.horaInicio >= '13:00' && s.horaInicio < '18:00';
+  if (turno === 'NOCHE') return s.horaInicio >= '18:00';
+  return true; // MIXTO o vacio
+}
+
+function countUniqueDays(schedule) {
+  const days = new Set();
+  schedule.forEach(s => {
+    if (s && s.dias) {
+      s.dias.forEach(d => days.add(d));
+    }
+  });
+  return days.size;
+}
+
+// ── Generador de Horario "IA" (heurístico inteligente optimizado) ────────────────────────
 exports.generarHorarioIA = async (req, res) => {
   try {
     const estudianteId = req.user.id;
-    const { diasLibre = [], horariosPreferidos = [] } = req.body;
+    // Preferencias recibidas del frontend
+    const { turno = 'MIXTO', cantidadCursos = 5, diasPorSemana = 6 } = req.body;
 
     const estudiante = await User.findById(estudianteId);
     if (!estudiante) return res.status(404).json({ msg: 'Estudiante no encontrado' });
 
-    // 1. Cursos pendientes del ciclo actual (no aprobados, no matriculados aún)
-    const cursosCiclo = await Curso.find({ carrera: estudiante.carrera, ciclo: estudiante.cicloActual });
-    const calificaciones = await Calificacion.find({ estudiante: estudianteId, aprobado: true }).select('curso');
+    // 1. Cursos pendientes del ciclo actual
+    const cursosCiclo = await Curso.find({ carrera: estudiante.carrera, ciclo: estudiante.cicloActual }).lean();
+    const calificaciones = await Calificacion.find({ estudiante: estudianteId, aprobado: true }).select('curso').lean();
     const aprobadosSet = new Set(calificaciones.map(c => String(c.curso)));
 
-    const seccionesActuales = await Seccion.find({ estudiantesMatriculados: estudianteId }).select('curso');
+    const seccionesActuales = await Seccion.find({ estudiantesMatriculados: estudianteId }).select('curso').lean();
     const matriculadosSet = new Set(seccionesActuales.map(s => String(s.curso)));
 
     const cursosPendientes = cursosCiclo.filter(c =>
       !aprobadosSet.has(String(c._id)) && !matriculadosSet.has(String(c._id))
     );
 
-    // 2. Para cada curso pendiente, buscar la mejor sección
-    const horarioGenerado = [];
-    const bloqueados = new Set(); // "Lunes-07:00" para evitar colisiones
-
-    for (const curso of cursosPendientes) {
-      // Secciones disponibles del curso con cupo
-      const secciones = await Seccion.find({ curso: curso._id })
-        .populate('docente', 'nombre apellidos')
-        .lean();
-
-      const disponibles = secciones.filter(s =>
-        s.estudiantesMatriculados.length < s.cupoMaximo &&
-        !diasLibre.includes(s.dias[0])
-      );
-      if (disponibles.length === 0) continue;
-
-      // Priorizar bloques en horarios preferidos
-      let elegida = null;
-      if (horariosPreferidos.length > 0) {
-        elegida = disponibles.find(s =>
-          horariosPreferidos.some(h => s.horaInicio >= h.split('-')[0] && s.horaInicio < h.split('-')[1])
-          && !bloqueados.has(`${s.dias[0]}-${s.horaInicio}`)
-        );
-      }
-      if (!elegida) {
-        elegida = disponibles.find(s => !bloqueados.has(`${s.dias[0]}-${s.horaInicio}`));
-      }
-      if (!elegida) continue;
-
-      // Bloquear el slot para evitar colisión
-      elegida.dias.forEach(d => bloqueados.add(`${d}-${elegida.horaInicio}`));
-
-      horarioGenerado.push({
-        curso: { _id: curso._id, nombre: curso.nombre, creditos: curso.creditos },
-        seccion: {
-          _id: elegida._id,
-          codigoSeccion: elegida.codigoSeccion,
-          horario: elegida.horario,
-          dias: elegida.dias,
-          horaInicio: elegida.horaInicio,
-          horaFin: elegida.horaFin,
-          aula: elegida.aula,
-          docente: elegida.docente
-        }
-      });
+    if (cursosPendientes.length === 0) {
+      return res.json({ success: true, message: 'No tienes cursos pendientes este ciclo.', alternativas: [] });
     }
 
-    res.json({ horarioGenerado, totalSugeridas: horarioGenerado.length });
+    const cursosIds = cursosPendientes.map(c => c._id);
+    
+    // Optimización: 1 sola consulta masiva a la BD para todas las secciones
+    const todasSecciones = await Seccion.find({ curso: { $in: cursosIds } })
+      .populate('docente', 'nombre apellidos')
+      .populate('curso', 'nombre creditos')
+      .lean();
+
+    // Agrupar secciones por curso y filtrar llenas
+    const seccionesPorCurso = {};
+    cursosPendientes.forEach(c => { seccionesPorCurso[c._id] = []; });
+    
+    todasSecciones.forEach(s => {
+      if (s.estudiantesMatriculados.length < s.cupoMaximo) {
+        seccionesPorCurso[s.curso._id].push(s);
+      }
+    });
+
+    // Ordenar cursos por los que tienen menos secciones (para optimizar backtracking)
+    cursosPendientes.sort((a, b) => seccionesPorCurso[a._id].length - seccionesPorCurso[b._id].length);
+    
+    // Limitar iteración a cantidad de cursos pedidos
+    const cursosAProcesar = cursosPendientes.slice(0, cantidadCursos);
+
+    // Motor Greedy Aleatorio para encontrar combinaciones sin colisión
+    function generateGreedySchedule(strictMode) {
+      // Mezclar aleatoriamente el orden de los cursos para dar variedad
+      const cursosRandom = [...cursosAProcesar].sort(() => 0.5 - Math.random());
+      const schedule = [];
+      
+      for (const curso of cursosRandom) {
+        let opciones = seccionesPorCurso[curso._id];
+        if (!opciones || opciones.length === 0) continue;
+
+        // Mezclar opciones de secciones
+        opciones = [...opciones].sort(() => 0.5 - Math.random());
+        
+        for (const sec of opciones) {
+          if (strictMode && !checkTurno(sec, turno)) continue;
+          
+          let colision = false;
+          for (const s of schedule) {
+            if (checkOverlap(sec, s)) { colision = true; break; }
+          }
+          if (!colision) {
+            schedule.push(sec);
+            break; // Ya encontramos sección para este curso
+          }
+        }
+      }
+      
+      // En modo estricto, descartar si excede los días
+      if (strictMode && countUniqueDays(schedule) > diasPorSemana) return [];
+      return schedule;
+    }
+
+    const alternativasFinales = [];
+    const hashesVistos = new Set();
+    const getHash = (alt) => alt.map(s => s._id.toString()).sort().join('-');
+
+    // Intentar 150 veces generar combinaciones aleatorias válidas
+    for (let i = 0; i < 150; i++) {
+      if (alternativasFinales.length >= 5) break;
+      
+      // Intentar primero estricto (la mitad de las veces), si no, relajado
+      let schedule = [];
+      if (i < 75) {
+        schedule = generateGreedySchedule(true);
+      }
+      // Si falló el estricto o estamos en la segunda mitad de intentos, modo relajado
+      if (schedule.length === 0) {
+        schedule = generateGreedySchedule(false);
+      }
+      
+      if (schedule.length > 0) {
+        const hash = getHash(schedule);
+        if (!hashesVistos.has(hash)) {
+          hashesVistos.add(hash);
+          alternativasFinales.push(schedule);
+        }
+      }
+    }
+
+    // Ordenar alternativas priorizando la cantidad de cursos asignados
+    alternativasFinales.sort((a, b) => b.length - a.length);
+
+    // Formatear respuesta
+    if (alternativasFinales.length === 0 || alternativasFinales[0].length === 0) {
+       return res.json({ success: false, message: 'Imposible generar horario. No hay secciones compatibles disponibles.', alternativas: [] });
+    }
+
+    const respuestaAlternativas = alternativasFinales.map((alt, i) => {
+      // Determinar si esta alternativa en particular fue "Estricta"
+      const esEstricta = countUniqueDays(alt) <= diasPorSemana && alt.every(s => checkTurno(s, turno));
+      let desc = '';
+
+      if (esEstricta) {
+        desc = `Alternativa ${i+1} (Óptima): Cumple al 100% tu configuración de Turno y Días. (${alt.length} cursos).`;
+      } else {
+        const turnosVistos = new Set(alt.map(s => {
+          if (checkTurno(s, 'MAÑANA')) return 'Mañana';
+          if (checkTurno(s, 'TARDE')) return 'Tarde';
+          return 'Noche';
+        }));
+        desc = `Alternativa ${i+1}: Prioriza ${alt.length} cursos, pero requiere asistir en turnos ${Array.from(turnosVistos).join('/')} o exceder los días.`;
+      }
+
+      const horarioGenerado = alt.map(s => ({
+        curso: s.curso,
+        seccion: { ...s, curso: s.curso._id }
+      }));
+
+      return { descripcion: desc, horarioGenerado };
+    });
+
+    res.json({
+      success: isStrictSuccess,
+      message: isStrictSuccess ? '¡Horario optimizado generado por IA de acuerdo a tus preferencias!' : 'No se pudo generar al 100% de acuerdo a tu preferencia, pero se pudo generar de estas formas:',
+      alternativas: respuestaAlternativas
+    });
+
   } catch (err) {
     console.error(err);
     res.status(500).send('Error al generar el horario');

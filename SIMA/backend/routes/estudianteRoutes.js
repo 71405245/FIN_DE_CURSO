@@ -6,6 +6,7 @@ const auth = require('../middleware/auth');
 router.get('/secciones-disponibles', auth, estudianteController.getSeccionesDisponibles);
 router.get('/mis-secciones', auth, estudianteController.misSecciones);
 router.post('/matricular', auth, estudianteController.matricular);
+router.post('/rectificar', auth, estudianteController.rectificar);
 router.get('/perfil', auth, estudianteController.getPerfil);
 router.get('/plan-estudios', auth, estudianteController.getPlanEstudios);
 router.get('/historial', auth, estudianteController.getHistorial);

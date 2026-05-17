@@ -1,0 +1,49 @@
+REQUERIMIENTOS DEL SISTEMA - SIMA (Sistema Integral de Matrícula Académica)
+=============================================================================
+
+1. REQUISITOS DE HARDWARE (Mínimos recomendados para el entorno de desarrollo)
+-----------------------------------------------------------------------------
+- Procesador: Intel Core i3 / AMD Ryzen 3 o superior.
+- Memoria RAM: 4 GB mínimo (8 GB recomendado).
+- Almacenamiento: 1 GB de espacio libre (para dependencias, código y base de datos).
+
+2. REQUISITOS DE SOFTWARE (Entorno y Herramientas)
+-----------------------------------------------------------------------------
+- Sistema Operativo: Windows 10/11, macOS, o Linux.
+- Node.js: Versión 18.x o superior (https://nodejs.org/).
+- Base de Datos: MongoDB Community Server v6.0 o superior (Local) o MongoDB Atlas (Nube).
+- Interfaz para Base de Datos: MongoDB Compass (Recomendado para visualización).
+- Navegador Web: Google Chrome, Mozilla Firefox, Microsoft Edge, o Safari (Actualizados).
+- Editor de Código: Visual Studio Code (Opcional, recomendado para modificaciones).
+
+3. DEPENDENCIAS DEL PROYECTO
+-----------------------------------------------------------------------------
+A. BACKEND (Node.js + Express)
+   - bcryptjs: ^3.0.3 (Encriptación de contraseñas)
+   - cors: ^2.8.6 (Permitir peticiones entre puertos)
+   - csv-parse: ^6.2.1 (Para carga masiva de alumnos y docentes)
+   - dotenv: ^17.4.2 (Variables de entorno)
+   - express: ^5.2.1 (Framework de servidor)
+   - jsonwebtoken: ^9.0.3 (Autenticación y sesiones)
+   - mongoose: ^9.6.2 (Modelado de datos para MongoDB)
+   - pdfkit: ^0.18.0 (Generación de horarios en PDF)
+   - nodemon: ^3.1.14 (Para desarrollo)
+
+B. FRONTEND (React + Vite)
+   - react / react-dom: (Librería principal UI)
+   - react-router-dom: (Para navegación entre vistas)
+   - axios: (Cliente HTTP para consumir la API)
+   - lucide-react: (Iconografía moderna)
+   - chart.js / react-chartjs-2: (Para gráficos de rendimiento académico)
+
+4. CÓMO CONFIGURAR Y EJECUTAR
+-----------------------------------------------------------------------------
+1. Clonar o descargar el proyecto.
+2. Asegúrate de tener MongoDB ejecutándose localmente (puerto 27017).
+3. En la carpeta "backend", ejecuta:
+   $ npm install
+   $ npm run dev
+4. En la carpeta "frontend", ejecuta:
+   $ npm install
+   $ npm run dev
+5. Accede desde tu navegador a: http://localhost:5173
