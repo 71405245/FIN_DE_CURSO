@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const compression = require('compression');
 const connectDB = require('./config/db');
 
 const app = express();
@@ -10,6 +11,7 @@ connectDB();
 
 // Middlewares
 app.use(cors());
+app.use(compression());
 app.use(express.json());
 
 // Rutas de prueba
