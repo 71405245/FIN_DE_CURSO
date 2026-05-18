@@ -5,13 +5,15 @@ Este documento describe la arquitectura técnica del **Sistema de Información y
 ---
 
 ## 1. Descripción General de la Infraestructura
-El sistema sigue un patrón de diseño **MVT (Model-View-Template)** basado en el framework **Django**, con una base de datos relacional para garantizar la integridad de la información académica.
 
-- **Lenguaje:** Python 3.x
-- **Framework Web:** Django 5.1
-- **Base de Datos:** MySQL (con modo `STRICT_TRANS_TABLES`)
-- **Autenticación:** JWT (JSON Web Tokens) gestionado mediante Middleware personalizado.
-- **Generación de Documentos:** ReportLab / xhtml2pdf (para horarios en PDF).
+El sistema SIMA utiliza arquitectura MERN Stack:
+
+- MongoDB → Base de datos NoSQL
+- Express.js → Backend API REST
+- React.js → Interfaces dinámicas
+- Node.js → Servidor backend
+
+La comunicación entre frontend y backend se realiza mediante JSON y servicios RESTful.
 
 ---
 
