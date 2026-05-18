@@ -46,7 +46,7 @@ const calificacionSchema = new mongoose.Schema({
 
 // Calcular automáticamente si aprobó antes de guardar
 calificacionSchema.pre('save', function (next) {
-  this.aprobado = this.nota >= 11;
+  this.aprobado = this.nota > 10.5;
   next();
 });
 

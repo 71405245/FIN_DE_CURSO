@@ -109,7 +109,7 @@ function DocenteDashboard() {
     let aprobados = 0;
     savedCalificaciones.forEach(c => {
       suma += c.nota;
-      if (c.nota >= 11) aprobados++;
+      if (c.nota > 10.5) aprobados++;
     });
 
     const promedio = suma / savedCalificaciones.length;
@@ -355,7 +355,7 @@ function DocenteDashboard() {
                             const notaLocal = calificaciones[est._id];
                             const notaNum = Number(notaLocal);
                             const hasGrade = notaLocal !== undefined && notaLocal !== '';
-                            const isPassing = hasGrade && notaNum >= 11;
+                            const isPassing = hasGrade && notaNum > 10.5;
                             
                             return (
                               <tr key={est._id}>

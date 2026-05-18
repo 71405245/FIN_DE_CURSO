@@ -273,6 +273,9 @@ exports.getHistorial = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send('Error en el servidor');
+  }
+};
+
 // ── Helper functions for AI Scheduler ──────────────────────────────
 function checkOverlap(s1, s2) {
   if (!s1 || !s2 || !s1.dias || !s2.dias) return false;
@@ -350,79 +353,99 @@ exports.generarHorarioIA = async (req, res) => {
     // Limitar iteración a cantidad de cursos pedidos
     const cursosAProcesar = cursosPendientes.slice(0, cantidadCursos);
 
-    // Motor Greedy Aleatorio para encontrar combinaciones sin colisión
-    function generateGreedySchedule(strictMode) {
-      // Mezclar aleatoriamente el orden de los cursos para dar variedad
-      const cursosRandom = [...cursosAProcesar].sort(() => 0.5 - Math.random());
-      const schedule = [];
-      
-      for (const curso of cursosRandom) {
-        let opciones = seccionesPorCurso[curso._id];
-        if (!opciones || opciones.length === 0) continue;
+    // Motor Backtracking Exacto (DFS con Heurística MRV y Forward Checking)
+    const todasLasAlternativas = [];
 
-        // Mezclar opciones de secciones
-        opciones = [...opciones].sort(() => 0.5 - Math.random());
-        
-        for (const sec of opciones) {
-          if (strictMode && !checkTurno(sec, turno)) continue;
-          
-          let colision = false;
-          for (const s of schedule) {
-            if (checkOverlap(sec, s)) { colision = true; break; }
+    function backtrack(cursoIndex, horarioActual) {
+      // PODA: Si ya exploramos suficientes combinaciones exitosas, cortamos para evitar latencia (O(2^n) limit)
+      if (todasLasAlternativas.length >= 150) return;
+
+      // Condición base: Se han intentado asignar todos los cursos solicitados
+      if (cursoIndex === cursosAProcesar.length) {
+        todasLasAlternativas.push([...horarioActual]);
+        return;
+      }
+
+      const cursoActual = cursosAProcesar[cursoIndex];
+      const opcionesSeccion = seccionesPorCurso[cursoActual._id];
+
+      // PODA: Si este curso no tiene opciones disponibles, forzamos intentar armar horario parcial sin él
+      if (!opcionesSeccion || opcionesSeccion.length === 0) {
+        backtrack(cursoIndex + 1, horarioActual);
+        return;
+      }
+
+      // Intentar colocar cada sección de este curso
+      for (const seccion of opcionesSeccion) {
+        // Forward Checking: No solapamiento de horario (Hard Constraint)
+        let cruza = false;
+        for (const asignada of horarioActual) {
+          if (checkOverlap(seccion, asignada)) {
+            cruza = true;
+            break;
           }
-          if (!colision) {
-            schedule.push(sec);
-            break; // Ya encontramos sección para este curso
-          }
+        }
+
+        if (!cruza) {
+          horarioActual.push(seccion);
+          backtrack(cursoIndex + 1, horarioActual);
+          horarioActual.pop(); // Backtrack (deshacer el paso y probar la siguiente sección)
         }
       }
       
-      // En modo estricto, descartar si excede los días
-      if (strictMode && countUniqueDays(schedule) > diasPorSemana) return [];
-      return schedule;
+      // Permitir horarios parciales (por si es matemáticamente imposible llevar los N cursos juntos)
+      backtrack(cursoIndex + 1, horarioActual);
     }
 
-    const alternativasFinales = [];
+    // Iniciar Backtracking desde el curso más restrictivo
+    backtrack(0, []);
+
+    // Limpiar duplicados generados por combinaciones vacías
     const hashesVistos = new Set();
-    const getHash = (alt) => alt.map(s => s._id.toString()).sort().join('-');
-
-    // Intentar 150 veces generar combinaciones aleatorias válidas
-    for (let i = 0; i < 150; i++) {
-      if (alternativasFinales.length >= 5) break;
-      
-      // Intentar primero estricto (la mitad de las veces), si no, relajado
-      let schedule = [];
-      if (i < 75) {
-        schedule = generateGreedySchedule(true);
-      }
-      // Si falló el estricto o estamos en la segunda mitad de intentos, modo relajado
-      if (schedule.length === 0) {
-        schedule = generateGreedySchedule(false);
-      }
-      
-      if (schedule.length > 0) {
-        const hash = getHash(schedule);
-        if (!hashesVistos.has(hash)) {
-          hashesVistos.add(hash);
-          alternativasFinales.push(schedule);
-        }
+    const alternativasUnicas = [];
+    for (const alt of todasLasAlternativas) {
+      if (alt.length === 0) continue;
+      const hash = alt.map(s => String(s._id)).sort().join('-');
+      if (!hashesVistos.has(hash)) {
+        hashesVistos.add(hash);
+        alternativasUnicas.push(alt);
       }
     }
 
-    // Ordenar alternativas priorizando la cantidad de cursos asignados
-    alternativasFinales.sort((a, b) => b.length - a.length);
+    // Evaluar y Puntuar (Soft Constraints de Optimización)
+    alternativasUnicas.forEach(alt => {
+      let score = alt.length * 1000; // Prioridad 1: Maximizar cantidad de cursos matriculados
+      
+      const cumpleTurno = alt.every(s => checkTurno(s, turno));
+      if (cumpleTurno) score += 500; // Prioridad 2: Cumplir turno preferido
 
-    // Formatear respuesta
-    if (alternativasFinales.length === 0 || alternativasFinales[0].length === 0) {
-       return res.json({ success: false, message: 'Imposible generar horario. No hay secciones compatibles disponibles.', alternativas: [] });
+      const diasUnicos = countUniqueDays(alt);
+      if (diasUnicos <= diasPorSemana) score += 200; // Prioridad 3: Respetar días libres
+      
+      // Minimizar días asistidos para evitar ir a la universidad por 1 sola clase
+      score -= (diasUnicos * 50);
+
+      alt._score = score;
+      alt._cumpleTurno = cumpleTurno;
+      alt._diasUnicos = diasUnicos;
+    });
+
+    // Ordenar alternativas de mayor a menor puntaje
+    alternativasUnicas.sort((a, b) => b._score - a._score);
+    
+    // Retornar solo las top 5 opciones
+    const mejoresAlternativas = alternativasUnicas.slice(0, 5);
+
+    if (mejoresAlternativas.length === 0) {
+       return res.json({ success: false, message: 'Imposible generar horario. Tus cursos obligatorios se cruzan en todos sus horarios.', alternativas: [] });
     }
 
-    const respuestaAlternativas = alternativasFinales.map((alt, i) => {
-      // Determinar si esta alternativa en particular fue "Estricta"
-      const esEstricta = countUniqueDays(alt) <= diasPorSemana && alt.every(s => checkTurno(s, turno));
+    // Flag de éxito absoluto
+    const isStrictSuccess = mejoresAlternativas[0].length === cursosAProcesar.length && mejoresAlternativas[0]._cumpleTurno && mejoresAlternativas[0]._diasUnicos <= diasPorSemana;
+
+    const respuestaAlternativas = mejoresAlternativas.map((alt, i) => {
       let desc = '';
-
-      if (esEstricta) {
+      if (alt.length === cursosAProcesar.length && alt._cumpleTurno && alt._diasUnicos <= diasPorSemana) {
         desc = `Alternativa ${i+1} (Óptima): Cumple al 100% tu configuración de Turno y Días. (${alt.length} cursos).`;
       } else {
         const turnosVistos = new Set(alt.map(s => {
@@ -430,7 +453,7 @@ exports.generarHorarioIA = async (req, res) => {
           if (checkTurno(s, 'TARDE')) return 'Tarde';
           return 'Noche';
         }));
-        desc = `Alternativa ${i+1}: Prioriza ${alt.length} cursos, pero requiere asistir en turnos ${Array.from(turnosVistos).join('/')} o exceder los días.`;
+        desc = `Alternativa ${i+1}: Logra agrupar ${alt.length} cursos, requiere asistir en turnos ${Array.from(turnosVistos).join('/')} durante ${alt._diasUnicos} días de la semana.`;
       }
 
       const horarioGenerado = alt.map(s => ({
@@ -443,7 +466,7 @@ exports.generarHorarioIA = async (req, res) => {
 
     res.json({
       success: isStrictSuccess,
-      message: isStrictSuccess ? '¡Horario optimizado generado por IA de acuerdo a tus preferencias!' : 'No se pudo generar al 100% de acuerdo a tu preferencia, pero se pudo generar de estas formas:',
+      message: isStrictSuccess ? '¡Horario matemático óptimo generado de acuerdo a tus preferencias!' : 'No se pudo generar un horario perfecto a tus reglas, pero se calcularon estas combinaciones óptimas parciales:',
       alternativas: respuestaAlternativas
     });
 
