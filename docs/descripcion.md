@@ -2,7 +2,6 @@
 
 # 🚀 DESCRIPCIÓN DEL PROYECTO
 
-```markdown
 # Descripción del Proyecto
 
 SIMA es un sistema académico inteligente desarrollado bajo arquitectura MERN Stack que busca optimizar la gestión universitaria mediante procesos automatizados de matrícula, horarios y administración académica.
