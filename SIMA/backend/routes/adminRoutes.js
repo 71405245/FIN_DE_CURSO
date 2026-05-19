@@ -1,6 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const adminController = require('../controllers/adminController');
+const planificacionController = require('../controllers/planificacionController');
+
+// Planificación de Horarios
+router.get('/planificacion/stats', planificacionController.getStats);
+
 
 // Carreras
 router.post('/carreras', adminController.createCarrera);
