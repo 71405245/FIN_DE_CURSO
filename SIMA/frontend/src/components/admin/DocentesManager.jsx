@@ -8,6 +8,10 @@ function DocentesManager() {
   const [form, setForm] = useState({ nombre: '', apellidos: '', email: '', password: '', carrerasEnsenadas: [] });
   const [editId, setEditId] = useState(null);
 
+  // ── Filtros de búsqueda ──────────────────────────────────────────────────────
+  const [busqueda, setBusqueda] = useState('');
+  const [filtroCarrera, setFiltroCarrera] = useState('');
+
   useEffect(() => { 
     fetchDocentes(); 
     axios.get('http://localhost:5000/api/admin/carreras').then(res => setCarrerasList(res.data));
@@ -66,6 +70,20 @@ function DocentesManager() {
     }
   };
 
+  // ── Lógica de filtrado en memoria ────────────────────────────────────────────
+  const docentesFiltrados = docentes.filter(d => {
+    const texto = busqueda.toLowerCase().trim();
+    const coincideTexto = texto === '' || 
+      d.nombre.toLowerCase().includes(texto) || 
+      d.apellidos.toLowerCase().includes(texto) ||
+      `${d.nombre} ${d.apellidos}`.toLowerCase().includes(texto);
+
+    const coincideCarrera = filtroCarrera === '' ||
+      d.carrerasEnsenadas?.some(c => c._id === filtroCarrera);
+
+    return coincideTexto && coincideCarrera;
+  });
+
   return (
     <div className="animate-fade-in">
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '2rem' }}>
@@ -105,14 +123,58 @@ function DocentesManager() {
         </form>
       </div>
 
+      {/* ── Barra de Filtros ─────────────────────────────────────────────────── */}
+      <div className="modern-card" style={{ marginBottom: '1.5rem', padding: '1.25rem 1.5rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
+          <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            🔍 Filtrar Docentes
+          </span>
+          <span style={{ marginLeft: 'auto', fontSize: '0.8rem', color: 'var(--primary-purple)', fontWeight: '600' }}>
+            {docentesFiltrados.length} de {docentes.length} docentes
+          </span>
+          {(busqueda || filtroCarrera) && (
+            <button
+              onClick={() => { setBusqueda(''); setFiltroCarrera(''); }}
+              style={{ padding: '4px 10px', borderRadius: '8px', border: '1px solid var(--border)', background: 'transparent', cursor: 'pointer', fontSize: '0.78rem', color: 'var(--text-muted)' }}
+            >
+              Limpiar filtros ✕
+            </button>
+          )}
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '1rem', alignItems: 'center' }}>
+          <input
+            id="filtro-docente-busqueda"
+            type="text"
+            placeholder="Buscar por nombre o apellidos..."
+            value={busqueda}
+            onChange={e => setBusqueda(e.target.value)}
+            style={{ width: '100%', boxSizing: 'border-box' }}
+          />
+          <select
+            id="filtro-docente-carrera"
+            value={filtroCarrera}
+            onChange={e => setFiltroCarrera(e.target.value)}
+            style={{ minWidth: '220px', height: '46px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)', background: 'var(--bg-color)', color: 'var(--text-main)', padding: '0 1rem', fontSize: '0.9rem', cursor: 'pointer' }}
+          >
+            <option value="">— Todas las carreras —</option>
+            {carrerasList.map(c => (
+              <option key={c._id} value={c._id}>{c.nombre}</option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      {/* ── Tabla de Resultados ──────────────────────────────────────────────── */}
       <div className="modern-card" style={{ padding: '0', overflow: 'hidden' }}>
         <table className="modern-table" style={{ marginTop: 0 }}>
           <thead><tr><th>Docente</th><th>Email</th><th>Carreras Asignadas</th><th>Acciones</th></tr></thead>
           <tbody>
-            {docentes.length === 0 ? (
-              <tr><td colSpan="4" style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-muted)' }}>No hay docentes registrados.</td></tr>
+            {docentesFiltrados.length === 0 ? (
+              <tr><td colSpan="4" style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-muted)' }}>
+                {docentes.length === 0 ? 'No hay docentes registrados.' : 'No se encontraron docentes con ese criterio de búsqueda.'}
+              </td></tr>
             ) : (
-              docentes.map(d => (
+              docentesFiltrados.map(d => (
                 <tr key={d._id}>
                   <td style={{ fontWeight: '500' }}>{d.nombre} {d.apellidos}</td>
                   <td style={{ color: 'var(--text-muted)' }}>{d.email}</td>
