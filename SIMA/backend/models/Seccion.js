@@ -5,6 +5,7 @@ const seccionSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Curso',
     required: true,
+    index: true,
   },
   codigoSeccion: {
     type: String,
@@ -14,6 +15,7 @@ const seccionSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true, // Asignado por el Admin
+    index: true,
   },
   horario: {
     type: String, // Ej: "Lunes y Miércoles 10:00 - 12:00"
@@ -42,5 +44,10 @@ const seccionSchema = new mongoose.Schema({
     ref: 'User'
   }]
 });
+
+// Índice en el array de matriculados: acelera buscar si un alumno está en alguna sección
+seccionSchema.index({ estudiantesMatriculados: 1 });
+// Índice compuesto: útil para verificar conflictos de horario por docente
+seccionSchema.index({ docente: 1, horario: 1 });
 
 module.exports = mongoose.model('Seccion', seccionSchema);

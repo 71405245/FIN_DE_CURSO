@@ -22,10 +22,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ['ADMIN', 'ESTUDIANTE', 'DOCENTE'],
     default: 'ESTUDIANTE',
+    index: true,
   },
   carrera: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Carrera',
+    index: true,
   },
   carrerasEnsenadas: [{
     type: mongoose.Schema.Types.ObjectId,
@@ -40,5 +42,8 @@ const userSchema = new mongoose.Schema({
     default: Date.now,
   }
 });
+
+// Índice compuesto: optimiza consultas rol + carrera (ej: estudiantes por carrera)
+userSchema.index({ rol: 1, carrera: 1 });
 
 module.exports = mongoose.model('User', userSchema);

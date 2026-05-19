@@ -7,7 +7,8 @@ exports.misSecciones = async (req, res) => {
     // Buscar secciones donde el docente asignado es este usuario
     const secciones = await Seccion.find({ docente: docenteId })
       .populate('curso', 'nombre codigo')
-      .populate('estudiantesMatriculados', 'nombre apellidos email');
+      .populate('estudiantesMatriculados', 'nombre apellidos email')
+      .lean();
     res.json(secciones);
   } catch (err) {
     res.status(500).send('Error en el servidor');
@@ -68,7 +69,7 @@ exports.calificar = async (req, res) => {
 exports.getCalificacionesSeccion = async (req, res) => {
   try {
     const { seccionId } = req.params;
-    const calificaciones = await Calificacion.find({ seccion: seccionId });
+    const calificaciones = await Calificacion.find({ seccion: seccionId }).lean();
     res.json(calificaciones);
   } catch (err) {
     res.status(500).send('Error al obtener calificaciones');

@@ -45,7 +45,13 @@ exports.createEstudiante = async (req, res) => {
 };
 
 exports.getEstudiantes = async (req, res) => {
-  try { res.json(await User.find({ rol: 'ESTUDIANTE' }).select('-password').populate('carrera', 'nombre')); } catch (error) { res.status(500).send('Error al obtener'); }
+  try {
+    const estudiantes = await User.find({ rol: 'ESTUDIANTE' })
+      .select('-password')
+      .populate('carrera', 'nombre')
+      .lean();
+    res.json(estudiantes);
+  } catch (error) { res.status(500).send('Error al obtener'); }
 };
 
 exports.importarEstudiantes = async (req, res) => {
@@ -189,7 +195,13 @@ exports.createDocente = async (req, res) => {
 };
 
 exports.getDocentes = async (req, res) => {
-  try { res.json(await User.find({ rol: 'DOCENTE' }).select('-password').populate('carrerasEnsenadas', 'nombre')); } catch (error) { res.status(500).send('Error al obtener'); }
+  try {
+    const docentes = await User.find({ rol: 'DOCENTE' })
+      .select('-password')
+      .populate('carrerasEnsenadas', 'nombre')
+      .lean();
+    res.json(docentes);
+  } catch (error) { res.status(500).send('Error al obtener'); }
 };
 
 exports.updateDocente = async (req, res) => {
@@ -231,7 +243,8 @@ exports.getCursos = async (req, res) => {
     const filtro = carreraId ? { carrera: carreraId } : {};
     const cursos = await Curso.find(filtro)
       .populate('carrera', 'nombre')
-      .sort({ ciclo: 1, nombre: 1 });
+      .sort({ ciclo: 1, nombre: 1 })
+      .lean();
     res.json(cursos);
   } catch (error) {
     res.status(500).json({ msg: 'Error al obtener cursos' });
@@ -267,7 +280,13 @@ exports.createSeccion = async (req, res) => {
 };
 
 exports.getSecciones = async (req, res) => {
-  try { res.json(await Seccion.find().populate('curso', 'nombre codigo').populate('docente', 'nombre apellidos')); } catch (error) { res.status(500).send('Error al obtener'); }
+  try {
+    const secciones = await Seccion.find()
+      .populate('curso', 'nombre codigo')
+      .populate('docente', 'nombre apellidos')
+      .lean();
+    res.json(secciones);
+  } catch (error) { res.status(500).send('Error al obtener'); }
 };
 
 exports.updateSeccion = async (req, res) => {

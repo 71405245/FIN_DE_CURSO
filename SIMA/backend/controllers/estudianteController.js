@@ -20,7 +20,8 @@ exports.getSeccionesDisponibles = async (req, res) => {
     // Secciones disponibles de esos cursos
     let secciones = await Seccion.find({ curso: { $in: cursosIds } })
       .populate('curso', 'nombre codigo creditos ciclo prerrequisitos area tipo')
-      .populate('docente', 'nombre apellidos');
+      .populate('docente', 'nombre apellidos')
+      .lean();
 
     // Filtrar: sin cupo lleno y no matriculado ya
     secciones = secciones.filter(s => {
@@ -41,7 +42,8 @@ exports.misSecciones = async (req, res) => {
   try {
     const secciones = await Seccion.find({ estudiantesMatriculados: req.user.id })
       .populate('curso', 'nombre codigo creditos ciclo area tipo')
-      .populate('docente', 'nombre apellidos');
+      .populate('docente', 'nombre apellidos')
+      .lean();
     res.json(secciones);
   } catch (err) {
     res.status(500).send('Error en el servidor');
@@ -185,17 +187,18 @@ exports.getPlanEstudios = async (req, res) => {
 
     // Todos los cursos de la carrera del estudiante, agrupados por ciclo
     const cursos = await Curso.find({ carrera: estudiante.carrera })
-      .sort({ ciclo: 1, nombre: 1 });
+      .sort({ ciclo: 1, nombre: 1 })
+      .lean();
 
     // Calificaciones para saber cuáles están aprobados/jalados
-    const calificaciones = await Calificacion.find({ estudiante: estudianteId });
+    const calificaciones = await Calificacion.find({ estudiante: estudianteId }).lean();
     const calMap = {};
     calificaciones.forEach(c => {
       calMap[String(c.curso)] = { nota: c.nota, aprobado: c.aprobado };
     });
 
     // Secciones matriculadas actualmente
-    const seccionesActuales = await Seccion.find({ estudiantesMatriculados: estudianteId }).select('curso');
+    const seccionesActuales = await Seccion.find({ estudiantesMatriculados: estudianteId }).select('curso').lean();
     const matriculadosSet = new Set(seccionesActuales.map(s => String(s.curso)));
 
     const cursosConEstado = cursos.map(c => {
@@ -228,7 +231,8 @@ exports.getHistorial = async (req, res) => {
   try {
     const estudianteId = req.user.id;
     const calificaciones = await Calificacion.find({ estudiante: estudianteId })
-      .populate('curso', 'nombre codigo creditos ciclo');
+      .populate('curso', 'nombre codigo creditos ciclo')
+      .lean();
 
     // Estadísticas generales
     let aprobados = 0, jalados = 0, creditosAcumulados = 0;
