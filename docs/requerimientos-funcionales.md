@@ -1,15 +1,19 @@
-# 📋 Requerimientos Funcionales
+# 📋 Requerimientos Funcionales (RF)
 
-
-| ID | Nombre | Descripción  | Entradas | Salidas |
-|----|--------|----------------------|----------|---------|
-| RF-01 | Registro de preferencias | El sistema permitirá al estudiante registrar sus preferencias académicas, como cursos deseados, horarios disponibles, cantidad máxima de cursos y restricciones personales, con la finalidad de personalizar la generación de horarios de acuerdo con sus necesidades. | Preferencias del usuario | Datos almacenados en la base de datos |
-| RF-02 | Visualización de cursos | El sistema mostrará la oferta académica disponible obtenida desde la base de datos institucional, incluyendo nombre del curso, sección, docente asignado, créditos y horarios disponibles. | Consulta de cursos | Lista de cursos disponibles |
-| RF-03 | Detección de cruces | El sistema analizará automáticamente los cursos seleccionados para identificar conflictos de horario entre secciones, evitando combinaciones inválidas. | Cursos seleccionados | Alertas de conflicto |
-| RF-04 | Generación de horarios | El sistema generará múltiples combinaciones de horarios válidos en base a las preferencias del estudiante y sin presentar cruces detectados. | Cursos + preferencias | Opciones de horario |
-| RF-05 | Recomendación inteligente | El sistema priorizará y sugerirá los mejores horarios según criterios definidos, como menor cantidad de huecos, mejor distribución horaria o menor carga diaria. | Horarios generados | Ranking de horarios recomendados |
-| RF-06 | Edición de preferencias | El usuario podrá modificar sus preferencias en cualquier momento antes de generar nuevamente los horarios. | Nuevos criterios | Datos actualizados |
-| RF-07 | Visualización gráfica | El sistema mostrará el horario seleccionado en formato visual tipo calendario semanal para facilitar la comprensión del estudiante. | Horario elegido | Vista gráfica semanal |
-| RF-08 | Exportación | El usuario podrá descargar o imprimir el horario generado en formato PDF para su uso personal. | Solicitud de exportación | Archivo PDF |
-| RF-09 | Autenticación | El sistema permitirá a los usuarios iniciar sesión mediante credenciales seguras para guardar preferencias e historial. | Usuario y contraseña | Acceso autorizado |
-| RF-10 | Historial | El sistema almacenará las consultas previas del usuario para reutilizar configuraciones anteriores y mejorar la experiencia. | Usuario autenticado | Historial mostrado |
+| ID | Nombre | Descripción | Entradas | Salidas |
+|----|---------|-------------|-----------|----------|
+| RF-01 | Autenticación | El sistema permite iniciar sesión con correo y contraseña. Redirige al panel del rol correspondiente (ADMIN / DOCENTE / ESTUDIANTE) y emite un JWT de 10 horas. | Usuario y contraseña | JWT + acceso al panel |
+| RF-02 | Visualización de oferta académica | El sistema muestra los cursos disponibles para el ciclo y carrera del estudiante, incluyendo nombre, código, créditos, sección, docente asignado y horario. | Consulta del estudiante | Lista de cursos con secciones |
+| RF-03 | Registro de preferencias | El estudiante puede configurar sus preferencias para la generación de horarios: turno preferido (mañana/tarde/noche), cantidad máxima de cursos a llevar y días disponibles por semana. | Preferencias del usuario | Preferencias almacenadas |
+| RF-04 | Detección de cruces | El sistema analiza automáticamente las secciones seleccionadas para identificar conflictos de horario entre cursos, evitando combinaciones inválidas antes de la matrícula. | Cursos seleccionados | Alertas de conflicto |
+| RF-05 | Generación inteligente de horarios | El sistema genera hasta 5 combinaciones de horarios válidos y sin cruces usando un algoritmo de Backtracking con heurística MRV, priorizando la mayor cantidad de cursos y el turno preferido del estudiante. | Cursos + preferencias | Ranking de horarios recomendados |
+| RF-06 | Matrícula y rectificación | El estudiante puede matricularse en una sección con validación de prerrequisitos y límite de créditos, así como retirarse de ella durante el período de rectificación. | Sección elegida | Confirmación de matrícula o retiro |
+| RF-07 | Visualización gráfica del horario | El sistema muestra el horario del estudiante en formato de calendario semanal visual. El administrador dispone de un calendario global con todos los salones del sistema por día. | Horario del usuario / todas las secciones | Vista gráfica semanal interactiva |
+| RF-08 | Exportación a PDF | El estudiante puede descargar su horario actual en formato PDF con nombre, carrera, ciclo, cursos y total de créditos. | Solicitud de exportación | Archivo PDF descargable |
+| RF-09 | Historial académico | El sistema almacena y muestra el historial de calificaciones del estudiante con estadísticas por ciclo (aprobados, jalados, créditos acumulados) y gráficos desarrollados con Chart.js. | Usuario autenticado | Historial + gráficos por ciclo |
+| RF-10 | Gestión de oferta académica | El administrador puede crear, editar y eliminar carreras, cursos y secciones. Cada sección contiene: curso, docente, código, días, horario, aula y cupo. | Datos ingresados por admin | Oferta académica actualizada |
+| RF-11 | Gestión de usuarios | El administrador puede registrar, editar, eliminar e importar masivamente estudiantes y docentes. Cada docente puede tener múltiples carreras asignadas. | Datos de usuario / archivo CSV | Usuarios registrados en el sistema |
+| RF-12 | Filtros de búsqueda | El administrador puede filtrar docentes por nombre, apellidos y carrera. El sistema soporta búsqueda en tiempo real sin consultas adicionales al backend. | Texto de búsqueda / carrera seleccionada | Lista filtrada en tiempo real |
+| RF-13 | KPIs y gráficos en tiempo real | El módulo de planificación muestra: total de salones, porcentaje de ocupación, salones llenos, cupos libres y docentes activos. Incluye gráficos de distribución por día, turno, top docentes y rangos de ocupación. | Datos actuales de la BD | Indicadores y gráficos actualizados |
+| RF-14 | Detección de conflictos administrativos | El sistema detecta automáticamente conflictos de docente y conflictos de aula, mostrando alertas con el detalle de cada caso detectado. | Todas las secciones activas | Lista de conflictos detectados |
+| RF-15 | Alertas de ocupación y carga | El sistema identifica salones con ocupación mayor o igual al 80% y docentes con más de 5 secciones asignadas, permitiendo al administrador tomar decisiones preventivas. | Datos de matrícula y asignaciones | Listado de alertas por categoría |
