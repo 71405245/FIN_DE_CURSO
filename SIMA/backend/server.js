@@ -14,6 +14,30 @@ app.use(cors());
 app.use(compression());
 app.use(express.json());
 
+// APM - Tracker de rendimiento de API
+global.apiMetrics = [];
+app.use((req, res, next) => {
+  const start = Date.now();
+  res.on('finish', () => {
+    const duration = Date.now() - start;
+    const route = req.originalUrl.split('?')[0];
+    
+    if(route.startsWith('/api/')) {
+      global.apiMetrics.push({
+        method: req.method,
+        route: route,
+        duration: duration,
+        status: res.statusCode,
+        time: new Date()
+      });
+      if(global.apiMetrics.length > 1000) {
+        global.apiMetrics.shift();
+      }
+    }
+  });
+  next();
+});
+
 // Rutas de prueba
 app.get('/api/status', (req, res) => {
   res.json({ message: 'Bienvenido a la API de SIMA MERN' });

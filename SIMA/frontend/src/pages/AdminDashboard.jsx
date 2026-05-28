@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { LogOut, BookOpen, Users, Layers, GraduationCap, Building, LayoutDashboard, ChevronRight, BarChart2 } from 'lucide-react';
+import { LogOut, BookOpen, Users, Layers, GraduationCap, Building, LayoutDashboard, ChevronRight, BarChart2, Activity } from 'lucide-react';
 import CarrerasManager from '../components/admin/CarrerasManager';
 import CursosManager from '../components/admin/CursosManager';
 import EstudiantesManager from '../components/admin/EstudiantesManager';
 import DocentesManager from '../components/admin/DocentesManager';
 import SeccionesManager from '../components/admin/SeccionesManager';
 import PlanificacionManager from '../components/admin/PlanificacionManager';
+import RecursosManager from '../components/admin/RecursosManager';
 
 function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('carreras');
@@ -82,6 +83,8 @@ function AdminDashboard() {
           <TabButton active={activeTab === 'secciones'} onClick={() => setActiveTab('secciones')} icon={<Layers size={20}/>} text="Salones y Horarios" isHovered={isHovered} badge={stats.secciones} />
           <div style={{ height: '1px', background: 'var(--border)', margin: '1rem 1.5rem' }} />
           <TabButton active={activeTab === 'planificacion'} onClick={() => setActiveTab('planificacion')} icon={<BarChart2 size={20}/>} text="Centro de Planificación" isHovered={isHovered} />
+          <div style={{ height: '1px', background: 'var(--border)', margin: '1rem 1.5rem' }} />
+          <TabButton active={activeTab === 'recursos'} onClick={() => setActiveTab('recursos')} icon={<Activity size={20}/>} text="Consumo de Recursos" isHovered={isHovered} />
         </nav>
 
         <div style={{ padding: '1.5rem 0', borderTop: '1px solid var(--border)' }}>
@@ -120,6 +123,7 @@ function AdminDashboard() {
           {activeTab === 'docentes' && <DocentesManager />}
           {activeTab === 'secciones' && <SeccionesManager />}
           {activeTab === 'planificacion' && <PlanificacionManager />}
+          {activeTab === 'recursos' && <RecursosManager />}
         </div>
       </main>
     </div>

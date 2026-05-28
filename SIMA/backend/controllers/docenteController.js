@@ -6,7 +6,11 @@ exports.misSecciones = async (req, res) => {
     const docenteId = req.user.id;
     // Buscar secciones donde el docente asignado es este usuario
     const secciones = await Seccion.find({ docente: docenteId })
-      .populate('curso', 'nombre codigo')
+      .populate({
+        path: 'curso',
+        select: 'nombre codigo carrera',
+        populate: { path: 'carrera', select: 'nombre' }
+      })
       .populate('estudiantesMatriculados', 'nombre apellidos email')
       .lean();
     res.json(secciones);

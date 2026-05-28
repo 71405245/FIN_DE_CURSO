@@ -124,6 +124,14 @@ function DocenteDashboard() {
 
   const stats = calcularEstadisticas();
 
+  // Agrupar secciones por carrera
+  const seccionesAgrupadas = secciones.reduce((acc, seccion) => {
+    const carrera = seccion.curso?.carrera?.nombre || 'General / Sin Carrera';
+    if (!acc[carrera]) acc[carrera] = [];
+    acc[carrera].push(seccion);
+    return acc;
+  }, {});
+
   return (
     <div style={{ backgroundColor: '#f8fafc', minHeight: '100vh', fontFamily: 'Outfit, sans-serif', paddingBottom: '4rem' }}>
       
@@ -255,29 +263,36 @@ function DocenteDashboard() {
             {secciones.length === 0 ? (
               <div className="glass-card p-5 text-center color-muted">No tienes salones asignados.</div>
             ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                {secciones.map(s => {
-                  const isSelected = seccionSeleccionada?._id === s._id;
-                  return (
-                    <div 
-                      key={s._id} 
-                      onClick={() => setSeccionSeleccionada(s)}
-                      className={`salon-card ${isSelected ? 'salon-card-active' : ''}`}
-                    >
-                      <h4 style={{ fontSize: '1.05rem', fontWeight: '800', color: isSelected ? '#1d4ed8' : '#0f172a', marginBottom: '0.25rem', lineHeight: '1.3' }}>
-                        {s.curso?.nombre}
-                      </h4>
-                      <p style={{ color: '#64748b', fontSize: '0.85rem', marginBottom: '0.75rem', fontWeight: '500' }}>Sec: {s.codigoSeccion} • Aula {s.aula}</p>
-                      
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <span style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.75rem', color: '#64748b', fontWeight: '600', background: '#f8fafc', padding: '4px 8px', borderRadius: '6px' }}>
-                          <Users size={12}/> {s.estudiantesMatriculados.length} Alumnos
-                        </span>
-                        <span style={{ fontSize: '0.75rem', fontWeight: '700', color: '#2563eb' }}>{s.horaInicio} - {s.horaFin}</span>
-                      </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                {Object.entries(seccionesAgrupadas).map(([carrera, salones]) => (
+                  <div key={carrera}>
+                    <h4 style={{ fontSize: '0.8rem', fontWeight: '800', color: '#64748b', textTransform: 'uppercase', marginBottom: '0.75rem', letterSpacing: '0.05em' }}>{carrera}</h4>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                      {salones.map(s => {
+                        const isSelected = seccionSeleccionada?._id === s._id;
+                        return (
+                          <div 
+                            key={s._id} 
+                            onClick={() => setSeccionSeleccionada(s)}
+                            className={`salon-card ${isSelected ? 'salon-card-active' : ''}`}
+                          >
+                            <h4 style={{ fontSize: '1.05rem', fontWeight: '800', color: isSelected ? '#1d4ed8' : '#0f172a', marginBottom: '0.25rem', lineHeight: '1.3' }}>
+                              {s.curso?.nombre}
+                            </h4>
+                            <p style={{ color: '#64748b', fontSize: '0.85rem', marginBottom: '0.75rem', fontWeight: '500' }}>Sec: {s.codigoSeccion} • Aula {s.aula}</p>
+                            
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                              <span style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.75rem', color: '#64748b', fontWeight: '600', background: '#f8fafc', padding: '4px 8px', borderRadius: '6px' }}>
+                                <Users size={12}/> {s.estudiantesMatriculados.length} Alumnos
+                              </span>
+                              <span style={{ fontSize: '0.75rem', fontWeight: '700', color: '#2563eb' }}>{s.horaInicio} - {s.horaFin}</span>
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
-                  );
-                })}
+                  </div>
+                ))}
               </div>
             )}
           </section>

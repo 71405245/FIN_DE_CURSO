@@ -7,6 +7,9 @@ const planificacionController = require('../controllers/planificacionController'
 router.get('/planificacion/stats', planificacionController.getStats);
 
 
+// Recursos / Sistema
+router.get('/recursos', adminController.getRecursos);
+
 // Carreras
 router.post('/carreras', adminController.createCarrera);
 router.get('/carreras', adminController.getCarreras);

@@ -3,7 +3,67 @@ const Curso = require('../models/Curso');
 const Seccion = require('../models/Seccion');
 const Carrera = require('../models/Carrera');
 const bcrypt = require('bcryptjs');
+const os = require('os');
 
+// === RECURSOS DEL SISTEMA ===
+exports.getRecursos = async (req, res) => {
+  try {
+    const totalMem = os.totalmem();
+    const freeMem = os.freemem();
+    const usedMem = totalMem - freeMem;
+    
+    const cpuInfo = os.cpus();
+    const cpuModel = cpuInfo.length > 0 ? cpuInfo[0].model : 'Desconocido';
+    
+    // Procesar APM Metrics
+    const metrics = global.apiMetrics || [];
+    
+    // Top Rutas Más Frecuentes
+    const frequencyMap = {};
+    metrics.forEach(m => {
+      const key = `${m.method} ${m.route}`;
+      frequencyMap[key] = (frequencyMap[key] || 0) + 1;
+    });
+    const topRutas = Object.entries(frequencyMap)
+      .map(([ruta, count]) => ({ ruta, count }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 5);
+
+    // Top Consultas Más Lentas (ordenadas por duración)
+    const lentas = [...metrics]
+      .sort((a, b) => b.duration - a.duration)
+      .slice(0, 5)
+      .map(m => ({
+        ruta: `${m.method} ${m.route}`,
+        duracion: m.duration,
+        time: m.time
+      }));
+
+    res.json({
+      uptime: os.uptime(),
+      platform: os.platform(),
+      architecture: os.arch(),
+      memory: {
+        total: totalMem,
+        free: freeMem,
+        used: usedMem,
+        usedPercentage: ((usedMem / totalMem) * 100).toFixed(2)
+      },
+      cpu: {
+        cores: cpuInfo.length,
+        model: cpuModel,
+        speed: cpuInfo.length > 0 ? cpuInfo[0].speed : 0
+      },
+      apm: {
+        topRutas,
+        topLentas: lentas,
+        totalRequests: metrics.length
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ msg: 'Error al obtener recursos del sistema' });
+  }
+};
 // === CARRERAS ===
 exports.createCarrera = async (req, res) => {
   try {
