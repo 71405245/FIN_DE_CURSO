@@ -41,7 +41,7 @@ Se realizó una **optimización integral** en **8 categorías** + **Green Code**
 ### ⚠️ Principales Cuellos de Botella Identificados
 
 | # | Problema                              | Impacto |
-|---|---------------------------------------|--------|
+|---|---------------------------------------|---------|
 | 1 | Consultas MongoDB sin optimizar       | Se descargaban colecciones completas (2500+ estudiantes) |
 | 2 | Ausencia total de paginación          | Tablas renderizando miles de filas en el DOM |
 | 3 | Sin compresión de respuestas          | Payloads JSON muy pesados |
@@ -57,7 +57,8 @@ Se realizó una **optimización integral** en **8 categorías** + **Green Code**
 ## ✨ Optimizaciones Aplicadas
 
 ### Backend
-- **Nuevo endpoint consolidado**: `GET /admin/stats/counts`
+
+- **Nuevo endpoint consolidado:** `GET /admin/stats/counts`
 - **Paginación server-side** en listados grandes
 - **Proyecciones `.select()`** para reducir campos enviados
 - **Caché en memoria** con TTL para recursos
@@ -67,6 +68,7 @@ Se realizó una **optimización integral** en **8 categorías** + **Green Code**
 - **Eliminación de dependencias muertas**
 
 ### Frontend
+
 - **React.lazy() + Suspense** para carga diferida
 - **Paginación client-side** en todas las tablas:
   - Alumnos: **25 registros** por página
@@ -83,7 +85,7 @@ Se realizó una **optimización integral** en **8 categorías** + **Green Code**
 ## 📊 Comparativa Antes vs Después
 
 | Categoría                  | Antes                        | Después                          | Mejora       |
-|---------------------------|------------------------------|----------------------------------|--------------|
+|----------------------------|------------------------------|----------------------------------|--------------|
 | Peticiones HTTP           | 5+ por carga                 | **1 request**                    | **-80%**     |
 | Datos transferidos        | Colecciones completas        | Paginación + proyecciones        | **-95%**     |
 | Tamaño del bundle         | 100% cargado                 | Lazy Loading                     | **-60%**     |
@@ -97,6 +99,7 @@ Se realizó una **optimización integral** en **8 categorías** + **Green Code**
 ## 🌱 Green Code y Sostenibilidad
 
 ### Acciones Implementadas:
+
 - Reducción del **66%** en peticiones de polling
 - Pausa automática del polling cuando la pestaña no está visible
 - Cálculos pre-cacheados en el servidor
@@ -112,12 +115,14 @@ Se realizó una **optimización integral** en **8 categorías** + **Green Code**
 ## 📁 Archivos Modificados
 
 ### Backend
+
 - `adminController.js`
 - `server.js`
 - `adminRoutes.js`
 - `package.json` (eliminación de dependencias)
 
 ### Frontend
+
 - `AdminDashboard.jsx`
 - `EstudiantesManager.jsx`
 - `DocentesManager.jsx`
@@ -127,6 +132,7 @@ Se realizó una **optimización integral** en **8 categorías** + **Green Code**
 - `package.json` (frontend)
 
 ### Documentos Creados
+
 - `OPTIMIZACION_ANALISIS.md`
 - `OPTIMIZACION_GREENCODE.md`
 
@@ -135,11 +141,13 @@ Se realizó una **optimización integral** en **8 categorías** + **Green Code**
 ## ✅ Plan de Verificación
 
 ### Pruebas Automatizadas
+
 - `npm run build` → Verificar Lazy Loading
 - Probar endpoint `/admin/stats/counts`
 - Validar paginación en todas las tablas
 
 ### Verificación Manual
+
 - Acceso correcto según rol (Admin 1 y Admin 2)
 - Paginación funcional y fluida
 - Indicadores Green Code visibles
