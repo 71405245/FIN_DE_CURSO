@@ -12,6 +12,9 @@ router.put('/planificacion/seccion/:id/liberar', planificacionController.liberar
 router.put('/planificacion/seccion/:id/horario', planificacionController.editarHorario);
 
 
+// [OPTIMIZACIÓN 6] Endpoint consolidado de estadísticas (1 petición en vez de 5)
+router.get('/stats/counts', adminController.getStatsCounts);
+
 // Recursos / Sistema
 router.get('/recursos', adminController.getRecursos);
 

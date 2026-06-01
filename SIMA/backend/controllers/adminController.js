@@ -5,9 +5,50 @@ const Carrera = require('../models/Carrera');
 const bcrypt = require('bcryptjs');
 const os = require('os');
 
+// [OPTIMIZACIÓN 7] Caché en memoria para recursos del sistema
+let recursosCache = null;
+let recursosCacheTime = 0;
+const RECURSOS_CACHE_TTL = 2000; // 2 segundos TTL
+
+// === ENDPOINT CONSOLIDADO DE ESTADÍSTICAS ===
+// [OPTIMIZACIÓN 1 + 6] Un solo endpoint en vez de 5 — usa countDocuments() en vez de cargar colecciones enteras
+exports.getStatsCounts = async (req, res) => {
+  try {
+    const [carreras, cursos, alumnos, docentes, secciones] = await Promise.all([
+      Carrera.countDocuments(),
+      Curso.countDocuments(),
+      User.countDocuments({ rol: 'ESTUDIANTE' }),
+      User.countDocuments({ rol: 'DOCENTE' }),
+      Seccion.countDocuments()
+    ]);
+
+    // [OPTIMIZACIÓN 7] Cache-Control: los conteos no cambian cada segundo
+    res.set('Cache-Control', 'private, max-age=30');
+    res.json({ carreras, cursos, alumnos, docentes, secciones });
+  } catch (error) {
+    res.status(500).json({ msg: 'Error al obtener estadísticas' });
+  }
+};
+
 // === RECURSOS DEL SISTEMA ===
+// [OPTIMIZACIÓN 8 + 9 GREEN CODE] Lectura eficiente del buffer circular + caché
 exports.getRecursos = async (req, res) => {
   try {
+    const now = Date.now();
+
+    // [GREEN CODE] Si el cliente envía If-Modified-Since y los datos no cambiaron, retornar 304
+    const sinceHeader = req.headers['if-modified-since'];
+    if (sinceHeader && recursosCache && (now - recursosCacheTime) < RECURSOS_CACHE_TTL) {
+      return res.status(304).end();
+    }
+
+    // Reutilizar caché si aún es válido
+    if (recursosCache && (now - recursosCacheTime) < RECURSOS_CACHE_TTL) {
+      res.set('Cache-Control', 'private, max-age=2');
+      res.set('Last-Modified', new Date(recursosCacheTime).toUTCString());
+      return res.json(recursosCache);
+    }
+
     const totalMem = os.totalmem();
     const freeMem = os.freemem();
     const usedMem = totalMem - freeMem;
@@ -15,8 +56,17 @@ exports.getRecursos = async (req, res) => {
     const cpuInfo = os.cpus();
     const cpuModel = cpuInfo.length > 0 ? cpuInfo[0].model : 'Desconocido';
     
-    // Procesar APM Metrics
-    const metrics = global.apiMetrics || [];
+    // [OPTIMIZACIÓN 8] Leer métricas del buffer circular eficientemente
+    const metrics = [];
+    const count = global.apiMetricsCount || 0;
+    const buffer = global.apiMetrics || [];
+    const bufSize = buffer.length;
+    const idx = global.apiMetricsIndex || 0;
+
+    for (let i = 0; i < count; i++) {
+      const pos = (idx - count + i + bufSize) % bufSize;
+      if (buffer[pos]) metrics.push(buffer[pos]);
+    }
     
     // Top Rutas Más Frecuentes
     const frequencyMap = {};
@@ -39,7 +89,20 @@ exports.getRecursos = async (req, res) => {
         time: m.time
       }));
 
-    res.json({
+    // [GREEN CODE] Métricas de eficiencia energética
+    const avgResponseTime = metrics.length > 0 
+      ? Math.round(metrics.reduce((sum, m) => sum + m.duration, 0) / metrics.length) 
+      : 0;
+    
+    const requestsPerMinute = metrics.length > 0 
+      ? (() => {
+          const oldest = metrics[0]?.time ? new Date(metrics[0].time).getTime() : now;
+          const elapsed = Math.max((now - oldest) / 60000, 1);
+          return Math.round(metrics.length / elapsed);
+        })()
+      : 0;
+
+    const resultado = {
       uptime: os.uptime(),
       platform: os.platform(),
       architecture: os.arch(),
@@ -57,9 +120,26 @@ exports.getRecursos = async (req, res) => {
       apm: {
         topRutas,
         topLentas: lentas,
-        totalRequests: metrics.length
+        totalRequests: count
+      },
+      // [GREEN CODE] Métricas de sostenibilidad
+      greenMetrics: {
+        avgResponseTime,
+        requestsPerMinute,
+        cacheHitRate: recursosCache ? 'active' : 'cold',
+        bufferEfficiency: `${count}/${bufSize} slots`,
+        pollInterval: 15,
+        compressionEnabled: true
       }
-    });
+    };
+
+    // Actualizar caché
+    recursosCache = resultado;
+    recursosCacheTime = now;
+
+    res.set('Cache-Control', 'private, max-age=2');
+    res.set('Last-Modified', new Date(now).toUTCString());
+    res.json(resultado);
   } catch (error) {
     res.status(500).json({ msg: 'Error al obtener recursos del sistema' });
   }
@@ -73,7 +153,11 @@ exports.createCarrera = async (req, res) => {
 };
 
 exports.getCarreras = async (req, res) => {
-  try { res.json(await Carrera.find()); } catch (error) { res.status(500).send('Error al obtener'); }
+  try {
+    // [OPTIMIZACIÓN 7] Las carreras cambian raramente — cachear 60s
+    res.set('Cache-Control', 'private, max-age=60');
+    res.json(await Carrera.find().lean());
+  } catch (error) { res.status(500).send('Error al obtener'); }
 };
 
 exports.updateCarrera = async (req, res) => {
@@ -104,12 +188,26 @@ exports.createEstudiante = async (req, res) => {
   } catch (error) { res.status(500).send('Error al crear estudiante'); }
 };
 
+// [OPTIMIZACIÓN 1 + 2] Paginación server-side + proyección selectiva
 exports.getEstudiantes = async (req, res) => {
   try {
-    const estudiantes = await User.find({ rol: 'ESTUDIANTE' })
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 0; // 0 = sin límite (backward compatible)
+    const skip = limit > 0 ? (page - 1) * limit : 0;
+
+    let query = User.find({ rol: 'ESTUDIANTE' })
       .select('-password')
       .populate('carrera', 'nombre')
       .lean();
+
+    if (limit > 0) {
+      const total = await User.countDocuments({ rol: 'ESTUDIANTE' });
+      const estudiantes = await query.skip(skip).limit(limit);
+      return res.json({ data: estudiantes, total, page, totalPages: Math.ceil(total / limit) });
+    }
+
+    // Sin paginación (backward compatible para otros consumers)
+    const estudiantes = await query;
     res.json(estudiantes);
   } catch (error) { res.status(500).send('Error al obtener'); }
 };
@@ -254,12 +352,25 @@ exports.createDocente = async (req, res) => {
   } catch (error) { res.status(500).send('Error al crear docente'); }
 };
 
+// [OPTIMIZACIÓN 1 + 2] Paginación server-side para docentes
 exports.getDocentes = async (req, res) => {
   try {
-    const docentes = await User.find({ rol: 'DOCENTE' })
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 0;
+    const skip = limit > 0 ? (page - 1) * limit : 0;
+
+    let query = User.find({ rol: 'DOCENTE' })
       .select('-password')
       .populate('carrerasEnsenadas', 'nombre')
       .lean();
+
+    if (limit > 0) {
+      const total = await User.countDocuments({ rol: 'DOCENTE' });
+      const docentes = await query.skip(skip).limit(limit);
+      return res.json({ data: docentes, total, page, totalPages: Math.ceil(total / limit) });
+    }
+
+    const docentes = await query;
     res.json(docentes);
   } catch (error) { res.status(500).send('Error al obtener'); }
 };
@@ -297,6 +408,7 @@ exports.createCurso = async (req, res) => {
   }
 };
 
+// [OPTIMIZACIÓN 1 + 7] Cursos con caché + .lean()
 exports.getCursos = async (req, res) => {
   try {
     const { carreraId } = req.query;
@@ -305,6 +417,8 @@ exports.getCursos = async (req, res) => {
       .populate('carrera', 'nombre')
       .sort({ ciclo: 1, nombre: 1 })
       .lean();
+    // [OPTIMIZACIÓN 7] Cache-Control para cursos
+    res.set('Cache-Control', 'private, max-age=30');
     res.json(cursos);
   } catch (error) {
     res.status(500).json({ msg: 'Error al obtener cursos' });
@@ -339,13 +453,22 @@ exports.createSeccion = async (req, res) => {
   try { res.json(await new Seccion(req.body).save()); } catch (error) { res.status(500).send('Error al crear'); }
 };
 
+// [OPTIMIZACIÓN 1] Secciones con proyección optimizada — no enviar array completo de estudiantesMatriculados
 exports.getSecciones = async (req, res) => {
   try {
     const secciones = await Seccion.find()
       .populate('curso', 'nombre codigo')
       .populate('docente', 'nombre apellidos')
       .lean();
-    res.json(secciones);
+
+    // [OPTIMIZACIÓN 1] Transformar: enviar solo el COUNT de matriculados, no el array completo de ObjectIds
+    const seccionesOptimizadas = secciones.map(s => ({
+      ...s,
+      estudiantesMatriculadosCount: s.estudiantesMatriculados?.length || 0,
+      estudiantesMatriculados: undefined  // No enviar el array pesado
+    }));
+
+    res.json(seccionesOptimizadas);
   } catch (error) { res.status(500).send('Error al obtener'); }
 };
 

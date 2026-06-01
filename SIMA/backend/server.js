@@ -11,11 +11,23 @@ connectDB();
 
 // Middlewares
 app.use(cors());
-app.use(compression());
+// [OPTIMIZACIÓN 3] Compresión con nivel 6 (equilibrio velocidad/ratio) y threshold de 1KB
+app.use(compression({
+  level: 6,
+  threshold: 1024,
+  filter: (req, res) => {
+    if (req.headers['x-no-compression']) return false;
+    return compression.filter(req, res);
+  }
+}));
 app.use(express.json());
 
-// APM - Tracker de rendimiento de API
-global.apiMetrics = [];
+// [OPTIMIZACIÓN 8] APM - Buffer circular O(1) en vez de Array.shift() O(n)
+const APM_BUFFER_SIZE = 500;
+global.apiMetrics = new Array(APM_BUFFER_SIZE).fill(null);
+global.apiMetricsIndex = 0;
+global.apiMetricsCount = 0;
+
 app.use((req, res, next) => {
   const start = Date.now();
   res.on('finish', () => {
@@ -23,16 +35,16 @@ app.use((req, res, next) => {
     const route = req.originalUrl.split('?')[0];
     
     if(route.startsWith('/api/')) {
-      global.apiMetrics.push({
+      // Escritura O(1) en buffer circular
+      global.apiMetrics[global.apiMetricsIndex] = {
         method: req.method,
         route: route,
         duration: duration,
         status: res.statusCode,
         time: new Date()
-      });
-      if(global.apiMetrics.length > 1000) {
-        global.apiMetrics.shift();
-      }
+      };
+      global.apiMetricsIndex = (global.apiMetricsIndex + 1) % APM_BUFFER_SIZE;
+      if (global.apiMetricsCount < APM_BUFFER_SIZE) global.apiMetricsCount++;
     }
   });
   next();
