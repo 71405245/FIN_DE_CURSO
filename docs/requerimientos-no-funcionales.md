@@ -1,10 +1,12 @@
-# 📋 Requerimientos No Funcionales
+# 📋 Requerimientos No Funcionales (RNF)
 
-| ID | Nombre del Requerimiento | Descripción Técnica | Criterio de Aceptación |
-|----|--------------------------|--------------------|------------------------|
-| RNF-01 | Latencia | El sistema debe responder a las solicitudes del usuario en tiempos mínimos para garantizar fluidez. | Dado que el usuario realiza una acción, cuando el sistema procesa la solicitud, entonces responde en ≤ 2 segundos. |
-| RNF-02 | Usabilidad | El sistema debe ser intuitivo y fácil de usar para el usuario. | Dado un usuario nuevo, cuando utiliza el sistema, entonces completa el proceso en ≤ 3 minutos sin errores. |
-| RNF-03 | Compatibilidad | El sistema debe funcionar correctamente en navegadores modernos. | Dado acceso desde Chrome, Edge o Firefox, cuando se utiliza, entonces funciona sin fallos. |
-| RNF-04 | Escalabilidad | El sistema debe poder adaptarse al incremento de usuarios sin afectar su funcionamiento. | Dado un aumento de usuarios, cuando el sistema escala, entonces mantiene su rendimiento. |
-| RNF-05 | Rendimiento | El sistema debe manejar múltiples solicitudes sin degradar su desempeño. | Dado múltiples usuarios simultáneos, cuando el sistema está en uso, entonces mantiene tiempos de respuesta estables. |
-| RNF-06 | Mantenibilidad | El sistema debe ser fácil de mantener y modificar. | Dado una actualización del sistema, cuando se realizan cambios, entonces el código puede modificarse sin afectar otras funcionalidades. |
+| ID | Nombre | Descripción |
+|----|---------|-------------|
+| RNF-01 | Compresión de red | Todas las respuestas de la API deben comprimirse mediante GZIP, reduciendo hasta un 90% el tamaño de las respuestas masivas y optimizando el consumo de ancho de banda. |
+| RNF-02 | Consultas eficientes | Las consultas masivas realizadas con Mongoose deben utilizar `.lean()` para retornar objetos JavaScript planos, mejorando el rendimiento entre 3x y 5x. |
+| RNF-03 | Indexación de base de datos | Los campos de búsqueda frecuente como rol, carrera, curso y docente deben contar con índices en MongoDB para optimizar las búsquedas y reducir tiempos de respuesta. |
+| RNF-04 | Escalabilidad | El sistema debe soportar al menos 3,000 estudiantes, 80 docentes y 1,000 secciones activas sin degradación perceptible del rendimiento. |
+| RNF-05 | Seguridad | Las contraseñas deben almacenarse utilizando bcrypt con costo 10 y los tokens JWT tendrán una vigencia máxima de 10 horas. |
+| RNF-06 | Disponibilidad local | Durante el desarrollo, el sistema debe ejecutarse localmente en `http://localhost:5173` para el frontend y `http://localhost:5000` para la API backend. |
+| RNF-07 | Rendimiento | El tiempo de respuesta promedio de las consultas críticas no debe superar los 2 segundos bajo carga normal del sistema. |
+| RNF-08 | Mantenibilidad | El código debe seguir una arquitectura modular basada en componentes y separación por capas, facilitando futuras mejoras y mantenimiento del sistema. |

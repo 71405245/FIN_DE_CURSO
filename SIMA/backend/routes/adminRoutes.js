@@ -5,7 +5,18 @@ const planificacionController = require('../controllers/planificacionController'
 
 // Planificación de Horarios
 router.get('/planificacion/stats', planificacionController.getStats);
+router.get('/planificacion/carga-horaria', planificacionController.getCargaHoraria);
+router.get('/planificacion/docentes-disponibles', planificacionController.getDocentesDisponibles);
+router.put('/planificacion/seccion/:id/reasignar', planificacionController.reasignarDocente);
+router.put('/planificacion/seccion/:id/liberar', planificacionController.liberarSeccion);
+router.put('/planificacion/seccion/:id/horario', planificacionController.editarHorario);
 
+
+// [OPTIMIZACIÓN 6] Endpoint consolidado de estadísticas (1 petición en vez de 5)
+router.get('/stats/counts', adminController.getStatsCounts);
+
+// Recursos / Sistema
+router.get('/recursos', adminController.getRecursos);
 
 // Carreras
 router.post('/carreras', adminController.createCarrera);

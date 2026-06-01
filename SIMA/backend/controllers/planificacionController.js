@@ -1,13 +1,43 @@
 const Seccion = require('../models/Seccion');
 const User = require('../models/User');
 
-// Verifica si dos bloques horarios se solapan
+const MAX_HORAS = 48;
+
+// ── Helpers ─────────────────────────────────────────────────────────────────
+
+/** Convierte "HH:MM" a número decimal de horas */
+function horaADecimal(str) {
+  if (!str) return 0;
+  const [h, m] = str.split(':').map(Number);
+  return h + (m || 0) / 60;
+}
+
+/**
+ * Calcula las horas semanales que aporta una sección.
+ * Fórmula: (horaFin - horaInicio) × cantidad_de_días_en_semana
+ */
+function calcularHorasSeccion(horaInicio, horaFin, dias) {
+  const duracion = horaADecimal(horaFin) - horaADecimal(horaInicio);
+  const numDias = Array.isArray(dias) ? dias.length : 0;
+  return Math.max(0, duracion * numDias);
+}
+
+/** Verifica si dos secciones tienen conflicto horario */
 function hayConflicto(s1, s2) {
   if (!s1.dias || !s2.dias || !s1.horaInicio || !s2.horaInicio) return false;
   const diasComunes = s1.dias.filter(d => s2.dias.includes(d));
   if (diasComunes.length === 0) return false;
   return s1.horaInicio < s2.horaFin && s2.horaInicio < s1.horaFin;
 }
+
+/** Clasifica el estado de carga de un docente */
+function estadoCarga(horas) {
+  if (horas > MAX_HORAS) return 'exceso';
+  if (horas >= 40) return 'limite';
+  return 'normal';
+}
+
+// ── getStats ─────────────────────────────────────────────────────────────────
 
 exports.getStats = async (req, res) => {
   try {
@@ -21,29 +51,33 @@ exports.getStats = async (req, res) => {
     let totalCupos = 0;
     let salonesLlenos = 0;
 
-    // Carga por día
     const cargaPorDia = { Lunes: 0, Martes: 0, Miércoles: 0, Jueves: 0, Viernes: 0, Sábado: 0, Domingo: 0 };
-
-    // Carga por turno
     const turnos = { Mañana: 0, Tarde: 0, Noche: 0 };
-
-    // Carga por docente { docenteId: { nombre, secciones } }
     const cargaDocente = {};
-
-    // Distribución de ocupación
     const distOcupacion = { '0-24%': 0, '25-49%': 0, '50-74%': 0, '75-99%': 0, '100%': 0 };
-
-    // Docentes únicos con sección
     const docentesConSeccion = new Set();
+    const seccionesSinAsignar = [];
 
     for (const s of secciones) {
+      if (!s.docente) {
+        seccionesSinAsignar.push({
+          _id: s._id,
+          codigoSeccion: s.codigoSeccion,
+          curso: s.curso?.nombre,
+          dias: s.dias,
+          horaInicio: s.horaInicio,
+          horaFin: s.horaFin,
+          aula: s.aula,
+          horario: s.horario
+        });
+      }
+
       const mat = s.estudiantesMatriculados?.length || 0;
       const cupo = s.cupoMaximo || 30;
       totalMatriculados += mat;
       totalCupos += cupo;
       if (mat >= cupo) salonesLlenos++;
 
-      // Pct ocupación por salón
       const pct = cupo > 0 ? (mat / cupo) * 100 : 0;
       if (pct < 25) distOcupacion['0-24%']++;
       else if (pct < 50) distOcupacion['25-49%']++;
@@ -51,14 +85,8 @@ exports.getStats = async (req, res) => {
       else if (pct < 100) distOcupacion['75-99%']++;
       else distOcupacion['100%']++;
 
-      // Días
-      if (s.dias) {
-        s.dias.forEach(d => {
-          if (cargaPorDia[d] !== undefined) cargaPorDia[d]++;
-        });
-      }
+      if (s.dias) s.dias.forEach(d => { if (cargaPorDia[d] !== undefined) cargaPorDia[d]++; });
 
-      // Turno
       if (s.horaInicio) {
         const h = parseInt(s.horaInicio.split(':')[0]);
         if (h < 13) turnos['Mañana']++;
@@ -66,33 +94,51 @@ exports.getStats = async (req, res) => {
         else turnos['Noche']++;
       }
 
-      // Docente
       if (s.docente) {
         const did = String(s.docente._id);
         docentesConSeccion.add(did);
         if (!cargaDocente[did]) {
-          cargaDocente[did] = { nombre: `${s.docente.nombre} ${s.docente.apellidos}`, secciones: 0 };
+          cargaDocente[did] = {
+            nombre: `${s.docente.nombre} ${s.docente.apellidos}`,
+            secciones: 0,
+            horasSemanales: 0,
+          };
         }
         cargaDocente[did].secciones++;
+        cargaDocente[did].horasSemanales += calcularHorasSeccion(s.horaInicio, s.horaFin, s.dias);
       }
     }
 
-    // Top 10 docentes por carga
+    const histogramaCarga = {
+      '0-10h': 0, '11-20h': 0, '21-30h': 0, '31-40h': 0, '41-48h': 0, '>48h': 0
+    };
+
+    // Redondear horas a 1 decimal y llenar histograma
+    Object.values(cargaDocente).forEach(d => {
+      d.horasSemanales = Math.round(d.horasSemanales * 10) / 10;
+      if (d.horasSemanales <= 10) histogramaCarga['0-10h']++;
+      else if (d.horasSemanales <= 20) histogramaCarga['11-20h']++;
+      else if (d.horasSemanales <= 30) histogramaCarga['21-30h']++;
+      else if (d.horasSemanales <= 40) histogramaCarga['31-40h']++;
+      else if (d.horasSemanales <= MAX_HORAS) histogramaCarga['41-48h']++;
+      else histogramaCarga['>48h']++;
+    });
+
+    // Top 10 docentes por horas semanales
     const topDocentes = Object.values(cargaDocente)
-      .sort((a, b) => b.secciones - a.secciones)
+      .sort((a, b) => b.horasSemanales - a.horasSemanales)
       .slice(0, 10);
 
-    // Detección de conflictos
+    // KPI: docentes en exceso (> 48h)
+    const docentesEnExceso = Object.values(cargaDocente).filter(d => d.horasSemanales > MAX_HORAS).length;
+
+    // Conflictos de horario
     const conflictosDocente = [];
     const conflictosAula = [];
-
     for (let i = 0; i < secciones.length; i++) {
       for (let j = i + 1; j < secciones.length; j++) {
-        const a = secciones[i];
-        const b = secciones[j];
+        const a = secciones[i], b = secciones[j];
         if (!hayConflicto(a, b)) continue;
-
-        // Conflicto de docente
         if (a.docente && b.docente && String(a.docente._id) === String(b.docente._id)) {
           conflictosDocente.push({
             docente: `${a.docente.nombre} ${a.docente.apellidos}`,
@@ -100,8 +146,6 @@ exports.getStats = async (req, res) => {
             seccion2: { codigo: b.codigoSeccion, curso: b.curso?.nombre, horario: b.horario },
           });
         }
-
-        // Conflicto de aula
         if (a.aula && b.aula && a.aula.trim().toLowerCase() === b.aula.trim().toLowerCase()) {
           conflictosAula.push({
             aula: a.aula,
@@ -123,14 +167,14 @@ exports.getStats = async (req, res) => {
         curso: s.curso?.nombre,
         matriculados: s.estudiantesMatriculados?.length || 0,
         cupo: s.cupoMaximo,
-        pct: Math.round(((s.estudiantesMatriculados?.length || 0) / s.cupoMaximo) * 100)
+        pct: Math.round(((s.estudiantesMatriculados?.length || 0) / s.cupoMaximo) * 100),
       }))
       .sort((a, b) => b.pct - a.pct);
 
-    // Docentes sobrecargados (>5 secciones)
+    // Docentes que superan las 48h (criterio real)
     const docentesSobrecargados = Object.values(cargaDocente)
-      .filter(d => d.secciones > 5)
-      .sort((a, b) => b.secciones - a.secciones);
+      .filter(d => d.horasSemanales > MAX_HORAS)
+      .sort((a, b) => b.horasSemanales - a.horasSemanales);
 
     res.json({
       kpis: {
@@ -139,20 +183,22 @@ exports.getStats = async (req, res) => {
         salonesLlenos,
         cuposDisponibles: totalCupos - totalMatriculados,
         docentesConSeccion: docentesConSeccion.size,
+        docentesEnExceso,
       },
       graficos: {
         cargaPorDia,
         turnos,
         topDocentes,
         distOcupacion,
+        histogramaCarga,
       },
       alertas: {
         conflictosDocente: conflictosDocente.slice(0, 20),
         conflictosAula: conflictosAula.slice(0, 20),
         casiLlenos: casiLlenos.slice(0, 20),
         docentesSobrecargados,
+        seccionesSinAsignar,
       },
-      // Secciones completas para el calendario
       secciones: secciones.map(s => ({
         _id: s._id,
         codigoSeccion: s.codigoSeccion,
@@ -172,3 +218,166 @@ exports.getStats = async (req, res) => {
     res.status(500).json({ msg: 'Error al obtener estadísticas de planificación' });
   }
 };
+
+// ── getCargaHoraria ───────────────────────────────────────────────────────────
+
+exports.getCargaHoraria = async (req, res) => {
+  try {
+    const secciones = await Seccion.find()
+      .populate('curso', 'nombre codigo')
+      .populate('docente', 'nombre apellidos email')
+      .lean();
+
+    // Agrupar secciones por docente
+    const porDocente = {};
+    for (const s of secciones) {
+      if (!s.docente) continue;
+      const did = String(s.docente._id);
+      if (!porDocente[did]) {
+        porDocente[did] = {
+          _id: did,
+          nombre: `${s.docente.nombre} ${s.docente.apellidos}`,
+          email: s.docente.email || '',
+          secciones: [],
+          totalHoras: 0,
+        };
+      }
+      const horas = calcularHorasSeccion(s.horaInicio, s.horaFin, s.dias);
+      porDocente[did].totalHoras += horas;
+      porDocente[did].secciones.push({
+        _id: s._id,
+        codigoSeccion: s.codigoSeccion,
+        curso: s.curso?.nombre || 'Sin curso',
+        dias: s.dias || [],
+        horaInicio: s.horaInicio,
+        horaFin: s.horaFin,
+        aula: s.aula,
+        horario: s.horario,
+        horas: Math.round(horas * 10) / 10,
+      });
+    }
+
+    const resultado = Object.values(porDocente)
+      .map(d => ({
+        ...d,
+        totalHoras: Math.round(d.totalHoras * 10) / 10,
+        estado: estadoCarga(d.totalHoras),
+        pctCarga: Math.min(Math.round((d.totalHoras / MAX_HORAS) * 100), 999),
+      }))
+      .sort((a, b) => b.totalHoras - a.totalHoras);
+
+    res.json({ maxHoras: MAX_HORAS, docentes: resultado });
+  } catch (err) {
+    console.error('Error en carga-horaria:', err);
+    res.status(500).json({ msg: 'Error al calcular carga horaria' });
+  }
+};
+
+// ── Reasignación Inteligente ────────────────────────────────────────────────
+
+exports.getDocentesDisponibles = async (req, res) => {
+  try {
+    const { horaInicio, horaFin, dias } = req.query;
+    if (!horaInicio || !horaFin || !dias) {
+      return res.status(400).json({ msg: 'horaInicio, horaFin y dias son requeridos' });
+    }
+    
+    const diasArray = dias.split(',');
+    const horasNuevas = calcularHorasSeccion(horaInicio, horaFin, diasArray);
+
+    const docentes = await User.find({ rol: 'DOCENTE' }).lean();
+    const todasSecciones = await Seccion.find().lean();
+    
+    const docentesSugeridos = [];
+
+    for (const doc of docentes) {
+      const idDocente = String(doc._id);
+      const secDocente = todasSecciones.filter(s => s.docente && String(s.docente) === idDocente);
+      
+      let horasActuales = 0;
+      let tieneConflicto = false;
+      
+      for (const s of secDocente) {
+        horasActuales += calcularHorasSeccion(s.horaInicio, s.horaFin, s.dias);
+        if (hayConflicto(s, { horaInicio, horaFin, dias: diasArray })) {
+          tieneConflicto = true;
+        }
+      }
+      
+      if (!tieneConflicto && (horasActuales + horasNuevas <= MAX_HORAS)) {
+        docentesSugeridos.push({
+          _id: doc._id,
+          nombre: `${doc.nombre} ${doc.apellidos}`,
+          horasActuales: Math.round(horasActuales * 10) / 10,
+          horasProyectadas: Math.round((horasActuales + horasNuevas) * 10) / 10,
+          seccionesActuales: secDocente.length
+        });
+      }
+    }
+
+    docentesSugeridos.sort((a, b) => a.horasProyectadas - b.horasProyectadas);
+    res.json(docentesSugeridos);
+  } catch (err) {
+    console.error('Error buscando docentes disponibles:', err);
+    res.status(500).json({ msg: 'Error al buscar docentes' });
+  }
+};
+
+exports.reasignarDocente = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { docenteId } = req.body;
+    
+    const seccion = await Seccion.findById(id);
+    if (!seccion) return res.status(404).json({ msg: 'Sección no encontrada' });
+    
+    seccion.docente = docenteId;
+    await seccion.save();
+    
+    res.json({ msg: 'Docente reasignado correctamente' });
+  } catch (err) {
+    console.error('Error reasignando docente:', err);
+    res.status(500).json({ msg: 'Error al reasignar docente' });
+  }
+};
+
+exports.liberarSeccion = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const seccion = await Seccion.findById(id);
+    if (!seccion) return res.status(404).json({ msg: 'Sección no encontrada' });
+    
+    seccion.docente = null; // Quitar docente
+    await seccion.save();
+    
+    res.json({ msg: 'Sección liberada correctamente' });
+  } catch (err) {
+    console.error('Error liberando sección:', err);
+    res.status(500).json({ msg: 'Error al liberar sección' });
+  }
+};
+
+exports.editarHorario = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { dias, horaInicio, horaFin, aula } = req.body;
+    
+    const seccion = await Seccion.findById(id);
+    if (!seccion) return res.status(404).json({ msg: 'Sección no encontrada' });
+    
+    if (dias) seccion.dias = dias;
+    if (horaInicio) seccion.horaInicio = horaInicio;
+    if (horaFin) seccion.horaFin = horaFin;
+    if (aula) seccion.aula = aula;
+    
+    seccion.horario = `${(dias || seccion.dias).join(', ')} ${horaInicio || seccion.horaInicio} - ${horaFin || seccion.horaFin}`;
+    
+    await seccion.save();
+    
+    res.json({ msg: 'Horario actualizado correctamente', seccion });
+  } catch (err) {
+    console.error('Error editando horario:', err);
+    res.status(500).json({ msg: 'Error al editar horario' });
+  }
+};
+

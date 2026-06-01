@@ -6,14 +6,17 @@ Este documento describe la arquitectura técnica del **Sistema de Información y
 
 ## 1. Descripción General de la Infraestructura
 
-El sistema SIMA utiliza arquitectura MERN Stack:
-
-- MongoDB → Base de datos NoSQL
-- Express.js → Backend API REST
-- React.js → Interfaces dinámicas
-- Node.js → Servidor backend
-
-La comunicación entre frontend y backend se realiza mediante JSON y servicios RESTful.
+| Capa | Tecnología | Versión |
+|------|-------------|----------|
+| Frontend | React + Vite | 19.x / 8.x |
+| Gráficos | Chart.js + react-chartjs-2 | 4.x / 5.x |
+| HTTP Client | axios | 1.x |
+| Routing | react-router-dom | 7.x |
+| Backend | Node.js + Express | 18+ / 4.x |
+| ORM | Mongoose | 8.x |
+| Base de Datos | MongoDB | 6+ |
+| Autenticación | JWT + bcryptjs | — |
+| Compresión | compression | 1.x |
 
 ---
 

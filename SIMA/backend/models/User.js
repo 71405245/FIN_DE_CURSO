@@ -37,6 +37,11 @@ const userSchema = new mongoose.Schema({
     type: Number,
     default: 1,
   },
+  turnoDisponibilidad: {
+    type: String,
+    enum: ['Mañana', 'Tarde', 'Noche', 'Completo'],
+    default: 'Completo',
+  },
   fechaRegistro: {
     type: Date,
     default: Date.now,
