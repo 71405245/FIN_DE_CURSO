@@ -12,14 +12,15 @@ function EstudiantesManager() {
   
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => { 
     fetchEstudiantes(); 
-    axios.get('http://localhost:5000/api/admin/carreras').then(res => setCarreras(res.data));
+    axios.get('http://localhost:5001/api/admin/carreras').then(res => setCarreras(res.data));
   }, []);
 
   const fetchEstudiantes = async () => {
-    const res = await axios.get('http://localhost:5000/api/admin/estudiantes');
+    const res = await axios.get('http://localhost:5001/api/admin/estudiantes');
     setEstudiantes(res.data);
   };
 
@@ -29,11 +30,11 @@ function EstudiantesManager() {
     setSuccess('');
     try {
       if (editId) {
-        await axios.put(`http://localhost:5000/api/admin/estudiantes/${editId}`, form);
+        await axios.put(`http://localhost:5001/api/admin/estudiantes/${editId}`, form);
         setSuccess('Estudiante actualizado correctamente.');
         setEditId(null);
       } else {
-        await axios.post('http://localhost:5000/api/admin/estudiantes', form);
+        await axios.post('http://localhost:5001/api/admin/estudiantes', form);
         setSuccess('Estudiante registrado correctamente.');
       }
       setForm(EMPTY_FORM);
@@ -60,7 +61,7 @@ function EstudiantesManager() {
   const handleDelete = async (id) => {
     if (!window.confirm('¿Seguro que deseas eliminar este estudiante?')) return;
     try {
-      await axios.delete(`http://localhost:5000/api/admin/estudiantes/${id}`);
+      await axios.delete(`http://localhost:5001/api/admin/estudiantes/${id}`);
       fetchEstudiantes();
       setSuccess('Estudiante eliminado correctamente.');
       setTimeout(() => setSuccess(''), 3000);
@@ -156,26 +157,123 @@ function EstudiantesManager() {
             {estudiantes.length === 0 ? (
               <tr><td colSpan="5" style={{ textAlign: 'center', padding: '3.5rem', color: 'var(--text-muted)' }}>No hay estudiantes registrados actualmente.</td></tr>
             ) : (
-              estudiantes.map(e => (
-                <tr key={e._id}>
-                  <td style={{ paddingLeft: '1.5rem', fontWeight: '600', color: 'var(--text-main)' }}>{e.nombre} {e.apellidos}</td>
-                  <td style={{ color: 'var(--text-muted)' }}>{e.email}</td>
-                  <td style={{ fontWeight: '500' }}>{e.carrera?.nombre || <span style={{ color: 'var(--text-muted)' }}>Sin asignar</span>}</td>
-                  <td style={{ textAlign: 'center' }}>
-                    <span className="badge badge-purple" style={{ fontWeight: '700' }}>Ciclo {e.cicloActual}</span>
-                  </td>
-                  <td>
-                    <div style={{ display: 'flex', gap: '0.4rem' }}>
-                      <button onClick={() => handleEdit(e)} style={actionBtnStyle} title="Editar"><Edit2 size={15}/></button>
-                      <button onClick={() => handleDelete(e._id)} style={{...actionBtnStyle, color: '#ef4444'}} title="Eliminar"><Trash2 size={15}/></button>
-                    </div>
-                  </td>
-                </tr>
-              ))
+              (() => {
+                const itemsPerPage = 25;
+                const totalPages = Math.ceil(estudiantes.length / itemsPerPage);
+                // Asegurar que la página actual no quede huérfana tras una eliminación
+                const activePage = Math.max(1, Math.min(currentPage, totalPages));
+                const indexOfLastItem = activePage * itemsPerPage;
+                const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+                const currentItems = estudiantes.slice(indexOfFirstItem, indexOfLastItem);
+                
+                return currentItems.map(e => (
+                  <tr key={e._id}>
+                    <td style={{ paddingLeft: '1.5rem', fontWeight: '600', color: 'var(--text-main)' }}>{e.nombre} {e.apellidos}</td>
+                    <td style={{ color: 'var(--text-muted)' }}>{e.email}</td>
+                    <td style={{ fontWeight: '500' }}>{e.carrera?.nombre || <span style={{ color: 'var(--text-muted)' }}>Sin asignar</span>}</td>
+                    <td style={{ textAlign: 'center' }}>
+                      <span className="badge badge-purple" style={{ fontWeight: '700' }}>Ciclo {e.cicloActual}</span>
+                    </td>
+                    <td>
+                      <div style={{ display: 'flex', gap: '0.4rem' }}>
+                        <button onClick={() => handleEdit(e)} style={actionBtnStyle} title="Editar"><Edit2 size={15}/></button>
+                        <button onClick={() => handleDelete(e._id)} style={{...actionBtnStyle, color: '#ef4444'}} title="Eliminar"><Trash2 size={15}/></button>
+                      </div>
+                    </td>
+                  </tr>
+                ));
+              })()
             )}
           </tbody>
         </table>
       </div>
+
+      {/* Paginación */}
+      {(() => {
+        const itemsPerPage = 25;
+        const totalPages = Math.ceil(estudiantes.length / itemsPerPage);
+        const activePage = Math.max(1, Math.min(currentPage, totalPages));
+        const indexOfLastItem = activePage * itemsPerPage;
+        const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+        if (totalPages <= 1) return null;
+
+        return (
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '1.5rem', padding: '1rem 1.5rem', background: 'var(--surface)', borderRadius: '12px', boxShadow: 'var(--shadow-sm)' }}>
+            <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+              Mostrando <strong>{indexOfFirstItem + 1}</strong> a <strong>{Math.min(indexOfLastItem, estudiantes.length)}</strong> de <strong>{estudiantes.length}</strong> alumnos
+            </span>
+            <div style={{ display: 'flex', gap: '0.35rem', alignItems: 'center' }}>
+              <button
+                type="button"
+                disabled={activePage === 1}
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                style={{
+                  padding: '8px 14px',
+                  borderRadius: '8px',
+                  border: '1px solid var(--border)',
+                  background: 'var(--bg-color)',
+                  color: activePage === 1 ? 'var(--text-muted)' : 'var(--text-main)',
+                  cursor: activePage === 1 ? 'not-allowed' : 'pointer',
+                  fontSize: '0.85rem',
+                  fontWeight: '600',
+                  transition: 'all 0.15s'
+                }}
+              >
+                Anterior
+              </button>
+              
+              {Array.from({ length: totalPages }, (_, idx) => idx + 1)
+                .filter(p => p === 1 || p === totalPages || Math.abs(p - activePage) <= 1)
+                .map((p, index, array) => {
+                  const showEllipsis = index > 0 && p - array[index - 1] > 1;
+                  return (
+                    <React.Fragment key={p}>
+                      {showEllipsis && <span style={{ color: 'var(--text-muted)', padding: '0 4px' }}>...</span>}
+                      <button
+                        type="button"
+                        onClick={() => setCurrentPage(p)}
+                        style={{
+                          minWidth: '36px',
+                          height: '36px',
+                          borderRadius: '8px',
+                          border: p === activePage ? 'none' : '1px solid var(--border)',
+                          background: p === activePage ? 'var(--primary-purple)' : 'var(--bg-color)',
+                          color: p === activePage ? 'white' : 'var(--text-main)',
+                          cursor: 'pointer',
+                          fontSize: '0.85rem',
+                          fontWeight: '700',
+                          transition: 'all 0.15s'
+                        }}
+                      >
+                        {p}
+                      </button>
+                    </React.Fragment>
+                  );
+                })}
+
+              <button
+                type="button"
+                disabled={activePage === totalPages}
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                style={{
+                  padding: '8px 14px',
+                  borderRadius: '8px',
+                  border: '1px solid var(--border)',
+                  background: 'var(--bg-color)',
+                  color: activePage === totalPages ? 'var(--text-muted)' : 'var(--text-main)',
+                  cursor: activePage === totalPages ? 'not-allowed' : 'pointer',
+                  fontSize: '0.85rem',
+                  fontWeight: '600',
+                  transition: 'all 0.15s'
+                }}
+              >
+                Siguiente
+              </button>
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 }

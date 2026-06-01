@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Check, User, Lock, AlertTriangle } from 'lucide-react';
+import { Check, User, Lock, AlertTriangle, Eye, EyeOff } from 'lucide-react';
 import '../App.css';
 
 function Login() {
   const [email, setEmail] = useState('admin@sima.com');
   const [password, setPassword] = useState('admin123');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ function Login() {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+      const res = await axios.post('http://localhost:5001/api/auth/login', { email, password });
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user', JSON.stringify(res.data.user));
       
@@ -98,7 +99,10 @@ function Login() {
         .custom-input-group { margin-bottom: 1.5rem; }
         .custom-input-group label { display: block; font-weight: 600; font-size: 0.9rem; color: #475569; margin-bottom: 0.5rem; }
         .input-wrapper { position: relative; }
-        .input-wrapper svg { position: absolute; left: 1.2rem; top: 50%; transform: translateY(-50%); color: #94a3b8; transition: color 0.3s; }
+        .input-wrapper .icon-left { position: absolute; left: 1.2rem; top: 50%; transform: translateY(-50%); color: #94a3b8; transition: color 0.3s; pointer-events: none; }
+        .eye-toggle-btn { position: absolute; right: 1.2rem; top: 50%; transform: translateY(-50%); background: none; border: none; padding: 0; cursor: pointer; color: #94a3b8; display: flex; align-items: center; transition: color 0.2s; }
+        .eye-toggle-btn:hover { color: #6366f1; }
+        .form-control-with-eye { padding-right: 3.2rem !important; }
         
         .form-control-custom {
             width: 100%;
@@ -188,7 +192,7 @@ function Login() {
                               onChange={(e) => setEmail(e.target.value)}
                               required 
                             />
-                            <User size={18} />
+                            <User size={18} className="icon-left" />
                         </div>
                     </div>
 
@@ -196,14 +200,23 @@ function Login() {
                         <label>Contraseña</label>
                         <div className="input-wrapper">
                             <input 
-                              type="password" 
-                              className="form-control-custom" 
+                              type={showPassword ? 'text' : 'password'}
+                              className="form-control-custom form-control-with-eye" 
                               placeholder="••••••••" 
                               value={password}
                               onChange={(e) => setPassword(e.target.value)}
                               required 
                             />
-                            <Lock size={18} />
+                            <Lock size={18} className="icon-left" />
+                            <button
+                              type="button"
+                              className="eye-toggle-btn"
+                              onClick={() => setShowPassword(prev => !prev)}
+                              tabIndex={-1}
+                              aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
+                            >
+                              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                            </button>
                         </div>
                     </div>
 

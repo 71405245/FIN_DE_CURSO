@@ -41,10 +41,29 @@ function estadoCarga(horas) {
 
 exports.getStats = async (req, res) => {
   try {
-    const secciones = await Seccion.find()
-      .populate('curso', 'nombre codigo')
-      .populate('docente', 'nombre apellidos')
-      .lean();
+    // [OPTIMIZACIÓN 1] Evitar descargar ObjectIds de estudiantesMatriculados usando Agregación y $size
+    let secciones = await Seccion.aggregate([
+      {
+        $project: {
+          codigoSeccion: 1,
+          curso: 1,
+          docente: 1,
+          dias: 1,
+          horaInicio: 1,
+          horaFin: 1,
+          aula: 1,
+          cupoMaximo: 1,
+          horario: 1,
+          estudiantesMatriculadosCount: { $size: { $ifNull: ["$estudiantesMatriculados", []] } }
+        }
+      }
+    ]);
+
+    // [OPTIMIZACIÓN 1] Poblar referencias en memoria
+    secciones = await Seccion.populate(secciones, [
+      { path: 'curso', select: 'nombre codigo' },
+      { path: 'docente', select: 'nombre apellidos' }
+    ]);
 
     const totalSecciones = secciones.length;
     let totalMatriculados = 0;
@@ -72,7 +91,7 @@ exports.getStats = async (req, res) => {
         });
       }
 
-      const mat = s.estudiantesMatriculados?.length || 0;
+      const mat = s.estudiantesMatriculadosCount || 0;
       const cupo = s.cupoMaximo || 30;
       totalMatriculados += mat;
       totalCupos += cupo;
@@ -159,15 +178,15 @@ exports.getStats = async (req, res) => {
     // Salones casi llenos (≥80%)
     const casiLlenos = secciones
       .filter(s => {
-        const pct = s.cupoMaximo > 0 ? (s.estudiantesMatriculados?.length || 0) / s.cupoMaximo : 0;
+        const pct = s.cupoMaximo > 0 ? (s.estudiantesMatriculadosCount || 0) / s.cupoMaximo : 0;
         return pct >= 0.8 && pct < 1;
       })
       .map(s => ({
         codigo: s.codigoSeccion,
         curso: s.curso?.nombre,
-        matriculados: s.estudiantesMatriculados?.length || 0,
+        matriculados: s.estudiantesMatriculadosCount || 0,
         cupo: s.cupoMaximo,
-        pct: Math.round(((s.estudiantesMatriculados?.length || 0) / s.cupoMaximo) * 100),
+        pct: Math.round(((s.estudiantesMatriculadosCount || 0) / s.cupoMaximo) * 100),
       }))
       .sort((a, b) => b.pct - a.pct);
 
@@ -209,7 +228,7 @@ exports.getStats = async (req, res) => {
         horaFin: s.horaFin,
         aula: s.aula,
         horario: s.horario,
-        matriculados: s.estudiantesMatriculados?.length || 0,
+        matriculados: s.estudiantesMatriculadosCount || 0,
         cupoMaximo: s.cupoMaximo,
       })),
     });

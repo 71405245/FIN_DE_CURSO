@@ -19,15 +19,16 @@ function CursosManager() {
   const [filtroCiclo, setFiltroCiclo]    = useState('');
   const [loading, setLoading]       = useState(false);
   const [error, setError]           = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     fetchCursos();
-    axios.get('http://localhost:5000/api/admin/carreras').then(res => setCarreras(res.data));
+    axios.get('http://localhost:5001/api/admin/carreras').then(res => setCarreras(res.data));
   }, []);
 
   const fetchCursos = async () => {
     setLoading(true);
-    const res = await axios.get('http://localhost:5000/api/admin/cursos');
+    const res = await axios.get('http://localhost:5001/api/admin/cursos');
     setCursos(res.data);
     setLoading(false);
   };
@@ -47,10 +48,10 @@ function CursosManager() {
       };
 
       if (editId) {
-        await axios.put(`http://localhost:5000/api/admin/cursos/${editId}`, payload);
+        await axios.put(`http://localhost:5001/api/admin/cursos/${editId}`, payload);
         setEditId(null);
       } else {
-        await axios.post('http://localhost:5000/api/admin/cursos', payload);
+        await axios.post('http://localhost:5001/api/admin/cursos', payload);
       }
       setForm(EMPTY_FORM);
       fetchCursos();
@@ -77,7 +78,7 @@ function CursosManager() {
   const handleDelete = async (id) => {
     if (!window.confirm('¿Seguro que deseas eliminar este curso?')) return;
     try {
-      await axios.delete(`http://localhost:5000/api/admin/cursos/${id}`);
+      await axios.delete(`http://localhost:5001/api/admin/cursos/${id}`);
       fetchCursos();
     } catch (err) {
       alert(err.response?.data?.msg || 'Error al eliminar');
@@ -219,15 +220,15 @@ function CursosManager() {
           <div style={{ position: 'relative' }}>
             <Search size={16} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
             <input placeholder="Buscar por código, nombre o área..."
-              value={busqueda} onChange={e => setBusqueda(e.target.value)}
+              value={busqueda} onChange={e => { setBusqueda(e.target.value); setCurrentPage(1); }}
               style={{ paddingLeft: '36px', width: '100%' }} />
           </div>
-          <select value={filtroCarrera} onChange={e => setFiltroCarrera(e.target.value)}
+          <select value={filtroCarrera} onChange={e => { setFiltroCarrera(e.target.value); setCurrentPage(1); }}
             style={{ minWidth: '200px' }}>
             <option value="">Todas las carreras</option>
             {carreras.map(c => <option key={c._id} value={c._id}>{c.nombre}</option>)}
           </select>
-          <select value={filtroCiclo} onChange={e => setFiltroCiclo(e.target.value)}
+          <select value={filtroCiclo} onChange={e => { setFiltroCiclo(e.target.value); setCurrentPage(1); }}
             style={{ minWidth: '130px' }}>
             <option value="">Todos los ciclos</option>
             {ciclosDisponibles.map(n => <option key={n} value={n}>Ciclo {n}</option>)}
@@ -264,55 +265,151 @@ function CursosManager() {
                 {cursos.length === 0 ? 'No hay cursos registrados.' : 'No se encontraron resultados.'}
               </td></tr>
             ) : (
-              cursosFiltrados.map(c => (
-                <tr key={c._id}>
-                  <td><span className="badge badge-gray" style={{ fontFamily: 'monospace' }}>{c.codigo}</span></td>
-                  <td style={{ fontWeight: '500', maxWidth: '220px' }}>{c.nombre}</td>
-                  <td style={{ textAlign: 'center' }}>{c.creditos}</td>
-                  <td style={{ textAlign: 'center' }}>
-                    <span className="badge badge-purple">C{c.ciclo}</span>
-                  </td>
-                  <td style={{ fontSize: '0.85rem', color: 'var(--text-muted)', maxWidth: '160px' }}>
-                    {c.carrera?.nombre || '—'}
-                  </td>
-                  <td style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>{c.area || '—'}</td>
-                  <td>
-                    {c.tipo
-                      ? <span className={`badge ${tipoBadge(c.tipo)}`}>{c.tipo}</span>
-                      : <span style={{ color: 'var(--text-muted)', fontSize: '0.82rem' }}>—</span>}
-                  </td>
-                  <td style={{ maxWidth: '200px' }}>
-                    {c.prerrequisitos && c.prerrequisitos.length > 0 ? (
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '3px' }}>
-                        {c.prerrequisitos.map(p => (
-                          <span key={p} style={{
-                            fontSize: '0.72rem', background: 'var(--primary-alpha)',
-                            color: 'var(--primary-purple)', borderRadius: '4px',
-                            padding: '2px 6px', fontFamily: 'monospace', fontWeight: '600',
-                          }}>{p}</span>
-                        ))}
+              (() => {
+                const itemsPerPage = 20;
+                const totalPages = Math.ceil(cursosFiltrados.length / itemsPerPage);
+                const activePage = Math.max(1, Math.min(currentPage, totalPages));
+                const indexOfLastItem = activePage * itemsPerPage;
+                const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+                const currentItems = cursosFiltrados.slice(indexOfFirstItem, indexOfLastItem);
+
+                return currentItems.map(c => (
+                  <tr key={c._id}>
+                    <td><span className="badge badge-gray" style={{ fontFamily: 'monospace' }}>{c.codigo}</span></td>
+                    <td style={{ fontWeight: '500', maxWidth: '220px' }}>{c.nombre}</td>
+                    <td style={{ textAlign: 'center' }}>{c.creditos}</td>
+                    <td style={{ textAlign: 'center' }}>
+                      <span className="badge badge-purple">C{c.ciclo}</span>
+                    </td>
+                    <td style={{ fontSize: '0.85rem', color: 'var(--text-muted)', maxWidth: '160px' }}>
+                      {c.carrera?.nombre || '—'}
+                    </td>
+                    <td style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>{c.area || '—'}</td>
+                    <td>
+                      {c.tipo
+                        ? <span className={`badge ${tipoBadge(c.tipo)}`}>{c.tipo}</span>
+                        : <span style={{ color: 'var(--text-muted)', fontSize: '0.82rem' }}>—</span>}
+                    </td>
+                    <td style={{ maxWidth: '200px' }}>
+                      {c.prerrequisitos && c.prerrequisitos.length > 0 ? (
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '3px' }}>
+                          {c.prerrequisitos.map(p => (
+                            <span key={p} style={{
+                              fontSize: '0.72rem', background: 'var(--primary-alpha)',
+                              color: 'var(--primary-purple)', borderRadius: '4px',
+                              padding: '2px 6px', fontFamily: 'monospace', fontWeight: '600',
+                            }}>{p}</span>
+                          ))}
+                        </div>
+                      ) : (
+                        <span style={{ color: 'var(--text-muted)', fontSize: '0.82rem' }}>Ninguno</span>
+                      )}
+                    </td>
+                    <td>
+                      <div style={{ display: 'flex', gap: '0.4rem' }}>
+                        <button onClick={() => handleEdit(c)} style={actionBtnStyle} title="Editar">
+                          <Edit2 size={15}/>
+                        </button>
+                        <button onClick={() => handleDelete(c._id)}
+                          style={{ ...actionBtnStyle, color: '#ef4444' }} title="Eliminar">
+                          <Trash2 size={15}/>
+                        </button>
                       </div>
-                    ) : (
-                      <span style={{ color: 'var(--text-muted)', fontSize: '0.82rem' }}>Ninguno</span>
-                    )}
-                  </td>
-                  <td>
-                    <div style={{ display: 'flex', gap: '0.4rem' }}>
-                      <button onClick={() => handleEdit(c)} style={actionBtnStyle} title="Editar">
-                        <Edit2 size={15}/>
-                      </button>
-                      <button onClick={() => handleDelete(c._id)}
-                        style={{ ...actionBtnStyle, color: '#ef4444' }} title="Eliminar">
-                        <Trash2 size={15}/>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))
+                    </td>
+                  </tr>
+                ));
+              })()
             )}
           </tbody>
         </table>
       </div>
+
+      {/* Paginación */}
+      {(() => {
+        const itemsPerPage = 20;
+        const totalPages = Math.ceil(cursosFiltrados.length / itemsPerPage);
+        const activePage = Math.max(1, Math.min(currentPage, totalPages));
+        const indexOfLastItem = activePage * itemsPerPage;
+        const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+        if (totalPages <= 1) return null;
+
+        return (
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '1.5rem', padding: '1rem 1.5rem', background: 'var(--surface)', borderRadius: '12px', boxShadow: 'var(--shadow-sm)' }}>
+            <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+              Mostrando <strong>{indexOfFirstItem + 1}</strong> a <strong>{Math.min(indexOfLastItem, cursosFiltrados.length)}</strong> de <strong>{cursosFiltrados.length}</strong> cursos
+            </span>
+            <div style={{ display: 'flex', gap: '0.35rem', alignItems: 'center' }}>
+              <button
+                type="button"
+                disabled={activePage === 1}
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                style={{
+                  padding: '8px 14px',
+                  borderRadius: '8px',
+                  border: '1px solid var(--border)',
+                  background: 'var(--bg-color)',
+                  color: activePage === 1 ? 'var(--text-muted)' : 'var(--text-main)',
+                  cursor: activePage === 1 ? 'not-allowed' : 'pointer',
+                  fontSize: '0.85rem',
+                  fontWeight: '600',
+                  transition: 'all 0.15s'
+                }}
+              >
+                Anterior
+              </button>
+              
+              {Array.from({ length: totalPages }, (_, idx) => idx + 1)
+                .filter(p => p === 1 || p === totalPages || Math.abs(p - activePage) <= 1)
+                .map((p, index, array) => {
+                  const showEllipsis = index > 0 && p - array[index - 1] > 1;
+                  return (
+                    <React.Fragment key={p}>
+                      {showEllipsis && <span style={{ color: 'var(--text-muted)', padding: '0 4px' }}>...</span>}
+                      <button
+                        type="button"
+                        onClick={() => setCurrentPage(p)}
+                        style={{
+                          minWidth: '36px',
+                          height: '36px',
+                          borderRadius: '8px',
+                          border: p === activePage ? 'none' : '1px solid var(--border)',
+                          background: p === activePage ? 'var(--primary-purple)' : 'var(--bg-color)',
+                          color: p === activePage ? 'white' : 'var(--text-main)',
+                          cursor: 'pointer',
+                          fontSize: '0.85rem',
+                          fontWeight: '700',
+                          transition: 'all 0.15s'
+                        }}
+                      >
+                        {p}
+                      </button>
+                    </React.Fragment>
+                  );
+                })}
+
+              <button
+                type="button"
+                disabled={activePage === totalPages}
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                style={{
+                  padding: '8px 14px',
+                  borderRadius: '8px',
+                  border: '1px solid var(--border)',
+                  background: 'var(--bg-color)',
+                  color: activePage === totalPages ? 'var(--text-muted)' : 'var(--text-main)',
+                  cursor: activePage === totalPages ? 'not-allowed' : 'pointer',
+                  fontSize: '0.85rem',
+                  fontWeight: '600',
+                  transition: 'all 0.15s'
+                }}
+              >
+                Siguiente
+              </button>
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 }

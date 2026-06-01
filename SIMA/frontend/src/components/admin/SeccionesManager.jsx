@@ -23,15 +23,16 @@ function SeccionesManager() {
   const [editId, setEditId] = useState(null);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     fetchSecciones();
-    axios.get('http://localhost:5000/api/admin/cursos').then(res => setCursos(res.data));
-    axios.get('http://localhost:5000/api/admin/docentes').then(res => setDocentes(res.data));
+    axios.get('http://localhost:5001/api/admin/cursos').then(res => setCursos(res.data));
+    axios.get('http://localhost:5001/api/admin/docentes').then(res => setDocentes(res.data));
   }, []);
 
   const fetchSecciones = async () => {
-    const res = await axios.get('http://localhost:5000/api/admin/secciones');
+    const res = await axios.get('http://localhost:5001/api/admin/secciones');
     setSecciones(res.data);
   };
 
@@ -83,11 +84,11 @@ function SeccionesManager() {
       };
 
       if (editId) {
-        await axios.put(`http://localhost:5000/api/admin/secciones/${editId}`, payload);
+        await axios.put(`http://localhost:5001/api/admin/secciones/${editId}`, payload);
         setSuccess('Salón actualizado correctamente.');
         setEditId(null);
       } else {
-        await axios.post('http://localhost:5000/api/admin/secciones', payload);
+        await axios.post('http://localhost:5001/api/admin/secciones', payload);
         setSuccess('Salón aperturado correctamente.');
       }
       setForm(EMPTY_FORM);
@@ -116,7 +117,7 @@ function SeccionesManager() {
   const handleDelete = async (id) => {
     if (!window.confirm('¿Seguro que deseas eliminar este salón?')) return;
     try {
-      await axios.delete(`http://localhost:5000/api/admin/secciones/${id}`);
+      await axios.delete(`http://localhost:5001/api/admin/secciones/${id}`);
       fetchSecciones();
       setSuccess('Salón eliminado correctamente.');
       setTimeout(() => setSuccess(''), 3000);
@@ -321,60 +322,156 @@ function SeccionesManager() {
                 </td>
               </tr>
             ) : (
-              secciones.map(s => {
-                const matriculadosCount = s.estudiantesMatriculados?.length || 0;
-                const isFull = matriculadosCount >= s.cupoMaximo;
-                return (
-                  <tr key={s._id}>
-                    <td style={{ paddingLeft: '1.5rem' }}>
-                      <span className="badge badge-gray" style={{ fontWeight: '700' }}>{s.codigoSeccion}</span>
-                    </td>
-                    <td>
-                      <div style={{ fontWeight: '600', color: 'var(--text-main)' }}>{s.curso?.nombre}</div>
-                      <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontFamily: 'monospace' }}>{s.curso?.codigo}</div>
-                    </td>
-                    <td>
-                      <div style={{ fontWeight: '500' }}>{s.docente ? `${s.docente.nombre} ${s.docente.apellidos}` : 'No asignado'}</div>
-                    </td>
-                    <td>
-                      <span style={{ fontSize: '0.9rem', color: 'var(--text-main)', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                        <Clock size={14} style={{ color: 'var(--primary-purple)' }}/> {s.horario}
-                      </span>
-                    </td>
-                    <td>
-                      <span style={{ fontSize: '0.88rem', color: 'var(--text-muted)', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                        <MapPin size={14} style={{ color: '#ef4444' }}/> {s.aula}
-                      </span>
-                    </td>
-                    <td style={{ textAlign: 'center' }}>
-                      <span
-                        className={`badge ${isFull ? 'badge-gray' : 'badge-green'}`}
-                        style={{
-                          padding: '4px 10px',
-                          color: isFull ? '#ef4444' : '#059669',
-                          fontWeight: '700'
-                        }}
-                      >
-                        {matriculadosCount} / {s.cupoMaximo}
-                      </span>
-                    </td>
-                    <td>
-                      <div style={{ display: 'flex', gap: '0.4rem' }}>
-                        <button onClick={() => handleEdit(s)} style={actionBtnStyle} title="Editar">
-                          <Edit2 size={15}/>
-                        </button>
-                        <button onClick={() => handleDelete(s._id)} style={{ ...actionBtnStyle, color: '#ef4444' }} title="Eliminar">
-                          <Trash2 size={15}/>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })
+              (() => {
+                const itemsPerPage = 15;
+                const totalPages = Math.ceil(secciones.length / itemsPerPage);
+                const activePage = Math.max(1, Math.min(currentPage, totalPages));
+                const indexOfLastItem = activePage * itemsPerPage;
+                const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+                const currentItems = secciones.slice(indexOfFirstItem, indexOfLastItem);
+
+                return currentItems.map(s => {
+                  const matriculadosCount = s.estudiantesMatriculadosCount !== undefined ? s.estudiantesMatriculadosCount : (s.estudiantesMatriculados?.length || 0);
+                  const isFull = matriculadosCount >= s.cupoMaximo;
+                  return (
+                    <tr key={s._id}>
+                      <td style={{ paddingLeft: '1.5rem' }}>
+                        <span className="badge badge-gray" style={{ fontWeight: '700' }}>{s.codigoSeccion}</span>
+                      </td>
+                      <td>
+                        <div style={{ fontWeight: '600', color: 'var(--text-main)' }}>{s.curso?.nombre}</div>
+                        <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', fontFamily: 'monospace' }}>{s.curso?.codigo}</div>
+                      </td>
+                      <td>
+                        <div style={{ fontWeight: '500' }}>{s.docente ? `${s.docente.nombre} ${s.docente.apellidos}` : 'No asignado'}</div>
+                      </td>
+                      <td>
+                        <span style={{ fontSize: '0.9rem', color: 'var(--text-main)', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                          <Clock size={14} style={{ color: 'var(--primary-purple)' }}/> {s.horario}
+                        </span>
+                      </td>
+                      <td>
+                        <span style={{ fontSize: '0.88rem', color: 'var(--text-muted)', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                          <MapPin size={14} style={{ color: '#ef4444' }}/> {s.aula}
+                        </span>
+                      </td>
+                      <td style={{ textAlign: 'center' }}>
+                        <span
+                          className={`badge ${isFull ? 'badge-gray' : 'badge-green'}`}
+                          style={{
+                            padding: '4px 10px',
+                            color: isFull ? '#ef4444' : '#059669',
+                            fontWeight: '700'
+                          }}
+                        >
+                          {matriculadosCount} / {s.cupoMaximo}
+                        </span>
+                      </td>
+                      <td>
+                        <div style={{ display: 'flex', gap: '0.4rem' }}>
+                          <button onClick={() => handleEdit(s)} style={actionBtnStyle} title="Editar">
+                            <Edit2 size={15}/>
+                          </button>
+                          <button onClick={() => handleDelete(s._id)} style={{ ...actionBtnStyle, color: '#ef4444' }} title="Eliminar">
+                            <Trash2 size={15}/>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                });
+              })()
             )}
           </tbody>
         </table>
       </div>
+
+      {/* Paginación */}
+      {(() => {
+        const itemsPerPage = 15;
+        const totalPages = Math.ceil(secciones.length / itemsPerPage);
+        const activePage = Math.max(1, Math.min(currentPage, totalPages));
+        const indexOfLastItem = activePage * itemsPerPage;
+        const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+        if (totalPages <= 1) return null;
+
+        return (
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '1.5rem', padding: '1rem 1.5rem', background: 'var(--surface)', borderRadius: '12px', boxShadow: 'var(--shadow-sm)' }}>
+            <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
+              Mostrando <strong>{indexOfFirstItem + 1}</strong> a <strong>{Math.min(indexOfLastItem, secciones.length)}</strong> de <strong>{secciones.length}</strong> salones
+            </span>
+            <div style={{ display: 'flex', gap: '0.35rem', alignItems: 'center' }}>
+              <button
+                type="button"
+                disabled={activePage === 1}
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                style={{
+                  padding: '8px 14px',
+                  borderRadius: '8px',
+                  border: '1px solid var(--border)',
+                  background: 'var(--bg-color)',
+                  color: activePage === 1 ? 'var(--text-muted)' : 'var(--text-main)',
+                  cursor: activePage === 1 ? 'not-allowed' : 'pointer',
+                  fontSize: '0.85rem',
+                  fontWeight: '600',
+                  transition: 'all 0.15s'
+                }}
+              >
+                Anterior
+              </button>
+              
+              {Array.from({ length: totalPages }, (_, idx) => idx + 1)
+                .filter(p => p === 1 || p === totalPages || Math.abs(p - activePage) <= 1)
+                .map((p, index, array) => {
+                  const showEllipsis = index > 0 && p - array[index - 1] > 1;
+                  return (
+                    <React.Fragment key={p}>
+                      {showEllipsis && <span style={{ color: 'var(--text-muted)', padding: '0 4px' }}>...</span>}
+                      <button
+                        type="button"
+                        onClick={() => setCurrentPage(p)}
+                        style={{
+                          minWidth: '36px',
+                          height: '36px',
+                          borderRadius: '8px',
+                          border: p === activePage ? 'none' : '1px solid var(--border)',
+                          background: p === activePage ? 'var(--primary-purple)' : 'var(--bg-color)',
+                          color: p === activePage ? 'white' : 'var(--text-main)',
+                          cursor: 'pointer',
+                          fontSize: '0.85rem',
+                          fontWeight: '700',
+                          transition: 'all 0.15s'
+                        }}
+                      >
+                        {p}
+                      </button>
+                    </React.Fragment>
+                  );
+                })}
+
+              <button
+                type="button"
+                disabled={activePage === totalPages}
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                style={{
+                  padding: '8px 14px',
+                  borderRadius: '8px',
+                  border: '1px solid var(--border)',
+                  background: 'var(--bg-color)',
+                  color: activePage === totalPages ? 'var(--text-muted)' : 'var(--text-main)',
+                  cursor: activePage === totalPages ? 'not-allowed' : 'pointer',
+                  fontSize: '0.85rem',
+                  fontWeight: '600',
+                  transition: 'all 0.15s'
+                }}
+              >
+                Siguiente
+              </button>
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 }

@@ -12,11 +12,39 @@ router.put('/planificacion/seccion/:id/liberar', planificacionController.liberar
 router.put('/planificacion/seccion/:id/horario', planificacionController.editarHorario);
 
 
+const auth = require('../middleware/auth');
+
+// [OPTIMIZACIÓN 8] Rate Limiter personalizado en memoria - Green Code (sin dependencias adicionales)
+const rateLimitMap = new Map();
+const rateLimiter = (req, res, next) => {
+  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+  const now = Date.now();
+  const limitWindow = 60000; // 1 minuto
+  const maxRequests = 20; // 20 requests por minuto para el monitoreo de recursos
+
+  if (!rateLimitMap.has(ip)) {
+    rateLimitMap.set(ip, []);
+  }
+
+  const requests = rateLimitMap.get(ip).filter(timestamp => now - timestamp < limitWindow);
+  if (requests.length >= maxRequests) {
+    return res.status(429).json({ msg: 'Demasiadas peticiones. Por favor intente más tarde.' });
+  }
+
+  requests.push(now);
+  rateLimitMap.set(ip, requests);
+  next();
+};
+
 // [OPTIMIZACIÓN 6] Endpoint consolidado de estadísticas (1 petición en vez de 5)
 router.get('/stats/counts', adminController.getStatsCounts);
 
-// Recursos / Sistema
-router.get('/recursos', adminController.getRecursos);
+// Environmental Impact Dashboard — métricas de impacto ambiental del APM
+router.get('/environmental-impact', adminController.getEnvironmentalImpact);
+
+
+// Recursos / Sistema (Con seguridad JWT y Rate Limiting)
+router.get('/recursos', auth, rateLimiter, adminController.getRecursos);
 
 // Carreras
 router.post('/carreras', adminController.createCarrera);

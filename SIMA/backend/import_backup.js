@@ -28,7 +28,10 @@ async function importDatabase() {
       const fileData = fs.readFileSync(filePath, 'utf8');
       if (!fileData.trim()) continue;
 
-      const data = JSON.parse(fileData);
+      let data = JSON.parse(fileData);
+      if (!Array.isArray(data) && data && Array.isArray(data.data)) {
+        data = data.data;
+      }
 
       // Limpiar colección si existe para evitar duplicados
       try {
@@ -38,7 +41,7 @@ async function importDatabase() {
         // La colección no existía previamente, todo bien.
       }
 
-      if (data.length > 0) {
+      if (Array.isArray(data) && data.length > 0) {
         // Convertir strings de 24 caracteres a ObjectIds nativos de MongoDB
         data.forEach(doc => {
           if (doc._id && typeof doc._id === 'string' && doc._id.length === 24) doc._id = new mongoose.Types.ObjectId(doc._id);

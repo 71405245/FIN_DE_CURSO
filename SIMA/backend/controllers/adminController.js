@@ -144,6 +144,68 @@ exports.getRecursos = async (req, res) => {
     res.status(500).json({ msg: 'Error al obtener recursos del sistema' });
   }
 };
+// === IMPACTO AMBIENTAL (Environmental Impact Dashboard) ===
+// Factor: Sustainable Web Design Model 2023 — 0.0000000318 g CO₂/byte
+const CO2_G_PER_BYTE = 0.0000000318;
+
+exports.getEnvironmentalImpact = (req, res) => {
+  try {
+    const count  = global.apiMetricsCount || 0;
+    const buffer = global.apiMetrics     || [];
+    const bufSize = buffer.length;
+    const idx    = global.apiMetricsIndex || 0;
+
+    // Leer buffer circular en orden cronológico (más reciente al final)
+    const requests = [];
+    for (let i = 0; i < count; i++) {
+      const pos = (idx - count + i + bufSize) % bufSize;
+      if (buffer[pos]) requests.push(buffer[pos]);
+    }
+
+    // CO₂ en mg por petición
+    const withCo2 = requests.map(r => ({
+      time:            r.time,
+      method:          r.method,
+      route:           r.route,
+      status:          r.status,
+      duration:        r.duration,
+      bytes:           r.bytes,           // JSON crudo pre-GZIP
+      compressedBytes: r.compressedBytes, // bytes enviados al cliente
+      encoding:        r.encoding || 'identity',
+      co2mg:           parseFloat((r.compressedBytes * CO2_G_PER_BYTE * 1000).toFixed(7))
+    }));
+
+    // Totales
+    const totalRequests  = withCo2.length;
+    const totalCo2g      = withCo2.reduce((s, r) => s + r.co2mg * 0.001, 0); // mg → g
+    const avgCo2g        = totalRequests > 0 ? totalCo2g / totalRequests : 0;
+
+    // Peor endpoint por CO₂ total acumulado por ruta
+    const byRoute = {};
+    withCo2.forEach(r => {
+      const key = `${r.method} ${r.route}`;
+      if (!byRoute[key]) byRoute[key] = { route: key, totalCo2mg: 0, count: 0 };
+      byRoute[key].totalCo2mg += r.co2mg;
+      byRoute[key].count++;
+    });
+    const worstEndpoint = Object.values(byRoute)
+      .sort((a, b) => b.totalCo2mg - a.totalCo2mg)[0]?.route || '-';
+    const mostUsed = Object.values(byRoute)
+      .sort((a, b) => b.count - a.count)[0]?.route || '-';
+
+    res.json({
+      totalRequests,
+      totalCo2g:    parseFloat(totalCo2g.toFixed(7)),
+      avgCo2g:      parseFloat(avgCo2g.toFixed(7)),
+      worstEndpoint,
+      mostUsed,
+      requests:     withCo2.reverse() // Más reciente primero
+    });
+  } catch (err) {
+    res.status(500).json({ msg: 'Error al obtener impacto ambiental' });
+  }
+};
+
 // === CARRERAS ===
 exports.createCarrera = async (req, res) => {
   try {
@@ -456,19 +518,33 @@ exports.createSeccion = async (req, res) => {
 // [OPTIMIZACIÓN 1] Secciones con proyección optimizada — no enviar array completo de estudiantesMatriculados
 exports.getSecciones = async (req, res) => {
   try {
-    const secciones = await Seccion.find()
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 0;
+    const skip = limit > 0 ? (page - 1) * limit : 0;
+
+    let query = Seccion.find()
       .populate('curso', 'nombre codigo')
       .populate('docente', 'nombre apellidos')
       .lean();
 
-    // [OPTIMIZACIÓN 1] Transformar: enviar solo el COUNT de matriculados, no el array completo de ObjectIds
-    const seccionesOptimizadas = secciones.map(s => ({
+    if (limit > 0) {
+      const total = await Seccion.countDocuments();
+      const secciones = await query.skip(skip).limit(limit);
+      const seccionesOpt = secciones.map(s => ({
+        ...s,
+        estudiantesMatriculadosCount: s.estudiantesMatriculados?.length || 0,
+        estudiantesMatriculados: undefined
+      }));
+      return res.json({ data: seccionesOpt, total, page, totalPages: Math.ceil(total / limit) });
+    }
+
+    const secciones = await query;
+    const seccionesOpt = secciones.map(s => ({
       ...s,
       estudiantesMatriculadosCount: s.estudiantesMatriculados?.length || 0,
-      estudiantesMatriculados: undefined  // No enviar el array pesado
+      estudiantesMatriculados: undefined
     }));
-
-    res.json(seccionesOptimizadas);
+    res.json(seccionesOpt);
   } catch (error) { res.status(500).send('Error al obtener'); }
 };
 
