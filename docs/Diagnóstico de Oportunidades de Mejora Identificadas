@@ -14,8 +14,6 @@
 - [🌟 Introducción y Contexto](#-introducción-y-contexto)
 - [🔍 Diagnóstico de Problemas](#-diagnóstico-de-problemas)
 - [✨ Optimizaciones Aplicadas](#-optimizaciones-aplicadas)
-  - [Backend](#backend)
-  - [Frontend](#frontend)
 - [📊 Comparativa Antes vs Después](#-comparativa-antes-vs-después)
 - [🌱 Green Code y Sostenibilidad](#-green-code-y-sostenibilidad)
 - [📁 Archivos Modificados](#-archivos-modificados)
@@ -28,11 +26,11 @@
 
 El **Panel Administrativo SIMA** es un sistema MERN que cuenta con dos roles administrativos:
 
-| Rol       | Email                | Módulos que Gestiona                     |
-|-----------|----------------------|------------------------------------------|
-| **Admin 1** | `admin@sima.com`    | Carreras, Cursos y Alumnos              |
-| **Admin 2** | `admin2@sima.com`   | Docentes, Secciones y Planificación     |
-| **Ambos**   | -                    | **Consumo de Recursos**                 |
+| Rol         | Email                | Módulos que Gestiona                          |
+|-------------|----------------------|-----------------------------------------------|
+| **Admin 1** | `admin@sima.com`     | Carreras, Cursos y Alumnos                    |
+| **Admin 2** | `admin2@sima.com`    | Docentes, Secciones y Planificación           |
+| **Ambos**   | -                    | **Consumo de Recursos**                       |
 
 Se realizó una **optimización integral** en **8 categorías** + **Green Code**, enfocada especialmente en el módulo de Recursos.
 
@@ -42,24 +40,23 @@ Se realizó una **optimización integral** en **8 categorías** + **Green Code**
 
 ### ⚠️ Principales Cuellos de Botella Identificados
 
-| # | Problema | Impacto |
-|---|---------|--------|
-| 1 | Consultas MongoDB sin optimizar | Se descargaban colecciones completas (2500+ estudiantes) |
-| 2 | Ausencia total de paginación | Tablas renderizando miles de filas en el DOM |
-| 3 | Sin compresión de respuestas | Payloads JSON muy pesados |
-| 4 | Sin Lazy Loading | Bundle completo cargado aunque solo se use un módulo |
-| 5 | Dependencias innecesarias | `csv-parse`, `pdfkit`, `"all": "^0.0.0"` |
-| 6 | Exceso de peticiones HTTP | 5+ requests duplicados al cambiar de pestaña |
-| 7 | Sin caché de datos | Datos estáticos se recargaban constantemente |
-| 8 | APIs sin optimizar | Sin proyecciones, sin endpoints consolidados |
-| 9 | Green Code deficiente | Polling cada 5 segundos constante |
+| # | Problema                              | Impacto |
+|---|---------------------------------------|--------|
+| 1 | Consultas MongoDB sin optimizar       | Se descargaban colecciones completas (2500+ estudiantes) |
+| 2 | Ausencia total de paginación          | Tablas renderizando miles de filas en el DOM |
+| 3 | Sin compresión de respuestas          | Payloads JSON muy pesados |
+| 4 | Sin Lazy Loading                      | Bundle completo cargado aunque solo se use un módulo |
+| 5 | Dependencias innecesarias             | `csv-parse`, `pdfkit`, `"all": "^0.0.0"` |
+| 6 | Exceso de peticiones HTTP             | 5+ requests duplicados al cambiar de pestaña |
+| 7 | Sin caché de datos                    | Datos estáticos se recargaban constantemente |
+| 8 | APIs sin optimizar                    | Sin proyecciones, sin endpoints consolidados |
+| 9 | Green Code deficiente                 | Polling cada 5 segundos constante |
 
 ---
 
 ## ✨ Optimizaciones Aplicadas
 
 ### Backend
-
 - **Nuevo endpoint consolidado**: `GET /admin/stats/counts`
 - **Paginación server-side** en listados grandes
 - **Proyecciones `.select()`** para reducir campos enviados
@@ -70,13 +67,12 @@ Se realizó una **optimización integral** en **8 categorías** + **Green Code**
 - **Eliminación de dependencias muertas**
 
 ### Frontend
-
 - **React.lazy() + Suspense** para carga diferida
 - **Paginación client-side** en todas las tablas:
-  - Alumnos: 25 registros por página
-  - Docentes: 15 registros por página
-  - Cursos: 20 registros por página
-  - Secciones: 15 registros por página
+  - Alumnos: **25 registros** por página
+  - Docentes: **15 registros** por página
+  - Cursos: **20 registros** por página
+  - Secciones: **15 registros** por página
 - **Polling optimizado** (de 5s → 15s)
 - **Page Visibility API** (pausa el polling al cambiar de pestaña)
 - **Indicadores visuales Green Code**
@@ -86,22 +82,21 @@ Se realizó una **optimización integral** en **8 categorías** + **Green Code**
 
 ## 📊 Comparativa Antes vs Después
 
-| Categoría                  | Antes                  | Después                    | Mejora          |
-|---------------------------|------------------------|----------------------------|-----------------|
-| Peticiones HTTP           | 5+ por carga           | **1 request**              | **-80%**        |
-| Datos transferidos        | Colecciones completas  | Paginación + proyecciones  | **-95%**        |
-| Tamaño del bundle         | 100% cargado           | Lazy Loading               | **-60%**        |
-| Frecuencia de Polling     | Cada 5 segundos        | Cada 15 segundos + Visibility | **-66%**     |
-| Rendimiento de Tablas     | Muy lento (2500+ filas)| Rápido y fluido            | **+300%**       |
-| Consumo de CPU/Servidor   | Alto                   | Optimizado                 | **-70%**        |
-| Experiencia de Usuario    | Pesada                 | Rápida y moderna           | **Significativa** |
+| Categoría                  | Antes                        | Después                          | Mejora       |
+|---------------------------|------------------------------|----------------------------------|--------------|
+| Peticiones HTTP           | 5+ por carga                 | **1 request**                    | **-80%**     |
+| Datos transferidos        | Colecciones completas        | Paginación + proyecciones        | **-95%**     |
+| Tamaño del bundle         | 100% cargado                 | Lazy Loading                     | **-60%**     |
+| Frecuencia de Polling     | Cada 5 segundos              | Cada 15 segundos + Visibility    | **-66%**     |
+| Rendimiento de Tablas     | Muy lento (2500+ filas)      | Rápido y fluido                  | **+300%**    |
+| Consumo de CPU/Servidor   | Alto                         | Optimizado                       | **-70%**     |
+| Experiencia de Usuario    | Pesada                       | Rápida y moderna                 | Significativa |
 
 ---
 
 ## 🌱 Green Code y Sostenibilidad
 
 ### Acciones Implementadas:
-
 - Reducción del **66%** en peticiones de polling
 - Pausa automática del polling cuando la pestaña no está visible
 - Cálculos pre-cacheados en el servidor
