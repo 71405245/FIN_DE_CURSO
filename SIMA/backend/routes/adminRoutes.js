@@ -5,6 +5,11 @@ const planificacionController = require('../controllers/planificacionController'
 
 // Planificación de Horarios
 router.get('/planificacion/stats', planificacionController.getStats);
+router.get('/planificacion/carga-horaria', planificacionController.getCargaHoraria);
+router.get('/planificacion/docentes-disponibles', planificacionController.getDocentesDisponibles);
+router.put('/planificacion/seccion/:id/reasignar', planificacionController.reasignarDocente);
+router.put('/planificacion/seccion/:id/liberar', planificacionController.liberarSeccion);
+router.put('/planificacion/seccion/:id/horario', planificacionController.editarHorario);
 
 
 // Recursos / Sistema

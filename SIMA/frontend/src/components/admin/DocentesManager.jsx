@@ -5,7 +5,7 @@ import { Plus, Users, Edit2, Trash2 } from 'lucide-react';
 function DocentesManager() {
   const [docentes, setDocentes] = useState([]);
   const [carrerasList, setCarrerasList] = useState([]);
-  const [form, setForm] = useState({ nombre: '', apellidos: '', email: '', password: '', carrerasEnsenadas: [] });
+  const [form, setForm] = useState({ nombre: '', apellidos: '', email: '', password: '', turnoDisponibilidad: 'Completo', carrerasEnsenadas: [] });
   const [editId, setEditId] = useState(null);
 
   // ── Filtros de búsqueda ──────────────────────────────────────────────────────
@@ -42,7 +42,7 @@ function DocentesManager() {
       } else {
         await axios.post('http://localhost:5000/api/admin/docentes', form);
       }
-      setForm({ nombre: '', apellidos: '', email: '', password: '', carrerasEnsenadas: [] });
+      setForm({ nombre: '', apellidos: '', email: '', password: '', turnoDisponibilidad: 'Completo', carrerasEnsenadas: [] });
       fetchDocentes();
     } catch (err) {
       alert(err.response?.data?.msg || 'Error al guardar');
@@ -55,6 +55,7 @@ function DocentesManager() {
       apellidos: d.apellidos, 
       email: d.email, 
       password: '', // Leave empty to not update unless typed
+      turnoDisponibilidad: d.turnoDisponibilidad || 'Completo',
       carrerasEnsenadas: d.carrerasEnsenadas?.map(c => c._id) || []
     });
     setEditId(d._id);
@@ -105,6 +106,16 @@ function DocentesManager() {
           <div><label style={labelStyle}>{editId ? 'Nueva Contraseña (Opcional)' : 'Contraseña Temporal'}</label><input type="password" placeholder="••••••••" value={form.password} onChange={e=>setForm({...form, password: e.target.value})} required={!editId} /></div>
           
           <div style={{ gridColumn: '1 / -1', marginTop: '0.5rem' }}>
+            <label style={labelStyle}>Turno de Disponibilidad</label>
+            <select value={form.turnoDisponibilidad} onChange={e=>setForm({...form, turnoDisponibilidad: e.target.value})} style={{ width: '100%', padding: '10px 14px', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--bg-color)', color: 'var(--text-main)', fontSize: '0.9rem', cursor: 'pointer', maxWidth: '300px' }}>
+              <option value="Completo">Tiempo Completo</option>
+              <option value="Mañana">Solo Mañanas (08:00 - 13:00)</option>
+              <option value="Tarde">Solo Tardes (13:00 - 18:00)</option>
+              <option value="Noche">Solo Noches (18:00 - 22:00)</option>
+            </select>
+          </div>
+          
+          <div style={{ gridColumn: '1 / -1', marginTop: '0.5rem' }}>
             <label style={labelStyle}>Carreras Asignadas</label>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem', marginTop: '0.5rem' }}>
               {carrerasList.map(c => (
@@ -118,7 +129,7 @@ function DocentesManager() {
 
           <div style={{ gridColumn: '1 / -1', display: 'flex', gap: '1rem', marginTop: '1rem' }}>
             <button type="submit" style={btnStyle}><Plus size={18}/> {editId ? 'Guardar Cambios' : 'Registrar Docente'}</button>
-            {editId && <button type="button" onClick={() => { setEditId(null); setForm({ nombre: '', apellidos: '', email: '', password: '', carrerasEnsenadas: [] }); }} style={{...btnStyle, background: 'var(--text-muted)'}}>Cancelar</button>}
+            {editId && <button type="button" onClick={() => { setEditId(null); setForm({ nombre: '', apellidos: '', email: '', password: '', turnoDisponibilidad: 'Completo', carrerasEnsenadas: [] }); }} style={{...btnStyle, background: 'var(--text-muted)'}}>Cancelar</button>}
           </div>
         </form>
       </div>
@@ -167,7 +178,7 @@ function DocentesManager() {
       {/* ── Tabla de Resultados ──────────────────────────────────────────────── */}
       <div className="modern-card" style={{ padding: '0', overflow: 'hidden' }}>
         <table className="modern-table" style={{ marginTop: 0 }}>
-          <thead><tr><th>Docente</th><th>Email</th><th>Carreras Asignadas</th><th>Acciones</th></tr></thead>
+          <thead><tr><th>Docente</th><th>Email</th><th>Disponibilidad</th><th>Carreras Asignadas</th><th>Acciones</th></tr></thead>
           <tbody>
             {docentesFiltrados.length === 0 ? (
               <tr><td colSpan="4" style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-muted)' }}>
@@ -178,6 +189,11 @@ function DocentesManager() {
                 <tr key={d._id}>
                   <td style={{ fontWeight: '500' }}>{d.nombre} {d.apellidos}</td>
                   <td style={{ color: 'var(--text-muted)' }}>{d.email}</td>
+                  <td>
+                    <span className="badge" style={{ background: d.turnoDisponibilidad === 'Completo' ? '#10b98122' : '#6366f122', color: d.turnoDisponibilidad === 'Completo' ? '#10b981' : '#6366f1', fontSize: '0.75rem', padding: '4px 8px' }}>
+                      {d.turnoDisponibilidad || 'Completo'}
+                    </span>
+                  </td>
                   <td>
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px' }}>
                       {d.carrerasEnsenadas?.map(c => <span key={c._id} className="badge badge-purple" style={{ fontSize: '0.7rem' }}>{c.nombre}</span>)}

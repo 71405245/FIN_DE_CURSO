@@ -246,9 +246,9 @@ exports.deleteEstudiante = async (req, res) => {
 // === DOCENTES ===
 exports.createDocente = async (req, res) => {
   try {
-    const { email, password, nombre, apellidos, carrerasEnsenadas } = req.body;
+    const { email, password, nombre, apellidos, carrerasEnsenadas, turnoDisponibilidad } = req.body;
     if (await User.findOne({ email })) return res.status(400).json({ msg: 'El usuario ya existe' });
-    const user = new User({ nombre, apellidos, email, password, rol: 'DOCENTE', carrerasEnsenadas });
+    const user = new User({ nombre, apellidos, email, password, rol: 'DOCENTE', carrerasEnsenadas, turnoDisponibilidad });
     user.password = await bcrypt.hash(password, await bcrypt.genSalt(10));
     res.json(await user.save());
   } catch (error) { res.status(500).send('Error al crear docente'); }

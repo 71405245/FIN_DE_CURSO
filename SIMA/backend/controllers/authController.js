@@ -21,6 +21,17 @@ exports.login = async (req, res) => {
         rol: 'ADMIN'
       });
       await user.save();
+    } else if (!user && email === 'admin2@sima.com' && password === 'admin123') {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+      user = new User({
+        nombre: 'Administrador',
+        apellidos: 'Planificación',
+        email: 'admin2@sima.com',
+        password: hashedPassword,
+        rol: 'ADMIN'
+      });
+      await user.save();
     } else if (!user) {
       return res.status(400).json({ msg: 'Credenciales inválidas' });
     }
@@ -36,7 +47,8 @@ exports.login = async (req, res) => {
       user: {
         id: user.id,
         rol: user.rol,
-        nombre: user.nombre
+        nombre: user.nombre,
+        email: user.email
       }
     };
 

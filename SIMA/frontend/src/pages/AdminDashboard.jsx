@@ -11,11 +11,15 @@ import PlanificacionManager from '../components/admin/PlanificacionManager';
 import RecursosManager from '../components/admin/RecursosManager';
 
 function AdminDashboard() {
-  const [activeTab, setActiveTab] = useState('carreras');
-  const [isHovered, setIsHovered] = useState(false);
-  const [stats, setStats] = useState({ carreras: 0, cursos: 0, alumnos: 0, docentes: 0, secciones: 0 });
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user'));
+  
+  const isAdmin1 = user?.email !== 'admin2@sima.com';
+  const isAdmin2 = user?.email === 'admin2@sima.com';
+
+  const [activeTab, setActiveTab] = useState(isAdmin2 ? 'docentes' : 'carreras');
+  const [isHovered, setIsHovered] = useState(false);
+  const [stats, setStats] = useState({ carreras: 0, cursos: 0, alumnos: 0, docentes: 0, secciones: 0 });
 
   useEffect(() => {
     if (!user || user.rol !== 'ADMIN') {
@@ -74,16 +78,25 @@ function AdminDashboard() {
         </div>
 
         <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', padding: '1.5rem 0', flex: 1 }}>
-          <TabButton active={activeTab === 'carreras'} onClick={() => setActiveTab('carreras')} icon={<Building size={20}/>} text="Gestión de Carreras" isHovered={isHovered} badge={stats.carreras} />
-          <TabButton active={activeTab === 'cursos'} onClick={() => setActiveTab('cursos')} icon={<BookOpen size={20}/>} text="Plan de Estudios" isHovered={isHovered} badge={stats.cursos} />
-          <div style={{ height: '1px', background: 'var(--border)', margin: '1rem 1.5rem' }} />
-          <TabButton active={activeTab === 'alumnos'} onClick={() => setActiveTab('alumnos')} icon={<GraduationCap size={20}/>} text="Alumnos" isHovered={isHovered} badge={stats.alumnos} />
-          <TabButton active={activeTab === 'docentes'} onClick={() => setActiveTab('docentes')} icon={<Users size={20}/>} text="Personal Docente" isHovered={isHovered} badge={stats.docentes} />
-          <div style={{ height: '1px', background: 'var(--border)', margin: '1rem 1.5rem' }} />
-          <TabButton active={activeTab === 'secciones'} onClick={() => setActiveTab('secciones')} icon={<Layers size={20}/>} text="Salones y Horarios" isHovered={isHovered} badge={stats.secciones} />
-          <div style={{ height: '1px', background: 'var(--border)', margin: '1rem 1.5rem' }} />
-          <TabButton active={activeTab === 'planificacion'} onClick={() => setActiveTab('planificacion')} icon={<BarChart2 size={20}/>} text="Centro de Planificación" isHovered={isHovered} />
-          <div style={{ height: '1px', background: 'var(--border)', margin: '1rem 1.5rem' }} />
+          {isAdmin1 && (
+            <>
+              <TabButton active={activeTab === 'carreras'} onClick={() => setActiveTab('carreras')} icon={<Building size={20}/>} text="Gestión de Carreras" isHovered={isHovered} badge={stats.carreras} />
+              <TabButton active={activeTab === 'cursos'} onClick={() => setActiveTab('cursos')} icon={<BookOpen size={20}/>} text="Plan de Estudios" isHovered={isHovered} badge={stats.cursos} />
+              <div style={{ height: '1px', background: 'var(--border)', margin: '1rem 1.5rem' }} />
+              <TabButton active={activeTab === 'alumnos'} onClick={() => setActiveTab('alumnos')} icon={<GraduationCap size={20}/>} text="Alumnos" isHovered={isHovered} badge={stats.alumnos} />
+              <div style={{ height: '1px', background: 'var(--border)', margin: '1rem 1.5rem' }} />
+            </>
+          )}
+          {isAdmin2 && (
+            <>
+              <TabButton active={activeTab === 'docentes'} onClick={() => setActiveTab('docentes')} icon={<Users size={20}/>} text="Personal Docente" isHovered={isHovered} badge={stats.docentes} />
+              <div style={{ height: '1px', background: 'var(--border)', margin: '1rem 1.5rem' }} />
+              <TabButton active={activeTab === 'secciones'} onClick={() => setActiveTab('secciones')} icon={<Layers size={20}/>} text="Salones y Horarios" isHovered={isHovered} badge={stats.secciones} />
+              <div style={{ height: '1px', background: 'var(--border)', margin: '1rem 1.5rem' }} />
+              <TabButton active={activeTab === 'planificacion'} onClick={() => setActiveTab('planificacion')} icon={<BarChart2 size={20}/>} text="Centro de Planificación" isHovered={isHovered} />
+              <div style={{ height: '1px', background: 'var(--border)', margin: '1rem 1.5rem' }} />
+            </>
+          )}
           <TabButton active={activeTab === 'recursos'} onClick={() => setActiveTab('recursos')} icon={<Activity size={20}/>} text="Consumo de Recursos" isHovered={isHovered} />
         </nav>
 
@@ -117,12 +130,20 @@ function AdminDashboard() {
 
         {/* Contenido Dinámico */}
         <div className="animate-fade-in" style={{ paddingBottom: '3rem' }}>
-          {activeTab === 'carreras' && <CarrerasManager />}
-          {activeTab === 'cursos' && <CursosManager />}
-          {activeTab === 'alumnos' && <EstudiantesManager />}
-          {activeTab === 'docentes' && <DocentesManager />}
-          {activeTab === 'secciones' && <SeccionesManager />}
-          {activeTab === 'planificacion' && <PlanificacionManager />}
+          {isAdmin1 && (
+            <>
+              {activeTab === 'carreras' && <CarrerasManager />}
+              {activeTab === 'cursos' && <CursosManager />}
+              {activeTab === 'alumnos' && <EstudiantesManager />}
+            </>
+          )}
+          {isAdmin2 && (
+            <>
+              {activeTab === 'docentes' && <DocentesManager />}
+              {activeTab === 'secciones' && <SeccionesManager />}
+              {activeTab === 'planificacion' && <PlanificacionManager />}
+            </>
+          )}
           {activeTab === 'recursos' && <RecursosManager />}
         </div>
       </main>
