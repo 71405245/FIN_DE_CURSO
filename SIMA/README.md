@@ -107,7 +107,7 @@ Abre tu navegador web e ingresa a:
 Para acceder al Panel de Control administrativo completo con estadísticas en tiempo real:
 
 * **Correo Electrónico:** `admin@sima.com`
-* **Contraseña:** `admin123`
+* **Contraseña:** `123456789`
 
 ---
 

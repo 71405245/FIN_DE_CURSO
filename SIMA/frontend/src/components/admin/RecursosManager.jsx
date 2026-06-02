@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 
 // ─── Constantes ────────────────────────────────────────────────────────────
-const API = 'http://localhost:5001/api/admin';
+const API = 'http://localhost:5000/api/admin';
 const CO2_PER_BYTE_MG = 0.0000000318 * 1000; // mg CO₂ por byte
 
 // ─── Helpers ───────────────────────────────────────────────────────────────

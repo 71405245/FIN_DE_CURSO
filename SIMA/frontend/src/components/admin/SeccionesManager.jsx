@@ -27,12 +27,12 @@ function SeccionesManager() {
 
   useEffect(() => {
     fetchSecciones();
-    axios.get('http://localhost:5001/api/admin/cursos').then(res => setCursos(res.data));
-    axios.get('http://localhost:5001/api/admin/docentes').then(res => setDocentes(res.data));
+    axios.get('http://localhost:5000/api/admin/cursos').then(res => setCursos(res.data));
+    axios.get('http://localhost:5000/api/admin/docentes').then(res => setDocentes(res.data));
   }, []);
 
   const fetchSecciones = async () => {
-    const res = await axios.get('http://localhost:5001/api/admin/secciones');
+    const res = await axios.get('http://localhost:5000/api/admin/secciones');
     setSecciones(res.data);
   };
 
@@ -84,11 +84,11 @@ function SeccionesManager() {
       };
 
       if (editId) {
-        await axios.put(`http://localhost:5001/api/admin/secciones/${editId}`, payload);
+        await axios.put(`http://localhost:5000/api/admin/secciones/${editId}`, payload);
         setSuccess('Salón actualizado correctamente.');
         setEditId(null);
       } else {
-        await axios.post('http://localhost:5001/api/admin/secciones', payload);
+        await axios.post('http://localhost:5000/api/admin/secciones', payload);
         setSuccess('Salón aperturado correctamente.');
       }
       setForm(EMPTY_FORM);
@@ -117,7 +117,7 @@ function SeccionesManager() {
   const handleDelete = async (id) => {
     if (!window.confirm('¿Seguro que deseas eliminar este salón?')) return;
     try {
-      await axios.delete(`http://localhost:5001/api/admin/secciones/${id}`);
+      await axios.delete(`http://localhost:5000/api/admin/secciones/${id}`);
       fetchSecciones();
       setSuccess('Salón eliminado correctamente.');
       setTimeout(() => setSuccess(''), 3000);

@@ -15,11 +15,11 @@ function DocentesManager() {
 
   useEffect(() => { 
     fetchDocentes(); 
-    axios.get('http://localhost:5001/api/admin/carreras').then(res => setCarrerasList(res.data));
+    axios.get('http://localhost:5000/api/admin/carreras').then(res => setCarrerasList(res.data));
   }, []);
   
   const fetchDocentes = async () => {
-    const res = await axios.get('http://localhost:5001/api/admin/docentes');
+    const res = await axios.get('http://localhost:5000/api/admin/docentes');
     setDocentes(res.data);
   };
 
@@ -38,10 +38,10 @@ function DocentesManager() {
     e.preventDefault();
     try {
       if (editId) {
-        await axios.put(`http://localhost:5001/api/admin/docentes/${editId}`, form);
+        await axios.put(`http://localhost:5000/api/admin/docentes/${editId}`, form);
         setEditId(null);
       } else {
-        await axios.post('http://localhost:5001/api/admin/docentes', form);
+        await axios.post('http://localhost:5000/api/admin/docentes', form);
       }
       setForm({ nombre: '', apellidos: '', email: '', password: '', turnoDisponibilidad: 'Completo', carrerasEnsenadas: [] });
       fetchDocentes();
@@ -65,7 +65,7 @@ function DocentesManager() {
   const handleDelete = async (id) => {
     if (!window.confirm('¿Seguro que deseas eliminar este docente?')) return;
     try {
-      await axios.delete(`http://localhost:5001/api/admin/docentes/${id}`);
+      await axios.delete(`http://localhost:5000/api/admin/docentes/${id}`);
       fetchDocentes();
     } catch (err) {
       alert(err.response?.data?.msg || 'Error al eliminar');

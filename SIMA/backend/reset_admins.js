@@ -9,7 +9,7 @@ async function reset() {
     await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/sima_db');
     console.log('✅ Conexión establecida.');
 
-    const password = 'admin123';
+    const password = '123456789';
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
@@ -53,7 +53,7 @@ async function reset() {
       console.log(`✨ Creado nuevo administrador de planificación: ${admin2Email}`);
     }
 
-    console.log('🎉 Administradores listos y habilitados con contraseña "admin123"!');
+    console.log('🎉 Administradores listos y habilitados con contraseña "123456789"!');
   } catch (err) {
     console.error('❌ Error al reestablecer administradores:', err);
   } finally {

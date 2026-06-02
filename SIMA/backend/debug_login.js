@@ -26,13 +26,13 @@ async function debug() {
     console.log('  Hash en BD:', user.password ? user.password.substring(0, 30) + '...' : 'NULL');
 
     // Probar bcrypt directamente
-    const match = await bcrypt.compare('admin123', user.password);
-    console.log('  bcrypt.compare("admin123") =>', match ? '✅ MATCH' : '❌ NO MATCH');
+    const match = await bcrypt.compare('123456789', user.password);
+    console.log('  bcrypt.compare("123456789") =>', match ? '✅ MATCH' : '❌ NO MATCH');
 
     if (!match) {
       console.log('\n  🔧 Reparando hash...');
       const salt = await bcrypt.genSalt(10);
-      const newHash = await bcrypt.hash('admin123', salt);
+      const newHash = await bcrypt.hash('123456789', salt);
       console.log('  Nuevo hash generado:', newHash.substring(0, 30) + '...');
       
       // Actualizar directamente en BD sin pasar por Mongoose model
@@ -41,7 +41,7 @@ async function debug() {
 
       // Verificar
       const userUpdated = await User.findOne({ email });
-      const matchAfter = await bcrypt.compare('admin123', userUpdated.password);
+      const matchAfter = await bcrypt.compare('123456789', userUpdated.password);
       console.log('  Verificación post-repair:', matchAfter ? '✅ AHORA FUNCIONA' : '❌ SIGUE FALLANDO');
     }
     console.log('');

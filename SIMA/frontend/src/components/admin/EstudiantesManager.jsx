@@ -16,11 +16,11 @@ function EstudiantesManager() {
 
   useEffect(() => { 
     fetchEstudiantes(); 
-    axios.get('http://localhost:5001/api/admin/carreras').then(res => setCarreras(res.data));
+    axios.get('http://localhost:5000/api/admin/carreras').then(res => setCarreras(res.data));
   }, []);
 
   const fetchEstudiantes = async () => {
-    const res = await axios.get('http://localhost:5001/api/admin/estudiantes');
+    const res = await axios.get('http://localhost:5000/api/admin/estudiantes');
     setEstudiantes(res.data);
   };
 
@@ -30,11 +30,11 @@ function EstudiantesManager() {
     setSuccess('');
     try {
       if (editId) {
-        await axios.put(`http://localhost:5001/api/admin/estudiantes/${editId}`, form);
+        await axios.put(`http://localhost:5000/api/admin/estudiantes/${editId}`, form);
         setSuccess('Estudiante actualizado correctamente.');
         setEditId(null);
       } else {
-        await axios.post('http://localhost:5001/api/admin/estudiantes', form);
+        await axios.post('http://localhost:5000/api/admin/estudiantes', form);
         setSuccess('Estudiante registrado correctamente.');
       }
       setForm(EMPTY_FORM);
@@ -61,7 +61,7 @@ function EstudiantesManager() {
   const handleDelete = async (id) => {
     if (!window.confirm('¿Seguro que deseas eliminar este estudiante?')) return;
     try {
-      await axios.delete(`http://localhost:5001/api/admin/estudiantes/${id}`);
+      await axios.delete(`http://localhost:5000/api/admin/estudiantes/${id}`);
       fetchEstudiantes();
       setSuccess('Estudiante eliminado correctamente.');
       setTimeout(() => setSuccess(''), 3000);

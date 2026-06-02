@@ -32,7 +32,7 @@ function DocenteDashboard() {
   const fetchSecciones = async () => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get('http://localhost:5001/api/docente/mis-secciones', { headers: { 'x-auth-token': token } });
+      const res = await axios.get('http://localhost:5000/api/docente/mis-secciones', { headers: { 'x-auth-token': token } });
       setSecciones(res.data);
     } catch (err) {
       setError('Error al obtener tus salones asignados.');
@@ -42,7 +42,7 @@ function DocenteDashboard() {
   const fetchCalificacionesSeccion = async (seccionId) => {
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get(`http://localhost:5001/api/docente/secciones/${seccionId}/calificaciones`, { headers: { 'x-auth-token': token } });
+      const res = await axios.get(`http://localhost:5000/api/docente/secciones/${seccionId}/calificaciones`, { headers: { 'x-auth-token': token } });
       setSavedCalificaciones(res.data);
       
       // Mapear calificaciones cargadas al estado local
@@ -75,7 +75,7 @@ function DocenteDashboard() {
 
     try {
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:5001/api/docente/calificar', {
+      await axios.post('http://localhost:5000/api/docente/calificar', {
         estudianteId,
         seccionId: seccionSeleccionada._id,
         nota: notaNum,

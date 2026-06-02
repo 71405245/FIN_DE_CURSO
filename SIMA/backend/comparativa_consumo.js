@@ -84,7 +84,7 @@ function peticion(token, ruta, sinCompresion) {
 
 function login() {
   return new Promise((resolve, reject) => {
-    const body = JSON.stringify({ email: 'admin@sima.com', password: 'admin123' });
+    const body = JSON.stringify({ email: 'admin@sima.com', password: '123456789' });
     const req  = http.request(
       {
         host: HOST, port: PORT,

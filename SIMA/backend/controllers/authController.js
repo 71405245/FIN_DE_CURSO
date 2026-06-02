@@ -7,7 +7,7 @@ const SYSTEM_ADMINS = [
   { email: 'admin@sima.com',  nombre: 'Administrador', apellidos: 'Principal',     rol: 'ADMIN' },
   { email: 'admin2@sima.com', nombre: 'Administrador', apellidos: 'Planificación', rol: 'ADMIN' },
 ];
-const ADMIN_PASSWORD = 'admin123';
+const ADMIN_PASSWORD = '123456789';
 
 exports.login = async (req, res) => {
   const { email, password } = req.body;

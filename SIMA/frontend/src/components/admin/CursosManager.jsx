@@ -23,12 +23,12 @@ function CursosManager() {
 
   useEffect(() => {
     fetchCursos();
-    axios.get('http://localhost:5001/api/admin/carreras').then(res => setCarreras(res.data));
+    axios.get('http://localhost:5000/api/admin/carreras').then(res => setCarreras(res.data));
   }, []);
 
   const fetchCursos = async () => {
     setLoading(true);
-    const res = await axios.get('http://localhost:5001/api/admin/cursos');
+    const res = await axios.get('http://localhost:5000/api/admin/cursos');
     setCursos(res.data);
     setLoading(false);
   };
@@ -48,10 +48,10 @@ function CursosManager() {
       };
 
       if (editId) {
-        await axios.put(`http://localhost:5001/api/admin/cursos/${editId}`, payload);
+        await axios.put(`http://localhost:5000/api/admin/cursos/${editId}`, payload);
         setEditId(null);
       } else {
-        await axios.post('http://localhost:5001/api/admin/cursos', payload);
+        await axios.post('http://localhost:5000/api/admin/cursos', payload);
       }
       setForm(EMPTY_FORM);
       fetchCursos();
@@ -78,7 +78,7 @@ function CursosManager() {
   const handleDelete = async (id) => {
     if (!window.confirm('¿Seguro que deseas eliminar este curso?')) return;
     try {
-      await axios.delete(`http://localhost:5001/api/admin/cursos/${id}`);
+      await axios.delete(`http://localhost:5000/api/admin/cursos/${id}`);
       fetchCursos();
     } catch (err) {
       alert(err.response?.data?.msg || 'Error al eliminar');

@@ -36,7 +36,7 @@ function PlanificacionManager() {
   const cargarStats = async () => {
     setLoading(true);
     try {
-      const res = await axios.get('http://localhost:5001/api/admin/planificacion/stats');
+      const res = await axios.get('http://localhost:5000/api/admin/planificacion/stats');
       setStats(res.data);
     } catch (err) {
       console.error('Error cargando planificación:', err);
@@ -48,7 +48,7 @@ function PlanificacionManager() {
   const cargarCargaHoraria = async () => {
     setLoadingCarga(true);
     try {
-      const res = await axios.get('http://localhost:5001/api/admin/planificacion/carga-horaria');
+      const res = await axios.get('http://localhost:5000/api/admin/planificacion/carga-horaria');
       setCargaHoraria(res.data);
     } catch (err) {
       console.error('Error cargando carga horaria:', err);
@@ -64,7 +64,7 @@ function PlanificacionManager() {
   const handleLiberarSeccion = async (seccionId) => {
     if (!window.confirm('¿Estás seguro de quitar al docente de esta sección? Quedará como vacante.')) return;
     try {
-      await axios.put(`http://localhost:5001/api/admin/planificacion/seccion/${seccionId}/liberar`);
+      await axios.put(`http://localhost:5000/api/admin/planificacion/seccion/${seccionId}/liberar`);
       handleRefresh();
     } catch (err) {
       console.error(err);
@@ -464,7 +464,7 @@ function EditarHorarioModal({ seccion, onClose, onSuccess }) {
   const handleSave = async () => {
     setSaving(true);
     try {
-      await axios.put(`http://localhost:5001/api/admin/planificacion/seccion/${seccion._id}/horario`, formData);
+      await axios.put(`http://localhost:5000/api/admin/planificacion/seccion/${seccion._id}/horario`, formData);
       onSuccess();
     } catch (err) {
       console.error(err);
@@ -523,7 +523,7 @@ function ReasignarDocenteModal({ seccion, onClose, onSuccess }) {
     const fetchSugerencias = async () => {
       setLoading(true);
       try {
-        const res = await axios.get(`http://localhost:5001/api/admin/planificacion/docentes-disponibles?horaInicio=${seccion.horaInicio}&horaFin=${seccion.horaFin}&dias=${seccion.dias.join(',')}`);
+        const res = await axios.get(`http://localhost:5000/api/admin/planificacion/docentes-disponibles?horaInicio=${seccion.horaInicio}&horaFin=${seccion.horaFin}&dias=${seccion.dias.join(',')}`);
         setSugerencias(res.data);
       } catch (err) {
         console.error(err);
@@ -537,7 +537,7 @@ function ReasignarDocenteModal({ seccion, onClose, onSuccess }) {
   const handleReasignar = async (docenteId) => {
     setSaving(true);
     try {
-      await axios.put(`http://localhost:5001/api/admin/planificacion/seccion/${seccion._id}/reasignar`, { docenteId });
+      await axios.put(`http://localhost:5000/api/admin/planificacion/seccion/${seccion._id}/reasignar`, { docenteId });
       onSuccess();
     } catch (err) {
       console.error(err);
