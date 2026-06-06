@@ -1,4 +1,4 @@
-﻿const { MongoClient } = require('mongodb');
+const { MongoClient } = require('mongodb');
 const fs = require('fs');
 const path = require('path');
 
@@ -33,7 +33,7 @@ async function importAll() {
         await client.connect();
         console.log('✅ Conectado a MongoDB\n');
         
-        const backupDir = 'C:\\Users\\labi206\\Music\\FIN_DE_CURSO\\SIMA\\sima_db_backup';
+        const backupDir = path.join(__dirname, 'sima_db_backup');
         
         await importCollection(client, 'users', path.join(backupDir, 'users.json'));
         await importCollection(client, 'cursos', path.join(backupDir, 'cursos.json'));
