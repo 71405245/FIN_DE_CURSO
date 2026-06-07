@@ -11,11 +11,11 @@ function CarrerasManager() {
 
   useEffect(() => {
     fetchCarreras();
-    axios.get('http://localhost:5000/api/admin/cursos').then(res => setCursos(res.data));
+    axios.get('/api/admin/cursos').then(res => setCursos(res.data));
   }, []);
 
   const fetchCarreras = async () => {
-    const res = await axios.get('http://localhost:5000/api/admin/carreras');
+    const res = await axios.get('/api/admin/carreras');
     setCarreras(res.data);
   };
 
@@ -27,10 +27,10 @@ function CarrerasManager() {
     setError('');
     try {
       if (editId) {
-        await axios.put(`http://localhost:5000/api/admin/carreras/${editId}`, form);
+        await axios.put(`/api/admin/carreras/${editId}`, form);
         setEditId(null);
       } else {
-        await axios.post('http://localhost:5000/api/admin/carreras', form);
+        await axios.post('/api/admin/carreras', form);
       }
       setForm({ nombre: '', descripcion: '' });
       fetchCarreras();
@@ -47,7 +47,7 @@ function CarrerasManager() {
   const handleDelete = async (id) => {
     if (!window.confirm('¿Seguro que deseas eliminar esta carrera?')) return;
     try {
-      await axios.delete(`http://localhost:5000/api/admin/carreras/${id}`);
+      await axios.delete(`/api/admin/carreras/${id}`);
       fetchCarreras();
     } catch (err) {
       alert(err.response?.data?.msg || 'Error al eliminar');

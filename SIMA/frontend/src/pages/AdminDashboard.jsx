@@ -38,7 +38,7 @@ function AdminDashboard() {
       return;
     }
     // [OPTIMIZACIÓN 6] Una sola petición consolidada en vez de 5 separadas
-    axios.get('http://localhost:5000/api/admin/stats/counts')
+    axios.get('/api/admin/stats/counts')
       .then(res => setStats(res.data))
       .catch(() => {});
   }, [navigate]); // [OPTIMIZACIÓN 6] Eliminada la dependencia 'activeTab' — ya no se re-dispara en cada cambio de pestaña

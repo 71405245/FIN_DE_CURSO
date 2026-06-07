@@ -11,18 +11,8 @@ connectDB();
 
 // Middlewares
 app.use(cors());
-// [OPTIMIZACIÓN 3] Compresión con nivel 6 (equilibrio velocidad/ratio) y threshold de 1KB
-app.use(compression({
-  level: 6,
-  threshold: 1024,
-  filter: (req, res) => {
-    if (req.headers['x-no-compression']) return false;
-    return compression.filter(req, res);
-  }
-}));
-app.use(express.json());
 
-// [OPTIMIZACIÓN 8] APM - Buffer circular O(1) en vez de Array.shift() O(n)
+// [OPTIMIZACIÃ“N 8] APM - Buffer circular O(1) en vez de Array.shift() O(n)
 const APM_BUFFER_SIZE = 500;
 global.apiMetrics = new Array(APM_BUFFER_SIZE).fill(null);
 global.apiMetricsIndex = 0;
@@ -31,7 +21,7 @@ global.apiMetricsCount = 0;
 app.use((req, res, next) => {
   const start = Date.now();
 
-  // Capturar tamaño del payload interceptando res.json ANTES de compresión
+  // [APM FIX] Interceptar res.json ANTES de compresión → bytes del JSON crudo (ANTES)
   const originalJson = res.json.bind(res);
   res.json = function (data) {
     try {
@@ -40,16 +30,38 @@ app.use((req, res, next) => {
     return originalJson(data);
   };
 
+  // [APM FIX] Interceptar res.write y res.end para contar bytes reales que salen
+  // por el socket (DESPUÉS de GZIP). Con Transfer-Encoding:chunked el Content-Length
+  // no existe, por eso hay que acumular manualmente.
+  res._compressedBytesAccum = 0;
+  const origWrite = res.write.bind(res);
+  const origEnd   = res.end.bind(res);
+
+  res.write = function (chunk, ...args) {
+    if (chunk) {
+      res._compressedBytesAccum += Buffer.isBuffer(chunk)
+        ? chunk.length
+        : Buffer.byteLength(chunk, args[0] || 'utf8');
+    }
+    return origWrite(chunk, ...args);
+  };
+
+  res.end = function (chunk, ...args) {
+    if (chunk) {
+      res._compressedBytesAccum += Buffer.isBuffer(chunk)
+        ? chunk.length
+        : Buffer.byteLength(String(chunk), args[0] || 'utf8');
+    }
+    return origEnd(chunk, ...args);
+  };
+
   res.on('finish', () => {
-    const duration = Date.now() - start;
-    const route = req.originalUrl.split('?')[0];
+    const duration  = Date.now() - start;
+    const route     = req.originalUrl.split('?')[0];
 
     if (route.startsWith('/api/')) {
-      // Bytes comprimidos reales enviados al cliente (post-GZIP)
-      const contentLength = parseInt(res.getHeader('content-length') || '0', 10);
-      const rawBytes = res._payloadBytes || 0;
-      // Si content-length < rawBytes significa que se aplicó compresión
-      const compressedBytes = (contentLength > 0 && contentLength < rawBytes) ? contentLength : rawBytes;
+      const rawBytes        = res._payloadBytes         || 0; // JSON crudo (ANTES)
+      const compressedBytes = res._compressedBytesAccum || rawBytes; // bytes reales de red (DESPUÉS)
 
       // Escritura O(1) en buffer circular
       global.apiMetrics[global.apiMetricsIndex] = {
@@ -57,8 +69,8 @@ app.use((req, res, next) => {
         route:           route,
         duration:        duration,
         status:          res.statusCode,
-        bytes:           rawBytes,           // payload JSON crudo (antes de GZIP)
-        compressedBytes: compressedBytes,    // bytes reales enviados (después de GZIP)
+        bytes:           rawBytes,        // payload JSON crudo (antes de GZIP)
+        compressedBytes: compressedBytes, // bytes reales enviados (después de GZIP)
         encoding:        res.getHeader('content-encoding') || 'identity',
         time:            new Date()
       };
@@ -68,6 +80,17 @@ app.use((req, res, next) => {
   });
   next();
 });
+
+// [OPTIMIZACIÃ“N 3] CompresiÃ³n con nivel 6 (equilibrio velocidad/ratio) y threshold de 1KB
+app.use(compression({
+  level: 6,
+  threshold: 1024,
+  filter: (req, res) => {
+    if (req.headers['x-no-compression']) return false;
+    return compression.filter(req, res);
+  }
+}));
+app.use(express.json());
 
 // Rutas de prueba
 app.get('/api/status', (req, res) => {
@@ -86,7 +109,7 @@ app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
 });
 
-// Configuraci�n manual de MongoDB
+// Configuración manual de MongoDB
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/sima_db';
 console.log('Conectando a:', MONGODB_URI);
 

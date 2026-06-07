@@ -33,9 +33,9 @@ function EstudianteDashboard() {
       const config = { headers: { 'x-auth-token': token } };
       
       const [dispRes, misRes, perfilRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/estudiante/secciones-disponibles', config),
-        axios.get('http://localhost:5000/api/estudiante/mis-secciones', config),
-        axios.get('http://localhost:5000/api/estudiante/perfil', config)
+        axios.get('/api/estudiante/secciones-disponibles', config),
+        axios.get('/api/estudiante/mis-secciones', config),
+        axios.get('/api/estudiante/perfil', config)
       ]);
       
       setSecciones(dispRes.data);
@@ -52,7 +52,7 @@ function EstudianteDashboard() {
     try {
       const token = localStorage.getItem('token');
       const config = { headers: { 'x-auth-token': token } };
-      await axios.post('http://localhost:5000/api/estudiante/matricular', { seccionId }, config);
+      await axios.post('/api/estudiante/matricular', { seccionId }, config);
       setSuccess('¡Matrícula exitosa! El curso ha sido agregado a tu horario.');
       setError('');
       fetchData();
@@ -70,7 +70,7 @@ function EstudianteDashboard() {
     try {
       const token = localStorage.getItem('token');
       const config = { headers: { 'x-auth-token': token } };
-      await axios.post('http://localhost:5000/api/estudiante/rectificar', { seccionId }, config);
+      await axios.post('/api/estudiante/rectificar', { seccionId }, config);
       setSuccess('Te has retirado del curso correctamente.');
       setError('');
       fetchData();
@@ -86,7 +86,7 @@ function EstudianteDashboard() {
   const handleDownloadPDF = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/estudiante/horario-pdf', {
+      const response = await axios.get('/api/estudiante/horario-pdf', {
         headers: { 'x-auth-token': token },
         responseType: 'blob'
       });
@@ -109,7 +109,7 @@ function EstudianteDashboard() {
     try {
       setIsGeneratingIA(true);
       const token = localStorage.getItem('token');
-      const res = await axios.post('http://localhost:5000/api/estudiante/generar-horario-ia', iaPrefs, {
+      const res = await axios.post('/api/estudiante/generar-horario-ia', iaPrefs, {
         headers: { 'x-auth-token': token }
       });
       
@@ -136,7 +136,7 @@ function EstudianteDashboard() {
       // Matricular en cada curso sugerido de la alternativa
       for (const h of alternativa.horarioGenerado) {
         try {
-          await axios.post('http://localhost:5000/api/estudiante/matricular', { seccionId: h.seccion._id }, config);
+          await axios.post('/api/estudiante/matricular', { seccionId: h.seccion._id }, config);
         } catch (e) {
           console.warn('Posible curso ya matriculado o cruce:', e);
         }

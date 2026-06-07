@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 
 // ─── Constantes ────────────────────────────────────────────────────────────
-const API = 'http://localhost:5000/api/admin';
+const API = '/api/admin';
 const CO2_PER_BYTE_MG = 0.0000000318 * 1000; // mg CO₂ por byte
 
 // ─── Helpers ───────────────────────────────────────────────────────────────
@@ -477,8 +477,8 @@ function EnvironmentalView({ impact, loading, onRefresh }) {
 
 // ──────────────────────────────────────────────────────────────────────────
 // Comparativa Antes vs Después  (equivalente visual a comparativa_consumo.js)
-// ANTES = bytes JSON crudo (campo `bytes` en APM = lo que se env\u00edaba sin GZIP)
-// DESPU\u00c9S = bytes comprimidos (campo `compressedBytes` = lo que realmente viaja)
+// ANTES = bytes JSON crudo (campo `bytes` en APM = lo que se enviaba sin GZIP)
+// DESPUÉS = bytes comprimidos (campo `compressedBytes` = lo que realmente viaja)
 // ──────────────────────────────────────────────────────────────────────────
 function ComparativaView({ impact, loading }) {
   const CO2_PER_BYTE_MG = 0.0000000318 * 1000;
@@ -502,7 +502,7 @@ function ComparativaView({ impact, loading }) {
     }
     byEndpoint[key].count++;
     byEndpoint[key].totalBefore   += r.bytes           || 0; // JSON crudo (ANTES)
-    byEndpoint[key].totalAfter    += r.compressedBytes || r.bytes || 0; // con GZIP (DESPU\u00c9S)
+    byEndpoint[key].totalAfter    += r.compressedBytes || r.bytes || 0; // con GZIP (DESPUÉS)
     byEndpoint[key].totalDuration += r.duration        || 0;
   });
 
@@ -538,18 +538,18 @@ function ComparativaView({ impact, loading }) {
 
   return (
     <div>
-      {/* ── T\u00edtulo ── */}
+      {/* ── Título ── */}
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '1.25rem' }}>
         <BarChart2 size={20} color="#00e5ff" />
         <h3 style={{ margin: 0, fontSize: '1.2rem', fontWeight: '800', color: 'var(--text-main)' }}>
-          Comparativa de Consumo: ANTES vs DESPU\u00c9S
+          Comparativa de Consumo: ANTES vs DESPUÉS
         </h3>
         <span style={{ marginLeft: 'auto', fontSize: '0.75rem', color: '#4a7fa5', fontWeight: '600' }}>
           Equivalente a: <code style={{ background: '#0d1b2a', padding: '2px 6px', borderRadius: '4px', color: '#00e5ff' }}>node comparativa_consumo.js</code>
         </span>
       </div>
 
-      {/* Explicaci\u00f3n de metodolog\u00eda */}
+      {/* Explicación de metodología */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '0.75rem', marginBottom: '1.5rem' }}>
         <div style={{ background: 'linear-gradient(135deg, #1a0a0a 0%, #2a0f0f 100%)', border: '1px solid #5f1e1e', borderRadius: '12px', padding: '1rem 1.25rem', display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
           <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontWeight: '900', fontSize: '0.85rem', color: 'white' }}>A</div>
@@ -565,7 +565,7 @@ function ComparativaView({ impact, loading }) {
         <div style={{ background: 'linear-gradient(135deg, #0a1a0f 0%, #0f2a18 100%)', border: '1px solid #1e5f3a', borderRadius: '12px', padding: '1rem 1.25rem', display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
           <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontWeight: '900', fontSize: '0.85rem', color: 'white' }}>D</div>
           <div>
-            <div style={{ fontWeight: '800', color: '#6ee7b7', fontSize: '0.88rem', marginBottom: '3px' }}>DESPU\u00c9S (optimizado)</div>
+            <div style={{ fontWeight: '800', color: '#6ee7b7', fontSize: '0.88rem', marginBottom: '3px' }}>DESPUÉS (optimizado)</div>
             <div style={{ fontSize: '0.78rem', color: '#2e7a56', lineHeight: 1.4 }}>
               Bytes reales con GZIP Nivel 6 · <code style={{ background: '#051a0e', padding: '1px 4px', borderRadius: '3px', color: '#6ee7b7' }}>Content-Encoding: gzip</code><br/>
               Lo que realmente viaja por la red hacia el cliente
@@ -577,14 +577,14 @@ function ComparativaView({ impact, loading }) {
           <div style={{ background: 'linear-gradient(135deg, #0a0f1a 0%, #0d1628 100%)', border: '1px solid #1e3a5f', borderRadius: '12px', padding: '1rem 1.25rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <div style={{ textAlign: 'center' }}>
               <div style={{ fontSize: '2rem', fontWeight: '900', color: '#10b981', lineHeight: 1 }}>{globalPct}%</div>
-              <div style={{ fontSize: '0.7rem', color: '#4a7fa5', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Reducci\u00f3n total</div>
+              <div style={{ fontSize: '0.7rem', color: '#4a7fa5', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.06em' }}>Reducción total</div>
             </div>
             <div style={{ borderLeft: '1px solid #1e3a5f', paddingLeft: '1rem' }}>
               <div style={{ fontSize: '0.78rem', color: '#4a7fa5', marginBottom: '4px' }}>
                 ANTES: <strong style={{ color: '#fca5a5' }}>{formatBytes(totalBefore)}</strong>
               </div>
               <div style={{ fontSize: '0.78rem', color: '#4a7fa5', marginBottom: '4px' }}>
-                DESPU\u00c9S: <strong style={{ color: '#6ee7b7' }}>{formatBytes(totalAfter)}</strong>
+                DESPUÉS: <strong style={{ color: '#6ee7b7' }}>{formatBytes(totalAfter)}</strong>
               </div>
               <div style={{ fontSize: '0.78rem', color: '#4a7fa5' }}>
                 CO₂ ahorrado: <strong style={{ color: '#00e5ff' }}>{co2mg(totalSaved)} mg</strong>
@@ -598,9 +598,9 @@ function ComparativaView({ impact, loading }) {
       {rows.length === 0 ? (
         <div style={{ background: 'linear-gradient(180deg, #0a1628 0%, #0d1b2a 100%)', border: '1px solid #1e3a5f', borderRadius: '16px', padding: '3rem', textAlign: 'center', color: '#4a7fa5' }}>
           <BarChart2 size={40} style={{ marginBottom: '1rem', opacity: 0.3 }} />
-          <p style={{ margin: 0, fontWeight: '600' }}>Sin datos de comparativa a\u00fan.</p>
+          <p style={{ margin: 0, fontWeight: '600' }}>Sin datos de comparativa aún.</p>
           <p style={{ margin: '0.5rem 0 0', fontSize: '0.85rem' }}>
-            Navega por el sistema para generar peticiones en el APM. Tambi\u00e9n puedes correr:
+            Navega por el sistema para generar peticiones en el APM. También puedes correr:
             <br/><code style={{ color: '#00e5ff', fontSize: '0.8rem' }}>node comparativa_consumo.js</code>
           </p>
         </div>
@@ -624,11 +624,11 @@ function ComparativaView({ impact, loading }) {
                 <tr>
                   <th style={{ minWidth: '200px' }}>Endpoint</th>
                   <th style={{ color: '#fca5a5' }}>ANTES (bytes)</th>
-                  <th style={{ color: '#6ee7b7' }}>DESPU\u00c9S (GZIP)</th>
-                  <th>Reducci\u00f3n</th>
+                  <th style={{ color: '#6ee7b7' }}>DESPUÉS (GZIP)</th>
+                  <th>Reducción</th>
                   <th>Barra</th>
                   <th style={{ color: '#fca5a5' }}>CO₂ ANTES</th>
-                  <th style={{ color: '#6ee7b7' }}>CO₂ DESPU\u00c9S</th>
+                  <th style={{ color: '#6ee7b7' }}>CO₂ DESPUÉS</th>
                   <th>Reqs</th>
                   <th>Avg ms</th>
                 </tr>
@@ -654,7 +654,7 @@ function ComparativaView({ impact, loading }) {
               </tbody>
               <tfoot>
                 <tr style={{ background: '#0a1628', borderTop: '2px solid #1e3a5f' }}>
-                  <td style={{ color: '#00e5ff', fontWeight: '900', fontSize: '0.85rem' }}>TOTAL SES\u00cdON</td>
+                  <td style={{ color: '#00e5ff', fontWeight: '900', fontSize: '0.85rem' }}>TOTAL SESIÓN</td>
                   <td style={{ color: '#fca5a5', fontWeight: '900' }}>{formatBytes(totalBefore)}</td>
                   <td style={{ color: '#6ee7b7', fontWeight: '900' }}>{formatBytes(totalAfter)}</td>
                   <td>{pct(totalBefore, totalAfter)}</td>
@@ -672,14 +672,14 @@ function ComparativaView({ impact, loading }) {
           <div style={{ padding: '0.9rem 1.4rem', borderTop: '1px solid #1e3a5f', background: '#081220', display: 'flex', gap: '2rem', flexWrap: 'wrap', alignItems: 'center' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.77rem', color: '#4a7fa5' }}>
               <div style={{ width: '10px', height: '10px', borderRadius: '2px', background: '#fca5a5', flexShrink: 0 }} />
-              <span>ANTES = campo <code style={{ color: '#fca5a5' }}>bytes</code> del APM (JSON crudo / sin compresi\u00f3n)</span>
+              <span>ANTES = campo <code style={{ color: '#fca5a5' }}>bytes</code> del APM (JSON crudo / sin compresión)</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.77rem', color: '#4a7fa5' }}>
               <div style={{ width: '10px', height: '10px', borderRadius: '2px', background: '#6ee7b7', flexShrink: 0 }} />
-              <span>DESPU\u00c9S = campo <code style={{ color: '#6ee7b7' }}>compressedBytes</code> del APM (post-GZIP, bytes reales de red)</span>
+              <span>DESPUÉS = campo <code style={{ color: '#6ee7b7' }}>compressedBytes</code> del APM (post-GZIP, bytes reales de red)</span>
             </div>
             <div style={{ fontSize: '0.77rem', color: '#2d5a7a', marginLeft: 'auto' }}>
-              Misma metodolog\u00eda que <code style={{ color: '#00e5ff' }}>comparativa_consumo.js</code>
+              Misma metodología que <code style={{ color: '#00e5ff' }}>comparativa_consumo.js</code>
             </div>
           </div>
         </div>
@@ -689,12 +689,12 @@ function ComparativaView({ impact, loading }) {
       {totalSaved > 0 && (
         <div style={{ marginTop: '1.25rem', padding: '1rem 1.25rem', background: 'linear-gradient(135deg, rgba(16,185,129,0.06) 0%, rgba(0,229,255,0.04) 100%)', border: '1px solid rgba(16,185,129,0.15)', borderRadius: '12px' }}>
           <div style={{ fontWeight: '800', color: '#10b981', marginBottom: '0.5rem', fontSize: '0.88rem' }}>
-            📊 Proyecci\u00f3n Anual (100 sesiones/d\u00eda × 365 d\u00edas)
+            📊 Proyección Anual (100 sesiones/día × 365 días)
           </div>
           <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap', fontSize: '0.83rem', color: 'var(--text-muted)' }}>
-            <span>CO₂ ahorrado/sesi\u00f3n: <strong style={{ color: '#00e5ff' }}>{co2mg(totalSaved)} mg</strong></span>
-            <span>CO₂ ahorrado/a\u00f1o: <strong style={{ color: '#00e5ff' }}>{(parseFloat(co2mg(totalSaved)) * 100 * 365 / 1000).toFixed(3)} g CO₂</strong></span>
-            <span>Datos ahorrados/a\u00f1o: <strong style={{ color: '#10b981' }}>{formatBytes(totalSaved * 100 * 365)}</strong></span>
+            <span>CO₂ ahorrado/sesión: <strong style={{ color: '#00e5ff' }}>{co2mg(totalSaved)} mg</strong></span>
+            <span>CO₂ ahorrado/año: <strong style={{ color: '#00e5ff' }}>{(parseFloat(co2mg(totalSaved)) * 100 * 365 / 1000).toFixed(3)} g CO₂</strong></span>
+            <span>Datos ahorrados/año: <strong style={{ color: '#10b981' }}>{formatBytes(totalSaved * 100 * 365)}</strong></span>
           </div>
         </div>
       )}
