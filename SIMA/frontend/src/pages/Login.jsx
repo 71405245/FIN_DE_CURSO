@@ -6,7 +6,7 @@ import '../App.css';
 
 function Login() {
   const [email, setEmail] = useState('admin@sima.com');
-  const [password, setPassword] = useState('123456789');
+  const [password, setPassword] = useState('admin');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);

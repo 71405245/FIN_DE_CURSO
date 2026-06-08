@@ -5,10 +5,10 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
-    // Proxy: todas las llamadas a /api se redirigen al backend en puerto 5001
+    // Proxy: todas las llamadas a /api se redirigen al backend en puerto 5000
     proxy: {
       '/api': {
-        target: 'http://localhost:5001',
+        target: 'http://localhost:5000',
         changeOrigin: true,
       }
     }

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Plus, GraduationCap, Edit2, Trash2, Check, AlertCircle } from 'lucide-react';
+import { Plus, GraduationCap, Edit2, Trash2, Check, AlertCircle, Search, Filter } from 'lucide-react';
 
 const EMPTY_FORM = { nombre: '', apellidos: '', email: '', password: '', carrera: '', cicloActual: 1 };
 
@@ -13,6 +13,8 @@ function EstudiantesManager() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [filterNombre, setFilterNombre] = useState('');
+  const [filterCarrera, setFilterCarrera] = useState('');
 
   useEffect(() => { 
     fetchEstudiantes(); 
@@ -141,6 +143,31 @@ function EstudiantesManager() {
         </form>
       </div>
 
+      {/* Filtros */}
+      <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
+        <div style={{ flex: 1, minWidth: '250px', position: 'relative' }}>
+          <Search size={18} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+          <input 
+            type="text" 
+            placeholder="Buscar por nombre o apellidos..." 
+            value={filterNombre} 
+            onChange={e => { setFilterNombre(e.target.value); setCurrentPage(1); }}
+            style={{ width: '100%', padding: '10px 10px 10px 38px', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--surface)', color: 'var(--text-main)', fontSize: '0.9rem' }}
+          />
+        </div>
+        <div style={{ flex: 1, minWidth: '250px', position: 'relative' }}>
+          <Filter size={18} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
+          <select 
+            value={filterCarrera} 
+            onChange={e => { setFilterCarrera(e.target.value); setCurrentPage(1); }}
+            style={{ width: '100%', padding: '10px 10px 10px 38px', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--surface)', color: 'var(--text-main)', fontSize: '0.9rem', appearance: 'none' }}
+          >
+            <option value="">Todas las Carreras</option>
+            {carreras.map(c => <option key={c._id} value={c._id}>{c.nombre}</option>)}
+          </select>
+        </div>
+      </div>
+
       {/* Lista de Alumnos */}
       <div className="modern-card" style={{ padding: '0', overflow: 'hidden' }}>
         <table className="modern-table" style={{ marginTop: 0 }}>
@@ -158,14 +185,23 @@ function EstudiantesManager() {
               <tr><td colSpan="5" style={{ textAlign: 'center', padding: '3.5rem', color: 'var(--text-muted)' }}>No hay estudiantes registrados actualmente.</td></tr>
             ) : (
               (() => {
+                const filteredEstudiantes = estudiantes.filter(e => {
+                  const matchNombre = (e.nombre + ' ' + e.apellidos).toLowerCase().includes(filterNombre.toLowerCase());
+                  const matchCarrera = filterCarrera ? (e.carrera?._id === filterCarrera || e.carrera === filterCarrera) : true;
+                  return matchNombre && matchCarrera;
+                });
                 const itemsPerPage = 25;
-                const totalPages = Math.ceil(estudiantes.length / itemsPerPage);
+                const totalPages = Math.ceil(filteredEstudiantes.length / itemsPerPage);
                 // Asegurar que la página actual no quede huérfana tras una eliminación
-                const activePage = Math.max(1, Math.min(currentPage, totalPages));
+                const activePage = Math.max(1, Math.min(currentPage, totalPages || 1));
                 const indexOfLastItem = activePage * itemsPerPage;
                 const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-                const currentItems = estudiantes.slice(indexOfFirstItem, indexOfLastItem);
+                const currentItems = filteredEstudiantes.slice(indexOfFirstItem, indexOfLastItem);
                 
+                if (filteredEstudiantes.length === 0) {
+                  return <tr><td colSpan="5" style={{ textAlign: 'center', padding: '3.5rem', color: 'var(--text-muted)' }}>No se encontraron alumnos con los filtros actuales.</td></tr>;
+                }
+
                 return currentItems.map(e => (
                   <tr key={e._id}>
                     <td style={{ paddingLeft: '1.5rem', fontWeight: '600', color: 'var(--text-main)' }}>{e.nombre} {e.apellidos}</td>
@@ -190,9 +226,14 @@ function EstudiantesManager() {
 
       {/* Paginación */}
       {(() => {
+        const filteredEstudiantes = estudiantes.filter(e => {
+          const matchNombre = (e.nombre + ' ' + e.apellidos).toLowerCase().includes(filterNombre.toLowerCase());
+          const matchCarrera = filterCarrera ? (e.carrera?._id === filterCarrera || e.carrera === filterCarrera) : true;
+          return matchNombre && matchCarrera;
+        });
         const itemsPerPage = 25;
-        const totalPages = Math.ceil(estudiantes.length / itemsPerPage);
-        const activePage = Math.max(1, Math.min(currentPage, totalPages));
+        const totalPages = Math.ceil(filteredEstudiantes.length / itemsPerPage);
+        const activePage = Math.max(1, Math.min(currentPage, totalPages || 1));
         const indexOfLastItem = activePage * itemsPerPage;
         const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
@@ -201,7 +242,7 @@ function EstudiantesManager() {
         return (
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '1.5rem', padding: '1rem 1.5rem', background: 'var(--surface)', borderRadius: '12px', boxShadow: 'var(--shadow-sm)' }}>
             <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-              Mostrando <strong>{indexOfFirstItem + 1}</strong> a <strong>{Math.min(indexOfLastItem, estudiantes.length)}</strong> de <strong>{estudiantes.length}</strong> alumnos
+              Mostrando <strong>{indexOfFirstItem + 1}</strong> a <strong>{Math.min(indexOfLastItem, filteredEstudiantes.length)}</strong> de <strong>{filteredEstudiantes.length}</strong> alumnos
             </span>
             <div style={{ display: 'flex', gap: '0.35rem', alignItems: 'center' }}>
               <button
