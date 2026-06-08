@@ -29,8 +29,8 @@ El proyecto SIMA surge de la necesidad de modernizar el proceso de matrícula un
 - **Estudiantes**: Usuarios finales que realizan la matrícula y visualizan su historial.
 - **Docentes**: Responsables de la carga de calificaciones y gestión de sus secciones.
 - **Administradores**: Encargados de la configuración de la malla y recursos del servidor.
-- **Equipo de Desarrollo**: Antigravity AI (Lead Architect).
-
+- **Equipo de Desarrollo**: Encargados del desarrollo del sistema
+- 
 ## 5. Criterios de Éxito
 - Importación exitosa de grandes volúmenes de datos históricos (Backup).
 - Tiempo de respuesta de la API menor a 200ms para operaciones estándar.
