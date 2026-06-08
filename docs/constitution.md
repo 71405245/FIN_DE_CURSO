@@ -1,8 +1,6 @@
 # Constitución del Proyecto: SIMA
 
 **Nombre del Proyecto:** Sistema Integral de Matrícula Académica (SIMA)  
-**Versión:** 1.0  
-**Fecha:** 8 de junio de 2026
 
 ## 1. Propósito y Justificación
 El proyecto SIMA surge de la necesidad de modernizar el proceso de matrícula universitaria, eliminando la lentitud de los sistemas tradicionales y proporcionando una herramienta inteligente que asista al estudiante en la toma de decisiones académicas. 
@@ -37,5 +35,4 @@ El proyecto SIMA surge de la necesidad de modernizar el proceso de matrícula un
 - Cero errores de redundancia de datos en la BD MongoDB.
 
 ---
-**Aprobado por:** Antigravity AI  
-**Líder de Proyecto:** USER
+
