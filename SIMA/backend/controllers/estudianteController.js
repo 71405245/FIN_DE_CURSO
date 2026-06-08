@@ -137,16 +137,26 @@ exports.getPerfil = async (req, res) => {
     // 1. Obtener calificaciones para créditos aprobados
     const calificaciones = await Calificacion.find({ estudiante: estudianteId }).populate('curso', 'creditos');
 
-    let creditosAprobados = 0;
-    let haJaladoCursos = false;
-
+    // ── [OPTIMIZACIÓN] Lógica de Reiterancia de Desaprobación ───────────────
+    // Solo penalizamos con 15 CR si el alumno ha jalado un mismo curso 3+ veces 
+    // y aún no lo ha aprobado.
+    const historialPorCurso = {};
     calificaciones.forEach(c => {
-      if (c.aprobado) {
-        creditosAprobados += c.curso?.creditos || 0;
-      } else {
-        haJaladoCursos = true;
+      const cursoId = String(c.curso?._id);
+      if (!historialPorCurso[cursoId]) {
+        historialPorCurso[cursoId] = { aprobado: false, jales: 0 };
       }
+      if (c.aprobado) historialPorCurso[cursoId].aprobado = true;
+      else historialPorCurso[cursoId].jales++;
     });
+
+    let creditosAprobados = 0;
+    calificaciones.forEach(c => { if (c.aprobado) creditosAprobados += c.curso?.creditos || 0; });
+
+    // Cursos con 3 o más jales activos (sin haber aprobado el curso aún)
+    const cursosCriticos = Object.values(historialPorCurso).filter(h => h.jales >= 3 && !h.aprobado);
+    const esRestringido = cursosCriticos.length > 0;
+    const limiteCreditos = esRestringido ? 15 : 22;
 
     // 2. Obtener créditos matriculados actuales
     const misSecciones = await Seccion.find({ estudiantesMatriculados: estudianteId }).populate('curso', 'creditos');
@@ -154,10 +164,6 @@ exports.getPerfil = async (req, res) => {
     misSecciones.forEach(s => {
       creditosMatriculados += s.curso?.creditos || 0;
     });
-
-    // 3. Determinar si tiene restricción de créditos (15 CR si ha jalado, 22 CR normal)
-    const esRestringido = haJaladoCursos;
-    const limiteCreditos = esRestringido ? 15 : 22;
 
     res.json({
       estudiante: {
@@ -279,6 +285,16 @@ exports.getHistorial = async (req, res) => {
     res.status(500).send('Error en el servidor');
   }
 };
+
+// [RESTRICCIÓN] Cálculo de costo real (Créditos + Penalidad por jales)
+async function obtenerCostoRealCurso(estudianteId, cursoId, creditosBase) {
+  const jales = await Calificacion.countDocuments({ 
+    estudiante: estudianteId, 
+    curso: cursoId, 
+    aprobado: false 
+  });
+  return creditosBase + jales;
+}
 
 // ── Helper functions for AI Scheduler ──────────────────────────────
 function checkOverlap(s1, s2) {
