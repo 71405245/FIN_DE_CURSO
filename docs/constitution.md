@@ -1,36 +1,41 @@
-# Constitución del Sistema SIMA (Sistema Académico)
+# Constitución del Proyecto: SIMA
 
-Este documento define los principios fundamentales, reglas globales y restricciones que rigen el comportamiento y la lógica del sistema SIMA.
+**Nombre del Proyecto:** Sistema Integral de Matrícula Académica (SIMA)  
+**Versión:** 1.0  
+**Fecha:** 8 de junio de 2026
 
-## 1. Principios del Sistema
+## 1. Propósito y Justificación
+El proyecto SIMA surge de la necesidad de modernizar el proceso de matrícula universitaria, eliminando la lentitud de los sistemas tradicionales y proporcionando una herramienta inteligente que asista al estudiante en la toma de decisiones académicas. 
 
-1.  **Integridad Académica**: El sistema debe garantizar que toda la información académica (notas, cursos, prerequisitos) sea veraz y coherente.
-2.  **Seguridad de Acceso**: Solo usuarios autenticados y con los roles adecuados (Administrador, Docente, Alumno) pueden acceder a funciones específicas.
-3.  **Transparencia**: El proceso de matrícula debe ser claro para el alumno, indicando siempre por qué un curso puede o no ser tomado.
-4.  **Escalabilidad**: El diseño debe permitir la adición de nuevos ciclos, facultades y carreras sin comprometer el rendimiento.
+### Justificación:
+- Reducción del tiempo de inscripción mediante algoritmos de optimización.
+- Mejora en la visualización del progreso académico.
+- Automatización de la validación de prerrequisitos y disponibilidad de aulas.
 
-## 2. Reglas Globales
+## 2. Objetivos del Proyecto
+1.  **Optimización**: Implementar un motor de IA que genere horarios sin cruces en menos de 1 segundo.
+2.  **Integridad**: Garantizar que ningún estudiante se matricule en cursos sin cumplir los prerrequisitos.
+3.  **Observabilidad**: Monitorear el rendimiento del servidor durante picos de matrícula masiva.
+4.  **Usabilidad**: Proveer una interfaz minimalista y responsiva que WOW al usuario.
 
-1.  **Autenticación Obligatoria**: Ninguna operación de escritura o consulta de datos sensibles puede realizarse sin un token JWT válido.
-2.  **Trazabilidad**: Toda acción crítica (cambio de notas, aprobación de matrículas extraordinarias) debe quedar registrada (Audit Log).
-3.  **Consistencia de Datos**: No se permiten registros huérfanos. Por ejemplo, una sección no puede existir sin un curso asignado.
+## 3. Alcance
+- Autenticación segura basada en roles.
+- Dashboard para Estudiantes, Docentes y Administradores.
+- Generador de horarios inteligente (AI Scheduler).
+- Gestión académica completa (Carreras, Cursos, Secciones, Calificaciones).
+- Exportación de horarios en formato PDF.
 
-## 3. Restricciones
+## 4. Partes Interesadas (Stakeholders)
+- **Estudiantes**: Usuarios finales que realizan la matrícula y visualizan su historial.
+- **Docentes**: Responsables de la carga de calificaciones y gestión de sus secciones.
+- **Administradores**: Encargados de la configuración de la malla y recursos del servidor.
+- **Equipo de Desarrollo**: Antigravity AI (Lead Architect).
 
-### 3.1 Restricciones Duras (Hard Constraints)
-*No pueden ser violadas bajo ninguna circunstancia por la lógica del sistema.*
+## 5. Criterios de Éxito
+- Importación exitosa de grandes volúmenes de datos históricos (Backup).
+- Tiempo de respuesta de la API menor a 200ms para operaciones estándar.
+- Cero errores de redundancia de datos en la BD MongoDB.
 
-1.  **Prerequisitos**: Un alumno no puede matricularse en un curso si no ha aprobado los prerequisitos definidos en su plan de estudios.
-2.  **Cruce de Horarios**: El sistema debe impedir la matrícula en dos cursos cuyos horarios se traslapen, incluso por un minuto.
-3.  **Capacidad de Aula**: No se puede matricular a más alumnos de los que permite el aforo físico (o virtual) definido para la sección.
-4.  **Estado de Alumno**: Solo los alumnos con estado "Activo" pueden realizar procesos de matrícula.
-5.  **Reiterancia de Reprobación**: Si un estudiante desaprueba un mismo curso más de 3 veces (cursándolo por cuarta vez o más), su límite máximo se reduce de forma estricta a **15 créditos** en ese ciclo. Esta restricción se mantiene hasta que apruebe dicho curso, momento en el cual recuperará el límite estándar de 24 créditos.
-6.  **Generación Automática de Horarios (IA)**: Los horarios propuestos por la IA están restringidos a generar combinaciones que no presenten ningún cruce, que respeten los cupos máximos de las secciones y que se basen únicamente en los cursos permitidos por los prerequisitos del estudiante.
-
-### 3.2 Restricciones Blandas (Soft Constraints)
-*Pueden ser flexibilizadas mediante autorización administrativa.*
-
-1.  **Límite de Créditos**: El límite estándar es de **24 créditos** por ciclo.
-    *   *Excepción*: Se puede ampliar hasta **28 créditos** con aprobación explícita de un Administrador/Director de Carrera.
-2.  **Deuda Pendiente**: Los alumnos con deudas financieras menores a un umbral definido pueden matricularse si se les otorga una prórroga temporal.
-3.  **Carga Docente**: Se recomienda un límite de horas para los docentes, pero el sistema permitirá sobrepasarlo si el Administrador lo justifica.
+---
+**Aprobado por:** Antigravity AI  
+**Líder de Proyecto:** USER
