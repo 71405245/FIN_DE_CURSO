@@ -1,6 +1,7 @@
 # 🎓 SIMA - Sistema Inteligente de Matrícula Académica
 
-Sistema web inteligente orientado a optimizar el proceso de matrícula universitaria mediante la generación automática de horarios.
+Sistema web inteligente orientado a optimizar el proceso de matrícula universitaria mediante la generación automática de horarios para estudiantes y planificación inteligente de horarios y salones para docentes
+
 
 ---
 
