@@ -1,129 +1,68 @@
-# Arquitectura Detallada del Sistema SIMA
+# Arquitectura del Sistema SIMA
 
-Este documento describe la arquitectura técnica del **Sistema de Información y Matrícula Académica (SIMA)**, una plataforma integral diseñada para la gestión académica, matrícula inteligente y administración de estudiantes.
+El Sistema Integral de Matrícula Académica (SIMA) está diseñado bajo una arquitectura de **Agentes Lógicos** desacoplados, implementada sobre un stack **MERN** (MongoDB, Express, React, Node.js).
 
----
+## Vista General
 
-## 1. Descripción General de la Infraestructura
+El sistema se divide en tres capas principales:
 
-| Capa | Tecnología | Versión |
-|------|-------------|----------|
-| Frontend | React + Vite | 19.x / 8.x |
-| Gráficos | Chart.js + react-chartjs-2 | 4.x / 5.x |
-| HTTP Client | axios | 1.x |
-| Routing | react-router-dom | 7.x |
-| Backend | Node.js + Express | 18+ / 4.x |
-| ORM | Mongoose | 8.x |
-| Base de Datos | MongoDB | 6+ |
-| Autenticación | JWT + bcryptjs | — |
-| Compresión | compression | 1.x |
+1.  **Capa de Presentación (Frontend)**: Interfaz reactiva en React + Vite, optimizada para dashboards administrativos y portales estudiantiles.
+2.  **Capa de Aplicación (Backend)**: Servidor Node.js/Express que orquesta la lógica de negocio a través de controladores especializados (Agentes).
+3.  **Capa de Persistencia (Database)**: Modelado de datos en MongoDB usando Mongoose para integridad referencial y escalabilidad.
 
----
-
-## 2. Capa de Datos (Modelado E-R)
-La base de datos está normalizada para manejar la complejidad de los prerrequisitos y cruces de horarios.
+## Diagrama de Bloques
 
 ```mermaid
-erDiagram
-    USUARIO ||--o| PREFERENCIA_HORARIO : tiene
-    USUARIO ||--o{ MATRICULA : realiza
-    USUARIO ||--o{ HISTORIAL_ACADEMICO : posee
-    
-    CURSO ||--o{ PRERREQUISITO : "es requerido por"
-    CURSO ||--o{ SECCION : "se dicta en"
-    CURSO ||--o{ HISTORIAL_ACADEMICO : "registrado en"
-    
-    CICLO ||--o{ CURSO : agrupa
-    
-    SALON ||--o{ SECCION : asignado_a
-    
-    SECCION ||--o{ MATRICULA : recibe_estudiantes
-    
-    USUARIO {
-        string username
-        string rol "admin/estudiante"
-        string codigo
-        int ciclo_actual
-        int creditos_acumulados
-        int limite_creditos
-    }
+graph TD
+    subgraph "Frontend (React)"
+        UI[User Interface]
+        Store[State Management]
+    end
 
-    CURSO {
-        string codigo
-        string nombre
-        int creditos
-        string tipo "obligatorio/electivo"
-    }
+    subgraph "Backend (Node.js/Express)"
+        Auth[Agente Seguridad / Middleware JWT]
+        AI[Agente Recomendación / Backtracking Engine]
+        Admin[Agente Administrativo / Planificación]
+        Docente[Agente Docente / Analítica]
+        Estudiante[Agente Estudiantil / Matrícula]
+        APM[Módulo Observabilidad / Buffer Circular]
+    end
 
-    SECCION {
-        string dia
-        time hora_inicio
-        time hora_fin
-        int cupo
-    }
+    subgraph "Persistencia (MongoDB)"
+        DB[(sima_db)]
+    end
+
+    UI <--> Auth
+    Auth --> Admin
+    Auth --> Docente
+    Auth --> Estudiante
+    Estudiante --> AI
+    Admin --> DB
+    Docente --> DB
+    Estudiante --> DB
+    APM -.-> Admin
 ```
 
----
+## Agentes Lógicos
 
-## 3. Capa de Lógica y Seguridad
-### 3.1. Autenticación JWT (Hybrid Middleware)
-El sistema utiliza un enfoque híbrido de seguridad:
-1. **Token JWT:** Se almacena en las `COOKIES` del navegador como `access_token`.
-2. **Middleware:** El `JWTMiddleware` intercepta cada petición, decodifica el token usando la `SECRET_KEY` del sistema y autentica automáticamente al usuario en la sesión de Django (`request.user`).
-3. **Roles:** El modelo de usuario extendido permite diferenciar vistas y permisos entre `Administrador` y `Estudiante`.
+### 1. Agente de Seguridad (Auth Middleware)
+- **Tecnología**: JWT + Bcryptjs.
+- **Función**: Valida sesiones y restringe el acceso basado en roles (ADMIN, DOCENTE, ESTUDIANTE).
 
-### 3.2. Motor de Recomendación (IA)
-Ubicado en `matricula/utils.py`, el motor utiliza algoritmos de filtrado y búsqueda de caminos para generar horarios óptimos:
-- **Validación de Prerrequisitos:** Verifica que el estudiante haya aprobado los cursos necesarios o tenga los créditos mínimos.
-- **Detección de Cruces:** Algoritmo que compara intervalos de tiempo `(hora_inicio, hora_fin)` en el mismo día para evitar superposiciones.
-- **Optimización de Preferencias:** Filtra secciones basadas en el turno preferido (mañana/tarde/noche), cantidad máxima de días y carga crediticia deseada.
+### 2. Agente de Recomendación (AI Engine)
+- **Algoritmo**: Heurístico de búsqueda con retroceso (Backtracking DFS).
+- **Optimización**: Utiliza *Minimum Remaining Values* (MRV) y *Forward Checking* para evitar colisiones de horarios en tiempo récord.
+- **Scoring**: Clasifica horarios basados en preferencias de turno (Mañana/Tarde/Noche) y concentración de días.
 
----
+### 3. Agente Administrativo
+- **Función**: Gestión CRUD de mallas curriculares, auditoría de recursos de servidor y planificación de carga académica.
+- **Módulo de Observabilidad**: Buffer circular síncrono para métricas de tiempo real (APM) sin impacto en performance.
 
-## 4. Estructura de Aplicaciones (Componentes)
+### 4. Agente Docente
+- **Función**: Ingreso de calificaciones, analítica de promedios de sección y gestión de actas oficiales.
 
-| Aplicación | Responsabilidad |
-| :--- | :--- |
-| `usuarios` | Gestión de perfiles, autenticación JWT, dashboard principal y panel administrativo de estudiantes. |
-| `academico` | Core de datos: Cursos, Ciclos, Salones, Secciones e Historial Académico (Notas). |
-| `matricula` | Lógica de inscripción, gestión de preferencias del estudiante y motor de horarios recomendados. |
-| `core` | Configuraciones globales del proyecto, variables de entorno y enrutamiento principal. |
+### 5. Agente Estudiantil
+- **Función**: Proceso de matrícula con validación estricta de prerrequisitos y límites de créditos (restringido vs. normal).
 
----
-
-## 5. Capa de Presentación (UI/UX)
-El frontend está diseñado con una estética **Premium** y **Moderna**:
-- **Estilizado:** Vanilla CSS con un sistema de variables para el tema (Purple & White).
-- **Interactividad:** Diseño responsivo, micro-animaciones en botones y tarjetas, y estados de hover dinámicos.
-- **Visualización:** 
-    - Dashboard dinámico para estudiantes.
-    - Tabla de horario visual (Grid interactivo).
-    - Panel de administración simplificado para gestión de recursos.
-
----
-
-## 6. Flujo de Matrícula Inteligente
-```mermaid
-sequenceDiagram
-    participant E as Estudiante
-    participant M as Módulo Matrícula
-    participant DB as Base de Datos
-    participant IA as Motor Recomendación
-
-    E->>M: Define Preferencias (Turno, Días, Cursos)
-    M->>DB: Guarda Preferencias
-    E->>IA: Solicita Recomendación
-    IA->>DB: Consulta Cursos Disponibles y Prerrequisitos
-    IA->>IA: Filtra Cruces y Aplica Preferencias
-    IA-->>E: Muestra 3 Opciones de Horarios Óptimos
-    E->>M: Selecciona Horario y Confirma
-    M->>DB: Crea Registros de Matrícula y Actualiza Cupos
-    M-->>E: Notifica Éxito y Genera PDF
-```
-
----
-
-## 7. Características de Seguridad y Rendimiento
-- **Strict SQL Mode:** Asegura que no se inserten datos truncados o inválidos en MySQL.
-- **Optimización de Consultas:** Uso de `select_related` y `prefetch_related` para minimizar las consultas a la base de datos (N+1 problem).
-- **Restricciones Académicas:** Validación en servidor de límites de créditos y penalizaciones por cursos desaprobados.
+## Integración de Datos
+El sistema utiliza JSON como formato de intercambio universal, facilitando la importación masiva de respaldos y la interoperabilidad entre módulos.
