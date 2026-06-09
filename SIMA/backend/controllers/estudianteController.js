@@ -575,3 +575,13 @@ exports.downloadHorarioPDF = async (req, res) => {
     if (!res.headersSent) res.status(500).send('Error al generar el PDF');
   }
 };
+
+// ── Export helpers for Testing ──────────────────────────────────────────────
+if (process.env.NODE_ENV === 'test') {
+  exports._helpers = {
+    checkOverlap,
+    checkTurno,
+    countUniqueDays,
+    obtenerCostoRealCurso
+  };
+}
