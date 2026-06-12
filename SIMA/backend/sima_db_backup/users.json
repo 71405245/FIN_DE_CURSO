@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "exportedAt": "2026-06-01T04:26:44.158Z",
+    "exportedAt": "2026-06-12T16:01:22.665Z",
     "collection": "users",
     "totalDocuments": 3083,
     "database": "sima_db"
@@ -11,10 +11,13 @@
       "nombre": "Administrador",
       "apellidos": "Principal",
       "email": "admin@sima.com",
-      "password": "$2b$10$IkmsRcP6c5hH9A.dOOajfu.dVOfquEv6owas9Lck4DASw5WusRBpG",
+      "password": "$2a$10$pjVh9i.d5Wuf4IZriXlF4.RAIrdUYuYWCU8ipJKV.IT8bLhbnrD86",
       "rol": "ADMIN",
       "fechaRegistro": "2026-05-15T04:33:52.208Z",
-      "__v": 0
+      "__v": 1,
+      "carrerasEnsenadas": [],
+      "cicloActual": 1,
+      "turnoDisponibilidad": "Completo"
     },
     {
       "_id": "6a093abf117d7064ab22910f",
@@ -40266,12 +40269,13 @@
       "nombre": "Administrador",
       "apellidos": "Planificación",
       "email": "admin2@sima.com",
-      "password": "$2b$10$o6bAhp1u3macp5005YDNXuYyOICSh4vkBfl0m/2M2Sk/M7EU9pR6q",
+      "password": "$2a$10$pjVh9i.d5Wuf4IZriXlF4.RAIrdUYuYWCU8ipJKV.IT8bLhbnrD86",
       "rol": "ADMIN",
       "carrerasEnsenadas": [],
       "cicloActual": 1,
       "fechaRegistro": "2026-06-01T03:32:34.601Z",
-      "__v": 0
+      "__v": 0,
+      "turnoDisponibilidad": "Completo"
     }
   ]
 }

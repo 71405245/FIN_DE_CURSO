@@ -8,7 +8,7 @@ const bcrypt = require('bcryptjs');
 const http = require('http');
 
 const EMAIL = 'admin@sima.com';
-const PASSWORD = '123456789';
+const PASSWORD = 'admin';
 
 async function debugLogin() {
   console.log('\n========== DEBUG LOGIN ==========');

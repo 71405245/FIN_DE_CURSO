@@ -400,3 +400,14 @@ exports.editarHorario = async (req, res) => {
   }
 };
 
+// Export helpers for testing
+if (process.env.NODE_ENV === 'test') {
+  exports._helpers = {
+    horaADecimal,
+    calcularHorasSeccion,
+    hayConflicto,
+    estadoCarga
+  };
+}
+
+

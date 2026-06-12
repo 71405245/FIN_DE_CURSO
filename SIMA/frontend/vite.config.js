@@ -8,7 +8,7 @@ export default defineConfig({
     // Proxy: todas las llamadas a /api se redirigen al backend en puerto 5000
     proxy: {
       '/api': {
-        target: 'http://localhost:5000',
+        target: 'http://localhost:5001',
         changeOrigin: true,
       }
     }
@@ -45,5 +45,16 @@ export default defineConfig({
   // [OPTIMIZACIÓN 7] Pre-optimización de dependencias en el servidor de dev
   optimizeDeps: {
     include: ['react', 'react-dom', 'axios', 'chart.js', 'react-chartjs-2', 'lucide-react']
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/setupTests.js',
+    include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'json', 'html'],
+    },
   }
 })
+
