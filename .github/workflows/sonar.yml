@@ -4,14 +4,19 @@ on:
   push:
     branches:
       - main
+      - mejoras
+  pull_request:
+    branches:
+      - main
 
 jobs:
   sonar:
     runs-on: ubuntu-latest
-
     steps:
       # Descargar repo
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # ← Recomendado agregar esto para Sonar
 
       # Instalar dependencias backend
       - name: Install backend dependencies
