@@ -120,7 +120,8 @@ Durante la inspección se identificaron componentes que concentraban la mayor ca
 
 **Figura 3. Vulnerabilidades detectadas**
 
-> **INSERTAR CAPTURA AQUÍ**
+> <img width="1600" height="847" alt="WhatsApp Image 2026-06-14 at 10 15 18 PM" src="https://github.com/user-attachments/assets/6378bda4-3855-4f04-a581-79363f504d5c" />
+
 
 ---
 
