@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const { validationResult } = require('express-validator');
 
 // Admins del sistema con acceso garantizado
 const SYSTEM_ADMINS = [
@@ -9,8 +10,12 @@ const SYSTEM_ADMINS = [
 ];
 
 exports.login = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ msg: errors.array()[0].msg, errors: errors.array() });
+  }
+
   const { email, password } = req.body;
-  console.log('INTENTO DE LOGIN:', { email, password });
 
   try {
     // Buscar usuario

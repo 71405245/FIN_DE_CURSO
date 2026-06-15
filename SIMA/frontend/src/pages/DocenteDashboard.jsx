@@ -236,8 +236,8 @@ function DocenteDashboard() {
       <main style={{ maxWidth: '1440px', margin: '2rem auto', padding: '0 2rem' }} className="animate-fade-in">
         
         {/* Alertas Flotantes */}
-        {error && <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1rem 1.5rem', borderRadius: '12px', marginBottom: '2rem', background: '#fef2f2', color: '#991b1b', border: '1px solid #fecaca', fontWeight: '600' }}><AlertCircle size={18}/> {error}</div>}
-        {success && <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1rem 1.5rem', borderRadius: '12px', marginBottom: '2rem', background: '#ecfdf5', color: '#065f46', border: '1px solid #a7f3d0', fontWeight: '600' }}><CheckCircle size={18}/> {success}</div>}
+        {error && <div role="alert" aria-live="assertive" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1rem 1.5rem', borderRadius: '12px', marginBottom: '2rem', background: '#fef2f2', color: '#991b1b', border: '1px solid #fecaca', fontWeight: '600' }}><AlertCircle size={18} aria-hidden="true"/> {error}</div>}
+        {success && <div role="status" aria-live="polite" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1rem 1.5rem', borderRadius: '12px', marginBottom: '2rem', background: '#ecfdf5', color: '#065f46', border: '1px solid #a7f3d0', fontWeight: '600' }}><CheckCircle size={18} aria-hidden="true"/> {success}</div>}
 
         {/* 🚀 HERO PROFESSOR WELCOME */}
         <div className="docente-hero rounded-3xl shadow-lg mb-8 p-6 text-white" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -387,13 +387,16 @@ function DocenteDashboard() {
                                 </td>
                                 <td>
                                   <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', alignItems: 'center' }}>
+                                    <label htmlFor={`nota-${est._id}`} className="sr-only" style={{ display: 'none' }}>Nota de {est.nombre}</label>
                                     <input 
+                                      id={`nota-${est._id}`}
                                       type="number" 
                                       placeholder="-"
                                       min="0" max="20"
                                       value={notaLocal || ''}
                                       onChange={(e) => setCalificaciones({...calificaciones, [est._id]: e.target.value})}
                                       className="grade-input"
+                                      aria-label={`Calificación para ${est.nombre} ${est.apellidos}`}
                                     />
                                     <button 
                                       disabled={savingId === est._id}

@@ -307,8 +307,8 @@ function EstudianteDashboard() {
       <main style={{ maxWidth: '1400px', margin: '2rem auto', padding: '0 2rem' }} className="animate-fade-in">
         
         {/* Alertas Premium Flotantes */}
-        {error && <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1rem 1.5rem', borderRadius: '12px', marginBottom: '2rem', background: '#fef2f2', color: '#991b1b', border: '1px solid #fecaca', fontWeight: '600', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>{error}</div>}
-        {success && <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1rem 1.5rem', borderRadius: '12px', marginBottom: '2rem', background: '#ecfdf5', color: '#065f46', border: '1px solid #a7f3d0', fontWeight: '600', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}><CheckCircle size={18}/> {success}</div>}
+        {error && <div role="alert" aria-live="assertive" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1rem 1.5rem', borderRadius: '12px', marginBottom: '2rem', background: '#fef2f2', color: '#991b1b', border: '1px solid #fecaca', fontWeight: '600', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>{error}</div>}
+        {success && <div role="status" aria-live="polite" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1rem 1.5rem', borderRadius: '12px', marginBottom: '2rem', background: '#ecfdf5', color: '#065f46', border: '1px solid #a7f3d0', fontWeight: '600', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}><CheckCircle size={18} aria-hidden="true" /> {success}</div>}
 
         {/* 🚀 HERO WELCOME SECTION */}
         <div className="hero-gradient rounded-3xl shadow-lg mb-6 p-6 text-white" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -578,8 +578,8 @@ function EstudianteDashboard() {
                         <span style={{ color: '#4f46e5', fontWeight: '800', fontSize: '0.75rem', background: '#f1f5f9', padding: '2px 6px', borderRadius: '6px' }}>
                           {s.curso?.creditos} CR
                         </span>
-                        <button onClick={() => handleRectificar(s._id)} style={{ background: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', border: 'none', padding: '6px', borderRadius: '6px', cursor: 'pointer', transition: 'all 0.2s', display: 'flex', alignItems: 'center', justifyContent: 'center' }} title="Retirarme del curso">
-                          <Trash2 size={14} />
+                        <button onClick={() => handleRectificar(s._id)} aria-label={`Retirarme de ${s.curso?.nombre}`} style={{ background: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', border: 'none', padding: '6px', borderRadius: '6px', cursor: 'pointer', transition: 'all 0.2s', display: 'flex', alignItems: 'center', justifyContent: 'center' }} title="Retirarme del curso">
+                          <Trash2 size={14} aria-hidden="true" />
                         </button>
                       </div>
                     </div>
@@ -594,22 +594,22 @@ function EstudianteDashboard() {
 
         {/* Preferencias Modal */}
         {showPrefsModal && (
-          <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(15,23,42,0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, overflowY: 'auto' }}>
+          <div role="dialog" aria-modal="true" aria-labelledby="modal-prefs-title" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(15,23,42,0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, overflowY: 'auto' }}>
             <div className="glass-card" style={{ background: 'white', width: '90%', maxWidth: '500px', borderRadius: '24px', overflow: 'hidden', margin: 'auto' }}>
               <div style={{ padding: '1.5rem 2rem', borderBottom: '1px solid #f1f5f9', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#f8fafc' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                   <div style={{ background: 'rgba(245,158,11,0.1)', padding: '8px', borderRadius: '10px', color: '#f59e0b' }}><Cpu size={20} /></div>
-                   <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: '800', color: '#0f172a' }}>Preferencias de IA</h3>
+                   <div style={{ background: 'rgba(245,158,11,0.1)', padding: '8px', borderRadius: '10px', color: '#f59e0b' }}><Cpu size={20} aria-hidden="true" /></div>
+                   <h3 id="modal-prefs-title" style={{ margin: 0, fontSize: '1.25rem', fontWeight: '800', color: '#0f172a' }}>Preferencias de IA</h3>
                 </div>
-                <button onClick={() => setShowPrefsModal(false)} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#94a3b8' }}><LogOut size={20}/></button>
+                <button aria-label="Cerrar modal" onClick={() => setShowPrefsModal(false)} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#94a3b8' }}><LogOut size={20} aria-hidden="true" /></button>
               </div>
               
               <div style={{ padding: '2rem' }}>
                 <p style={{ color: '#64748b', marginBottom: '1.5rem' }}>Configura tus preferencias para que el algoritmo busque la mejor combinación de cursos y horarios disponibles sin colisiones.</p>
                 
                 <div style={{ marginBottom: '1.5rem' }}>
-                  <label style={{ display: 'block', fontWeight: '700', color: '#334155', marginBottom: '0.5rem' }}>Turno Preferido</label>
-                  <select value={iaPrefs.turno} onChange={(e) => setIaPrefs({...iaPrefs, turno: e.target.value})} style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #e2e8f0', background: 'white', color: '#0f172a' }}>
+                  <label htmlFor="ia-turno" style={{ display: 'block', fontWeight: '700', color: '#334155', marginBottom: '0.5rem' }}>Turno Preferido</label>
+                  <select id="ia-turno" value={iaPrefs.turno} onChange={(e) => setIaPrefs({...iaPrefs, turno: e.target.value})} style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #e2e8f0', background: 'white', color: '#0f172a' }}>
                     <option value="MIXTO">Indiferente (Mixto)</option>
                     <option value="MAÑANA">Mañana (07:00 - 13:00)</option>
                     <option value="TARDE">Tarde (13:00 - 18:00)</option>
@@ -619,12 +619,12 @@ function EstudianteDashboard() {
 
                 <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem' }}>
                   <div style={{ flex: 1 }}>
-                    <label style={{ display: 'block', fontWeight: '700', color: '#334155', marginBottom: '0.5rem' }}>Cantidad de Cursos</label>
-                    <input type="number" min="1" max="7" value={iaPrefs.cantidadCursos} onChange={(e) => setIaPrefs({...iaPrefs, cantidadCursos: Number(e.target.value)})} style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #e2e8f0', background: 'white', color: '#0f172a' }} />
+                    <label htmlFor="ia-cant-cursos" style={{ display: 'block', fontWeight: '700', color: '#334155', marginBottom: '0.5rem' }}>Cantidad de Cursos</label>
+                    <input id="ia-cant-cursos" type="number" min="1" max="7" value={iaPrefs.cantidadCursos} onChange={(e) => setIaPrefs({...iaPrefs, cantidadCursos: Number(e.target.value)})} style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #e2e8f0', background: 'white', color: '#0f172a' }} />
                   </div>
                   <div style={{ flex: 1 }}>
-                    <label style={{ display: 'block', fontWeight: '700', color: '#334155', marginBottom: '0.5rem' }}>Días a la semana (Máx)</label>
-                    <input type="number" min="1" max="7" value={iaPrefs.diasPorSemana} onChange={(e) => setIaPrefs({...iaPrefs, diasPorSemana: Number(e.target.value)})} style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #e2e8f0', background: 'white', color: '#0f172a' }} />
+                    <label htmlFor="ia-dias" style={{ display: 'block', fontWeight: '700', color: '#334155', marginBottom: '0.5rem' }}>Días a la semana (Máx)</label>
+                    <input id="ia-dias" type="number" min="1" max="7" value={iaPrefs.diasPorSemana} onChange={(e) => setIaPrefs({...iaPrefs, diasPorSemana: Number(e.target.value)})} style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #e2e8f0', background: 'white', color: '#0f172a' }} />
                   </div>
                 </div>
 
@@ -638,14 +638,14 @@ function EstudianteDashboard() {
 
         {/* IA Resultados Modal */}
         {showResultsModal && iaResult && (
-          <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(15,23,42,0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, overflowY: 'auto' }}>
+          <div role="dialog" aria-modal="true" aria-labelledby="modal-results-title" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(15,23,42,0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, overflowY: 'auto' }}>
             <div className="glass-card" style={{ background: 'white', width: '90%', maxWidth: '700px', borderRadius: '24px', overflow: 'hidden', margin: 'auto' }}>
               <div style={{ padding: '1.5rem 2rem', borderBottom: '1px solid #f1f5f9', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#f8fafc' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                   <div style={{ background: 'rgba(245,158,11,0.1)', padding: '8px', borderRadius: '10px', color: '#f59e0b' }}><Sparkles size={20} /></div>
-                   <h3 style={{ margin: 0, fontSize: '1.25rem', fontWeight: '800', color: '#0f172a' }}>Opciones de Horario</h3>
+                   <div style={{ background: 'rgba(245,158,11,0.1)', padding: '8px', borderRadius: '10px', color: '#f59e0b' }}><Sparkles size={20} aria-hidden="true" /></div>
+                   <h3 id="modal-results-title" style={{ margin: 0, fontSize: '1.25rem', fontWeight: '800', color: '#0f172a' }}>Opciones de Horario</h3>
                 </div>
-                <button onClick={() => setShowResultsModal(false)} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#94a3b8' }}><LogOut size={20}/></button>
+                <button aria-label="Cerrar resultados" onClick={() => setShowResultsModal(false)} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#94a3b8' }}><LogOut size={20} aria-hidden="true" /></button>
               </div>
               
               <div style={{ padding: '2rem' }}>

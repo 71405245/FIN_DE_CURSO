@@ -3,6 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const compression = require('compression');
 const connectDB = require('./config/db');
+const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
 
 const app = express();
 
@@ -10,6 +12,8 @@ const app = express();
 connectDB();
 
 // Middlewares
+app.use(helmet());
+app.use(mongoSanitize());
 app.use(cors());
 
 // [OPTIMIZACIÃ“N 8] APM - Buffer circular O(1) en vez de Array.shift() O(n)
