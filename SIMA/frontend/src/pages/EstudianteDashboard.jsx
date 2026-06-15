@@ -308,7 +308,7 @@ function EstudianteDashboard() {
         
         {/* Alertas Premium Flotantes */}
         {error && <div role="alert" aria-live="assertive" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1rem 1.5rem', borderRadius: '12px', marginBottom: '2rem', background: '#fef2f2', color: '#991b1b', border: '1px solid #fecaca', fontWeight: '600', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>{error}</div>}
-        {success && <div role="status" aria-live="polite" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1rem 1.5rem', borderRadius: '12px', marginBottom: '2rem', background: '#ecfdf5', color: '#065f46', border: '1px solid #a7f3d0', fontWeight: '600', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}><CheckCircle size={18} aria-hidden="true" /> {success}</div>}
+        {success && <output aria-live="polite" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1rem 1.5rem', borderRadius: '12px', marginBottom: '2rem', background: '#ecfdf5', color: '#065f46', border: '1px solid #a7f3d0', fontWeight: '600', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}><CheckCircle size={18} aria-hidden="true" /> {success}</output>}
 
         {/* 🚀 HERO WELCOME SECTION */}
         <div className="hero-gradient rounded-3xl shadow-lg mb-6 p-6 text-white" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -594,7 +594,7 @@ function EstudianteDashboard() {
 
         {/* Preferencias Modal */}
         {showPrefsModal && (
-          <div role="dialog" aria-modal="true" aria-labelledby="modal-prefs-title" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(15,23,42,0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, overflowY: 'auto' }}>
+          <dialog open aria-modal="true" aria-labelledby="modal-prefs-title" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(15,23,42,0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, overflowY: 'auto', border: 'none' }}>
             <div className="glass-card" style={{ background: 'white', width: '90%', maxWidth: '500px', borderRadius: '24px', overflow: 'hidden', margin: 'auto' }}>
               <div style={{ padding: '1.5rem 2rem', borderBottom: '1px solid #f1f5f9', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#f8fafc' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>

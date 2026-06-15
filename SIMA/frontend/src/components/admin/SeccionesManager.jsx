@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Plus, Layers, Edit2, Trash2, Calendar, Clock, MapPin, Users, Check } from 'lucide-react';
+import { Plus, Layers, Edit2, Trash2, Clock, MapPin, Check } from 'lucide-react';
 
 const DIAS_SEMANA = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
 
@@ -169,8 +169,8 @@ function SeccionesManager() {
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.25rem', marginBottom: '1.25rem' }}>
             {/* Curso */}
             <div>
-              <label style={labelStyle}>Curso / Asignatura *</label>
-              <select value={form.curso} onChange={e => setForm({ ...form, curso: e.target.value })} required>
+              <label htmlFor="curso-select" style={labelStyle}>Curso / Asignatura *</label>
+              <select id="curso-select" value={form.curso} onChange={e => setForm({ ...form, curso: e.target.value })} required>
                 <option value="">Seleccione Curso</option>
                 {cursos.map(c => (
                   <option key={c._id} value={c._id}>
@@ -182,8 +182,8 @@ function SeccionesManager() {
 
             {/* Docente */}
             <div>
-              <label style={labelStyle}>Docente Asignado *</label>
-              <select value={form.docente} onChange={e => setForm({ ...form, docente: e.target.value })} required>
+              <label htmlFor="docente-select" style={labelStyle}>Docente Asignado *</label>
+              <select id="docente-select" value={form.docente} onChange={e => setForm({ ...form, docente: e.target.value })} required>
                 <option value="">Seleccione Docente</option>
                 {docentes.map(d => (
                   <option key={d._id} value={d._id}>
@@ -197,20 +197,20 @@ function SeccionesManager() {
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr 1fr', gap: '1.25rem', marginBottom: '1.25rem' }}>
             {/* Código de Sección */}
             <div>
-              <label style={labelStyle}>Código de Salón * (Ej: Secc A, Secc 101)</label>
-              <input placeholder="Ej. A1" value={form.codigoSeccion} onChange={e => setForm({ ...form, codigoSeccion: e.target.value })} required />
+              <label htmlFor="codigo-seccion" style={labelStyle}>Código de Salón * (Ej: Secc A, Secc 101)</label>
+              <input id="codigo-seccion" placeholder="Ej. A1" value={form.codigoSeccion} onChange={e => setForm({ ...form, codigoSeccion: e.target.value })} required />
             </div>
 
             {/* Aula */}
             <div>
-              <label style={labelStyle}>Aula / Laboratorio / Virtual *</label>
-              <input placeholder="Ej. Pabellón B - Aula 302" value={form.aula} onChange={e => setForm({ ...form, aula: e.target.value })} required />
+              <label htmlFor="aula-input" style={labelStyle}>Aula / Laboratorio / Virtual *</label>
+              <input id="aula-input" placeholder="Ej. Pabellón B - Aula 302" value={form.aula} onChange={e => setForm({ ...form, aula: e.target.value })} required />
             </div>
 
             {/* Cupos */}
             <div>
-              <label style={labelStyle}>Cupo Máximo (Mínimo 25) *</label>
-              <input type="number" min="25" max="60" placeholder="30" value={form.cupoMaximo} onChange={e => setForm({ ...form, cupoMaximo: Number(e.target.value) })} required />
+              <label htmlFor="cupo-max" style={labelStyle}>Cupo Máximo (Mínimo 25) *</label>
+              <input id="cupo-max" type="number" min="25" max="60" placeholder="30" value={form.cupoMaximo} onChange={e => setForm({ ...form, cupoMaximo: Number(e.target.value) })} required />
             </div>
           </div>
 
@@ -223,7 +223,7 @@ function SeccionesManager() {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '2rem', alignItems: 'start' }}>
               {/* Días */}
               <div>
-                <label style={{ ...labelStyle, marginBottom: '0.75rem' }}>Días de clase *</label>
+                <div style={{ ...labelStyle, marginBottom: '0.75rem' }}>Días de clase *</div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                   {DIAS_SEMANA.map(dia => {
                     const seleccionado = form.dias.includes(dia);
@@ -254,8 +254,9 @@ function SeccionesManager() {
               {/* Horas */}
               <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
                 <div>
-                  <label style={labelStyle}>Hora de Inicio *</label>
+                  <label htmlFor="hora-inicio" style={labelStyle}>Hora de Inicio *</label>
                   <input
+                    id="hora-inicio"
                     type="time"
                     value={form.horaInicio}
                     onChange={e => setForm({ ...form, horaInicio: e.target.value })}
@@ -265,8 +266,9 @@ function SeccionesManager() {
                 </div>
                 <span style={{ marginTop: '1.5rem', color: 'var(--text-muted)', fontWeight: 'bold' }}>a</span>
                 <div>
-                  <label style={labelStyle}>Hora de Fin *</label>
+                  <label htmlFor="hora-fin" style={labelStyle}>Hora de Fin *</label>
                   <input
+                    id="hora-fin"
                     type="time"
                     value={form.horaFin}
                     onChange={e => setForm({ ...form, horaFin: e.target.value })}

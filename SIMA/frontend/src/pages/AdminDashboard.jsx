@@ -1,6 +1,6 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
+import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { LogOut, BookOpen, Users, Layers, GraduationCap, Building, LayoutDashboard, ChevronRight, BarChart2, Activity } from 'lucide-react';
 
 // [OPTIMIZACIÓN 4] Lazy Loading — Solo se descarga el componente que el usuario necesita ver
@@ -166,6 +166,10 @@ function AdminDashboard() {
 const TabButton = ({ active, onClick, icon, text, isHovered, badge }) => {
   const [hovered, setHovered] = useState(false);
   
+  let bg = 'transparent';
+  if (active) bg = 'var(--primary-alpha)';
+  else if (hovered) bg = 'rgba(0,0,0,0.02)';
+
   return (
     <button 
       onClick={onClick} 
@@ -173,7 +177,7 @@ const TabButton = ({ active, onClick, icon, text, isHovered, badge }) => {
       onMouseLeave={() => setHovered(false)}
       style={{
         ...tabStyleBase,
-        background: active ? 'var(--primary-alpha)' : (hovered ? 'rgba(0,0,0,0.02)' : 'transparent'),
+        background: bg,
         color: active ? 'var(--primary-dark)' : 'var(--text-muted)',
         borderRight: active ? '4px solid var(--primary-purple)' : '4px solid transparent',
         fontWeight: active ? '700' : '500',
@@ -206,6 +210,15 @@ const TabButton = ({ active, onClick, icon, text, isHovered, badge }) => {
       </span>
     </button>
   );
+};
+
+TabButton.propTypes = {
+  active: PropTypes.bool.isRequired,
+  onClick: PropTypes.func.isRequired,
+  icon: PropTypes.node.isRequired,
+  text: PropTypes.string.isRequired,
+  isHovered: PropTypes.bool.isRequired,
+  badge: PropTypes.number
 };
 
 const tabStyleBase = {

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import {
   Activity, Cpu, HardDrive, Clock, Server, RefreshCw, Leaf,
-  Zap, Shield, Award, CheckCircle, Flame, Globe, TrendingUp,
-  AlertTriangle, BarChart2
+  Zap, Shield, Award, CheckCircle, Flame, Globe, BarChart2
 } from 'lucide-react';
 
 // ─── Constantes ────────────────────────────────────────────────────────────
@@ -405,7 +405,7 @@ function EnvironmentalView({ impact, loading, onRefresh }) {
                 {data.requests.map((r, i) => {
                   const compressionApplied = r.compressedBytes < r.bytes && r.bytes > 0;
                   return (
-                    <tr key={i}>
+                    <tr key={r.id || `${r.time}-${r.route}-${i}`}>
                       <td style={{ color: '#7a9bb5', fontSize: '0.78rem' }}>{formatDateTime(r.time)}</td>
                       <td>
                         <span style={{
@@ -474,6 +474,19 @@ function EnvironmentalView({ impact, loading, onRefresh }) {
     </div>
   );
 }
+
+EnvironmentalView.propTypes = {
+  impact: PropTypes.shape({
+    totalRequests: PropTypes.number,
+    totalCo2g: PropTypes.number,
+    avgCo2g: PropTypes.number,
+    worstEndpoint: PropTypes.string,
+    mostUsed: PropTypes.string,
+    requests: PropTypes.array
+  }),
+  loading: PropTypes.bool.isRequired,
+  onRefresh: PropTypes.func.isRequired
+};
 
 // ──────────────────────────────────────────────────────────────────────────
 // Comparativa Antes vs Después  (equivalente visual a comparativa_consumo.js)
@@ -634,8 +647,8 @@ function ComparativaView({ impact, loading }) {
                 </tr>
               </thead>
               <tbody>
-                {rows.map((r, i) => (
-                  <tr key={i}>
+                {rows.map((r) => (
+                  <tr key={r.key}>
                     <td style={{ fontFamily: 'monospace', fontSize: '0.8rem', color: '#a8c0d8', maxWidth: '240px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                       {r.key}
                     </td>
@@ -701,6 +714,11 @@ function ComparativaView({ impact, loading }) {
     </div>
   );
 }
+
+ComparativaView.propTypes = {
+  impact: PropTypes.object,
+  loading: PropTypes.bool.isRequired
+};
 
 // ──────────────────────────────────────────────────────────────────────────
 // System Resources View (panel original preservado)
@@ -871,7 +889,7 @@ function SystemView({ recursos, loading, error, lastUpdated, requestsEvitadasCou
                   ) : (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                       {recursos.apm.topLentas.map((r, i) => (
-                        <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--bg-color)', padding: '6px 10px', borderRadius: '8px', border: '1px solid var(--border)' }}>
+                        <div key={r.ruta ? `${r.ruta}-${i}` : i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--bg-color)', padding: '6px 10px', borderRadius: '8px', border: '1px solid var(--border)' }}>
                           <span style={{ fontSize: '0.8rem', fontFamily: 'monospace', fontWeight: '600', color: 'var(--text-main)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '70%' }}>{r.ruta}</span>
                           <span style={{ fontSize: '0.75rem', fontWeight: '700', background: '#fee2e2', color: '#dc2626', padding: '2px 8px', borderRadius: '12px' }}>{r.duracion} ms</span>
                         </div>
@@ -886,7 +904,7 @@ function SystemView({ recursos, loading, error, lastUpdated, requestsEvitadasCou
                   ) : (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                       {recursos.apm.topRutas.map((r, i) => (
-                        <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--bg-color)', padding: '6px 10px', borderRadius: '8px', border: '1px solid var(--border)' }}>
+                        <div key={r.ruta ? `${r.ruta}-${i}` : i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--bg-color)', padding: '6px 10px', borderRadius: '8px', border: '1px solid var(--border)' }}>
                           <span style={{ fontSize: '0.8rem', fontFamily: 'monospace', fontWeight: '600', color: 'var(--text-main)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '70%' }}>{r.ruta}</span>
                           <span style={{ fontSize: '0.75rem', fontWeight: '700', background: 'var(--primary-alpha)', color: 'var(--primary-dark)', padding: '2px 8px', borderRadius: '12px' }}>{r.count} reqs</span>
                         </div>
@@ -924,6 +942,18 @@ function SystemView({ recursos, loading, error, lastUpdated, requestsEvitadasCou
   );
 }
 
+SystemView.propTypes = {
+  recursos: PropTypes.object,
+  loading: PropTypes.bool.isRequired,
+  error: PropTypes.string,
+  lastUpdated: PropTypes.string,
+  requestsEvitadasCount: PropTypes.number.isRequired,
+  cacheStatus: PropTypes.string.isRequired,
+  formatSysBytes: PropTypes.func.isRequired,
+  formatUptime: PropTypes.func.isRequired,
+  calculateEmissions: PropTypes.func.isRequired
+};
+
 // ── Sub-componentes auxiliares ─────────────────────────────────────────────
 function RatingBar({ letter, label, active }) {
   const barColors = {
@@ -942,6 +972,12 @@ function RatingBar({ letter, label, active }) {
   );
 }
 
+RatingBar.propTypes = {
+  letter: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  active: PropTypes.bool
+};
+
 function EcoMetricRow({ icon, title, value, highlight }) {
   return (
     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: highlight ? 'rgba(16,185,129,0.05)' : 'transparent', padding: highlight ? '8px 12px' : '4px 0', borderRadius: '8px', border: highlight ? '1px solid rgba(16,185,129,0.1)' : 'none' }}>
@@ -953,3 +989,10 @@ function EcoMetricRow({ icon, title, value, highlight }) {
     </div>
   );
 }
+
+EcoMetricRow.propTypes = {
+  icon: PropTypes.node.isRequired,
+  title: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  highlight: PropTypes.bool
+};

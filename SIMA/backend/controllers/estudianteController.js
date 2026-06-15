@@ -306,7 +306,7 @@ function checkOverlap(s1, s2) {
 }
 
 function checkTurno(s, turno) {
-  if (!s || !s.horaInicio) return true;
+  if (!s?.horaInicio) return true;
   if (turno === 'MAÑANA') return s.horaInicio < '13:00';
   if (turno === 'TARDE') return s.horaInicio >= '13:00' && s.horaInicio < '18:00';
   if (turno === 'NOCHE') return s.horaInicio >= '18:00';
@@ -316,7 +316,7 @@ function checkTurno(s, turno) {
 function countUniqueDays(schedule) {
   const days = new Set();
   schedule.forEach(s => {
-    if (s && s.dias) {
+    if (s?.dias) {
       s.dias.forEach(d => days.add(d));
     }
   });

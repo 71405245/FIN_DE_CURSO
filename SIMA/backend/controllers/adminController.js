@@ -199,7 +199,7 @@ exports.getEnvironmentalImpact = (req, res) => {
       avgCo2g:      parseFloat(avgCo2g.toFixed(7)),
       worstEndpoint,
       mostUsed,
-      requests:     withCo2.reverse() // Más reciente primero
+      requests:     [...withCo2].reverse() // Más reciente primero
     });
   } catch (err) {
     res.status(500).json({ msg: 'Error al obtener impacto ambiental' });

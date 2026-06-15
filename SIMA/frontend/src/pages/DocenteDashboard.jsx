@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { LogOut, Edit3, Users, BookOpen, CheckCircle, AlertCircle, Award, TrendingUp } from 'lucide-react';
+import { LogOut, Users, BookOpen, CheckCircle, AlertCircle, TrendingUp } from 'lucide-react';
 import '../App.css';
 
 function DocenteDashboard() {
@@ -237,7 +238,7 @@ function DocenteDashboard() {
         
         {/* Alertas Flotantes */}
         {error && <div role="alert" aria-live="assertive" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1rem 1.5rem', borderRadius: '12px', marginBottom: '2rem', background: '#fef2f2', color: '#991b1b', border: '1px solid #fecaca', fontWeight: '600' }}><AlertCircle size={18} aria-hidden="true"/> {error}</div>}
-        {success && <div role="status" aria-live="polite" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1rem 1.5rem', borderRadius: '12px', marginBottom: '2rem', background: '#ecfdf5', color: '#065f46', border: '1px solid #a7f3d0', fontWeight: '600' }}><CheckCircle size={18} aria-hidden="true"/> {success}</div>}
+        {success && <output aria-live="polite" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1rem 1.5rem', borderRadius: '12px', marginBottom: '2rem', background: '#ecfdf5', color: '#065f46', border: '1px solid #a7f3d0', fontWeight: '600' }}><CheckCircle size={18} aria-hidden="true"/> {success}</output>}
 
         {/* 🚀 HERO PROFESSOR WELCOME */}
         <div className="docente-hero rounded-3xl shadow-lg mb-8 p-6 text-white" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -273,8 +274,12 @@ function DocenteDashboard() {
                         return (
                           <div 
                             key={s._id} 
+                            role="button"
+                            tabIndex={0}
                             onClick={() => setSeccionSeleccionada(s)}
+                            onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setSeccionSeleccionada(s)}
                             className={`salon-card ${isSelected ? 'salon-card-active' : ''}`}
+                            aria-pressed={isSelected}
                           >
                             <h4 style={{ fontSize: '1.05rem', fontWeight: '800', color: isSelected ? '#1d4ed8' : '#0f172a', marginBottom: '0.25rem', lineHeight: '1.3' }}>
                               {s.curso?.nombre}
@@ -377,11 +382,13 @@ function DocenteDashboard() {
                                 <td style={{ fontWeight: '700', color: '#334155' }}>{est.nombre} {est.apellidos}</td>
                                 <td style={{ color: '#64748b', fontSize: '0.9rem' }}>{est.email}</td>
                                 <td style={{ textAlign: 'center' }}>
-                                  {!hasGrade ? (
+                                  {!hasGrade && (
                                     <span style={{ display: 'inline-block', background: '#f1f5f9', color: '#475569', fontSize: '0.7rem', fontWeight: '700', padding: '3px 10px', borderRadius: '20px' }}>Sin Calificar</span>
-                                  ) : isPassing ? (
+                                  )}
+                                  {hasGrade && isPassing && (
                                     <span style={{ display: 'inline-block', background: '#ecfdf5', color: '#047857', fontSize: '0.7rem', fontWeight: '700', padding: '3px 10px', borderRadius: '20px' }}>Aprobado</span>
-                                  ) : (
+                                  )}
+                                  {hasGrade && !isPassing && (
                                     <span style={{ display: 'inline-block', background: '#fef2f2', color: '#b91c1c', fontSize: '0.7rem', fontWeight: '700', padding: '3px 10px', borderRadius: '20px' }}>Desaprobado</span>
                                   )}
                                 </td>

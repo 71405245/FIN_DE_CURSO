@@ -326,7 +326,7 @@ exports.getDocentesDisponibles = async (req, res) => {
       if (!tieneConflicto && (horasActuales + horasNuevas <= MAX_HORAS)) {
         docentesSugeridos.push({
           _id: doc._id,
-          nombre: `${doc.nombre} ${doc.apellidos}`,
+          nombre: `${String(doc.nombre)} ${String(doc.apellidos)}`,
           horasActuales: Math.round(horasActuales * 10) / 10,
           horasProyectadas: Math.round((horasActuales + horasNuevas) * 10) / 10,
           seccionesActuales: secDocente.length

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import {
   Chart as ChartJS, CategoryScale, LinearScale, BarElement,
@@ -7,8 +8,8 @@ import {
 import { Bar } from 'react-chartjs-2';
 import {
   BarChart2, AlertTriangle, CheckCircle, Users, Clock,
-  TrendingUp, RefreshCw, ChevronDown, ChevronUp, ShieldAlert, Zap,
-  XCircle, Edit2, PlusCircle, Search, Calendar, LayoutDashboard, Settings
+  TrendingUp, RefreshCw, ChevronDown, ChevronUp, ShieldAlert,
+  XCircle, Edit2, PlusCircle, Search, Calendar, LayoutDashboard
 } from 'lucide-react';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, ArcElement, PointElement, LineElement, Tooltip, Legend);
@@ -240,24 +241,33 @@ function PlanificacionManager() {
             </div>
 
             {/* Grilla de Docentes */}
-            {loadingCarga ? (
+            {loadingCarga && (
               <div style={{ textAlign: 'center', padding: '4rem', color: 'var(--text-muted)' }}>Cargando disponibilidad docente...</div>
-            ) : docentesFiltrados.length === 0 ? (
+            )}
+            {!loadingCarga && docentesFiltrados.length === 0 && (
               <div style={{ textAlign: 'center', padding: '4rem', color: 'var(--text-muted)' }}>No hay docentes que coincidan con la búsqueda.</div>
-            ) : (
+            )}
+            {!loadingCarga && docentesFiltrados.length > 0 && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 {docentesFiltrados.map(doc => {
                   const cfg = estadoConfig[doc.estado];
                   const pct = Math.min((doc.totalHoras / MAX_HORAS) * 100, 100);
-                  const barColor = doc.estado === 'exceso' ? '#ef4444' : doc.estado === 'limite' ? '#f59e0b' : '#10b981';
+                  
+                  let barColor = '#10b981';
+                  if (doc.estado === 'exceso') barColor = '#ef4444';
+                  else if (doc.estado === 'limite') barColor = '#f59e0b';
                   const isOpen = expandedDocente === doc._id;
 
                   return (
                     <div key={doc._id} style={{ border: `1px solid ${isOpen ? barColor + '66' : 'var(--border)'}`, borderRadius: '12px', overflow: 'hidden', transition: 'all 0.2s', background: isOpen ? 'var(--bg-color)' : 'var(--surface)' }}>
                       {/* Fila principal del docente */}
                       <div
+                        role="button"
+                        tabIndex={0}
                         style={{ display: 'grid', gridTemplateColumns: '1fr 200px 100px 100px auto', alignItems: 'center', gap: '1.5rem', padding: '16px 20px', cursor: 'pointer', transition: 'background 0.2s' }}
                         onClick={() => setExpandedDocente(isOpen ? null : doc._id)}
+                        onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && setExpandedDocente(isOpen ? null : doc._id)}
+                        aria-expanded={isOpen}
                       >
                         <div>
                           <div style={{ fontWeight: '700', fontSize: '1rem', color: 'var(--text-main)', marginBottom: '8px' }}>{cfg.icon} {doc.nombre}</div>
@@ -404,11 +414,11 @@ function PlanificacionManager() {
                 <div style={{ color: '#10b981', fontSize: '0.9rem', padding: '1rem 0' }}>✅ No se detectaron conflictos de cruce horario.</div>
               ) : (
                 <div style={{ maxHeight: '400px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '0.75rem', paddingRight: '4px' }}>
-                  {alertas.conflictosDocente.map((c, i) => (
-                    <AlertaItem key={`d-${i}`} tipo="Docente" color="#ef4444" icono="👤" msg={`${c.docente}: "${c.seccion1.curso}" vs "${c.seccion2.curso}"`} detalle={`${c.seccion1.horario} | ${c.seccion2.horario}`} />
+                  {alertas.conflictosDocente.map((c) => (
+                    <AlertaItem key={`d-${c.docente}-${c.seccion1.curso}`} tipo="Docente" color="#ef4444" icono="👤" msg={`${c.docente}: "${c.seccion1.curso}" vs "${c.seccion2.curso}"`} detalle={`${c.seccion1.horario} | ${c.seccion2.horario}`} />
                   ))}
-                  {alertas.conflictosAula.map((c, i) => (
-                    <AlertaItem key={`a-${i}`} tipo="Aula" color="#f97316" icono="🏫" msg={`Aula ${c.aula}: "${c.seccion1.curso}" vs "${c.seccion2.curso}"`} detalle={`${c.seccion1.horario} | ${c.seccion2.horario}`} />
+                  {alertas.conflictosAula.map((c) => (
+                    <AlertaItem key={`a-${c.aula}-${c.seccion1.curso}`} tipo="Aula" color="#f97316" icono="🏫" msg={`Aula ${c.aula}: "${c.seccion1.curso}" vs "${c.seccion2.curso}"`} detalle={`${c.seccion1.horario} | ${c.seccion2.horario}`} />
                   ))}
                 </div>
               )}
@@ -422,8 +432,8 @@ function PlanificacionManager() {
                 <div style={{ color: 'var(--text-muted)', fontSize: '0.88rem' }}>No hay salones con ocupación ≥ 80%.</div>
               ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', maxHeight: '400px', overflowY: 'auto', paddingRight: '4px' }}>
-                  {alertas.casiLlenos.map((s, i) => (
-                    <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px', background: 'var(--bg-color)', borderRadius: '8px', border: '1px solid var(--border)' }}>
+                  {alertas.casiLlenos.map((s) => (
+                    <div key={s.codigo || s._id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px', background: 'var(--bg-color)', borderRadius: '8px', border: '1px solid var(--border)' }}>
                       <span style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-main)' }}>{s.codigo} - {s.curso}</span>
                       <span style={{ fontSize: '0.8rem', fontWeight: '800', color: '#f59e0b', background: '#fef3c7', padding: '4px 12px', borderRadius: '12px' }}>{s.pct}% ocupado</span>
                     </div>
@@ -475,14 +485,14 @@ function EditarHorarioModal({ seccion, onClose, onSuccess }) {
   };
 
   return (
-    <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.5)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={onClose}>
-      <div className="modern-card animate-fade-in" style={{ width: '100%', maxWidth: '400px', padding: '1.5rem', display: 'flex', flexDirection: 'column' }} onClick={e => e.stopPropagation()}>
+    <div role="dialog" aria-modal="true" aria-label="Editar Horario y Aula" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.5)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={onClose}>
+      <div className="modern-card animate-fade-in" role="presentation" onKeyDown={e => e.stopPropagation()} style={{ width: '100%', maxWidth: '400px', padding: '1.5rem', display: 'flex', flexDirection: 'column' }} onClick={e => e.stopPropagation()}>
         <h3 style={{ fontSize: '1.1rem', fontWeight: '700', marginBottom: '1rem', display: 'flex', justifyContent: 'space-between' }}>
-          ✏️ Editar Horario y Aula
-          <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: '1.2rem', cursor: 'pointer' }}>&times;</button>
+          <span>✏️ Editar Horario y Aula</span>
+          <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: '1.2rem', cursor: 'pointer' }}><span>&times;</span></button>
         </h3>
         
-        <label style={labelStyle}>Días de la semana</label>
+        <div style={labelStyle}>Días de la semana</div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '1rem' }}>
           {DIAS.map(d => (
             <button key={d} onClick={() => handleToggleDia(d)} style={{ padding: '6px 10px', borderRadius: '6px', border: '1px solid', borderColor: formData.dias.includes(d) ? 'var(--primary-purple)' : 'var(--border)', background: formData.dias.includes(d) ? 'var(--primary-alpha)' : 'transparent', color: formData.dias.includes(d) ? 'var(--primary-purple)' : 'var(--text-muted)', fontSize: '0.8rem', cursor: 'pointer', fontWeight: '600' }}>
@@ -493,17 +503,17 @@ function EditarHorarioModal({ seccion, onClose, onSuccess }) {
 
         <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
           <div style={{ flex: 1 }}>
-            <label style={labelStyle}>Hora Inicio</label>
-            <input type="time" value={formData.horaInicio} onChange={e => setFormData({...formData, horaInicio: e.target.value})} style={inputStyle} />
+            <label htmlFor="hora-inicio-mod" style={labelStyle}>Hora Inicio</label>
+            <input id="hora-inicio-mod" type="time" value={formData.horaInicio} onChange={e => setFormData({...formData, horaInicio: e.target.value})} style={inputStyle} />
           </div>
           <div style={{ flex: 1 }}>
-            <label style={labelStyle}>Hora Fin</label>
-            <input type="time" value={formData.horaFin} onChange={e => setFormData({...formData, horaFin: e.target.value})} style={inputStyle} />
+            <label htmlFor="hora-fin-mod" style={labelStyle}>Hora Fin</label>
+            <input id="hora-fin-mod" type="time" value={formData.horaFin} onChange={e => setFormData({...formData, horaFin: e.target.value})} style={inputStyle} />
           </div>
         </div>
 
-        <label style={labelStyle}>Aula</label>
-        <input type="text" placeholder="Ej: A101" value={formData.aula} onChange={e => setFormData({...formData, aula: e.target.value})} style={{ ...inputStyle, marginBottom: '1.5rem' }} />
+        <label htmlFor="aula-mod" style={labelStyle}>Aula</label>
+        <input id="aula-mod" type="text" placeholder="Ej: A101" value={formData.aula} onChange={e => setFormData({...formData, aula: e.target.value})} style={{ ...inputStyle, marginBottom: '1.5rem' }} />
 
         <button onClick={handleSave} disabled={saving} style={{ padding: '10px', borderRadius: '8px', border: 'none', background: 'var(--primary-purple)', color: 'white', fontWeight: '700', cursor: saving ? 'not-allowed' : 'pointer', opacity: saving ? 0.7 : 1 }}>
           {saving ? 'Guardando...' : 'Guardar Cambios'}
@@ -512,6 +522,18 @@ function EditarHorarioModal({ seccion, onClose, onSuccess }) {
     </div>
   );
 }
+
+EditarHorarioModal.propTypes = {
+  seccion: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    dias: PropTypes.arrayOf(PropTypes.string),
+    horaInicio: PropTypes.string,
+    horaFin: PropTypes.string,
+    aula: PropTypes.string
+  }),
+  onClose: PropTypes.func.isRequired,
+  onSuccess: PropTypes.func.isRequired
+};
 
 function ReasignarDocenteModal({ seccion, onClose, onSuccess }) {
   const [sugerencias, setSugerencias] = useState([]);
@@ -550,11 +572,11 @@ function ReasignarDocenteModal({ seccion, onClose, onSuccess }) {
   if (!seccion) return null;
 
   return (
-    <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.5)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={onClose}>
-      <div className="modern-card animate-fade-in" style={{ width: '100%', maxWidth: '500px', padding: '1.5rem', maxHeight: '80vh', display: 'flex', flexDirection: 'column' }} onClick={e => e.stopPropagation()}>
+    <div role="dialog" aria-modal="true" aria-label="Asignar Docente" style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.5)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center' }} onClick={onClose}>
+      <div className="modern-card animate-fade-in" role="presentation" onKeyDown={e => e.stopPropagation()} style={{ width: '100%', maxWidth: '500px', padding: '1.5rem', maxHeight: '80vh', display: 'flex', flexDirection: 'column' }} onClick={e => e.stopPropagation()}>
         <h3 style={{ fontSize: '1.1rem', fontWeight: '700', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: 'var(--text-main)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>🔄 Asignar Docente</div>
-          <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer', color: 'var(--text-muted)' }}>&times;</button>
+          <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer', color: 'var(--text-muted)' }}><span>&times;</span></button>
         </h3>
         <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '1rem', background: 'var(--bg-color)', padding: '10px', borderRadius: '8px', border: '1px solid var(--border)' }}>
           <strong style={{ color: 'var(--text-main)' }}>{seccion.codigoSeccion} - {seccion.curso}</strong><br/>
@@ -563,13 +585,15 @@ function ReasignarDocenteModal({ seccion, onClose, onSuccess }) {
         
         <h4 style={{ fontSize: '0.85rem', fontWeight: '700', marginBottom: '0.75rem', color: 'var(--text-main)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Docentes Sugeridos (Sin cruces)</h4>
         
-        {loading ? (
+        {loading && (
           <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-muted)' }}>Buscando docentes sin cruce de horario...</div>
-        ) : sugerencias.length === 0 ? (
+        )}
+        {!loading && sugerencias.length === 0 && (
           <div style={{ textAlign: 'center', padding: '1.5rem', color: '#ef4444', background: '#fef2f2', borderRadius: '8px', border: '1px solid #fca5a5' }}>
             No hay docentes disponibles con menos de {MAX_HORAS}h y sin cruces.
           </div>
-        ) : (
+        )}
+        {!loading && sugerencias.length > 0 && (
           <div style={{ overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '0.5rem', paddingRight: '4px' }}>
             {sugerencias.map(doc => (
               <div key={doc._id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px', border: '1px solid var(--border)', borderRadius: '10px', background: 'var(--surface)' }}>
@@ -591,6 +615,20 @@ function ReasignarDocenteModal({ seccion, onClose, onSuccess }) {
   );
 }
 
+ReasignarDocenteModal.propTypes = {
+  seccion: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    codigoSeccion: PropTypes.string,
+    curso: PropTypes.string,
+    horaInicio: PropTypes.string,
+    horaFin: PropTypes.string,
+    horas: PropTypes.number,
+    dias: PropTypes.arrayOf(PropTypes.string)
+  }),
+  onClose: PropTypes.func.isRequired,
+  onSuccess: PropTypes.func.isRequired
+};
+
 function KpiCard({ icon, label, value, color, highlight }) {
   return (
     <div className="modern-card" style={{ textAlign: 'center', padding: '1.5rem 1rem', border: highlight ? `2px solid ${color}55` : undefined, background: highlight ? color + '0a' : undefined }}>
@@ -603,6 +641,14 @@ function KpiCard({ icon, label, value, color, highlight }) {
   );
 }
 
+KpiCard.propTypes = {
+  icon: PropTypes.node.isRequired,
+  label: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  color: PropTypes.string.isRequired,
+  highlight: PropTypes.bool,
+};
+
 function AlertaItem({ tipo, color, icono, msg, detalle }) {
   return (
     <div style={{ background: color + '11', border: `1px solid ${color}44`, borderRadius: '8px', padding: '12px' }}>
@@ -612,6 +658,14 @@ function AlertaItem({ tipo, color, icono, msg, detalle }) {
     </div>
   );
 }
+
+AlertaItem.propTypes = {
+  tipo: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
+  icono: PropTypes.string.isRequired,
+  msg: PropTypes.string.isRequired,
+  detalle: PropTypes.string.isRequired,
+};
 
 const btnStyle = (color) => ({
   display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 12px', borderRadius: '6px',
