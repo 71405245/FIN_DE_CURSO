@@ -10,10 +10,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Descargar repo
       - uses: actions/checkout@v4
 
+      # Instalar dependencias backend
+      - name: Install backend dependencies
+        run: |
+          cd SIMA/backend
+          npm install
+
+      # Ejecutar tests con Jest y generar coverage
+      - name: Run Jest tests
+        run: |
+          cd SIMA/backend
+          npm test
+
+      # Ejecutar análisis SonarCloud
       - name: Sonar Scan
-        uses: SonarSource/sonarqube-scan-action@v5
+        uses: SonarSource/sonarqube-scan-action@v6
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: https://sonarcloud.io
