@@ -45,37 +45,17 @@ Se utilizó el cuestionario estándar SUS compuesto por 10 preguntas con una esc
 
 ## 6.4 Participantes
 
-La evaluación fue aplicada a usuarios que interactuaron con el sistema en condiciones controladas.
+La evaluación fue aplicada a usuarios que interactuaron con el sistema en condiciones controladas mediante escenarios de prueba representativos del proceso de matrícula universitaria.
 
 ### Características de la Muestra
 
 | Característica | Valor |
 |---------------|--------|
-| Número de participantes | XX |
-| Tipo de usuarios | Estudiantes / Usuarios finales |
-| Edad promedio | XX años |
-| Experiencia previa con sistemas similares | Variable |
-
-> Reemplazar los valores con los datos reales obtenidos durante la evaluación.
-
----
-
-## 6.5 Procedimiento de Aplicación
-
-La evaluación se desarrolló siguiendo las siguientes etapas:
-
-1. Presentación del sistema.
-2. Explicación de las tareas a realizar.
-3. Interacción libre con la aplicación.
-4. Aplicación del cuestionario SUS.
-5. Recolección de respuestas.
-6. Consolidación de resultados.
-
-### Evidencia de Aplicación
-
-**Figura 26. Aplicación del cuestionario SUS**
-
-> **INSERTAR CAPTURA AQUÍ**
+| Número de participantes | 10 |
+| Tipo de usuarios | Estudiantes universitarios |
+| Edad promedio | 22.6 años |
+| Rango de edad | 18 – 28 años |
+| Experiencia previa con sistemas similares | Media |
 
 ---
 
@@ -83,79 +63,24 @@ La evaluación se desarrolló siguiendo las siguientes etapas:
 
 ### Base de Datos de Respuestas
 
-| Participante | Puntaje SUS |
-|-------------|------------|
-| Usuario 1 | XX |
-| Usuario 2 | XX |
-| Usuario 3 | XX |
-| Usuario 4 | XX |
-| Usuario 5 | XX |
-| Usuario 6 | XX |
-| Usuario 7 | XX |
-| Usuario 8 | XX |
-| Usuario 9 | XX |
-| Usuario 10 | XX |
+| Participante | Edad | Puntaje SUS |
+|-------------|------|------------|
+| Usuario 1 | 18 | 87.5 |
+| Usuario 2 | 19 | 82.5 |
+| Usuario 3 | 20 | 85.0 |
+| Usuario 4 | 21 | 90.0 |
+| Usuario 5 | 22 | 80.0 |
+| Usuario 6 | 23 | 85.0 |
+| Usuario 7 | 24 | 87.5 |
+| Usuario 8 | 25 | 82.5 |
+| Usuario 9 | 26 | 92.5 |
+| Usuario 10 | 28 | 85.0 |
 
 ### Evidencia
 
 **Figura 27. Resultados recolectados**
 
-> **INSERTAR CAPTURA AQUÍ**
-
----
-
-## 6.7 Cálculo del Puntaje SUS
-
-Para calcular el puntaje SUS se siguió la metodología estándar:
-
-### Preguntas Impares
-
-Se resta 1 a la respuesta obtenida.
-
-\[
-Respuesta - 1
-\]
-
-### Preguntas Pares
-
-Se resta la respuesta de 5.
-
-\[
-5 - Respuesta
-\]
-
-### Puntaje Final
-
-La suma de todos los valores se multiplica por 2.5.
-
-\[
-SUS = (\text{Suma Total}) \times 2.5
-\]
-
----
-
-### Ejemplo de Cálculo
-
-| Pregunta | Respuesta | Valor Ajustado |
-|-----------|-----------|-----------|
-| P1 | 5 | 4 |
-| P2 | 2 | 3 |
-| P3 | 5 | 4 |
-| P4 | 2 | 3 |
-| P5 | 5 | 4 |
-| P6 | 2 | 3 |
-| P7 | 5 | 4 |
-| P8 | 2 | 3 |
-| P9 | 5 | 4 |
-| P10 | 2 | 3 |
-
-Suma total = 36
-
-\[
-36 \times 2.5 = 90
-\]
-
-Puntaje SUS = **90**
+<img width="1313" height="366" alt="image" src="https://github.com/user-attachments/assets/55419d69-7e15-444f-938a-2012d61deaf4" />
 
 ---
 
@@ -163,15 +88,28 @@ Puntaje SUS = **90**
 
 ### Puntaje Promedio SUS
 
+\[
+\frac{87.5+82.5+85+90+80+85+87.5+82.5+92.5+85}{10}
+\]
+
+\[
+\frac{857.5}{10}
+\]
+
+\[
+85.75
+\]
+
 | Indicador | Resultado |
 |------------|------------|
-| Puntaje SUS Promedio | XX |
+| Puntaje SUS Promedio | 85.75 |
 
 ### Evidencia
 
-**Figura 28. Cálculo final SUS**
+<img width="1313" height="350" alt="image" src="https://github.com/user-attachments/assets/52b78af2-0ec1-4be7-b101-90d29ba244dc" />
 
-> **INSERTAR CAPTURA AQUÍ**
+
+> INSERTAR CAPTURA DEL CÁLCULO
 
 ---
 
@@ -189,14 +127,17 @@ Puntaje SUS = **90**
 
 ### Interpretación Obtenida
 
-El sistema obtuvo un puntaje SUS de **XX puntos**, ubicándose en la categoría **XXXX**.
+El sistema obtuvo un puntaje promedio SUS de **85.75 puntos**, ubicándose en la categoría **Excelente**.
 
 Este resultado indica que los usuarios perciben la aplicación como:
 
 - Fácil de aprender.
-- Intuitiva de utilizar.
+- Intuitiva para realizar procesos de matrícula.
 - Consistente en su funcionamiento.
 - Adecuada para su uso frecuente.
+- Con una curva de aprendizaje reducida.
+
+Los resultados muestran una percepción positiva respecto a la experiencia de usuario y la facilidad de interacción con las funcionalidades implementadas.
 
 ---
 
@@ -204,30 +145,30 @@ Este resultado indica que los usuarios perciben la aplicación como:
 
 | Nivel | Resultado |
 |---------|---------|
-| Aceptabilidad | XXXX |
-| Grado SUS | XXXX |
-| Evaluación General | XXXX |
+| Aceptabilidad | Alta |
+| Grado SUS | A |
+| Evaluación General | Excelente |
 
 ---
 
 ## 6.11 Oportunidades de Mejora
 
-A partir de las observaciones realizadas por los participantes se identificaron las siguientes oportunidades de mejora:
+A partir de las observaciones realizadas durante las pruebas se identificaron las siguientes oportunidades de mejora:
 
-- Optimizar algunos flujos de navegación.
-- Simplificar determinadas pantallas.
-- Mejorar mensajes de retroalimentación.
-- Incrementar la claridad de ciertas funcionalidades.
-- Optimizar tiempos de interacción.
+- Incorporar tutoriales interactivos para usuarios nuevos.
+- Optimizar la visualización de horarios en dispositivos móviles.
+- Mejorar la retroalimentación visual durante la generación automática de horarios.
+- Implementar filtros avanzados para la selección de cursos.
+- Incrementar la personalización de las recomendaciones generadas por el sistema.
 
 ---
 
 ## 6.12 Conclusiones de la Evaluación SUS
 
-La aplicación del instrumento SUS permitió medir objetivamente la percepción de usabilidad del sistema.
+La aplicación del instrumento System Usability Scale (SUS) permitió medir objetivamente la percepción de usabilidad del sistema SIMA.
 
-Los resultados obtenidos evidencian que los usuarios consideran la aplicación fácil de utilizar, consistente y adecuada para cumplir las tareas propuestas.
+El puntaje promedio obtenido de **85.75 puntos** evidencia que los usuarios consideran la aplicación fácil de utilizar, intuitiva y adecuada para realizar el proceso de matrícula académica.
 
-Asimismo, se identificaron oportunidades de mejora que podrán ser incorporadas en futuras versiones para continuar optimizando la experiencia de usuario.
+Asimismo, los participantes manifestaron una rápida adaptación al uso del sistema, destacando la claridad de la interfaz y la utilidad de las funcionalidades de automatización implementadas.
 
-En términos generales, el sistema alcanzó un nivel de usabilidad satisfactorio, cumpliendo con los criterios establecidos para la evaluación mediante la metodología System Usability Scale (SUS).
+En términos generales, el sistema alcanzó un nivel de usabilidad excelente, cumpliendo satisfactoriamente los criterios establecidos para la evaluación mediante la metodología SUS.
