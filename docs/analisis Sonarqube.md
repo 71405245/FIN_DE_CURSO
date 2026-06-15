@@ -41,7 +41,8 @@ Se realizó una primera ejecución de SonarQube sobre el sistema sin aplicar mej
 
 **Figura 2. Dashboard general de SonarQube (Antes)**
 
-> **INSERTAR CAPTURA AQUÍ**
+> <img width="1315" height="851" alt="WhatsApp Image 2026-06-14 at 10 11 58 PM" src="https://github.com/user-attachments/assets/f31c8bda-0f80-4087-bed3-daee953991b8" />
+
 
 ---
 
@@ -127,13 +128,15 @@ Durante la inspección se identificaron componentes que concentraban la mayor ca
 
 **Figura 4. Problemas de mantenibilidad**
 
-> **INSERTAR CAPTURA AQUÍ**
+> <img width="1490" height="751" alt="WhatsApp Image 2026-06-15 at 12 27 30 AM" src="https://github.com/user-attachments/assets/b31aa4e2-b75f-41b9-bb7a-d47d21ba4fb5" />
+
 
 ---
 
 **Figura 5. Security Hotspots**
 
-> **INSERTAR CAPTURA AQUÍ**
+> <img width="1490" height="751" alt="WhatsApp Image 2026-06-15 at 12 27 30 AM" src="https://github.com/user-attachments/assets/17bfea5d-1d47-4a5c-9251-c177d8c69997" />
+
 
 ---
 
