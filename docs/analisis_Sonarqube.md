@@ -31,7 +31,7 @@ Se realizó una primera ejecución de SonarQube sobre el sistema sin aplicar mej
 
 ### Dashboard Inicial
 
-**Figura 2. Dashboard general de SonarQube (Antes)**
+**Figura 1. Dashboard general de SonarQube (Antes)**
 
 > <img width="1315" height="851" alt="WhatsApp Image 2026-06-14 at 10 11 58 PM" src="https://github.com/user-attachments/assets/f31c8bda-0f80-4087-bed3-daee953991b8" />
 
@@ -111,21 +111,21 @@ Durante la inspección se identificaron componentes que concentraban la mayor ca
 
 ### Evidencia de Hallazgos
 
-**Figura 3. Vulnerabilidades detectadas**
+**Figura 2. Vulnerabilidades detectadas**
 
 > <img width="1600" height="847" alt="WhatsApp Image 2026-06-14 at 10 15 18 PM" src="https://github.com/user-attachments/assets/6378bda4-3855-4f04-a581-79363f504d5c" />
 
 
 ---
 
-**Figura 4. Problemas de mantenibilidad**
+**Figura 3. Problemas de mantenibilidad**
 
 > <img width="1490" height="751" alt="WhatsApp Image 2026-06-15 at 12 27 30 AM" src="https://github.com/user-attachments/assets/b31aa4e2-b75f-41b9-bb7a-d47d21ba4fb5" />
 
 
 ---
 
-**Figura 5. Security Hotspots**
+**Figura 4. Security Hotspots**
 
 > <img width="1374" height="807" alt="WhatsApp Image 2026-06-14 at 10 12 33 PM (1)" src="https://github.com/user-attachments/assets/4620369c-b155-447e-8784-fcf6f0795ff3" />
 
@@ -166,7 +166,7 @@ Las principales mejoras implementadas fueron:
 
 ### Evidencia de Correcciones
 
-**Figura 6. Ejemplo de corrección implementada**
+**Figura 5. Ejemplo de corrección implementada**
 
 > <img width="1359" height="440" alt="WhatsApp Image 2026-06-15 at 12 19 00 AM" src="https://github.com/user-attachments/assets/f33889bb-1d56-43dc-875e-8162fdfe58d6" />
 
@@ -190,7 +190,7 @@ Tras aplicar las mejoras se ejecutó nuevamente el análisis de SonarQube.
 
 ### Dashboard Final
 
-**Figura 7. Dashboard general de SonarQube (Después)**
+**Figura 6. Dashboard general de SonarQube (Después)**
 
 > <img width="1600" height="788" alt="WhatsApp Image 2026-06-14 at 7 28 59 PM" src="https://github.com/user-attachments/assets/fa091707-2850-4370-a4a7-9c679f76d231" />
 
@@ -210,7 +210,7 @@ Tras aplicar las mejoras se ejecutó nuevamente el análisis de SonarQube.
 
 ### Evidencia Comparativa
 
-**Figura 8. Comparación de métricas antes y después**
+**Figura 7. Comparación de métricas antes y después**
 
 > <img width="1139" height="487" alt="WhatsApp Image 2026-06-14 at 10 11 22 PM" src="https://github.com/user-attachments/assets/18d5b7e5-d9e4-4440-abd0-04061e94afc9" />
 > <img width="1359" height="440" alt="WhatsApp Image 2026-06-15 at 12 19 00 AM" src="https://github.com/user-attachments/assets/b0d443cb-237c-4e8c-985a-735fff8809e0" />
