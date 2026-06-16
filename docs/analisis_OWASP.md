@@ -197,7 +197,6 @@ Con base en los hallazgos obtenidos se ejecutaron diversas acciones correctivas.
 
 **Figura 14. Correcciones implementadas**
 
-> **INSERTAR CAPTURA AQUÍ**
 
 ---
 
