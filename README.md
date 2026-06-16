@@ -68,7 +68,7 @@
 - 🛡️ [Análisis de Seguridad (OWASP)](docs/analisis_OWASP.md)
 - ♿ [Validación de Accesibilidad (WCAG)](docs/validacion_WCAG.md)
 - 👥 [Evaluación de Usabilidad (SUS)](docs/analisis_SUS.md)
-- 📑 [Informe Técnico Integral](docs/reporte_integral.md)
+- 📑 [Informe Técnico Integral](docs/Reporte_integral.md)
 
 ---
 # 🎯 Cierre del Proyecto
