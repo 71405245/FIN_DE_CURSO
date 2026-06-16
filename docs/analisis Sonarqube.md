@@ -127,7 +127,8 @@ Durante la inspección se identificaron componentes que concentraban la mayor ca
 
 **Figura 5. Security Hotspots**
 
-> <img width="1490" height="751" alt="WhatsApp Image 2026-06-15 at 12 27 30 AM" src="https://github.com/user-attachments/assets/17bfea5d-1d47-4a5c-9251-c177d8c69997" />
+> <img width="1374" height="807" alt="WhatsApp Image 2026-06-14 at 10 12 33 PM (1)" src="https://github.com/user-attachments/assets/4620369c-b155-447e-8784-fcf6f0795ff3" />
+
 
 
 ---
