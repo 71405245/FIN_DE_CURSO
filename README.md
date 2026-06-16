@@ -61,6 +61,13 @@
 - 🔄 [Retrospectiva del Sprint](docs/retrospectiva-sprint.md)
 
 ---
+# 📊 Calidad y Validación
+
+- 🔍 [Análisis SonarQube](docs/analisis-sonarqube.md)
+- 🛡️ [Análisis OWASP](docs/analisis-owasp.md)
+- ♿ [Validación WCAG](docs/validacion-wcag.md)
+- 📈 [Métricas de Calidad](docs/metricas-calidad.md)
+- 📑 [Informe Técnico Integral](docs/informe-tecnico-integral.md)
 
 # 🎯 Cierre del Proyecto
 
@@ -69,33 +76,4 @@
 
 ---
 
-## 👥 Equipo del Proyecto
 
-| Rol | Integrante |
-|------|------------|
-| Product Owner | Nombre |
-| Scrum Master | Nombre |
-| Developer | Nombre |
-| Developer | Nombre |
-
-📄 Ver detalle completo: [Equipo del Proyecto](docs/equipo-proyecto.md)
-
----
-
-## 🚀 Tecnologías Utilizadas
-
-- Frontend: React / Angular / Vue
-- Backend: Spring Boot
-- Base de Datos: PostgreSQL
-- Control de Versiones: Git & GitHub
-- Metodología: Scrum
-
----
-
-## 📌 Estado del Proyecto
-
-**Versión actual:** 1.0  
-**Estado:** En desarrollo / Finalizado  
-**Metodología:** Scrum + Spec-Driven Development
-
----
