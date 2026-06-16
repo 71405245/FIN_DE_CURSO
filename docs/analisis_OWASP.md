@@ -41,7 +41,8 @@ Durante la evaluación inicial se identificaron múltiples hallazgos relacionado
 
 **Figura 9. Dashboard de seguridad antes de las correcciones**
 
-> **INSERTAR CAPTURA AQUÍ**
+> <img width="1330" height="232" alt="image" src="https://github.com/user-attachments/assets/ba8566e4-22d1-4b62-b142-37a0d35a4f8d" />
+
 
 ---
 
@@ -101,7 +102,7 @@ Durante la evaluación se identificaron oportunidades de mejora relacionadas con
 
 **Figura 10. Validación de autenticación**
 
-> **INSERTAR CAPTURA AQUÍ**
+> <img width="405" height="612" alt="image" src="https://github.com/user-attachments/assets/1dea53f9-51af-4e9f-8d33-1557bdfa07d7" />
 
 ---
 
@@ -124,7 +125,8 @@ Las validaciones implementadas fueron fortalecidas para reducir riesgos asociado
 
 **Figura 11. Validación de autorización**
 
-> **INSERTAR CAPTURA AQUÍ**
+> <img width="423" height="625" alt="image" src="https://github.com/user-attachments/assets/245bf319-f7f7-4d46-a738-cf5d6e46159a" />
+
 
 ---
 
@@ -148,7 +150,8 @@ Se implementaron mejoras orientadas a fortalecer la gestión de sesiones y reduc
 
 **Figura 12. Validación de sesiones**
 
-> **INSERTAR CAPTURA AQUÍ**
+> <img width="411" height="611" alt="image" src="https://github.com/user-attachments/assets/5b1bd102-b5ab-4979-84e7-1ed97b3b32fe" />
+
 
 ---
 
@@ -171,7 +174,8 @@ Se fortalecieron los mecanismos de validación para minimizar riesgos relacionad
 
 **Figura 13. Validación de entradas**
 
-> **INSERTAR CAPTURA AQUÍ**
+> <img width="1128" height="506" alt="image" src="https://github.com/user-attachments/assets/15246c52-ff63-4681-bbbd-91e4fbcf5aa4" />
+
 
 ---
 
@@ -214,7 +218,8 @@ Tras implementar las acciones correctivas se ejecutó una nueva evaluación de s
 
 **Figura 15. Dashboard de seguridad después de las correcciones**
 
-> **INSERTAR CAPTURA AQUÍ**
+> <img width="536" height="604" alt="image" src="https://github.com/user-attachments/assets/553b2d23-5597-4bc8-9a6e-7dd01d983b4e" />
+
 
 ---
 
@@ -228,10 +233,6 @@ Tras implementar las acciones correctivas se ejecutó una nueva evaluación de s
 | Exposición de Seguridad | Elevada | Mínima | Reducida |
 
 ### Evidencia Comparativa
-
-**Figura 16. Comparación de resultados de seguridad**
-
-> **INSERTAR CAPTURA AQUÍ**
 
 ---
 
