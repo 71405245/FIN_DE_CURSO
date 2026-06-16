@@ -68,7 +68,7 @@
 - ♿ [Validación WCAG](docs/validacion WCAG.md)
 - 📈 [Métricas de Calidad](docs/interpretacion metricas.md)
 - 📑 [Informe Técnico Integral](analisis SUS.md)
-
+---
 # 🎯 Cierre del Proyecto
 
 - 📊 [Retrospectiva del Proyecto](docs/retrospectiva-proyecto.md)
