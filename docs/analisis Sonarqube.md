@@ -14,14 +14,6 @@ Para evaluar la calidad técnica del sistema se utilizó **SonarQube** como herr
 - Medir deuda técnica.
 - Determinar el nivel de calidad general del proyecto.
 
-### Evidencia de Configuración
-
-**Figura 1. Configuración del proyecto en SonarQube**
-
-> **INSERTAR CAPTURA AQUÍ**
-
----
-
 ## 3.2 Resultados Iniciales (Antes de las Correcciones)
 
 Se realizó una primera ejecución de SonarQube sobre el sistema sin aplicar mejoras, obteniéndose los siguientes resultados.
@@ -175,7 +167,8 @@ Las principales mejoras implementadas fueron:
 
 **Figura 6. Ejemplo de corrección implementada**
 
-> **INSERTAR CAPTURA AQUÍ**
+> <img width="1359" height="440" alt="WhatsApp Image 2026-06-15 at 12 19 00 AM" src="https://github.com/user-attachments/assets/f33889bb-1d56-43dc-875e-8162fdfe58d6" />
+
 
 ---
 
@@ -198,7 +191,8 @@ Tras aplicar las mejoras se ejecutó nuevamente el análisis de SonarQube.
 
 **Figura 7. Dashboard general de SonarQube (Después)**
 
-> **INSERTAR CAPTURA AQUÍ**
+> <img width="1359" height="440" alt="WhatsApp Image 2026-06-15 at 12 19 00 AM" src="https://github.com/user-attachments/assets/d14b89f1-e6f5-410e-8c6f-0793fa77fde4" />
+
 
 ---
 
@@ -217,7 +211,9 @@ Tras aplicar las mejoras se ejecutó nuevamente el análisis de SonarQube.
 
 **Figura 8. Comparación de métricas antes y después**
 
-> **INSERTAR CAPTURA AQUÍ**
+> <img width="1139" height="487" alt="WhatsApp Image 2026-06-14 at 10 11 22 PM" src="https://github.com/user-attachments/assets/18d5b7e5-d9e4-4440-abd0-04061e94afc9" />
+> <img width="1359" height="440" alt="WhatsApp Image 2026-06-15 at 12 19 00 AM" src="https://github.com/user-attachments/assets/b0d443cb-237c-4e8c-985a-735fff8809e0" />
+
 
 ---
 
