@@ -63,12 +63,12 @@
 ---
 # 📊 Calidad y Validación
 
-- 🔍 [Análisis de Calidad de Código (SonarQube)](docs/analisis-sonarqube.md)
-- 📈 [Interpretación de Métricas de Calidad](docs/interpretacion-metricas.md)
-- 🛡️ [Análisis de Seguridad (OWASP)](docs/analisis-owasp.md)
-- ♿ [Validación de Accesibilidad (WCAG)](docs/validacion-wcag.md)
-- 👥 [Evaluación de Usabilidad (SUS)](docs/analisis-sus.md)
-- 📑 [Informe Técnico Integral](docs/informe-tecnico-integral.md)
+- 🔍 [Análisis de Calidad de Código (SonarQube)](docs/analisis_Sonarqube.md)
+- 📈 [Interpretación de Métricas de Calidad](docs/interpretacion_metricas.md)
+- 🛡️ [Análisis de Seguridad (OWASP)](docs/analisis_OWASP.md)
+- ♿ [Validación de Accesibilidad (WCAG)](docs/validacion_WCAG.md)
+- 👥 [Evaluación de Usabilidad (SUS)](docs/analisis_SUS.md)
+- 📑 [Informe Técnico Integral](docs/reporte_integral.md)
 
 ---
 # 🎯 Cierre del Proyecto
