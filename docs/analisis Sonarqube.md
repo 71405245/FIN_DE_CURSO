@@ -192,7 +192,7 @@ Tras aplicar las mejoras se ejecutó nuevamente el análisis de SonarQube.
 
 **Figura 7. Dashboard general de SonarQube (Después)**
 
-> <img width="1359" height="440" alt="WhatsApp Image 2026-06-15 at 12 19 00 AM" src="https://github.com/user-attachments/assets/d14b89f1-e6f5-410e-8c6f-0793fa77fde4" />
+> <img width="1600" height="788" alt="WhatsApp Image 2026-06-14 at 7 28 59 PM" src="https://github.com/user-attachments/assets/fa091707-2850-4370-a4a7-9c679f76d231" />
 
 
 ---
