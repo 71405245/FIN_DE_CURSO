@@ -183,10 +183,10 @@ Tras aplicar las mejoras se ejecutó nuevamente el análisis de SonarQube.
 |----------|----------|
 | Vulnerabilities | 0 |
 | Reliability Issues | 27 |
-| Maintainability Issues | 18 |
-| Security Hotspots | 1 |
-| Coverage | 38.0 % |
-| Duplications | 5.9 % |
+| Maintainability Issues | 21 |
+| Security Hotspots | 0 |
+| Coverage | 38.7 % |
+| Duplications | 6.0 % |
 
 ### Dashboard Final
 
@@ -203,10 +203,10 @@ Tras aplicar las mejoras se ejecutó nuevamente el análisis de SonarQube.
 |------------|---------|----------|---------|
 | Vulnerabilities | 23 | 0 | 100 % |
 | Reliability Issues | 173 | 27 | 84.4 % |
-| Maintainability Issues | 297 | 18 | 93.9 % |
-| Security Hotspots | 14 | 1 | 92.8 % |
-| Coverage | 16.0 % | 38.0 % | 137.5 % |
-| Duplications | 8.5 % | 5.9 % | 30.5 % |
+| Maintainability Issues | 297 | 21 | 93.9 % |
+| Security Hotspots | 14 | 0 | 100 % |
+| Coverage | 16.0 % | 38.7 % | 137.5 % |
+| Duplications | 8.5 % | 6.0 % | 30.5 % |
 
 ### Evidencia Comparativa
 
