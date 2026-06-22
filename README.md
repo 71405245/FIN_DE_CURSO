@@ -73,8 +73,7 @@ Control continuo del proyecto mediante validación, calidad, seguridad y mejora 
 
 | 🔄 Iteraciones | 📊 Calidad del Software |
 |:---|:---|
-| ✅ [Revisión del Sprint](docs/revision-sprint.md) | 🔍 [SonarQube](docs/analisis_Sonarqube.md) |
-| 🔄 [Retrospectiva del Sprint](docs/retrospectiva-sprint.md) | 📈 [Métricas de Calidad](docs/interpretacion_metricas.md) |
+| 📈 [Métricas de Calidad](docs/interpretacion_metricas.md) | 🔍 [SonarQube](docs/analisis_Sonarqube.md) |
 | 🖥️ [Pruebas Frontend](docs/pruebas-frontend.md) | 🛡️ [Análisis OWASP](docs/analisis_OWASP.md) |
 | ⚙️ [Pruebas Backend](docs/pruebas-backend.md) | ♿ [Validación WCAG](docs/validacion_WCAG.md) |
 | 🔄 [Pruebas E2E](docs/pruebas-e2e.md) | 👥 [Evaluación SUS](docs/analisis_SUS.md) |
