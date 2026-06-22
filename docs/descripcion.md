@@ -21,5 +21,3 @@ Actualmente el sistema administra:
 - 1,000 horarios y salones
 
 ---
-
-📌 [Ver Registro de Oportunidades](registro-oportunidades.md)
