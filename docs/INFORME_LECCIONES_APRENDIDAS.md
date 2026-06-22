@@ -634,10 +634,4 @@ Sin embargo, el análisis documental completo —realizado sin omitir ni suponer
 
 ---
 
-<div align="center">
 
-**📘 Fin del Informe Final de Lecciones Aprendidas — Proyecto SIMA**
-
-*Documento elaborado a partir de la lectura íntegra y sin omisiones del `README.md` y los 44 archivos de la carpeta `docs/`, contrastando activamente la información entre documentos para identificar tanto los aciertos técnicos como las brechas de gestión documental del proyecto.*
-
-</div>
