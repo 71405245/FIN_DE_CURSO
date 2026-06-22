@@ -13,7 +13,7 @@ connectDB();
 
 // Middlewares
 app.use(helmet());
-app.use(mongoSanitize());
+// app.use(mongoSanitize()); // Deshabilitado por incompatibilidad con Express 5
 app.use(cors());
 
 // [OPTIMIZACIÃ“N 8] APM - Buffer circular O(1) en vez de Array.shift() O(n)

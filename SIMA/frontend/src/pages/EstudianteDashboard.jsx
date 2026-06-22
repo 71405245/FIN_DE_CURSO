@@ -633,7 +633,7 @@ function EstudianteDashboard() {
                 </button>
               </div>
             </div>
-          </div>
+          </dialog>
         )}
 
         {/* IA Resultados Modal */}

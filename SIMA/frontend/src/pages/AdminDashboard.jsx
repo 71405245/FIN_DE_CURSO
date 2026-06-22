@@ -1,5 +1,6 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { LogOut, BookOpen, Users, Layers, GraduationCap, Building, LayoutDashboard, ChevronRight, BarChart2, Activity } from 'lucide-react';
 

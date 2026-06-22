@@ -4,12 +4,12 @@ const adminController = require('../controllers/adminController');
 const planificacionController = require('../controllers/planificacionController');
 
 // Planificación de Horarios
-router.get('/planificacion/stats', planificacionController.getStats);
+router.get('/planificacion/stats', planificacionController.getPlanificacionStats);
 router.get('/planificacion/carga-horaria', planificacionController.getCargaHoraria);
 router.get('/planificacion/docentes-disponibles', planificacionController.getDocentesDisponibles);
 router.put('/planificacion/seccion/:id/reasignar', planificacionController.reasignarDocente);
 router.put('/planificacion/seccion/:id/liberar', planificacionController.liberarSeccion);
-router.put('/planificacion/seccion/:id/horario', planificacionController.editarHorario);
+router.put('/planificacion/seccion/:id/horario', planificacionController.editarHorarioSeccion);
 
 
 const auth = require('../middleware/auth');

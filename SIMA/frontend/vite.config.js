@@ -8,7 +8,7 @@ export default defineConfig({
     // Proxy: todas las llamadas a /api se redirigen al backend en puerto 5000
     proxy: {
       '/api': {
-        target: 'http://localhost:5001',
+        target: 'http://localhost:5000',
         changeOrigin: true,
       }
     }
