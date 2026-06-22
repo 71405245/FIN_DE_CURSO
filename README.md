@@ -87,4 +87,4 @@ Control continuo del proyecto mediante validación, calidad, seguridad y mejora 
 Finalización de iteraciones, evaluación del proyecto y documentación final.
 
 - 📊 [Retrospectiva del Proyecto](docs/retrospectiva-proyecto.md)
-- 🏁 [Acta de Cierre del Proyecto](docs/acta-cierre.md)
+- 🏁 [Informe de lecciones aprendidas](docs/INFORME_LECCIONES_APRENDIDAS.md)
