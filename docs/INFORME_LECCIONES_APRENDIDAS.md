@@ -8,59 +8,7 @@
 
 ---
 
-> *"Identificar qué salió bien para que otros equipos lo adopten, y qué no funcionó para evitarlo en el futuro."*
 
----
-
-## 🧾 Ficha del Documento
-
-| Campo | Detalle |
-|---|---|
-| **Proyecto analizado** | SIMA — Sistema Inteligente de Matrícula Académica (también referido como *Sistema Integral de Matrícula Académica*) |
-| **Tipo de documento** | Informe Final de Lecciones Aprendidas (Final Lessons Learned Report) |
-| **Repositorio fuente** | `FIN_DE_CURSO` (carpeta `docs/` + `README.md` + archivos de configuración raíz) |
-| **Duración real del proyecto** | 15 semanas de desarrollo (31/Mar – 22/Jun/2026) + 2 semanas de fase post-lanzamiento de mejora continua |
-| **Sprints ejecutados** | 6 sprints de 2 semanas cada uno |
-| **Equipo del proyecto** | Jordan, Kevin, Liand (equipo de 3 personas con roles rotativos) |
-| **Stack tecnológico final** | MERN (MongoDB, Express, React + Vite, Node.js) + IA basada en Backtracking/MRV |
-| **Documentos fuente revisados** | 44 archivos de `docs/` + `README.md` + `package-lock.json` + `sonar-project.properties` + `.github/workflows/sonar.yml` + `cronograma-SIMA.png` (revisión íntegra, sin omisiones) |
-| **Elaborado por** | Asistente de análisis documental, a solicitud del usuario |
-| **Alcance del análisis** | Documentación completa del ciclo de vida del proyecto (Inicio → Planificación → Ejecución → Seguimiento y Control → Cierre) |
-
----
-
-## 🔍 Nota Metodológica y Transparencia de Fuentes
-
-Antes de presentar las lecciones aprendidas, es importante ser completamente transparente sobre cómo se construyó este informe, dado que **el propósito explícito de este documento es compilar sesiones de lecciones aprendidas y retrospectivas**.
-
-### ⚠️ Hallazgo metodológico importante
-
-El `README.md` del proyecto **referencia explícitamente** los siguientes documentos dentro de las fases de "Seguimiento y Control" y "Cierre":
-
-| Documento referenciado en el README | ¿Existe en `docs/`? |
-|---|:---:|
-| `docs/revision-sprint.md` (Revisión del Sprint) | ❌ **No encontrado** |
-| `docs/retrospectiva-sprint.md` (Retrospectiva del Sprint) | ❌ **No encontrado** |
-| `docs/retrospectiva-proyecto.md` (Retrospectiva del Proyecto) | ❌ **No encontrado** |
-| `docs/acta-cierre.md` (Acta de Cierre del Proyecto) | ❌ **No encontrado** |
-
-Es decir: **los cuatro documentos que normalmente alimentarían de forma directa un informe de lecciones aprendidas (retrospectivas de sprint, retrospectiva de proyecto y acta de cierre) están enlazados en el índice del README pero no están presentes físicamente en la carpeta `docs/` del repositorio entregado.**
-
-Esto, en sí mismo, **es la primera lección aprendida del proyecto** (ver sección B7) y se documenta aquí con total honestidad en lugar de inventar contenido inexistente.
-
-### ✅ Cómo se compensó esta brecha
-
-Siguiendo la instrucción de no omitir ni suponer nada, este informe **no fabrica** retrospectivas que no existen. En su lugar, reconstruye las lecciones aprendidas triangulando la evidencia real disponible en los **40 documentos restantes**, que sí contienen información equivalente en sustancia a una retrospectiva, en particular:
-
-- 🚧 `impedimentos.md` — registro vivo de bloqueos del equipo durante los sprints.
-- 📊 `registro-riesgos.md` y `registro-oportunidades.md` — registros con matriz de impacto/probabilidad.
-- 📝 `minuta-reunion.md` y `minuta-reunion2.md` — actas de reuniones de seguimiento.
-- 📄 `informe-estado.md` y `informe_estado2.md` — informes de estado (Sprint 1 vs. cierre).
-- 🔍 `analisis_Sonarqube.md`, `interpretacion_metricas.md`, `analisis_OWASP.md`, `validacion_WCAG.md`, `analisis_SUS.md` — los cinco documentos técnicos de calidad, cada uno con estructura explícita de **"Antes" vs. "Después"**, que funcionan de facto como retrospectivas técnicas detalladas.
-- 🍃 `aplicacion_greencode.md` y `Optimizacion-y-Analisis.md` — diagnóstico de problemas y soluciones aplicadas.
-- 📐 Documentos de especificación y arquitectura (`Spec.md`, `arquitectura.md`, `Desarrollo-del-algoritmo.md`) contrastados contra los documentos de enfoque inicial (`enfoque-proyecto.md`, `installation.md`, `api.md`).
-
----
 
 ## 1️⃣ Contexto General del Proyecto
 
