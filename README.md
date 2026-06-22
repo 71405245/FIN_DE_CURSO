@@ -7,39 +7,36 @@
 
 ## 🚀 Tecnologías utilizadas
 
-![Frontend](https://img.shields.io/badge/Frontend-React-blue)
-![Backend](https://img.shields.io/badge/Backend-Spring%20Boot-green)
-![Database](https://img.shields.io/badge/Database-PostgreSQL-blue)
-![Security](https://img.shields.io/badge/Security-OWASP-red)
+### 💻 Stack Tecnológico
+
+![Frontend](https://img.shields.io/badge/Frontend-React%20%2B%20Vite-61DAFB)
+![Backend](https://img.shields.io/badge/Backend-Node.js%20%2B%20Express-339933)
+![Database](https://img.shields.io/badge/Database-MongoDB-47A248)
+![Architecture](https://img.shields.io/badge/Architecture-Agent%20Based%20System-blue)
+
+### 🛡️ Calidad, Seguridad y Sostenibilidad
+
+![Security](https://img.shields.io/badge/Security-OWASP%20Top%2010-red)
 ![Quality](https://img.shields.io/badge/Quality-SonarQube-orange)
-![Accessibility](https://img.shields.io/badge/Accessibility-WCAG-purple)
+![Accessibility](https://img.shields.io/badge/Accessibility-WCAG-blue)
+![Usability](https://img.shields.io/badge/Usability-SUS-purple)
 ![Sustainability](https://img.shields.io/badge/Software-Green%20Software-success)
-
----
-
-# 📌 Gestión Adaptativa del Proyecto
-
-| 🚀 Inicio | 📅 Planificación | 💻 Ejecución | 🔍 Seguimiento y Control | 🏁 Cierre |
-|:---:|:---:|:---:|:---:|:---:|
-| Definición del problema | Requerimientos | Diseño y desarrollo | Calidad y validación | Cierre del proyecto |
-| Interesados | Backlog | Arquitectura | Seguridad | Retrospectiva |
-| Objetivos | Cronograma | Implementación | Mejora continua | Lecciones aprendidas |
+![Standard](https://img.shields.io/badge/Standard-ISO%2025010-lightgrey)
 
 ---
 
 # 🚀 1. Inicio (Initiating)
 
-Documentación inicial del proyecto, definición del problema, interesados y propósito del sistema.
+Documentación inicial del proyecto, alineamiento de interesados y definición del propósito del sistema.
 
-| 📌 Documento del Proyecto | 📄 Enlace |
-|:---|:---:|
-| Descripción del Proyecto | [Ver](docs/descripcion.md) |
-| Visión del Proyecto | [Ver](docs/vision.md) |
-| Project Charter | [Ver](docs/project-charter.md) |
-| Acta de Constitución | [Ver](docs/acta-constitucion.md) |
-| Documento del Problema | [Ver](docs/Problema.md) |
-| Enfoque del Proyecto | [Ver](docs/enfoque-proyecto.md) |
-| Equipo del Proyecto | [Ver](docs/equipo-proyecto.md) |
+- 📄 [Descripción del Proyecto](docs/descripcion.md)
+- 🎯 [Visión del Proyecto](docs/vision.md)
+- 🏛️ [Project Charter](docs/project-charter.md)
+- 📋 [Acta de Constitución](docs/acta-constitucion.md)
+- ❗ [Documento del Problema](docs/Problema.md)
+- 🎯 [Enfoque del Proyecto](docs/enfoque-proyecto.md)
+- 👥 [Equipo del Proyecto](docs/equipo-proyecto.md)
+
 
 ---
 
@@ -88,27 +85,7 @@ Control continuo del proyecto mediante validación, calidad, seguridad y mejora 
 
 # 🏁 5. Cierre (Closing)
 
-Finalización del proyecto, evaluación de resultados y documentación final.
+Finalización de iteraciones, evaluación del proyecto y documentación final.
 
-| 📌 Documento Final | 📄 Enlace |
-|:---|:---:|
-| Retrospectiva del Proyecto | [Ver](docs/retrospectiva-proyecto.md) |
-| Acta de Cierre del Proyecto | [Ver](docs/acta-cierre.md) |
-
----
-
-# 🌱 Impacto del Proyecto
-
-SIMA contribuye a una gestión académica más eficiente mediante:
-
-| 🤖 Inteligencia Artificial | 🌱 Sostenibilidad | 🔐 Calidad |
-|:---:|:---:|:---:|
-| Optimización automática de horarios | Uso eficiente de recursos académicos | Seguridad basada en OWASP |
-| Reducción de conflictos de matrícula | Aplicación de Green Software | Evaluación con ISO 25010 |
-| Mejora del tiempo del estudiante | Menor desperdicio operativo | Accesibilidad WCAG |
-
----
-
-# 👥 Equipo
-
-Proyecto desarrollado como parte del curso **Proyectos 2 - Ingeniería de Sistemas**.
+- 📊 [Retrospectiva del Proyecto](docs/retrospectiva-proyecto.md)
+- 🏁 [Acta de Cierre del Proyecto](docs/acta-cierre.md)
