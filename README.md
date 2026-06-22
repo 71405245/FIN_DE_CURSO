@@ -76,10 +76,10 @@ Control continuo del proyecto mediante validación, calidad, seguridad y mejora 
 |:---|:---|
 | ✅ [Revisión del Sprint](docs/revision-sprint.md) | 🔍 [SonarQube](docs/analisis_Sonarqube.md) |
 | 🔄 [Retrospectiva del Sprint](docs/retrospectiva-sprint.md) | 📈 [Métricas de Calidad](docs/interpretacion_metricas.md) |
-| | 🛡️ [Análisis OWASP](docs/analisis_OWASP.md) |
-| | ♿ [Validación WCAG](docs/validacion_WCAG.md) |
-| | 👥 [Evaluación SUS](docs/analisis_SUS.md) |
-| | 📑 [Informe Técnico Integral](docs/Reporte_integral.md) |
+| 🖥️ [Pruebas Frontend](docs/pruebas-frontend.md) | 🛡️ [Análisis OWASP](docs/analisis_OWASP.md) |
+| ⚙️ [Pruebas Backend](docs/pruebas-backend.md) | ♿ [Validación WCAG](docs/validacion_WCAG.md) |
+| 🔄 [Pruebas E2E](docs/pruebas-e2e.md) | 👥 [Evaluación SUS](docs/analisis_SUS.md) |
+| 📑 [Informe Técnico Integral](docs/Reporte_integral.md) | |
 
 ---
 
