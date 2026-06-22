@@ -61,10 +61,9 @@ Desarrollo del producto mediante iteraciones, arquitectura, implementación y co
 | 🏗️ Diseño y Arquitectura | 🛠️ Desarrollo |
 |:---|:---|
 | 🏛️ [Arquitectura del Proyecto](docs/arquitectura.md) | 📈 [Informe de Estado](docs/informe_estado2.md) |
-| 🗄️ [Diagrama Entidad-Relación](docs/diagrama-entidad-relacion.md) | 🚧 [Registro de Impedimentos](docs/impedimentos.md) |
+| 📊 [Optimización y Análisis](docs/Optimizacion-y-Analisis.md) | 🚧 [Registro de Impedimentos](docs/impedimentos.md) |
 | ⚙️ [Desarrollo Algoritmo IA](docs/Desarrollo-del-algoritmo.md) | 🤝 [Minuta Reunión 1](docs/minuta-reunion.md) |
 | 📐 [Spec-Driven Development](docs/Spec-DrivenDevelopment.md) | 🤝 [Minuta Reunión 2](docs/minuta-reunion2.md) |
-| 📊 [Optimización y Análisis](docs/Optimizacion-y-Analisis.md) | |
 
 ---
 
