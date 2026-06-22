@@ -10,34 +10,7 @@
 
 
 
-## 1️⃣ Contexto General del Proyecto
-
-**SIMA** es un sistema web académico cuyo objetivo es optimizar el proceso de matrícula universitaria mediante un motor de recomendación de horarios basado en inteligencia artificial (Backtracking con heurísticas), gestionando estudiantes, docentes, cursos, secciones y aulas, bajo los roles `ADMIN`, `DOCENTE` y `ESTUDIANTE`.
-
-| Atributo | Valor (según documentación final) |
-|---|---|
-| **Patrocinador** | Universidad Continental / Docente del curso |
-| **Alcance funcional** | 3,000 alumnos, 20 carreras, 1,210 cursos, 80 docentes, 1,000 horarios y salones (`descripcion.md`) |
-| **Presupuesto referencial** | USD $1,597 (proyecto académico, herramientas open-source) |
-| **Requerimientos funcionales** | 20 (RF-01 a RF-20) |
-| **Requerimientos no funcionales** | 27 (RNF-01 a RNF-27) |
-| **Historias de usuario** | 24 (HU-01 a HU-24) repartidas en 6 sprints |
-| **Story points totales** | 183 puntos (ver línea de tiempo) |
-
-### 👥 Equipo del proyecto — y una primera inconsistencia documental
-
-| Documento | Jordan | Kevin | Liand |
-|---|---|---|---|
-| `project-charter.md` | Developer | Scrum Master | Product Owner |
-| `acta-constitucion.md` | **Gerente de Proyecto** | Scrum Master | Dueño del Producto (junto a los otros) |
-| `informe-estado.md` / `informe_estado2.md` | — | — | **Gerente del Proyecto** |
-| `minuta-reunion2.md` | Developer | Scrum Master | Product Owner |
-
-> 💡 **Observación:** los tres integrantes son nombrados como "Gerente de Proyecto" en distintos documentos según la fuente. Esto no es necesariamente un error grave en un proyecto académico de 3 personas con roles compartidos, pero **evidencia falta de una única fuente de verdad (single source of truth) para roles y responsabilidades**, un tema que se retoma en la sección B3.
-
----
-
-## 2️⃣ El Hallazgo Transversal Más Importante: El Pivote Tecnológico de Stack
+## 1️⃣2️⃣ El Hallazgo Transversal Más Importante: El Pivote Tecnológico de Stack
 
 Antes de entrar en el detalle de "qué funcionó" y "qué no funcionó", es necesario documentar **el hallazgo más significativo de todo el análisis documental**, porque atraviesa y explica gran parte de las demás lecciones: **el proyecto cambió completamente su stack tecnológico a mitad de camino**, y este cambio **no quedó documentado formalmente como una decisión de proyecto** (no existe ningún ADR, acta de cambio de alcance o nota de versión que lo explique).
 
