@@ -79,7 +79,7 @@ Control continuo del proyecto mediante validación, calidad, seguridad y mejora 
 | 🖥️ [Pruebas Frontend](docs/pruebas-frontend.md) | 🛡️ [Análisis OWASP](docs/analisis_OWASP.md) |
 | ⚙️ [Pruebas Backend](docs/pruebas-backend.md) | ♿ [Validación WCAG](docs/validacion_WCAG.md) |
 | 🔄 [Pruebas E2E](docs/pruebas-e2e.md) | 👥 [Evaluación SUS](docs/analisis_SUS.md) |
-| 📑 [Informe Técnico Integral](docs/Reporte_integral.md) | |
+| 📑 [Informe Técnico Integral](docs/Reporte_integral.md) | 🍃 [Aplicación de Green Code](docs/aplicacion_greencode.md) |
 
 ---
 
