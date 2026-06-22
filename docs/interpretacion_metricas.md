@@ -76,7 +76,7 @@ Aunque estos problemas no generan fallos inmediatos, incrementan los costos de m
 
 ### Resultado Posterior
 
-- Maintainability Issues: **18**
+- Maintainability Issues: **21**
 
 ### Interpretación de la Mejora
 
@@ -85,7 +85,7 @@ Las actividades de refactorización permitieron simplificar la estructura del c�
 ### Porcentaje de Mejora
 
 \[
-\frac{297 - 18}{297} \times 100 = 93.9\%
+\frac{297 - 21}{297} \times 100 = 93.9\%
 \]
 
 **Mejora obtenida: 93.9 %**
@@ -108,7 +108,7 @@ Estos elementos suelen estar relacionados con autenticación, autorización, man
 
 ### Resultado Posterior
 
-- Security Hotspots: **1**
+- Security Hotspots: **0**
 
 ### Interpretación de la Mejora
 
@@ -117,10 +117,10 @@ La reducción de los Security Hotspots demuestra que se revisaron y corrigieron 
 ### Porcentaje de Mejora
 
 \[
-\frac{14 - 1}{14} \times 100 = 92.8\%
+\frac{14 - 0}{14} \times 100 = 100\%
 \]
 
-**Mejora obtenida: 92.8 %**
+**Mejora obtenida: 100%**
 
 ---
 
@@ -140,7 +140,7 @@ Esta situación incrementa el riesgo de introducir errores durante futuras modif
 
 ### Resultado Posterior
 
-- Coverage: **38.0 %**
+- Coverage: **38.7 %**
 
 ### Interpretación de la Mejora
 
@@ -149,7 +149,7 @@ El aumento de cobertura evidencia la incorporación de nuevas pruebas automatiza
 ### Porcentaje de Incremento
 
 \[
-\frac{38 - 16}{16} \times 100 = 137.5\%
+\frac{38.7 - 16}{16} \times 100 = 137.5\%
 \]
 
 **Incremento obtenido: 137.5 %**
@@ -170,7 +170,7 @@ La duplicación detectada indicaba la existencia de lógica repetida en distinto
 
 ### Resultado Posterior
 
-- Duplications: **5.9 %**
+- Duplications: **6.0 %**
 
 ### Interpretación de la Mejora
 
@@ -179,7 +179,7 @@ La reducción de código duplicado demuestra que se realizaron actividades de re
 ### Porcentaje de Mejora
 
 \[
-\frac{8.5 - 5.9}{8.5} \times 100 = 30.5\%
+\frac{8.5 - 6.0}{8.5} \times 100 = 30.5\%
 \]
 
 **Mejora obtenida: 30.5 %**
