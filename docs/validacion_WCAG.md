@@ -55,8 +55,7 @@ Estos hallazgos podían dificultar el uso del sistema por parte de personas que 
 ### Evidencia Inicial
 
 **Figura 17. Reporte inicial de accesibilidad**
-
-![Reporte inicial de accesibilidad](C:/Users/Usuario/.gemini/antigravity/brain/df740d7f-9225-4066-beae-a42c69669a4b/wcag_reporte_inicial_1782110348693.png)
+<img width="1024" height="1024" alt="wcag_reporte_inicial_1782110348693" src="https://github.com/user-attachments/assets/ac39fea2-3bbf-4654-810f-79e2b15faad5" />
 
 ---
 
@@ -86,7 +85,8 @@ Cumplimiento satisfactorio del criterio de contraste.
 
 **Figura 18. Validación de contraste**
 
-![Validación de contraste](C:/Users/Usuario/.gemini/antigravity/brain/df740d7f-9225-4066-beae-a42c69669a4b/wcag_contraste_1782110356388.png)
+<img width="1024" height="1024" alt="wcag_contraste_1782110356388" src="https://github.com/user-attachments/assets/d381eaeb-bd83-4b66-a19f-201b274bd938" />
+
 
 ---
 
@@ -114,7 +114,8 @@ Las funcionalidades principales pueden ser utilizadas mediante teclado.
 
 **Figura 19. Navegación por teclado**
 
-![Navegación por teclado](C:/Users/Usuario/.gemini/antigravity/brain/df740d7f-9225-4066-beae-a42c69669a4b/wcag_teclado_1782110366100.png)
+<img width="1024" height="1024" alt="wcag_teclado_1782110366100" src="https://github.com/user-attachments/assets/30685226-ff8a-40cb-abdb-beb68e204b8b" />
+
 
 ---
 
@@ -146,7 +147,7 @@ La estructura HTML cumple con las recomendaciones de accesibilidad.
 
 **Figura 20. Estructura semántica corregida**
 
-![Estructura semántica corregida](C:/Users/Usuario/.gemini/antigravity/brain/df740d7f-9225-4066-beae-a42c69669a4b/wcag_semantica_1782110379828.png)
+<img width="1024" height="1024" alt="wcag_semantica_1782110379828" src="https://github.com/user-attachments/assets/62f5ab49-2626-4626-9e9f-b1d7ea41935b" />
 
 ---
 
@@ -174,7 +175,7 @@ Los formularios presentan etiquetas correctamente asociadas.
 
 **Figura 21. Corrección de etiquetas**
 
-![Corrección de etiquetas](C:/Users/Usuario/.gemini/antigravity/brain/df740d7f-9225-4066-beae-a42c69669a4b/wcag_etiquetas_1782110388810.png)
+<img width="1024" height="1024" alt="wcag_etiquetas_1782110388810" src="https://github.com/user-attachments/assets/90259092-a40e-4943-b1e9-1c0de2a16e08" />
 
 ---
 
@@ -202,7 +203,7 @@ Mejora significativa de compatibilidad con tecnologías asistivas.
 
 **Figura 22. Validación con lector de pantalla**
 
-![Validación con lector de pantalla](C:/Users/Usuario/.gemini/antigravity/brain/df740d7f-9225-4066-beae-a42c69669a4b/wcag_lector_1782110399490.png)
+<img width="1024" height="1024" alt="wcag_lector_1782110399490" src="https://github.com/user-attachments/assets/6bf16925-c1f3-4db7-b35b-b977ab7c2a7a" />
 
 ---
 
