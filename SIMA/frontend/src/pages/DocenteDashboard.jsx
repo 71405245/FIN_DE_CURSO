@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect } from 'react';
+
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { LogOut, Users, BookOpen, CheckCircle, AlertCircle, TrendingUp } from 'lucide-react';

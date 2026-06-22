@@ -182,9 +182,10 @@ function Login() {
 
                 <form onSubmit={handleLogin}>
                     <div className="custom-input-group">
-                        <label>Correo Electrónico</label>
+                        <label htmlFor="login-email">Correo Electrónico</label>
                         <div className="input-wrapper">
                             <input 
+                              id="login-email"
                               type="text" 
                               className="form-control-custom" 
                               placeholder="ejemplo@sima.edu" 
@@ -197,9 +198,10 @@ function Login() {
                     </div>
 
                     <div className="custom-input-group">
-                        <label>Contraseña</label>
+                        <label htmlFor="login-password">Contraseña</label>
                         <div className="input-wrapper">
                             <input 
+                              id="login-password"
                               type={showPassword ? 'text' : 'password'}
                               className="form-control-custom form-control-with-eye" 
                               placeholder="••••••••" 

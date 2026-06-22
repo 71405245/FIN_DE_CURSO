@@ -18,6 +18,13 @@ vi.mock('react-router-dom', async (importOriginal) => {
   };
 });
 
+// Credenciales de prueba (mocked, no son credenciales reales del sistema)
+const TEST_CREDENTIALS = {
+  admin: { email: 'admin@sima.com', password: 'test-password-mock' },
+  student: { email: 'estudiante@sima.com', password: 'test-password-mock' },
+  invalid: { email: 'wrong@sima.com', password: 'test-invalid-mock' }
+};
+
 describe('Login Component (Pruebas Unitarias)', () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -75,15 +82,15 @@ describe('Login Component (Pruebas Unitarias)', () => {
     const passwordInput = screen.getByPlaceholderText('••••••••');
     const submitButton = screen.getByRole('button', { name: 'Entrar al Sistema' });
 
-    // Modificar campos y enviar
-    fireEvent.change(emailInput, { target: { value: 'wrong@sima.com' } });
-    fireEvent.change(passwordInput, { target: { value: 'wrongpass' } });
+    // Simular campos con credenciales inválidas (mocked)
+    fireEvent.change(emailInput, { target: { value: TEST_CREDENTIALS.invalid.email } });
+    fireEvent.change(passwordInput, { target: { value: TEST_CREDENTIALS.invalid.password } });
     fireEvent.click(submitButton);
 
     // Verificar llamada axios
     expect(axios.post).toHaveBeenCalledWith('/api/auth/login', {
-      email: 'wrong@sima.com',
-      password: 'wrongpass'
+      email: TEST_CREDENTIALS.invalid.email,
+      password: TEST_CREDENTIALS.invalid.password
     });
 
     // Esperar a que se muestre el error en pantalla
@@ -109,8 +116,8 @@ describe('Login Component (Pruebas Unitarias)', () => {
     const passwordInput = screen.getByPlaceholderText('••••••••');
     const submitButton = screen.getByRole('button', { name: 'Entrar al Sistema' });
 
-    fireEvent.change(emailInput, { target: { value: 'admin@sima.com' } });
-    fireEvent.change(passwordInput, { target: { value: 'admin' } });
+    fireEvent.change(emailInput, { target: { value: TEST_CREDENTIALS.admin.email } });
+    fireEvent.change(passwordInput, { target: { value: TEST_CREDENTIALS.admin.password } });
     fireEvent.click(submitButton);
 
     await waitFor(() => {
@@ -137,8 +144,8 @@ describe('Login Component (Pruebas Unitarias)', () => {
     const passwordInput = screen.getByPlaceholderText('••••••••');
     const submitButton = screen.getByRole('button', { name: 'Entrar al Sistema' });
 
-    fireEvent.change(emailInput, { target: { value: 'estudiante@sima.com' } });
-    fireEvent.change(passwordInput, { target: { value: 'estudiante' } });
+    fireEvent.change(emailInput, { target: { value: TEST_CREDENTIALS.student.email } });
+    fireEvent.change(passwordInput, { target: { value: TEST_CREDENTIALS.student.password } });
     fireEvent.click(submitButton);
 
     await waitFor(() => {

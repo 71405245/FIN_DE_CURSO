@@ -1,413 +1,309 @@
 const Seccion = require('../models/Seccion');
 const User = require('../models/User');
+const asyncWrapper = require('../middleware/asyncWrapper');
 
-const MAX_HORAS = 48;
+// ── Helpers de Cálculo ──────────────────────────────────────────────────────
 
-// ── Helpers ─────────────────────────────────────────────────────────────────
-
-/** Convierte "HH:MM" a número decimal de horas */
-function horaADecimal(str) {
-  if (!str) return 0;
-  const [h, m] = str.split(':').map(Number);
-  return h + (m || 0) / 60;
+function calcularHorasSeccion(s) {
+  if (!s.horaInicio || !s.horaFin || !s.dias) return 0;
+  const [hI, mI] = s.horaInicio.split(':').map(Number);
+  const [hF, mF] = s.horaFin.split(':').map(Number);
+  const horasPorSesion = (hF * 60 + mF - (hI * 60 + mI)) / 60;
+  return Math.max(0, horasPorSesion * s.dias.length);
 }
 
-/**
- * Calcula las horas semanales que aporta una sección.
- * Fórmula: (horaFin - horaInicio) × cantidad_de_días_en_semana
- */
-function calcularHorasSeccion(horaInicio, horaFin, dias) {
-  const duracion = horaADecimal(horaFin) - horaADecimal(horaInicio);
-  const numDias = Array.isArray(dias) ? dias.length : 0;
-  return Math.max(0, duracion * numDias);
-}
-
-/** Verifica si dos secciones tienen conflicto horario */
-function hayConflicto(s1, s2) {
-  if (!s1.dias || !s2.dias || !s1.horaInicio || !s2.horaInicio) return false;
-  const diasComunes = s1.dias.filter(d => s2.dias.includes(d));
-  if (diasComunes.length === 0) return false;
-  return s1.horaInicio < s2.horaFin && s2.horaInicio < s1.horaFin;
-}
-
-/** Clasifica el estado de carga de un docente */
-function estadoCarga(horas) {
-  if (horas > MAX_HORAS) return 'exceso';
-  if (horas >= 40) return 'limite';
+function clasificarEstadoDocente(totalHoras) {
+  if (totalHoras > 48) return 'exceso';
+  if (totalHoras >= 40) return 'limite';
   return 'normal';
 }
 
-// ── getStats ─────────────────────────────────────────────────────────────────
+function detectarConflictos(secciones) {
+  const conflictosDocente = [];
+  const conflictosAula = [];
 
-exports.getStats = async (req, res) => {
-  try {
-    // [OPTIMIZACIÓN 1] Evitar descargar ObjectIds de estudiantesMatriculados usando Agregación y $size
-    let secciones = await Seccion.aggregate([
-      {
-        $project: {
-          codigoSeccion: 1,
-          curso: 1,
-          docente: 1,
-          dias: 1,
-          horaInicio: 1,
-          horaFin: 1,
-          aula: 1,
-          cupoMaximo: 1,
-          horario: 1,
-          estudiantesMatriculadosCount: { $size: { $ifNull: ["$estudiantesMatriculados", []] } }
-        }
-      }
-    ]);
+  for (let i = 0; i < secciones.length; i++) {
+    for (let j = i + 1; j < secciones.length; j++) {
+      const s1 = secciones[i];
+      const s2 = secciones[j];
+      if (!s1.dias || !s2.dias || !s1.horaInicio || !s2.horaInicio) continue;
 
-    // [OPTIMIZACIÓN 1] Poblar referencias en memoria
-    secciones = await Seccion.populate(secciones, [
-      { path: 'curso', select: 'nombre codigo' },
-      { path: 'docente', select: 'nombre apellidos' }
-    ]);
+      const diasComunes = s1.dias.filter(d => s2.dias.includes(d));
+      if (diasComunes.length === 0) continue;
+      const seCruzan = s1.horaInicio < s2.horaFin && s2.horaInicio < s1.horaFin;
+      if (!seCruzan) continue;
 
-    const totalSecciones = secciones.length;
-    let totalMatriculados = 0;
-    let totalCupos = 0;
-    let salonesLlenos = 0;
+      const horario1 = `${s1.dias.join('/')} ${s1.horaInicio}-${s1.horaFin}`;
+      const horario2 = `${s2.dias.join('/')} ${s2.horaInicio}-${s2.horaFin}`;
+      const curso1 = s1.curso?.nombre || s1.curso;
+      const curso2 = s2.curso?.nombre || s2.curso;
 
-    const cargaPorDia = { Lunes: 0, Martes: 0, Miércoles: 0, Jueves: 0, Viernes: 0, Sábado: 0, Domingo: 0 };
-    const turnos = { Mañana: 0, Tarde: 0, Noche: 0 };
-    const cargaDocente = {};
-    const distOcupacion = { '0-24%': 0, '25-49%': 0, '50-74%': 0, '75-99%': 0, '100%': 0 };
-    const docentesConSeccion = new Set();
-    const seccionesSinAsignar = [];
-
-    for (const s of secciones) {
-      if (!s.docente) {
-        seccionesSinAsignar.push({
-          _id: s._id,
-          codigoSeccion: s.codigoSeccion,
-          curso: s.curso?.nombre,
-          dias: s.dias,
-          horaInicio: s.horaInicio,
-          horaFin: s.horaFin,
-          aula: s.aula,
-          horario: s.horario
+      const mismoDocente = s1.docente && s2.docente &&
+        String(s1.docente._id || s1.docente) === String(s2.docente._id || s2.docente);
+      if (mismoDocente) {
+        const nombreDocente = s1.docente.nombre && s1.docente.apellidos
+          ? `${s1.docente.nombre} ${s1.docente.apellidos}`
+          : String(s1.docente);
+        conflictosDocente.push({
+          docente: nombreDocente,
+          seccion1: { curso: curso1, horario: horario1 },
+          seccion2: { curso: curso2, horario: horario2 }
         });
       }
 
-      const mat = s.estudiantesMatriculadosCount || 0;
-      const cupo = s.cupoMaximo || 30;
-      totalMatriculados += mat;
-      totalCupos += cupo;
-      if (mat >= cupo) salonesLlenos++;
-
-      const pct = cupo > 0 ? (mat / cupo) * 100 : 0;
-      if (pct < 25) distOcupacion['0-24%']++;
-      else if (pct < 50) distOcupacion['25-49%']++;
-      else if (pct < 75) distOcupacion['50-74%']++;
-      else if (pct < 100) distOcupacion['75-99%']++;
-      else distOcupacion['100%']++;
-
-      if (s.dias) s.dias.forEach(d => { if (cargaPorDia[d] !== undefined) cargaPorDia[d]++; });
-
-      if (s.horaInicio) {
-        const h = parseInt(s.horaInicio.split(':')[0]);
-        if (h < 13) turnos['Mañana']++;
-        else if (h < 18) turnos['Tarde']++;
-        else turnos['Noche']++;
-      }
-
-      if (s.docente) {
-        const did = String(s.docente._id);
-        docentesConSeccion.add(did);
-        if (!cargaDocente[did]) {
-          cargaDocente[did] = {
-            nombre: `${s.docente.nombre} ${s.docente.apellidos}`,
-            secciones: 0,
-            horasSemanales: 0,
-          };
-        }
-        cargaDocente[did].secciones++;
-        cargaDocente[did].horasSemanales += calcularHorasSeccion(s.horaInicio, s.horaFin, s.dias);
+      const mismaAula = s1.aula && s2.aula && s1.aula === s2.aula;
+      if (mismaAula) {
+        conflictosAula.push({
+          aula: s1.aula,
+          seccion1: { curso: curso1, horario: horario1 },
+          seccion2: { curso: curso2, horario: horario2 }
+        });
       }
     }
-
-    const histogramaCarga = {
-      '0-10h': 0, '11-20h': 0, '21-30h': 0, '31-40h': 0, '41-48h': 0, '>48h': 0
-    };
-
-    // Redondear horas a 1 decimal y llenar histograma
-    Object.values(cargaDocente).forEach(d => {
-      d.horasSemanales = Math.round(d.horasSemanales * 10) / 10;
-      if (d.horasSemanales <= 10) histogramaCarga['0-10h']++;
-      else if (d.horasSemanales <= 20) histogramaCarga['11-20h']++;
-      else if (d.horasSemanales <= 30) histogramaCarga['21-30h']++;
-      else if (d.horasSemanales <= 40) histogramaCarga['31-40h']++;
-      else if (d.horasSemanales <= MAX_HORAS) histogramaCarga['41-48h']++;
-      else histogramaCarga['>48h']++;
-    });
-
-    // Top 10 docentes por horas semanales
-    const topDocentes = Object.values(cargaDocente)
-      .sort((a, b) => b.horasSemanales - a.horasSemanales)
-      .slice(0, 10);
-
-    // KPI: docentes en exceso (> 48h)
-    const docentesEnExceso = Object.values(cargaDocente).filter(d => d.horasSemanales > MAX_HORAS).length;
-
-    // Conflictos de horario
-    const conflictosDocente = [];
-    const conflictosAula = [];
-    for (let i = 0; i < secciones.length; i++) {
-      for (let j = i + 1; j < secciones.length; j++) {
-        const a = secciones[i], b = secciones[j];
-        if (!hayConflicto(a, b)) continue;
-        if (a.docente && b.docente && String(a.docente._id) === String(b.docente._id)) {
-          conflictosDocente.push({
-            docente: `${a.docente.nombre} ${a.docente.apellidos}`,
-            seccion1: { codigo: a.codigoSeccion, curso: a.curso?.nombre, horario: a.horario },
-            seccion2: { codigo: b.codigoSeccion, curso: b.curso?.nombre, horario: b.horario },
-          });
-        }
-        if (a.aula && b.aula && a.aula.trim().toLowerCase() === b.aula.trim().toLowerCase()) {
-          conflictosAula.push({
-            aula: a.aula,
-            seccion1: { codigo: a.codigoSeccion, curso: a.curso?.nombre, horario: a.horario },
-            seccion2: { codigo: b.codigoSeccion, curso: b.curso?.nombre, horario: b.horario },
-          });
-        }
-      }
-    }
-
-    // Salones casi llenos (≥80%)
-    const casiLlenos = secciones
-      .filter(s => {
-        const pct = s.cupoMaximo > 0 ? (s.estudiantesMatriculadosCount || 0) / s.cupoMaximo : 0;
-        return pct >= 0.8 && pct < 1;
-      })
-      .map(s => ({
-        codigo: s.codigoSeccion,
-        curso: s.curso?.nombre,
-        matriculados: s.estudiantesMatriculadosCount || 0,
-        cupo: s.cupoMaximo,
-        pct: Math.round(((s.estudiantesMatriculadosCount || 0) / s.cupoMaximo) * 100),
-      }))
-      .sort((a, b) => b.pct - a.pct);
-
-    // Docentes que superan las 48h (criterio real)
-    const docentesSobrecargados = Object.values(cargaDocente)
-      .filter(d => d.horasSemanales > MAX_HORAS)
-      .sort((a, b) => b.horasSemanales - a.horasSemanales);
-
-    res.json({
-      kpis: {
-        totalSecciones,
-        porcentajeOcupacion: totalCupos > 0 ? Math.round((totalMatriculados / totalCupos) * 100) : 0,
-        salonesLlenos,
-        cuposDisponibles: totalCupos - totalMatriculados,
-        docentesConSeccion: docentesConSeccion.size,
-        docentesEnExceso,
-      },
-      graficos: {
-        cargaPorDia,
-        turnos,
-        topDocentes,
-        distOcupacion,
-        histogramaCarga,
-      },
-      alertas: {
-        conflictosDocente: conflictosDocente.slice(0, 20),
-        conflictosAula: conflictosAula.slice(0, 20),
-        casiLlenos: casiLlenos.slice(0, 20),
-        docentesSobrecargados,
-        seccionesSinAsignar,
-      },
-      secciones: secciones.map(s => ({
-        _id: s._id,
-        codigoSeccion: s.codigoSeccion,
-        curso: s.curso,
-        docente: s.docente,
-        dias: s.dias,
-        horaInicio: s.horaInicio,
-        horaFin: s.horaFin,
-        aula: s.aula,
-        horario: s.horario,
-        matriculados: s.estudiantesMatriculadosCount || 0,
-        cupoMaximo: s.cupoMaximo,
-      })),
-    });
-  } catch (err) {
-    console.error('Error en planificacion/stats:', err);
-    res.status(500).json({ msg: 'Error al obtener estadísticas de planificación' });
   }
-};
+  return { conflictosDocente, conflictosAula };
+}
 
-// ── getCargaHoraria ───────────────────────────────────────────────────────────
+function calcularHistogramaCarga(docentes) {
+  const hist = { '0-10h': 0, '11-20h': 0, '21-30h': 0, '31-40h': 0, '41-48h': 0, '>48h': 0 };
+  docentes.forEach(d => {
+    const h = d.totalHoras;
+    if (h <= 10) hist['0-10h']++;
+    else if (h <= 20) hist['11-20h']++;
+    else if (h <= 30) hist['21-30h']++;
+    else if (h <= 40) hist['31-40h']++;
+    else if (h <= 48) hist['41-48h']++;
+    else hist['>48h']++;
+  });
+  return hist;
+}
 
-exports.getCargaHoraria = async (req, res) => {
-  try {
-    const secciones = await Seccion.find()
-      .populate('curso', 'nombre codigo')
-      .populate('docente', 'nombre apellidos email')
-      .lean();
+function calcularCargaPorDia(secciones) {
+  const dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
+  const carga = {};
+  dias.forEach(d => { carga[d] = 0; });
+  secciones.forEach(s => {
+    (s.dias || []).forEach(d => { if (carga[d] !== undefined) carga[d]++; });
+  });
+  return carga;
+}
 
-    // Agrupar secciones por docente
-    const porDocente = {};
-    for (const s of secciones) {
-      if (!s.docente) continue;
-      const did = String(s.docente._id);
-      if (!porDocente[did]) {
-        porDocente[did] = {
-          _id: did,
-          nombre: `${s.docente.nombre} ${s.docente.apellidos}`,
-          email: s.docente.email || '',
-          secciones: [],
-          totalHoras: 0,
-        };
-      }
-      const horas = calcularHorasSeccion(s.horaInicio, s.horaFin, s.dias);
-      porDocente[did].totalHoras += horas;
-      porDocente[did].secciones.push({
+function calcularDistOcupacion(secciones) {
+  const dist = { '0-24%': 0, '25-49%': 0, '50-74%': 0, '75-99%': 0, '100%': 0 };
+  secciones.forEach(s => {
+    if (!s.cupoMaximo) return;
+    const pct = (s.estudiantesMatriculados.length / s.cupoMaximo) * 100;
+    if (pct < 25) dist['0-24%']++;
+    else if (pct < 50) dist['25-49%']++;
+    else if (pct < 75) dist['50-74%']++;
+    else if (pct < 100) dist['75-99%']++;
+    else dist['100%']++;
+  });
+  return dist;
+}
+
+// ── Controladores ─────────────────────────────────────────────────────────────
+
+exports.getPlanificacionStats = asyncWrapper(async (req, res) => {
+  const [secciones, docentes] = await Promise.all([
+    Seccion.find().populate('curso', 'nombre creditos').populate('docente', 'nombre apellidos').lean(),
+    User.find({ rol: 'DOCENTE' }).lean()
+  ]);
+
+  const seccionesSinAsignar = secciones
+    .filter(s => !s.docente)
+    .map(s => ({
+      _id: s._id,
+      codigoSeccion: s.codigoSeccion,
+      curso: s.curso?.nombre || 'N/A',
+      dias: s.dias,
+      horaInicio: s.horaInicio,
+      horaFin: s.horaFin,
+      aula: s.aula
+    }));
+
+  const salonesLlenos = secciones.filter(s => s.estudiantesMatriculados.length >= s.cupoMaximo).length;
+  const ocupTotal = secciones.reduce((a, s) => a + s.estudiantesMatriculados.length, 0);
+  const capTotal = secciones.reduce((a, s) => a + (s.cupoMaximo || 0), 0);
+  const pctOcup = capTotal > 0 ? Math.round((ocupTotal / capTotal) * 100) : 0;
+
+  const docentesSecciones = {};
+  secciones.forEach(s => {
+    if (!s.docente) return;
+    const id = String(s.docente._id || s.docente);
+    if (!docentesSecciones[id]) docentesSecciones[id] = { horas: 0, count: 0 };
+    docentesSecciones[id].horas += calcularHorasSeccion(s);
+    docentesSecciones[id].count++;
+  });
+
+  const totalDocentes = docentes.length;
+  const docentesConSeccion = Object.keys(docentesSecciones).length;
+  const docentesEnExceso = Object.values(docentesSecciones).filter(d => d.horas > 48).length;
+
+  const { conflictosDocente, conflictosAula } = detectarConflictos(secciones);
+
+  const casiLlenos = secciones
+    .filter(s => s.cupoMaximo > 0 && (s.estudiantesMatriculados.length / s.cupoMaximo) >= 0.8 && s.estudiantesMatriculados.length < s.cupoMaximo)
+    .map(s => ({
+      _id: s._id,
+      codigo: s.codigoSeccion,
+      curso: s.curso?.nombre || 'N/A',
+      pct: Math.round((s.estudiantesMatriculados.length / s.cupoMaximo) * 100)
+    }))
+    .sort((a, b) => b.pct - a.pct);
+
+  const docentesArr = docentes.map(d => ({
+    horas: docentesSecciones[String(d._id)]?.horas || 0
+  }));
+
+  res.json({
+    kpis: {
+      totalSecciones: secciones.length,
+      porcentajeOcupacion: pctOcup,
+      salonesLlenos,
+      totalDocentes,
+      docentesConSeccion,
+      docentesEnExceso
+    },
+    graficos: {
+      histogramaCarga: calcularHistogramaCarga(docentesArr),
+      cargaPorDia: calcularCargaPorDia(secciones),
+      distOcupacion: calcularDistOcupacion(secciones)
+    },
+    alertas: {
+      seccionesSinAsignar,
+      conflictosDocente,
+      conflictosAula,
+      casiLlenos
+    }
+  });
+});
+
+exports.getCargaHoraria = asyncWrapper(async (req, res) => {
+  const [docentes, secciones] = await Promise.all([
+    User.find({ rol: 'DOCENTE' }).select('nombre apellidos email turnoDisponibilidad').lean(),
+    Seccion.find({ docente: { $ne: null } })
+      .populate('curso', 'nombre creditos')
+      .populate('docente', '_id')
+      .lean()
+  ]);
+
+  const secsByDocente = {};
+  secciones.forEach(s => {
+    const id = String(s.docente?._id);
+    if (!secsByDocente[id]) secsByDocente[id] = [];
+    secsByDocente[id].push(s);
+  });
+
+  const result = docentes.map(d => {
+    const secsDoc = secsByDocente[String(d._id)] || [];
+    const totalHoras = secsDoc.reduce((acc, s) => acc + calcularHorasSeccion(s), 0);
+    return {
+      _id: d._id,
+      nombre: `${d.nombre} ${d.apellidos}`,
+      email: d.email,
+      turnoDisponibilidad: d.turnoDisponibilidad,
+      totalHoras: Math.round(totalHoras * 10) / 10,
+      estado: clasificarEstadoDocente(totalHoras),
+      secciones: secsDoc.map(s => ({
         _id: s._id,
         codigoSeccion: s.codigoSeccion,
-        curso: s.curso?.nombre || 'Sin curso',
+        curso: s.curso?.nombre || 'N/A',
         dias: s.dias || [],
         horaInicio: s.horaInicio,
         horaFin: s.horaFin,
         aula: s.aula,
-        horario: s.horario,
-        horas: Math.round(horas * 10) / 10,
-      });
-    }
-
-    const resultado = Object.values(porDocente)
-      .map(d => ({
-        ...d,
-        totalHoras: Math.round(d.totalHoras * 10) / 10,
-        estado: estadoCarga(d.totalHoras),
-        pctCarga: Math.min(Math.round((d.totalHoras / MAX_HORAS) * 100), 999),
+        horas: Math.round(calcularHorasSeccion(s) * 10) / 10
       }))
-      .sort((a, b) => b.totalHoras - a.totalHoras);
+    };
+  });
 
-    res.json({ maxHoras: MAX_HORAS, docentes: resultado });
-  } catch (err) {
-    console.error('Error en carga-horaria:', err);
-    res.status(500).json({ msg: 'Error al calcular carga horaria' });
-  }
-};
+  res.json({ docentes: result });
+});
 
-// ── Reasignación Inteligente ────────────────────────────────────────────────
+exports.getDocentesDisponibles = asyncWrapper(async (req, res) => {
+  const { horaInicio, horaFin, dias } = req.query;
+  const diasArr = dias ? dias.split(',') : [];
 
-exports.getDocentesDisponibles = async (req, res) => {
-  try {
-    const { horaInicio, horaFin, dias } = req.query;
-    if (!horaInicio || !horaFin || !dias) {
-      return res.status(400).json({ msg: 'horaInicio, horaFin y dias son requeridos' });
-    }
-    
-    const diasArray = dias.split(',');
-    const horasNuevas = calcularHorasSeccion(horaInicio, horaFin, diasArray);
+  const docentes = await User.find({ rol: 'DOCENTE' }).select('nombre apellidos turnoDisponibilidad').lean();
+  const secciones = await Seccion.find({ docente: { $ne: null } }).lean();
 
-    const docentes = await User.find({ rol: 'DOCENTE' }).lean();
-    const todasSecciones = await Seccion.find().lean();
-    
-    const docentesSugeridos = [];
+  const secsByDocente = {};
+  secciones.forEach(s => {
+    const id = String(s.docente);
+    if (!secsByDocente[id]) secsByDocente[id] = [];
+    secsByDocente[id].push(s);
+  });
 
-    for (const doc of docentes) {
-      const idDocente = String(doc._id);
-      const secDocente = todasSecciones.filter(s => s.docente && String(s.docente) === idDocente);
-      
-      let horasActuales = 0;
-      let tieneConflicto = false;
-      
-      for (const s of secDocente) {
-        horasActuales += calcularHorasSeccion(s.horaInicio, s.horaFin, s.dias);
-        if (hayConflicto(s, { horaInicio, horaFin, dias: diasArray })) {
-          tieneConflicto = true;
-        }
-      }
-      
-      if (!tieneConflicto && (horasActuales + horasNuevas <= MAX_HORAS)) {
-        docentesSugeridos.push({
-          _id: doc._id,
-          nombre: `${String(doc.nombre)} ${String(doc.apellidos)}`,
-          horasActuales: Math.round(horasActuales * 10) / 10,
-          horasProyectadas: Math.round((horasActuales + horasNuevas) * 10) / 10,
-          seccionesActuales: secDocente.length
-        });
-      }
-    }
+  const disponibles = docentes
+    .map(d => {
+      const secsDoc = secsByDocente[String(d._id)] || [];
+      const horasActuales = secsDoc.reduce((acc, s) => acc + calcularHorasSeccion(s), 0);
+      const [hI, mI] = horaInicio.split(':').map(Number);
+      const [hF, mF] = horaFin.split(':').map(Number);
+      const horasNuevas = ((hF * 60 + mF) - (hI * 60 + mI)) / 60 * diasArr.length;
+      const horasProyectadas = Math.round((horasActuales + horasNuevas) * 10) / 10;
 
-    docentesSugeridos.sort((a, b) => a.horasProyectadas - b.horasProyectadas);
-    res.json(docentesSugeridos);
-  } catch (err) {
-    console.error('Error buscando docentes disponibles:', err);
-    res.status(500).json({ msg: 'Error al buscar docentes' });
-  }
-};
+      const tieneCruce = secsDoc.some(s => {
+        if (!s.dias || !s.horaInicio || !s.horaFin) return false;
+        const diasComunes = s.dias.filter(d => diasArr.includes(d));
+        if (diasComunes.length === 0) return false;
+        return s.horaInicio < horaFin && horaInicio < s.horaFin;
+      });
 
-exports.reasignarDocente = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { docenteId } = req.body;
-    
-    const seccion = await Seccion.findById(id);
-    if (!seccion) return res.status(404).json({ msg: 'Sección no encontrada' });
-    
-    seccion.docente = docenteId;
-    await seccion.save();
-    
-    res.json({ msg: 'Docente reasignado correctamente' });
-  } catch (err) {
-    console.error('Error reasignando docente:', err);
-    res.status(500).json({ msg: 'Error al reasignar docente' });
-  }
-};
+      return { _id: d._id, nombre: `${d.nombre} ${d.apellidos}`, horasActuales: Math.round(horasActuales * 10) / 10, horasProyectadas, tieneCruce };
+    })
+    .filter(d => !d.tieneCruce && d.horasProyectadas <= 48)
+    .sort((a, b) => a.horasProyectadas - b.horasProyectadas);
 
-exports.liberarSeccion = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const seccion = await Seccion.findById(id);
-    if (!seccion) return res.status(404).json({ msg: 'Sección no encontrada' });
-    
-    seccion.docente = null; // Quitar docente
-    await seccion.save();
-    
-    res.json({ msg: 'Sección liberada correctamente' });
-  } catch (err) {
-    console.error('Error liberando sección:', err);
-    res.status(500).json({ msg: 'Error al liberar sección' });
-  }
-};
+  res.json(disponibles);
+});
 
-exports.editarHorario = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { dias, horaInicio, horaFin, aula } = req.body;
-    
-    const seccion = await Seccion.findById(id);
-    if (!seccion) return res.status(404).json({ msg: 'Sección no encontrada' });
-    
-    if (dias) seccion.dias = dias;
-    if (horaInicio) seccion.horaInicio = horaInicio;
-    if (horaFin) seccion.horaFin = horaFin;
-    if (aula) seccion.aula = aula;
-    
-    seccion.horario = `${(dias || seccion.dias).join(', ')} ${horaInicio || seccion.horaInicio} - ${horaFin || seccion.horaFin}`;
-    
-    await seccion.save();
-    
-    res.json({ msg: 'Horario actualizado correctamente', seccion });
-  } catch (err) {
-    console.error('Error editando horario:', err);
-    res.status(500).json({ msg: 'Error al editar horario' });
-  }
-};
+exports.reasignarDocente = asyncWrapper(async (req, res) => {
+  const { id } = req.params;
+  const { docenteId } = req.body;
+  const seccion = await Seccion.findByIdAndUpdate(id, { docente: docenteId }, { new: true });
+  if (!seccion) return res.status(404).json({ msg: 'Sección no encontrada' });
+  res.json({ msg: 'Docente reasignado correctamente', seccion });
+});
 
-// Export helpers for testing
-if (process.env.NODE_ENV === 'test') {
-  exports._helpers = {
-    horaADecimal,
-    calcularHorasSeccion,
-    hayConflicto,
-    estadoCarga
-  };
-}
+exports.liberarSeccion = asyncWrapper(async (req, res) => {
+  const { id } = req.params;
+  const seccion = await Seccion.findByIdAndUpdate(id, { docente: null }, { new: true });
+  if (!seccion) return res.status(404).json({ msg: 'Sección no encontrada' });
+  res.json({ msg: 'Sección liberada correctamente', seccion });
+});
 
+exports.editarHorarioSeccion = asyncWrapper(async (req, res) => {
+  const { id } = req.params;
+  const { dias, horaInicio, horaFin, aula } = req.body;
+  const seccion = await Seccion.findByIdAndUpdate(
+    id,
+    { dias, horaInicio, horaFin, aula },
+    { new: true }
+  );
+  if (!seccion) return res.status(404).json({ msg: 'Sección no encontrada' });
+  res.json({ msg: 'Horario actualizado correctamente', seccion });
+});
 
+exports.getServerStats = asyncWrapper(async (req, res) => {
+  const os = require('os');
+  const cpus = os.cpus();
+  const totalMem = os.totalmem();
+  const freeMem = os.freemem();
+  const usedMem = totalMem - freeMem;
+  const uptimeSecs = process.uptime();
+
+  const cpuUsage = cpus.reduce((acc, cpu) => {
+    const total = Object.values(cpu.times).reduce((a, b) => a + b, 0);
+    const idle = cpu.times.idle;
+    return acc + ((total - idle) / total) * 100;
+  }, 0) / cpus.length;
+
+  res.json({
+    cpu: Math.round(cpuUsage),
+    ramUsada: Math.round(usedMem / 1024 / 1024),
+    ramTotal: Math.round(totalMem / 1024 / 1024),
+    uptime: uptimeSecs
+  });
+});

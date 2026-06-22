@@ -109,32 +109,33 @@ function EstudiantesManager() {
         </h3>
         <form onSubmit={handleSubmit} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '1rem', alignItems: 'end' }}>
           <div>
-            <label style={labelStyle}>Nombre *</label>
-            <input placeholder="Nombre" value={form.nombre} onChange={e=>setForm({...form, nombre: e.target.value})} required />
+            <label htmlFor="est-nombre" style={labelStyle}>Nombre *</label>
+            <input id="est-nombre" placeholder="Nombre" value={form.nombre} onChange={e=>setForm({...form, nombre: e.target.value})} required />
           </div>
           <div>
-            <label style={labelStyle}>Apellidos *</label>
-            <input placeholder="Apellidos" value={form.apellidos} onChange={e=>setForm({...form, apellidos: e.target.value})} required />
+            <label htmlFor="est-apellidos" style={labelStyle}>Apellidos *</label>
+            <input id="est-apellidos" placeholder="Apellidos" value={form.apellidos} onChange={e=>setForm({...form, apellidos: e.target.value})} required />
           </div>
           <div>
-            <label style={labelStyle}>Correo Electrónico *</label>
-            <input type="email" placeholder="ejemplo@alumno.edu" value={form.email} onChange={e=>setForm({...form, email: e.target.value})} required />
+            <label htmlFor="est-email" style={labelStyle}>Correo Electrónico *</label>
+            <input id="est-email" type="email" placeholder="ejemplo@alumno.edu" value={form.email} onChange={e=>setForm({...form, email: e.target.value})} required />
           </div>
           <div>
-            <label style={labelStyle}>{editId ? 'Nueva Clave (Opcional)' : 'Contraseña Temporal *'}</label>
-            <input type="password" placeholder="••••••••" value={form.password} onChange={e=>setForm({...form, password: e.target.value})} required={!editId} />
+            <label htmlFor="est-password" style={labelStyle}>{editId ? 'Nueva Clave (Opcional)' : 'Contraseña Temporal *'}</label>
+            <input id="est-password" type="password" placeholder="••••••••" value={form.password} onChange={e=>setForm({...form, password: e.target.value})} required={!editId} />
           </div>
           <div style={{ gridColumn: 'span 2' }}>
-            <label style={labelStyle}>Carrera del Alumno *</label>
-            <select value={form.carrera} onChange={e=>setForm({...form, carrera: e.target.value})} required>
+            <label htmlFor="est-carrera" style={labelStyle}>Carrera del Alumno *</label>
+            <select id="est-carrera" value={form.carrera} onChange={e=>setForm({...form, carrera: e.target.value})} required>
               <option value="">Seleccione Carrera</option>
               {carreras.map(c => <option key={c._id} value={c._id}>{c.nombre}</option>)}
             </select>
           </div>
           <div>
-            <label style={labelStyle}>Ciclo Actual *</label>
-            <input type="number" placeholder="Ej. 1" value={form.cicloActual} onChange={e=>setForm({...form, cicloActual: Number(e.target.value)})} required min="1" max="10"/>
+            <label htmlFor="est-ciclo" style={labelStyle}>Ciclo Actual *</label>
+            <input id="est-ciclo" type="number" placeholder="Ej. 1" value={form.cicloActual} onChange={e=>setForm({...form, cicloActual: Number(e.target.value)})} required min="1" max="10"/>
           </div>
+
           
           <div style={{ display: 'flex', gap: '0.5rem' }}>
             <button type="submit" style={btnStyle}><Plus size={18}/> {editId ? 'Guardar' : 'Matricular'}</button>

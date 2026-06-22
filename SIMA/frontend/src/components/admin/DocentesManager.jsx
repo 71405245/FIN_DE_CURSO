@@ -101,14 +101,15 @@ function DocentesManager() {
       <div className="modern-card" style={{ marginBottom: '2rem' }}>
         <h3 style={{ marginBottom: '1.25rem', fontSize: '1.1rem' }}>{editId ? 'Editar Docente' : 'Crear Nuevo Docente'}</h3>
         <form onSubmit={handleSubmit} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', alignItems: 'end' }}>
-          <div><label style={labelStyle}>Nombre</label><input placeholder="Nombre" value={form.nombre} onChange={e=>setForm({...form, nombre: e.target.value})} required /></div>
-          <div><label style={labelStyle}>Apellidos</label><input placeholder="Apellidos" value={form.apellidos} onChange={e=>setForm({...form, apellidos: e.target.value})} required /></div>
-          <div><label style={labelStyle}>Correo Electrónico</label><input type="email" placeholder="ejemplo@profesor.edu" value={form.email} onChange={e=>setForm({...form, email: e.target.value})} required /></div>
-          <div><label style={labelStyle}>{editId ? 'Nueva Contraseña (Opcional)' : 'Contraseña Temporal'}</label><input type="password" placeholder="••••••••" value={form.password} onChange={e=>setForm({...form, password: e.target.value})} required={!editId} /></div>
+          <div><label htmlFor="doc-nombre" style={labelStyle}>Nombre</label><input id="doc-nombre" placeholder="Nombre" value={form.nombre} onChange={e=>setForm({...form, nombre: e.target.value})} required /></div>
+          <div><label htmlFor="doc-apellidos" style={labelStyle}>Apellidos</label><input id="doc-apellidos" placeholder="Apellidos" value={form.apellidos} onChange={e=>setForm({...form, apellidos: e.target.value})} required /></div>
+          <div><label htmlFor="doc-email" style={labelStyle}>Correo Electrónico</label><input id="doc-email" type="email" placeholder="ejemplo@profesor.edu" value={form.email} onChange={e=>setForm({...form, email: e.target.value})} required /></div>
+          <div><label htmlFor="doc-password" style={labelStyle}>{editId ? 'Nueva Contraseña (Opcional)' : 'Contraseña Temporal'}</label><input id="doc-password" type="password" placeholder="••••••••" value={form.password} onChange={e=>setForm({...form, password: e.target.value})} required={!editId} /></div>
           
           <div style={{ gridColumn: '1 / -1', marginTop: '0.5rem' }}>
-            <label style={labelStyle}>Turno de Disponibilidad</label>
-            <select value={form.turnoDisponibilidad} onChange={e=>setForm({...form, turnoDisponibilidad: e.target.value})} style={{ width: '100%', padding: '10px 14px', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--bg-color)', color: 'var(--text-main)', fontSize: '0.9rem', cursor: 'pointer', maxWidth: '300px' }}>
+            <label htmlFor="doc-turno" style={labelStyle}>Turno de Disponibilidad</label>
+            <select id="doc-turno" value={form.turnoDisponibilidad} onChange={e=>setForm({...form, turnoDisponibilidad: e.target.value})} style={{ width: '100%', padding: '10px 14px', borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--bg-color)', color: 'var(--text-main)', fontSize: '0.9rem', cursor: 'pointer', maxWidth: '300px' }}>
+
               <option value="Completo">Tiempo Completo</option>
               <option value="Mañana">Solo Mañanas (08:00 - 13:00)</option>
               <option value="Tarde">Solo Tardes (13:00 - 18:00)</option>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Plus, BookOpen, Edit2, Trash2, Search, Filter, ChevronDown, GitBranch, Tag } from 'lucide-react';
+import { Plus, BookOpen, Edit2, Trash2, Search } from 'lucide-react';
+
 
 const EMPTY_FORM = {
   codigo: '', nombre: '', creditos: '', carrera: '',
@@ -159,25 +160,27 @@ function CursosManager() {
           {/* Fila 2: Créditos | Ciclo | Carrera | Tipo */}
           <div style={{ display: 'grid', gridTemplateColumns: '100px 100px 1fr 180px', gap: '1rem', marginBottom: '1rem' }}>
             <div>
-              <label style={labelStyle}>Créditos *</label>
-              <input type="number" min="0" max="12" placeholder="4" value={form.creditos}
+              <label htmlFor="curso-creditos" style={labelStyle}>Créditos *</label>
+              <input id="curso-creditos" type="number" min="0" max="12" placeholder="4" value={form.creditos}
                 onChange={e => setForm({ ...form, creditos: e.target.value })} required />
             </div>
             <div>
-              <label style={labelStyle}>Ciclo *</label>
-              <input type="number" min="1" max="14" placeholder="1" value={form.ciclo}
+              <label htmlFor="curso-ciclo" style={labelStyle}>Ciclo *</label>
+              <input id="curso-ciclo" type="number" min="1" max="14" placeholder="1" value={form.ciclo}
                 onChange={e => setForm({ ...form, ciclo: e.target.value })} required />
             </div>
             <div>
-              <label style={labelStyle}>Carrera *</label>
-              <select value={form.carrera} onChange={e => setForm({ ...form, carrera: e.target.value })} required>
+              <label htmlFor="curso-carrera" style={labelStyle}>Carrera *</label>
+              <select id="curso-carrera" value={form.carrera} onChange={e => setForm({ ...form, carrera: e.target.value })} required>
+
                 <option value="">Seleccione una carrera</option>
                 {carreras.map(c => <option key={c._id} value={c._id}>{c.nombre}</option>)}
               </select>
             </div>
             <div>
-              <label style={labelStyle}>Tipo</label>
-              <select value={form.tipo} onChange={e => setForm({ ...form, tipo: e.target.value })}>
+              <label htmlFor="curso-tipo" style={labelStyle}>Tipo</label>
+              <select id="curso-tipo" value={form.tipo} onChange={e => setForm({ ...form, tipo: e.target.value })}>
+
                 <option value="">— Sin tipo —</option>
                 {TIPO_OPTIONS.map(t => <option key={t} value={t}>{t}</option>)}
               </select>

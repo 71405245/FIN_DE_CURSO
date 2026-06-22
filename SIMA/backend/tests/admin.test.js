@@ -105,7 +105,7 @@ describe('Admin Controller (Panel Administrativo y CRUD)', () => {
       Carrera.find.mockResolvedValue([
         { _id: 'carr_1', nombre: 'Ingeniería de Sistemas' }
       ]);
-      
+
       // Mock de usuarios existentes para evitar duplicados en BD
       User.find.mockReturnValue({
         select: jest.fn().mockResolvedValue([{ email: 'old@sima.com' }])
@@ -213,7 +213,7 @@ describe('Admin Controller (Panel Administrativo y CRUD)', () => {
   describe('CRUD Cursos', () => {
     it('45. Debe crear, listar, actualizar y eliminar cursos con código único', async () => {
       req.body = { codigo: 'MAT1', nombre: 'Mate', creditos: 4 };
-      
+
       // Create
       Curso.findOne.mockResolvedValue(null); // No duplicado
       const saveMock = jest.fn().mockResolvedValue({ _id: 'curso1' });
@@ -230,6 +230,85 @@ describe('Admin Controller (Panel Administrativo y CRUD)', () => {
       Seccion.findOne.mockResolvedValue({ _id: 'seccion1' }); // Hay sección abierta
       await adminController.deleteCurso(req, res);
       expect(res.status).toHaveBeenCalledWith(400);
+    });
+  });
+
+  describe('CRUD Docentes', () => {
+    it('Debe crear, listar, actualizar y eliminar docentes', async () => {
+      // Create
+      req.body = { email: 'doc@sima.com', password: '123', nombre: 'Prof', apellidos: 'Sor' };
+      User.findOne.mockResolvedValue(null);
+      bcrypt.genSalt.mockResolvedValue('salt');
+      bcrypt.hash.mockResolvedValue('hashed');
+      const saveMock = jest.fn().mockResolvedValue({ nombre: 'Prof' });
+      User.mockImplementation(() => ({ save: saveMock }));
+
+      await adminController.createDocente(req, res);
+      expect(res.json).toHaveBeenCalled();
+      res.json.mockClear();
+
+      // List
+      req.query = { page: '1', limit: '10' };
+      User.countDocuments.mockResolvedValue(1);
+      const mockQuery = {
+        skip: jest.fn().mockReturnThis(),
+        limit: jest.fn().mockResolvedValue([{ nombre: 'Prof' }])
+      };
+      User.find.mockReturnValue({
+        select: jest.fn().mockReturnThis(),
+        populate: jest.fn().mockReturnThis(),
+        lean: jest.fn().mockReturnValue(mockQuery)
+      });
+
+      await adminController.getDocentes(req, res);
+      expect(res.json).toHaveBeenCalled();
+
+      // Update
+      req.params = { id: 'd1' };
+      req.body.password = 'new123';
+      User.findByIdAndUpdate.mockReturnValue({
+        populate: jest.fn().mockResolvedValue({ nombre: 'Prof Mod' })
+      });
+      await adminController.updateDocente(req, res);
+      expect(res.json).toHaveBeenCalled();
+
+      // Delete (sin secciones asignadas)
+      Seccion.findOne.mockResolvedValue(null);
+      User.findByIdAndDelete.mockResolvedValue(true);
+      await adminController.deleteDocente(req, res);
+      expect(res.json).toHaveBeenCalledWith({ msg: 'Docente eliminado' });
+    });
+  });
+
+  describe('CRUD Secciones', () => {
+    it('Debe crear, listar, actualizar y eliminar secciones', async () => {
+      // Create
+      req.body = { codigoSeccion: 'SEC1', cupoMaximo: 30 };
+      const saveMock = jest.fn().mockResolvedValue({ codigoSeccion: 'SEC1' });
+      Seccion.mockImplementation(() => ({ save: saveMock }));
+      await adminController.createSeccion(req, res);
+      expect(res.json).toHaveBeenCalled();
+
+      // List
+      req.query = { page: '1', limit: '10' };
+      Seccion.countDocuments.mockResolvedValue(1);
+      const mockQuery = {
+        skip: jest.fn().mockReturnThis(),
+        limit: jest.fn().mockResolvedValue([{ codigoSeccion: 'SEC1', estudiantesMatriculados: [] }])
+      };
+      Seccion.find.mockReturnValue({
+        populate: jest.fn().mockReturnThis(),
+        lean: jest.fn().mockReturnValue(mockQuery)
+      });
+      await adminController.getSecciones(req, res);
+      expect(res.json).toHaveBeenCalled();
+
+      // Delete (sin alumnos)
+      req.params = { id: 's1' };
+      Seccion.findById.mockResolvedValue({ estudiantesMatriculados: [] });
+      Seccion.findByIdAndDelete.mockResolvedValue(true);
+      await adminController.deleteSeccion(req, res);
+      expect(res.json).toHaveBeenCalledWith({ msg: 'Sección eliminada' });
     });
   });
 });

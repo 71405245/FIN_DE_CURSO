@@ -91,13 +91,13 @@ function CarrerasManager() {
         <form onSubmit={handleSubmit}
           style={{ display: 'grid', gridTemplateColumns: '1fr 2fr auto', gap: '1rem', alignItems: 'end' }}>
           <div>
-            <label style={labelStyle}>Nombre *</label>
-            <input placeholder="Ej. Ingeniería de Sistemas" value={form.nombre}
+            <label htmlFor="carrera-nombre" style={labelStyle}>Nombre *</label>
+            <input id="carrera-nombre" placeholder="Ej. Ingeniería de Sistemas" value={form.nombre}
               onChange={e => setForm({ ...form, nombre: e.target.value })} required />
           </div>
           <div>
-            <label style={labelStyle}>Descripción</label>
-            <input placeholder="Breve descripción del programa" value={form.descripcion}
+            <label htmlFor="carrera-desc" style={labelStyle}>Descripción</label>
+            <input id="carrera-desc" placeholder="Breve descripción del programa" value={form.descripcion}
               onChange={e => setForm({ ...form, descripcion: e.target.value })} />
           </div>
           <div style={{ display: 'flex', gap: '0.5rem' }}>
