@@ -210,8 +210,7 @@ Tras aplicar las mejoras se ejecutó nuevamente el análisis de SonarQube.
 ### Evidencia Comparativa
 
 **Figura 7. Comparación de métricas antes y después**
-
-> <img width="1600" height="788" alt="WhatsApp Image 2026-06-14 at 7 28 59 PM" src="https://github.com/user-attachments/assets/fa091707-2850-4370-a4a7-9c679f76d231" />
+> <img width="1315" height="851" alt="WhatsApp Image 2026-06-14 at 10 11 58 PM" src="https://github.com/user-attachments/assets/f31c8bda-0f80-4087-bed3-daee953991b8" />
 <img width="980" height="314" alt="WhatsApp Image 2026-06-22 at 12 44 45 AM (1)" src="https://github.com/user-attachments/assets/551feee4-9106-42f2-90ce-5ec7555f3269" />
 
 
