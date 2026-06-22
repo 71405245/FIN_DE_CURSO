@@ -13,6 +13,7 @@
 ## 1️⃣2️⃣ El Hallazgo Transversal Más Importante: El Pivote Tecnológico de Stack
 
  **el hallazgo más significativo de todo el análisis documental**, porque atraviesa y explica gran parte de las demás lecciones: **el proyecto cambió completamente su stack tecnológico a mitad de camino**, y este cambio **no quedó documentado formalmente como una decisión de proyecto** 
+ 
 ### 🔁 Evidencia del "antes" (stack original)
 
 | Documento | Evidencia textual |
