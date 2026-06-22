@@ -1,18 +1,29 @@
-# 📋 Backlog Detallado del Producto
+# Backlog Detallado del Producto - SIMA
 
 | ID Historia | Como (Rol) | Deseo | Para | ID Tarea | Descripción de la Tarea | Criterios de Aceptación | Prioridad | Estimación | Dependencias | Sprint | Estado | Responsable |
-|------------|------------|-------|------|----------|--------------------------|--------------------------|------------|-------------|---------------|--------|--------|-------------|
-| HU01 | Estudiante | Registrar preferencias | Generar horarios personalizados | T01 | Crear formulario de preferencias | Datos válidos se guardan correctamente | 8 | 5 | Ninguna | Sprint 3 | Por Hacer | Kevin |
-| HU01 | Estudiante | Registrar preferencias | Generar horarios personalizados | T02 | Validar campos obligatorios | Muestra error si faltan datos | 7 | 3 | T01 | Sprint 3 | Por Hacer | Jordan |
-| HU02 | Estudiante | Editar preferencias | Actualizar criterios | T03 | Actualizar datos en BD | Cambios se guardan correctamente | 6 | 3 | T01 | Sprint 3 | Por Hacer | Kevin |
-| HU03 | Estudiante | Ver cursos disponibles | Seleccionar materias | T04 | Listar cursos desde BD | Muestra cursos correctamente | 8 | 5 | Ninguna | Sprint 1 | Terminado | Jordan |
-| HU04 | Estudiante | Detectar cruces | Evitar conflictos | T05 | Comparar horarios | Detecta conflictos correctamente | 8 | 5 | T04 | Sprint 1 | Terminado | Kevin |
-| HU05 | Estudiante | Generar combinaciones | Elegir opciones válidas | T06 | Generar combinaciones válidas | Solo combinaciones sin conflicto | 10 | 8 | T05 | Sprint 1 | En Progreso | Kevin |
-| HU05 | Estudiante | Generar combinaciones | Elegir opciones válidas | T07 | Optimizar algoritmo | Tiempo menor a 5s | 8 | 8 | T06 | Sprint 2 | Terminado | Kevin |
-| HU06 | Estudiante | Recibir cursos seleccionados | Confirmar horario | T08 | Enviar horario seleccionado | Se guarda selección correctamente | 6 | 3 | T06 | Sprint 2 | Terminado | Jordan |
-| HU07 | Estudiante | Validar combinaciones | Evitar errores | T09 | Filtrar combinaciones inválidas | No muestra conflictos | 8 | 5 | T06 | Sprint 2 | En Progreso | Kevin |
-| HU08 | Usuario | Mostrar advertencias | Entender errores | T10 | Mostrar mensajes de error | Mensajes claros al usuario | 4 | 3 | T09 | Sprint 2 | Terminado | Jordan |
-| HU09 | Usuario | Soporte navegadores | Usar sistema correctamente | T11 | Detectar navegador no soportado | Muestra advertencia | 4 | 3 | Ninguna | Sprint 3 | Por Hacer | Jordan |
-| HU10 | Sistema | Optimizar generación | Mejorar rendimiento | T12 | Reducir tiempo de ejecución | Tiempo ≤ 5s | 7 | 5 | T06 | Sprint 3 | En Progreso | Kevin |
-| HU11 | Usuario | Flujo sencillo | Ahorrar tiempo | T13 | Reducir pasos del proceso | Flujo ≤ 3 min | 5 | 3 | T01 | Sprint 3 | Por Hacer | Jordan |
-| HU12 | Usuario | Interfaz amigable | Mejor experiencia | T14 | Ajustar estilos y scripts | UI clara y usable | 5 | 3 | Ninguna | Sprint 2 | En Progreso | Jordan |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| HU01 | Estudiante | Registrar mis preferencias horarias | Generar recomendaciones personalizadas | T01 | Crear formulario de preferencias de turno y días disponibles | La información se guarda correctamente en BD | 8 | 5 | Ninguna | Sprint 1 | Terminado | Kevin |
+| HU02 | Estudiante | Modificar mis preferencias | Mantener actualizado mi perfil académico | T02 | Implementar edición de preferencias del estudiante | Los cambios se actualizan correctamente | 6 | 3 | HU01 | Sprint 1 | Terminado | Kevin |
+| HU03 | Estudiante | Visualizar cursos disponibles | Conocer las materias habilitadas para matrícula | T03 | Consultar cursos desde MongoDB según carrera y ciclo | Lista correcta de cursos disponibles | 8 | 5 | BD | Sprint 1 | Terminado | Jordan |
+| HU04 | Estudiante | Revisar secciones disponibles | Elegir horarios adecuados | T04 | Mostrar secciones con docente, aula, cupos y horarios | Información académica visible correctamente | 8 | 5 | HU03 | Sprint 1 | Terminado | Jordan |
+| HU05 | Estudiante | Generar combinaciones de horarios | Encontrar opciones sin cruces | T05 | Implementar algoritmo DFS con Backtracking | Genera horarios válidos sin conflictos | 10 | 8 | HU04 | Sprint 2 | Terminado | Kevin |
+| HU06 | Estudiante | Recibir recomendaciones inteligentes | Elegir el mejor horario | T06 | Implementar scoring según preferencias del estudiante | Muestra alternativas ordenadas por prioridad | 10 | 8 | HU05 | Sprint 2 | Terminado | Kevin |
+| HU07 | Estudiante | Confirmar horario seleccionado | Guardar mi matrícula correctamente | T07 | Registrar selección final de horario | La matrícula queda almacenada correctamente | 8 | 5 | HU06 | Sprint 2 | Terminado | Jordan |
+| HU08 | Estudiante | Evitar matricular cursos inválidos | Cumplir reglas académicas | T08 | Validar prerrequisitos y créditos máximos | Bloquea matrículas incorrectas | 10 | 5 | HU07 | Sprint 2 | Terminado | Kevin |
+| HU09 | Estudiante | Descargar mi horario | Tener mi información académica disponible | T09 | Generar PDF del horario seleccionado | PDF generado correctamente | 7 | 5 | HU07 | Sprint 3 | Terminado | Jordan |
+| HU10 | Usuario | Iniciar sesión en el sistema | Acceder de forma segura | T10 | Implementar autenticación JWT | Login funcional con roles | 10 | 5 | Ninguna | Sprint 1 | Terminado | Kevin |
+| HU11 | Administrador | Gestionar usuarios del sistema | Administrar estudiantes y docentes | T11 | Crear CRUD de usuarios | Usuarios registrados correctamente | 9 | 8 | HU10 | Sprint 3 | Terminado | Kevin |
+| HU12 | Administrador | Gestionar carreras y cursos | Mantener estructura académica | T12 | Implementar CRUD de carreras y cursos | Datos académicos administrables | 9 | 8 | HU11 | Sprint 3 | Terminado | Jordan |
+| HU13 | Administrador | Gestionar secciones y aulas | Organizar oferta académica | T13 | Crear administración de secciones, cupos y horarios | Secciones creadas sin conflictos | 10 | 8 | HU12 | Sprint 3 | Terminado | Kevin |
+| HU14 | Docente | Visualizar cursos asignados | Gestionar mi carga académica | T14 | Crear dashboard docente | Docente visualiza sus cursos correctamente | 8 | 5 | HU13 | Sprint 4 | Terminado | Jordan |
+| HU15 | Docente | Registrar calificaciones | Actualizar notas de estudiantes | T15 | Implementar módulo de notas | Notas válidas entre rango permitido | 9 | 5 | HU14 | Sprint 4 | Terminado | Jordan |
+| HU16 | Administrador | Controlar permisos del sistema | Proteger información académica | T16 | Implementar RBAC por roles | Cada rol accede solo a sus módulos | 10 | 5 | HU10 | Sprint 4 | Terminado | Kevin |
+| HU17 | Sistema | Proteger información sensible | Evitar vulnerabilidades | T17 | Implementar bcrypt, Helmet, Rate Limit y sanitización | Sistema protegido contra ataques comunes | 10 | 8 | HU16 | Sprint 4 | Terminado | Kevin |
+| HU18 | Usuario | Usar una interfaz accesible | Mejorar experiencia de uso | T18 | Aplicar WCAG 2.1 AA, ARIA y navegación teclado | Interfaz accesible y usable | 8 | 5 | Frontend | Sprint 5 | Terminado | Jordan |
+| HU19 | Usuario | Usar el sistema fácilmente | Mejorar experiencia general | T19 | Mejorar diseño UX/UI y evaluar SUS | Experiencia validada con buena usabilidad | 7 | 5 | HU18 | Sprint 5 | Terminado | Jordan |
+| HU20 | Administrador | Monitorear recursos del sistema | Conocer rendimiento del servidor | T20 | Implementar panel APM CPU/RAM | Métricas visibles en tiempo real | 8 | 8 | Backend | Sprint 5 | Terminado | Kevin |
+| HU21 | Sistema | Consumir menos recursos | Mejorar sostenibilidad | T21 | Aplicar Green Code, caché, buffer circular y optimización | Menor consumo de CPU/red | 7 | 8 | HU20 | Sprint 5 | Terminado | Kevin |
+| HU22 | Sistema | Ejecutar pruebas automatizadas | Garantizar calidad del software | T22 | Crear pruebas unitarias frontend/backend | Pruebas ejecutadas correctamente | 8 | 8 | Todo el sistema | Sprint 6 | Terminado | Equipo |
+| HU23 | Sistema | Validar funcionamiento completo | Detectar errores reales de usuario | T23 | Implementar pruebas E2E Cypress y Playwright | Flujos críticos aprobados | 9 | 8 | HU22 | Sprint 6 | Terminado | Equipo |
+| HU24 | Sistema | Mantener calidad del código | Reducir errores técnicos | T24 | Ejecutar análisis estático SonarQube | Código sin vulnerabilidades críticas | 8 | 5 | HU22 | Sprint 6 | Terminado | Kevin |
+| HU25 | Administrador | Tener reportes técnicos del sistema | Facilitar mantenimiento y seguimiento | T25 | Crear documentación técnica, arquitectura y métricas | Documentación completa del proyecto | 7 | 5 | Todo el sistema | Sprint 6 | Terminado | Equipo |
