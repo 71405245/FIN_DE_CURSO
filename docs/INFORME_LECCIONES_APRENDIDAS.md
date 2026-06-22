@@ -44,18 +44,24 @@ Aplicamos buenas prácticas de seguridad basadas en OWASP Top 10, logrando reduc
 
 ---
 
-## ⚡ 1.3 Optimización del rendimiento del sistema
 
-Se aplicaron técnicas de optimización como paginación, caché y reducción de consultas redundantes.
+## ⚡ 1.3 Optimización del rendimiento del sistema (Green Software + Indexación)
 
-| Métrica | Antes | Después | Mejora |
-|---|---|---|---|
-| Tiempo dashboard | 1.5s | 0.08s | -94.6% |
-| Tráfico de datos | 2.3 MB | 24 KB | -98.9% |
+Uno de los logros más importantes del proyecto fue la mejora progresiva del rendimiento del sistema. En una primera etapa, el sistema presentaba **lentitud significativa cuando se trabajaba con grandes volúmenes de datos**, especialmente en módulos como el listado de estudiantes, el dashboard administrativo y la generación de reportes. Esto se debía principalmente a consultas no optimizadas, falta de indexación en la base de datos, ausencia de paginación y procesamiento excesivo de información en cada solicitud.
 
-📌 **Evidencia:** `Optimizacion-y-Analisis.md`
+Posteriormente, se aplicó un proceso de **optimización y refactorización orientado a rendimiento y eficiencia energética (Green Software)**, lo que permitió mejorar de forma considerable el comportamiento del sistema bajo carga.
 
----
+Entre las mejoras implementadas destacan:
+
+- **Indexación de campos críticos en la base de datos**, lo que redujo significativamente los tiempos de búsqueda y filtrado en consultas frecuentes.
+- **Implementación de paginación en listados grandes**, evitando la carga completa de registros en memoria y mejorando la respuesta del frontend.
+- **Reducción de consultas redundantes y optimización de endpoints**, disminuyendo la carga del servidor.
+- **Uso de caché para consultas repetitivas**, evitando recomputación innecesaria de datos.
+- **Aplicación de principios de Green Software**, como la reducción de polling innecesario, optimización del consumo de recursos y mejora del uso del servidor bajo carga.
+
+Gracias a estas mejoras, el sistema pasó de ser **lento y poco eficiente con grandes volúmenes de datos**, a un sistema con **tiempos de respuesta mucho más rápidos, mayor estabilidad y mejor experiencia de usuario**, incluso en escenarios de alta demanda.
+
+📌 **Evidencia:** `Optimizacion-y-Analisis.md`, `aplicacion_greencode.md`
 
 ## ♿ 1.4 Usabilidad y accesibilidad
 
@@ -104,22 +110,7 @@ Se realizó un cambio de arquitectura sin registro formal de decisión.
 
 ---
 
-## 📄 2.2 Desalineación de documentación
-
-Parte de la documentación quedó desactualizada respecto al sistema final.
-
-| Documento | Estado |
-|---|---|
-| api.md | Obsoleto |
-| installation.md | Obsoleto |
-| diagrama ER | No corresponde a MongoDB |
-| arquitectura.md | Actual |
-
-📌 Problema: coexistencia de documentación de dos arquitecturas.
-
----
-
-## 🧪 2.3 Cobertura desigual de pruebas
+## 🧪 2.2 Cobertura desigual de pruebas
 
 La cobertura de pruebas no fue homogénea entre capas.
 
@@ -132,11 +123,24 @@ La cobertura de pruebas no fue homogénea entre capas.
 📌 Evidencia: `pruebas-backend.md`, `pruebas-frontend.md`, `pruebas-e2e.md`
 
 ---
+# 📌 3. Conclusión
 
-## ⚙️ 2.4 Error en pipeline de CI/CD
+Como equipo, concluimos que el proyecto SIMA ha sido exitoso en términos de implementación técnica, logrando desarrollar un sistema funcional, estable y con un alto nivel de complejidad resuelto, especialmente en el módulo de generación de horarios mediante inteligencia artificial, así como en los procesos de autenticación, gestión académica y administración del sistema.
 
-Se detectó un error en la configuración del workflow.
+Uno de los principales logros del proyecto fue la evolución significativa del rendimiento del sistema. En una primera etapa, el sistema presentaba **problemas serios de lentitud cuando se trabajaba con grandes volúmenes de datos**, especialmente en módulos como el listado de estudiantes, generación de reportes y dashboard administrativo. En ese contexto, las respuestas del sistema eran percibidas como lentas debido a consultas no optimizadas, ausencia de paginación, falta de índices en la base de datos y procesamiento innecesario de información en cada solicitud.
 
-```yaml
-off: ❌ (incorrecto)
-on:  ✅ (correcto)
+Sin embargo, a través de un proceso de **optimización progresiva y aplicación de prácticas de Green Software**, se logró una mejora sustancial del rendimiento general. Se implementaron técnicas como:
+
+- **Indexación de campos críticos en la base de datos**, mejorando significativamente el tiempo de respuesta en consultas frecuentes.
+- **Paginación de resultados**, evitando la carga masiva de registros en memoria y en el frontend.
+- **Reducción de consultas redundantes y consolidación de endpoints**, disminuyendo la carga del servidor.
+- **Uso de caché y control de peticiones repetitivas**, reduciendo el procesamiento innecesario.
+- **Aplicación de principios de Green Code**, como reducción de polling innecesario, uso de Page Visibility API y optimización del consumo de recursos.
+
+Gracias a estas mejoras, el sistema pasó de un comportamiento inicialmente lento bajo carga de datos, a un sistema **mucho más eficiente, con tiempos de respuesta considerablemente reducidos y mejor experiencia de usuario**, incluso en escenarios con mayor volumen de información.
+
+En paralelo, el proyecto también fortaleció su nivel de calidad mediante la incorporación de prácticas de seguridad basadas en OWASP, mejoras en accesibilidad WCAG, pruebas automatizadas y validación con usuarios reales, lo que permitió asegurar no solo un sistema funcional, sino también confiable y usable.
+
+No obstante, a nivel de gestión del proyecto, identificamos debilidades importantes relacionadas con la documentación y el control de cambios, como el cambio de arquitectura sin registro formal, la existencia de documentación desactualizada y el cierre incompleto de algunos artefactos de gestión (riesgos, impedimentos y retrospectivas). Estos aspectos afectan la trazabilidad del proyecto y representan oportunidades claras de mejora para futuros desarrollos.
+
+Finalmente, consideramos que este proyecto nos deja como aprendizaje principal que **la excelencia técnica debe ir acompañada de una gestión disciplinada del proyecto**, donde cada decisión arquitectónica, mejora de rendimiento y cambio estructural sea correctamente documentado, validado y cerrado. Solo de esta forma es posible garantizar la mantenibilidad, escalabilidad y comprensión del sistema a largo plazo.
