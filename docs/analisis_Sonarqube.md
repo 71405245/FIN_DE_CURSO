@@ -164,14 +164,9 @@ Las principales mejoras implementadas fueron:
 - Incorporación de nuevas pruebas automatizadas.
 - Incremento de cobertura de código.
 
-### Evidencia de Correcciones
-
-**Figura 5. Ejemplo de corrección implementada**
-
-> <img width="1359" height="440" alt="WhatsApp Image 2026-06-15 at 12 19 00 AM" src="https://github.com/user-attachments/assets/f33889bb-1d56-43dc-875e-8162fdfe58d6" />
 
 
----
+
 
 ## 3.6 Resultados Posteriores a las Correcciones
 
@@ -183,18 +178,22 @@ Tras aplicar las mejoras se ejecutó nuevamente el análisis de SonarQube.
 |----------|----------|
 | Vulnerabilities | 0 |
 | Reliability Issues | 27 |
-| Maintainability Issues | 18 |
-| Security Hotspots | 1 |
-| Coverage | 38.0 % |
-| Duplications | 5.9 % |
+| Maintainability Issues | 21 |
+| Security Hotspots | 0 |
+| Coverage | 38.7 % |
+| Duplications | 6.0 % |
 
 ### Dashboard Final
 
 **Figura 6. Dashboard general de SonarQube (Después)**
 
-> <img width="1600" height="788" alt="WhatsApp Image 2026-06-14 at 7 28 59 PM" src="https://github.com/user-attachments/assets/fa091707-2850-4370-a4a7-9c679f76d231" />
 
 
+<img width="980" height="314" alt="WhatsApp Image 2026-06-22 at 12 44 45 AM (1)" src="https://github.com/user-attachments/assets/551feee4-9106-42f2-90ce-5ec7555f3269" />
+
+
+
+---
 ---
 
 ## 3.7 Comparación Antes vs Después
@@ -203,17 +202,16 @@ Tras aplicar las mejoras se ejecutó nuevamente el análisis de SonarQube.
 |------------|---------|----------|---------|
 | Vulnerabilities | 23 | 0 | 100 % |
 | Reliability Issues | 173 | 27 | 84.4 % |
-| Maintainability Issues | 297 | 18 | 93.9 % |
-| Security Hotspots | 14 | 1 | 92.8 % |
-| Coverage | 16.0 % | 38.0 % | 137.5 % |
-| Duplications | 8.5 % | 5.9 % | 30.5 % |
+| Maintainability Issues | 297 | 21 | 93.9 % |
+| Security Hotspots | 14 | 0 | 100 % |
+| Coverage | 16.0 % | 38.7 % | 137.5 % |
+| Duplications | 8.5 % | 6.0 % | 30.5 % |
 
 ### Evidencia Comparativa
 
 **Figura 7. Comparación de métricas antes y después**
-
-> <img width="1139" height="487" alt="WhatsApp Image 2026-06-14 at 10 11 22 PM" src="https://github.com/user-attachments/assets/18d5b7e5-d9e4-4440-abd0-04061e94afc9" />
-> <img width="1359" height="440" alt="WhatsApp Image 2026-06-15 at 12 19 00 AM" src="https://github.com/user-attachments/assets/b0d443cb-237c-4e8c-985a-735fff8809e0" />
+> <img width="1315" height="851" alt="WhatsApp Image 2026-06-14 at 10 11 58 PM" src="https://github.com/user-attachments/assets/f31c8bda-0f80-4087-bed3-daee953991b8" />
+<img width="980" height="314" alt="WhatsApp Image 2026-06-22 at 12 44 45 AM (1)" src="https://github.com/user-attachments/assets/551feee4-9106-42f2-90ce-5ec7555f3269" />
 
 
 ---

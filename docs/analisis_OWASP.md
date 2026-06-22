@@ -209,7 +209,7 @@ Tras implementar las acciones correctivas se ejecutó una nueva evaluación de s
 | Indicador | Antes | Después |
 |------------|---------|---------|
 | Vulnerabilities | 23 | 0 |
-| Security Hotspots | 14 | 1 |
+| Security Hotspots | 14 | 0 |
 | Riesgo General | Alto | Bajo |
 | Security Rating | E | A |
 
@@ -227,7 +227,7 @@ Tras implementar las acciones correctivas se ejecutó una nueva evaluación de s
 | Métrica | Antes | Después | Mejora |
 |----------|----------|----------|----------|
 | Vulnerabilities | 23 | 0 | 100 % |
-| Security Hotspots | 14 | 1 | 92.8 % |
+| Security Hotspots | 14 | 0 | 100 % |
 | Riesgo General | Alto | Bajo | Mitigado |
 | Exposición de Seguridad | Elevada | Mínima | Reducida |
 
