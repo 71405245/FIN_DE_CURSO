@@ -168,7 +168,7 @@ Las principales mejoras implementadas fueron:
 
 **Figura 5. Ejemplo de corrección implementada**
 
-<img width="1600" height="847" alt="WhatsApp Image 2026-06-22 at 12.44.45 AM" src="https://github.com/user-attachments/assets/7b0e3f7c-0c6b-4b3c-baaf-8ab7de6e9d92" />
+<img width="980" height="314" alt="WhatsApp Image 2026-06-22 at 12 44 45 AM (1)" src="https://github.com/user-attachments/assets/551feee4-9106-42f2-90ce-5ec7555f3269" />
 
 
 ---
