@@ -36,7 +36,7 @@ Documentación inicial del proyecto, alineamiento de interesados y definición d
 - ❗ [Documento del Problema](docs/Problema.md)
 - 🎯 [Enfoque del Proyecto](docs/enfoque-proyecto.md)
 - 👥 [Equipo del Proyecto](docs/equipo-proyecto.md)
-
+- 📋 [Documentacion de capacitacion](docs/Documentacion_capacitacion.md)
 
 ---
 
