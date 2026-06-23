@@ -25,7 +25,7 @@ Describe el uso general del sistema SIMA desde la perspectiva del usuario final.
 | Consulta de horarios | Visualización de horarios generados por IA |
 | Navegación general | Uso de módulos del sistema |
 
-📌 Evidencia: `README.md`, `docs/usage.md`
+📌 Evidencia:  `docs/usage.md`
 
 ---
 
