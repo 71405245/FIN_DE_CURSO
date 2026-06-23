@@ -50,8 +50,7 @@ Planificación adaptativa basada en iteraciones, gestión de requerimientos, rec
 | 🔒 [Requerimientos No Funcionales](docs/requerimientos-no-funcionales.md) | 📆 [Cronograma](docs/cronograma-SIMA.png) |
 | 📚 [Backlog Producto](docs/backlog_producto.md) | ⚠️ [Registro de Riesgos](docs/registro-riesgos.md)
 | 📚 [Registro_Incidencias](docs/registro-incidencias.md)  | 📝 [Backlog Detallado](docs/backlog-detallado-producto.md) 
-| 🌟 [Registro de Oportunidades](docs/registro-oportunidades.md) | | 🚀 [Backlog Sprint](docs/backlog_del_sprint.md) 
-| 📌 [Supuestos y Restricciones](docs/supuestos-restricciones.md) |
+| 🌟 [Registro de Oportunidades](docs/registro-oportunidades.md) | | 🚀 [Backlog Sprint](docs/backlog_del_sprint.md) | 📌 [Supuestos y Restricciones](docs/supuestos-restricciones.md) |
 
 ---
 
