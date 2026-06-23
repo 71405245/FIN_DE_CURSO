@@ -44,15 +44,15 @@ Documentación inicial del proyecto, alineamiento de interesados y definición d
 
 Planificación adaptativa basada en iteraciones, gestión de requerimientos, recursos y restricciones.
 
-| 📑 Requerimientos | 📅 Gestión del Proyecto |
-|:---|:---|
+| 📑 Requerimientos Funcionales y No Funcionales | 📅 Gestión del Proyecto |
+|:---------------------------------------------|:------------------------|
 | 📌 [Requerimientos Funcionales](docs/requerimientos-funcionales.md) | 💰 [Presupuesto](docs/presupuesto.md) |
 | 🔒 [Requerimientos No Funcionales](docs/requerimientos-no-funcionales.md) | 📆 [Cronograma](docs/cronograma-SIMA.png) |
-| 📚 [Backlog Producto](docs/backlog_producto.md) | ⚠️ [Registro de Riesgos](docs/registro-riesgos.md)| 
-| 🚧 [Registro de Impedimentos](docs/impedimentos.md) | 📚 [Registro_Incidencias](docs/registro-incidencias.md)  
-| 📝 [Backlog Detallado](docs/backlog-detallado-producto.md) | | 🌟 [Registro de Oportunidades](docs/registro-oportunidades.md) | 
-| 🚀 [Backlog Sprint](docs/backlog_del_sprint.md) | 📌 [Supuestos y Restricciones](docs/supuestos-restricciones.md) 
-| 🌟 [Registro de Defectos](docs/registro-defectos.md)
+| 📚 [Backlog del Producto](docs/backlog_producto.md) | ⚠️ [Registro de Riesgos](docs/registro-riesgos.md) |
+| 📝 [Backlog Detallado](docs/backlog-detallado-producto.md) | 🌟 [Registro de Oportunidades](docs/registro-oportunidades.md) |
+| 🚀 [Backlog del Sprint](docs/backlog_del_sprint.md) | 📌 [Supuestos y Restricciones](docs/supuestos-restricciones.md) |
+| 🚧 [Registro de Impedimentos](docs/registro-impedimentos.md) | 📋 [Registro de Incidentes](docs/registro-incidentes.md) |
+| 🐞 [Registro de Defectos](docs/registro-defectos.md) | — |
 
 ---
 
