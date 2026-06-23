@@ -2,100 +2,114 @@
 
 ## 📌 1. Definición del entregable
 
-En el proyecto SIMA se elaboró documentación de capacitación orientada a garantizar la **transferencia de conocimiento al cliente (usuario final) y al equipo de operaciones**, permitiendo el uso, administración y mantenimiento del sistema.
+En el proyecto SIMA se elaboró documentación de capacitación orientada a garantizar la **transferencia de conocimiento al cliente (usuario final) y al equipo de operaciones**, permitiendo que el sistema pueda ser utilizado, administrado y mantenido sin depender directamente del equipo de desarrollo.
 
-Toda la documentación se encuentra disponible en el repositorio del proyecto:
+Esta documentación incluye **manuales, guías técnicas y evidencias de transferencia de conocimiento**, estructuradas dentro del repositorio del proyecto:
 
-📎 🔗 Repositorio principal:  
-https://github.com/71405245/FIN_DE_CURSO.git
+📎 Repositorio: https://github.com/71405245/FIN_DE_CURSO.git
 
 ---
 
 ## 📘 2. Manuales del sistema (uso operativo)
 
+Se desarrollaron manuales y documentos orientados al uso del sistema en producción, con enfoque en el usuario final y el administrador.
+
 ### 📄 2.1 Manual de usuario
 
-Documentación orientada al uso del sistema por parte del usuario final.
+Describe el uso general del sistema SIMA desde la perspectiva del usuario final.
 
-🔗 Acceso directo:
-- https://github.com/71405245/FIN_DE_CURSO/blob/main/README.md
-- https://github.com/71405245/FIN_DE_CURSO/blob/main/docs/usage.md
+| Contenido | Descripción |
+|---|---|
+| Inicio de sesión | Acceso al sistema mediante credenciales |
+| Matrícula académica | Registro y asignación de cursos |
+| Consulta de horarios | Visualización de horarios generados por IA |
+| Navegación general | Uso de módulos del sistema |
 
-Incluye:
-- Inicio de sesión
-- Matrícula académica
-- Consulta de horarios
-- Navegación general del sistema
-
----
-
-### 🧑‍💼 2.2 Manual de administración y operaciones
-
-Orientado al personal técnico y de soporte del sistema.
-
-🔗 Acceso directo:
-- https://github.com/71405245/FIN_DE_CURSO/blob/main/docs/api.md
-- https://github.com/71405245/FIN_DE_CURSO/blob/main/docs/architecture.md *(si aplica en tu repo)*
-- https://github.com/71405245/FIN_DE_CURSO/blob/main/Spec.md
-
-Incluye:
-- Gestión de usuarios
-- Administración de módulos académicos
-- Supervisión del sistema
-- Control de datos y configuración
+📌 Evidencia: `README.md`, `docs/usage.md`
 
 ---
 
-## 📖 3. Guías de instalación y despliegue
+### 🧑‍💼 2.2 Manual de administrador / operaciones
 
-Documentación técnica para instalación y ejecución del sistema.
+Orientado al personal encargado de la gestión del sistema.
 
-🔗 Acceso directo:
-- https://github.com/71405245/FIN_DE_CURSO/blob/main/installation.md
-- https://github.com/71405245/FIN_DE_CURSO/blob/main/README.md
+| Función | Descripción |
+|---|---|
+| Gestión de usuarios | Creación, edición y eliminación de usuarios |
+| Gestión académica | Control de cursos, matrículas y horarios |
+| Supervisión del sistema | Monitoreo de funcionamiento general |
+| Gestión de datos | Validación y administración de información |
 
-Incluye:
-- Instalación del backend (Node.js + Express)
-- Instalación del frontend (React + Vite)
-- Configuración de variables de entorno
-- Despliegue del sistema
+📌 Evidencia: `docs/api.md`, `arquitectura.md`, `Spec.md`
+
+---
+
+## 📖 3. Guías técnicas de instalación y despliegue
+
+Se elaboraron guías técnicas para permitir la instalación, configuración y despliegue del sistema en entornos de desarrollo y producción.
+
+| Guía | Contenido |
+|---|---|
+| Instalación del sistema | Configuración del entorno MERN |
+| Configuración de backend | Node.js + Express + MongoDB |
+| Configuración frontend | React + Vite |
+| Variables de entorno | Configuración de seguridad y conexión |
+
+📌 Evidencia: `installation.md`, `package.json`, `README.md`
 
 ---
 
 ## 🔁 4. Evidencias de transferencia de conocimiento
 
-### 📊 4.1 Documentación técnica usada como capacitación
+La transferencia de conocimiento al cliente y al equipo de operaciones se realizó mediante documentación estructurada y sesiones internas de explicación del sistema.
 
-🔗 Acceso directo:
-- https://github.com/71405245/FIN_DE_CURSO/blob/main/README.md
-- https://github.com/71405245/FIN_DE_CURSO/blob/main/arquitectura.md
-- https://github.com/71405245/FIN_DE_CURSO/blob/main/Desarrollo-del-algoritmo.md
-- https://github.com/71405245/FIN_DE_CURSO/blob/main/Spec.md
+### 📊 4.1 Evidencias documentadas
 
-Incluye:
-- Explicación del sistema
-- Arquitectura general
-- Motor de IA de generación de horarios
-- Reglas del sistema
+| Evidencia | Descripción |
+|---|---|
+| README.md | Explicación general del sistema y uso |
+| Documentación técnica | Arquitectura, API y especificaciones |
+| Backlog del proyecto | Procesos y reglas del sistema |
+| Diagramas del sistema | Estructura y flujo de datos |
+
+---
+
+### 👨‍🏫 4.2 Evidencias de capacitación operativa
+
+| Actividad | Evidencia |
+|---|---|
+| Explicación de módulos del sistema | Documentación en repositorio |
+| Revisión de arquitectura | `arquitectura.md` |
+| Explicación del motor de IA | `Desarrollo-del-algoritmo.md` |
+| Capacitación en despliegue | `installation.md` |
 
 ---
 
 ## 📊 5. Evaluación de la documentación
 
-| Criterio | Nivel |
+| Criterio | Nivel alcanzado |
 |---|---|
 | Claridad | Alta |
-| Accesibilidad | Alta (acceso vía GitHub) |
 | Usabilidad | Media–Alta |
-| Cobertura | Completa en módulos principales |
-| Transferencia operativa | Adecuada |
+| Cobertura funcional | Completa |
+| Soporte a mantenimiento | Adecuado |
+| Transferencia operativa | Parcialmente formalizada |
 
 ---
 
-## 📌 6. Conclusión
+## ⚠️ 6. Observaciones
 
-El proyecto SIMA cuenta con documentación accesible directamente desde el repositorio, permitiendo la **transferencia de conocimiento tanto al usuario final como al equipo de operaciones**.
+- La documentación está distribuida en múltiples archivos Markdown, no en un único manual consolidado.
+- Parte de los documentos corresponde a diferentes fases del proyecto, lo que genera ligera dispersión de información.
+- No se generó un manual formal en PDF unificado para cliente final.
+- La capacitación fue principalmente basada en documentación técnica del repositorio.
 
-La documentación está disponible en formato web (Markdown en GitHub), lo que facilita su consulta inmediata mediante enlaces directos, sin necesidad de archivos adicionales.
+---
 
-Como mejora futura, se recomienda consolidar toda la documentación en un único manual estructurado (PDF o portal web) para mejorar la experiencia de lectura del cliente final.
+## 📌 7. Conclusión
+
+El proyecto SIMA cuenta con documentación suficiente para la **transferencia de conocimiento operativo y técnico**, permitiendo que el sistema pueda ser entendido, instalado y mantenido por terceros.
+
+Se incluyen manuales de usuario, guías de instalación, documentación de arquitectura y API, así como evidencias indirectas de capacitación mediante documentación técnica del sistema.
+
+Sin embargo, como mejora, se recomienda consolidar toda la información en un **manual formal unificado (PDF o portal de documentación)** para facilitar su uso por usuarios no técnicos y fortalecer la transferencia hacia el cliente final u operaciones.
