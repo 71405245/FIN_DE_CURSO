@@ -4,7 +4,7 @@
 > Sistema web inteligente que optimiza la gestión académica universitaria mediante inteligencia artificial, generando horarios personalizados para estudiantes, planificación eficiente de aulas y soporte a la asignación docente considerando restricciones académicas, operativas y criterios de sostenibilidad.
 
 # 👥 Equipo del Proyecto SIMA
-[Integrantes del grupo](docs/integrantes.md)
+[Integrantes del grupo](docs/Integrantes.md)
 
 ---
 
