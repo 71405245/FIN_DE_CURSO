@@ -51,7 +51,7 @@ Planificación adaptativa basada en iteraciones, gestión de requerimientos, rec
 | 📚 [Backlog Producto](docs/backlog_producto.md) | ⚠️ [Registro de Riesgos](docs/registro-riesgos.md)
 | 📚 [Registro_Incidencias](docs/registro-incidencias.md)  | 📝 [Backlog Detallado](docs/backlog-detallado-producto.md) 
 | 🌟 [Registro de Oportunidades](docs/registro-oportunidades.md) | | 🚀 [Backlog Sprint](docs/backlog_del_sprint.md) | 📌 [Supuestos y Restricciones](docs/supuestos-restricciones.md) |
-| 🌟 [Registro de Defectos](docs/registro-defectos.md)
+| 🌟 [Registro de Defectos](docs/registro-defectos.md) 🚧 [Registro de Impedimentos](docs/impedimentos.md) |
 
 ---
 
@@ -62,7 +62,7 @@ Desarrollo del producto mediante iteraciones, arquitectura, implementación y co
 | 🏗️ Diseño y Arquitectura | 🛠️ Desarrollo |
 |:---|:---|
 | 🏛️ [Arquitectura del Proyecto](docs/arquitectura.md) | 📈 [Informe de Estado](docs/informe_estado2.md) |
-| 📊 [Optimización y Análisis](docs/Optimizacion-y-Analisis.md) | 🚧 [Registro de Impedimentos](docs/impedimentos.md) |
+| 📊 [Optimización y Análisis](docs/Optimizacion-y-Analisis.md) | 
 | ⚙️ [Desarrollo Algoritmo IA](docs/Desarrollo-del-algoritmo.md) | 🤝 [Minuta Reunión 1](docs/minuta-reunion.md) |
 | 📐 [Spec-Driven Development](docs/Spec-DrivenDevelopment.md) | 🤝 [Minuta Reunión 2](docs/minuta-reunion2.md) |
 
