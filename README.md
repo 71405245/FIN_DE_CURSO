@@ -52,7 +52,7 @@ Planificación adaptativa basada en iteraciones, gestión de requerimientos, rec
 | 📝 [Backlog Detallado](docs/backlog-detallado-producto.md) | 🌟 [Registro de Oportunidades](docs/registro-oportunidades.md) |
 | 🚀 [Backlog del Sprint](docs/backlog_del_sprint.md) | 📌 [Supuestos y Restricciones](docs/supuestos-restricciones.md) |
 | 🚧 [Registro de Impedimentos](docs/registro-impedimentos.md) | 📋 [Registro de Incidentes](docs/registro-incidentes.md) |
-| 🐞 [Registro de Defectos](docs/registro-defectos.md) | — |
+| 🐞 [Registro de Defectos](docs/registro-defectos.md) |  |
 
 ---
 
