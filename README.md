@@ -89,3 +89,4 @@ Finalización de iteraciones, evaluación del proyecto y documentación final.
 
 - 📊 [Informe final del proyecto](docs/informe_final.md)
 - 🏁 [Informe de lecciones aprendidas](docs/INFORME_LECCIONES_APRENDIDAS.md)
+- 📄 [Declaración del trabajo](docs/sow.md)
