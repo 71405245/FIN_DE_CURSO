@@ -196,7 +196,7 @@ Resultado:
 
 Durante el proyecto se identificaron:
 
-# 📌 23 riesgos gestionados (R-01 a R-23)
+# 📌 14 riesgos gestionados (R-01 a R-14)
 
 ## Principales riesgos
 
