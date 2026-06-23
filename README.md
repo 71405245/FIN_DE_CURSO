@@ -32,7 +32,7 @@ Documentación inicial del proyecto, alineamiento de interesados y definición d
 - 📄 [Descripción del Proyecto](docs/descripcion.md)
 - 🎯 [Visión del Proyecto](docs/vision.md)
 - 🏛️ [Project Charter](docs/project-charter.md)
-- 📋 [Acta de Constitución](docs/acta-constitucion.md)
+- 📋 [Acta de Constitución](docs/Acta_constitución.md)
 - ❗ [Documento del Problema](docs/Problema.md)
 - 🎯 [Enfoque del Proyecto](docs/enfoque-proyecto.md)
 - 👥 [Equipo del Proyecto](docs/equipo-proyecto.md)
