@@ -19,23 +19,31 @@ backend/dist/
 # Archivos de análisis y reportes de SonarQube
 .scannerwork/
 **/.scannerwork/
-frontend/.scannerwork/
-backend/.scannerwork/
 
-# Respaldos de bases de datos locales (excluidos por Green Code y políticas de Git)
+# Respaldos de bases de datos locales
 otros/sima_db_backup/
 **/sima_db_backup/
+backend/sima_db_backup/
+
+# Reportes de pruebas E2E generados localmente
+frontend/playwright-report/
+frontend/test-results/
+frontend/cypress/screenshots/
+frontend/cypress/videos/
+
+# Archivos de cobertura de pruebas
+coverage/
+**/coverage/
 
 # Logs del sistema y runtime
 *.log
 logs/
 **/logs/
-coverage/
-**/coverage/
 
-# Archivos temporales y de configuración del sistema operativo/editores
+# Archivos temporales y de sistema operativo / editores
 .DS_Store
 [Dd]esktop.ini
+desktop.ini
 .vscode/
 .idea/
 *.suo
@@ -43,3 +51,11 @@ coverage/
 *.njsproj
 *.sln
 *.swp
+*.sw?
+
+# Archivos de backup de código fuente
+*.backup
+server.js.backup
+
+# Archivos Markdown de trabajo pendiente (borradores internos)
+docs/cierre/PENDIENTE_*.md
