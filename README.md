@@ -28,11 +28,37 @@ Sistema web full-stack (MERN) diseñado para simplificar y optimizar el proceso 
 
 ## 2. Integrantes del Equipo
 
-| Integrante | DNI | Correo institucional |
-|---|---|---|
-| 👨‍💻 Kevin Sebastian Cornejo Garcia | 73144637 | 73144637@continental.edu.pe |
-| 👨‍💻 Jordan Smith Acevedo Ura | 71405245 | 71405245@continental.edu.pe |
-| 👨‍💻 Liand Anthuane Mejia Poma | 72455406 | 72455406@continental.edu.pe |
+<div align="center">
+<table>
+<tr>
+
+<td align="center">
+<img src="docs/inicio/img/kevin.jpg" width="150px" alt="Kevin Cornejo" /><br/>
+<b>Kevin Sebastian Cornejo Garcia</b><br/>
+DNI: 73144637<br/>
+<a href="mailto:73144637@continental.edu.pe">73144637@continental.edu.pe</a><br/>
+🔧 Scrum Master
+</td>
+
+<td align="center">
+<img src="docs/inicio/img/jordan.jpg" width="150px" alt="Jordan Acevedo" /><br/>
+<b>Jordan Smith Acevedo Ura</b><br/>
+DNI: 71405245<br/>
+<a href="mailto:71405245@continental.edu.pe">71405245@continental.edu.pe</a><br/>
+💻 Developer
+</td>
+
+<td align="center">
+<img src="docs/inicio/img/liand.jpg" width="150px" alt="Liand Mejia" /><br/>
+<b>Liand Anthuane Mejia Poma</b><br/>
+DNI: 72455406<br/>
+<a href="mailto:72455406@continental.edu.pe">72455406@continental.edu.pe</a><br/>
+📋 Product Owner
+</td>
+
+</tr>
+</table>
+</div>
 
 📄 Ver ficha completa del equipo: [docs/inicio/equipo-proyecto.md](docs/inicio/equipo-proyecto.md)
 
@@ -237,9 +263,9 @@ npm run build
 
 ### 🎥 Video explicativo del proyecto
 
-> ⏳ **Pendiente de publicación** — El enlace al video demostrativo (máximo 5 minutos) será agregado aquí antes de la entrega final.
->
-> `[Enlace al video]` — *Por añadir*
+[![Ver video demostrativo](https://img.shields.io/badge/▶_Ver_Demo-YouTube-red)](PEGAR_URL_AQUI)
+
+> Video demostrativo (máximo 5 minutos) mostrando el funcionamiento completo de SIMA v1.0.0.
 
 ---
 
