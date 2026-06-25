@@ -58,8 +58,8 @@ describe('AI Planning Controller (Planificación y Carga Horaria)', () => {
   });
 
   describe('Métodos del Controlador', () => {
-    it('32. getStats: retorna estadísticas agregadas de las secciones', async () => {
-      const mockAggregatedSecciones = [
+    it('32. getPlanificacionStats: retorna estadísticas agregadas de las secciones', async () => {
+      const mockSecciones = [
         {
           _id: 'sec1',
           codigoSeccion: 'S1',
@@ -70,22 +70,27 @@ describe('AI Planning Controller (Planificación y Carga Horaria)', () => {
           horaFin: '10:00',
           aula: 'A101',
           cupoMaximo: 30,
-          estudiantesMatriculadosCount: 25
+          estudiantesMatriculados: Array(25).fill('estudiante')
         }
       ];
 
-      Seccion.aggregate.mockResolvedValue(mockAggregatedSecciones);
-      Seccion.populate.mockResolvedValue([
-        {
-          ...mockAggregatedSecciones[0],
-          curso: { nombre: 'Matemática I', codigo: 'MAT1' },
-          docente: { _id: 'docente1', nombre: 'Juan', apellidos: 'Pérez' }
-        }
-      ]);
+      Seccion.find.mockReturnValue({
+        populate: jest.fn().mockReturnValue({
+          populate: jest.fn().mockReturnValue({
+            lean: jest.fn().mockResolvedValue(mockSecciones)
+          })
+        })
+      });
 
-      await planificacionController.getStats(req, res);
+      User.find.mockReturnValue({
+        lean: jest.fn().mockResolvedValue([
+          { _id: 'docente1', nombre: 'Juan', apellidos: 'Pérez', rol: 'DOCENTE' }
+        ])
+      });
 
-      expect(Seccion.aggregate).toHaveBeenCalled();
+      await planificacionController.getPlanificacionStats(req, res);
+
+      expect(Seccion.find).toHaveBeenCalled();
       expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
         kpis: expect.objectContaining({
           totalSecciones: 1,
@@ -114,6 +119,13 @@ describe('AI Planning Controller (Planificación y Carga Horaria)', () => {
             lean: jest.fn().mockResolvedValue(mockSecciones)
           })
         })
+      });
+
+      User.find.mockReturnValue({
+        select: jest.fn().mockReturnThis(),
+        lean: jest.fn().mockResolvedValue([
+          { _id: 'doc1', nombre: 'José', apellidos: 'Gómez', email: 'jose@sima.com', turnoDisponibilidad: 'Completo' }
+        ])
       });
 
       await planificacionController.getCargaHoraria(req, res);
@@ -147,6 +159,7 @@ describe('AI Planning Controller (Planificación y Carga Horaria)', () => {
       ];
 
       User.find.mockReturnValue({
+        select: jest.fn().mockReturnThis(),
         lean: jest.fn().mockResolvedValue(mockDocentes)
       });
       Seccion.find.mockReturnValue({
@@ -218,7 +231,7 @@ describe('AI Planning Controller (Planificación y Carga Horaria)', () => {
 
       Seccion.findById.mockResolvedValue(mockSeccion);
 
-      await planificacionController.editarHorario(req, res);
+      await planificacionController.editarHorarioSeccion(req, res);
 
       expect(mockSeccion.dias).toEqual(['LU']);
       expect(mockSeccion.horaInicio).toBe('10:00');

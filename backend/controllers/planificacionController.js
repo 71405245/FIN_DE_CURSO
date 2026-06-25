@@ -4,12 +4,35 @@ const asyncWrapper = require('../middleware/asyncWrapper');
 
 // ── Helpers de Cálculo ──────────────────────────────────────────────────────
 
-function calcularHorasSeccion(s) {
-  if (!s.horaInicio || !s.horaFin || !s.dias) return 0;
-  const [hI, mI] = s.horaInicio.split(':').map(Number);
-  const [hF, mF] = s.horaFin.split(':').map(Number);
+function horaADecimal(horaStr) {
+  if (!horaStr) return 0;
+  const [h, m] = horaStr.split(':').map(Number);
+  return h + m / 60;
+}
+
+function calcularHorasSeccion(horaInicioOrObj, horaFin, dias) {
+  let hI_str, hF_str, dias_arr;
+  if (typeof horaInicioOrObj === 'object' && horaInicioOrObj !== null) {
+    hI_str = horaInicioOrObj.horaInicio;
+    hF_str = horaInicioOrObj.horaFin;
+    dias_arr = horaInicioOrObj.dias;
+  } else {
+    hI_str = horaInicioOrObj;
+    hF_str = horaFin;
+    dias_arr = dias;
+  }
+  if (!hI_str || !hF_str || !dias_arr) return 0;
+  const [hI, mI] = hI_str.split(':').map(Number);
+  const [hF, mF] = hF_str.split(':').map(Number);
   const horasPorSesion = (hF * 60 + mF - (hI * 60 + mI)) / 60;
-  return Math.max(0, horasPorSesion * s.dias.length);
+  return Math.max(0, horasPorSesion * dias_arr.length);
+}
+
+function hayConflicto(s1, s2) {
+  if (!s1 || !s2 || !s1.dias || !s2.dias || !s1.horaInicio || !s2.horaInicio || !s1.horaFin || !s2.horaFin) return false;
+  const diasComunes = s1.dias.filter(d => s2.dias.includes(d));
+  if (diasComunes.length === 0) return false;
+  return s1.horaInicio < s2.horaFin && s2.horaInicio < s1.horaFin;
 }
 
 function clasificarEstadoDocente(totalHoras) {
@@ -28,10 +51,7 @@ function detectarConflictos(secciones) {
       const s2 = secciones[j];
       if (!s1.dias || !s2.dias || !s1.horaInicio || !s2.horaInicio) continue;
 
-      const diasComunes = s1.dias.filter(d => s2.dias.includes(d));
-      if (diasComunes.length === 0) continue;
-      const seCruzan = s1.horaInicio < s2.horaFin && s2.horaInicio < s1.horaFin;
-      if (!seCruzan) continue;
+      if (!hayConflicto(s1, s2)) continue;
 
       const horario1 = `${s1.dias.join('/')} ${s1.horaInicio}-${s1.horaFin}`;
       const horario2 = `${s2.dias.join('/')} ${s2.horaInicio}-${s2.horaFin}`;
@@ -218,7 +238,7 @@ exports.getCargaHoraria = asyncWrapper(async (req, res) => {
     };
   });
 
-  res.json({ docentes: result });
+  res.json({ maxHoras: 48, docentes: result });
 });
 
 exports.getDocentesDisponibles = asyncWrapper(async (req, res) => {
@@ -262,27 +282,38 @@ exports.getDocentesDisponibles = asyncWrapper(async (req, res) => {
 exports.reasignarDocente = asyncWrapper(async (req, res) => {
   const { id } = req.params;
   const { docenteId } = req.body;
-  const seccion = await Seccion.findByIdAndUpdate(id, { docente: docenteId }, { new: true });
+  const seccion = await Seccion.findById(id);
   if (!seccion) return res.status(404).json({ msg: 'Sección no encontrada' });
-  res.json({ msg: 'Docente reasignado correctamente', seccion });
+  seccion.docente = docenteId;
+  await seccion.save();
+  res.json({ msg: 'Docente reasignado correctamente' });
 });
 
 exports.liberarSeccion = asyncWrapper(async (req, res) => {
   const { id } = req.params;
-  const seccion = await Seccion.findByIdAndUpdate(id, { docente: null }, { new: true });
+  const seccion = await Seccion.findById(id);
   if (!seccion) return res.status(404).json({ msg: 'Sección no encontrada' });
-  res.json({ msg: 'Sección liberada correctamente', seccion });
+  seccion.docente = null;
+  await seccion.save();
+  res.json({ msg: 'Sección liberada correctamente' });
 });
 
 exports.editarHorarioSeccion = asyncWrapper(async (req, res) => {
   const { id } = req.params;
   const { dias, horaInicio, horaFin, aula } = req.body;
-  const seccion = await Seccion.findByIdAndUpdate(
-    id,
-    { dias, horaInicio, horaFin, aula },
-    { new: true }
-  );
+  const seccion = await Seccion.findById(id);
   if (!seccion) return res.status(404).json({ msg: 'Sección no encontrada' });
+
+  if (dias) seccion.dias = dias;
+  if (horaInicio) seccion.horaInicio = horaInicio;
+  if (horaFin) seccion.horaFin = horaFin;
+  if (aula) seccion.aula = aula;
+
+  if (seccion.dias && seccion.horaInicio && seccion.horaFin) {
+    seccion.horario = `${seccion.dias.join('/')} ${seccion.horaInicio} - ${seccion.horaFin}`;
+  }
+
+  await seccion.save();
   res.json({ msg: 'Horario actualizado correctamente', seccion });
 });
 
@@ -307,3 +338,10 @@ exports.getServerStats = asyncWrapper(async (req, res) => {
     uptime: uptimeSecs
   });
 });
+
+module.exports._helpers = {
+  horaADecimal,
+  calcularHorasSeccion,
+  hayConflicto,
+  estadoCarga: clasificarEstadoDocente
+};
