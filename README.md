@@ -265,7 +265,7 @@ npm run build
 
 [![Ver video demostrativo](https://img.shields.io/badge/▶_Ver_Demo-YouTube-red)](PEGAR_URL_AQUI)
 
-> Video demostrativo (máximo 5 minutos) mostrando el funcionamiento completo de SIMA v1.0.0.
+[> Video demostrativo (máximo 5 minutos) mostrando el funcionamiento completo de SIMA v1.0.0.](https://drive.google.com/drive/folders/18z4LNtu9_lA5wtTShXV_CUiVNbku2ixC?usp=sharing)
 
 ---
 
