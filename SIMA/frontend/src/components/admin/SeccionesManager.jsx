@@ -215,7 +215,7 @@ function SeccionesManager() {
           </div>
 
           {/* Horario Inteligente (Inicio / Fin) */}
-          <div style={{ background: '#f8fafc', padding: '1.5rem', borderRadius: '12px', border: '1px solid var(--border-color)', marginBottom: '1.5rem' }}>
+          <div style={{ background: 'var(--surface)', padding: '1.5rem', borderRadius: '12px', border: '1px solid var(--border-color)', marginBottom: '1.5rem' }}>
             <h4 style={{ margin: '0 0 1rem 0', fontSize: '0.9rem', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <Clock size={16} color="var(--primary-purple)"/> Planificador de Horario
             </h4>
@@ -281,7 +281,7 @@ function SeccionesManager() {
 
             {/* Vista Previa en Vivo */}
             {vistaPreviaHorario && (
-              <div style={{ marginTop: '1.25rem', padding: '10px 15px', background: 'white', borderRadius: '8px', borderLeft: '3px solid var(--primary-purple)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <div style={{ marginTop: '1.25rem', padding: '10px 15px', background: 'var(--surface)', borderRadius: '8px', borderLeft: '3px solid var(--primary-purple)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <span style={{ fontSize: '0.82rem', fontWeight: '700', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Vista Previa:</span>
                 <span style={{ fontSize: '0.9rem', fontWeight: '600', color: 'var(--text-main)' }}>{vistaPreviaHorario}</span>
               </div>

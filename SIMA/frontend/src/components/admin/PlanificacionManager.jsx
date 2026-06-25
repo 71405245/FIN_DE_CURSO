@@ -193,7 +193,7 @@ function PlanificacionManager() {
               </h3>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '0.75rem' }}>
                 {alertas.seccionesSinAsignar.map(s => (
-                  <div key={s._id} style={{ background: 'white', border: '1px solid #fed7aa', borderRadius: '8px', padding: '12px', boxShadow: '0 2px 4px rgba(234, 88, 12, 0.05)' }}>
+                  <div key={s._id} style={{ background: 'var(--surface)', border: '1px solid #fed7aa', borderRadius: '8px', padding: '12px', boxShadow: '0 2px 4px rgba(234, 88, 12, 0.05)' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px' }}>
                       <span style={{ fontWeight: '700', color: '#ea580c', fontSize: '0.9rem' }}>{s.codigoSeccion} — {s.curso}</span>
                       <button onClick={() => setSeccionEditar(s)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#ea580c' }} title="Editar Aula/Horario"><Edit2 size={14}/></button>

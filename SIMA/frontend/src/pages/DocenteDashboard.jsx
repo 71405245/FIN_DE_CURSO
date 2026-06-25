@@ -134,7 +134,7 @@ function DocenteDashboard() {
   }, {});
 
   return (
-    <div style={{ backgroundColor: '#f8fafc', minHeight: '100vh', fontFamily: 'Outfit, sans-serif', paddingBottom: '4rem' }}>
+    <div style={{ backgroundColor: 'var(--surface)', minHeight: '100vh', fontFamily: 'Outfit, sans-serif', paddingBottom: '4rem' }}>
       
       <style>{`
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
@@ -217,7 +217,7 @@ function DocenteDashboard() {
       `}</style>
 
       {/* Header Premium */}
-      <header style={{ background: '#ffffff', borderBottom: '1px solid #e2e8f0', padding: '1rem 2rem', position: 'sticky', top: 0, zIndex: 10 }}>
+      <header style={{ background: 'var(--surface)', borderBottom: '1px solid #e2e8f0', padding: '1rem 2rem', position: 'sticky', top: 0, zIndex: 10 }}>
         <div style={{ maxWidth: '1440px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <div style={{ background: '#2563eb', padding: '8px', borderRadius: '12px', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -287,7 +287,7 @@ function DocenteDashboard() {
                             <p style={{ color: '#64748b', fontSize: '0.85rem', marginBottom: '0.75rem', fontWeight: '500' }}>Sec: {s.codigoSeccion} • Aula {s.aula}</p>
                             
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                              <span style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.75rem', color: '#64748b', fontWeight: '600', background: '#f8fafc', padding: '4px 8px', borderRadius: '6px' }}>
+                              <span style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.75rem', color: '#64748b', fontWeight: '600', background: 'var(--surface)', padding: '4px 8px', borderRadius: '6px' }}>
                                 <Users size={12}/> {s.estudiantesMatriculados.length} Alumnos
                               </span>
                               <span style={{ fontSize: '0.75rem', fontWeight: '700', color: '#2563eb' }}>{s.horaInicio} - {s.horaFin}</span>
@@ -327,21 +327,21 @@ function DocenteDashboard() {
                   {/* Fila de Métricas del Salón */}
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem' }}>
                     
-                    <div style={{ background: '#f8fafc', padding: '1rem', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                    <div style={{ background: 'var(--surface)', padding: '1rem', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
                       <span style={{ display: 'block', fontSize: '0.75rem', color: '#64748b', fontWeight: '700', textTransform: 'uppercase', marginBottom: '0.25rem' }}>Alumnos Grados</span>
                       <h4 style={{ fontSize: '1.5rem', fontWeight: '800', color: '#0f172a', margin: 0 }}>
                         {stats.totalCalificados} <span style={{ fontSize: '0.85rem', color: '#64748b', fontWeight: '500' }}>/ {seccionSeleccionada.estudiantesMatriculados.length}</span>
                       </h4>
                     </div>
 
-                    <div style={{ background: '#f8fafc', padding: '1rem', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                    <div style={{ background: 'var(--surface)', padding: '1rem', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
                       <span style={{ display: 'block', fontSize: '0.75rem', color: '#64748b', fontWeight: '700', textTransform: 'uppercase', marginBottom: '0.25rem' }}>Promedio del Salón</span>
                       <h4 style={{ fontSize: '1.5rem', fontWeight: '800', color: '#2563eb', margin: 0 }}>
                         {stats.promedio} <span style={{ fontSize: '0.85rem', color: '#64748b', fontWeight: '500' }}>/ 20</span>
                       </h4>
                     </div>
 
-                    <div style={{ background: '#f8fafc', padding: '1rem', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
+                    <div style={{ background: 'var(--surface)', padding: '1rem', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
                       <span style={{ display: 'block', fontSize: '0.75rem', color: '#64748b', fontWeight: '700', textTransform: 'uppercase', marginBottom: '0.25rem' }}>Tasa de Aprobación</span>
                       <h4 style={{ fontSize: '1.5rem', fontWeight: '800', color: '#10b981', margin: 0 }}>
                         {stats.tasaAprobacion}%
@@ -383,7 +383,7 @@ function DocenteDashboard() {
                                 <td style={{ color: '#64748b', fontSize: '0.9rem' }}>{est.email}</td>
                                 <td style={{ textAlign: 'center' }}>
                                   {!hasGrade && (
-                                    <span style={{ display: 'inline-block', background: '#f1f5f9', color: '#475569', fontSize: '0.7rem', fontWeight: '700', padding: '3px 10px', borderRadius: '20px' }}>Sin Calificar</span>
+                                    <span style={{ display: 'inline-block', background: 'var(--surface)', color: '#475569', fontSize: '0.7rem', fontWeight: '700', padding: '3px 10px', borderRadius: '20px' }}>Sin Calificar</span>
                                   )}
                                   {hasGrade && isPassing && (
                                     <span style={{ display: 'inline-block', background: '#ecfdf5', color: '#047857', fontSize: '0.7rem', fontWeight: '700', padding: '3px 10px', borderRadius: '20px' }}>Aprobado</span>

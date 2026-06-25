@@ -25,7 +25,7 @@ const LoadingFallback = () => (
 function AdminDashboard() {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user'));
-  
+
   const isAdmin1 = user?.email !== 'admin2@sima.com';
   const isAdmin2 = user?.email === 'admin2@sima.com';
 
@@ -41,7 +41,7 @@ function AdminDashboard() {
     // [OPTIMIZACIÓN 6] Una sola petición consolidada en vez de 5 separadas
     axios.get('/api/admin/stats/counts')
       .then(res => setStats(res.data))
-      .catch(() => {});
+      .catch(() => { });
   }, [navigate]); // [OPTIMIZACIÓN 6] Eliminada la dependencia 'activeTab' — ya no se re-dispara en cada cambio de pestaña
 
   const handleLogout = () => {
@@ -52,14 +52,14 @@ function AdminDashboard() {
 
   return (
     <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: 'var(--bg-color)' }}>
-      
+
       {/* Sidebar Expanding Premium */}
-      <aside 
+      <aside
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        style={{ 
-          width: isHovered ? '260px' : '80px', 
-          background: 'var(--surface)', 
+        style={{
+          width: isHovered ? '260px' : '80px',
+          background: 'var(--surface)',
           boxShadow: '4px 0 24px rgba(0,0,0,0.04)',
           transition: 'width 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
           position: 'fixed',
@@ -70,11 +70,11 @@ function AdminDashboard() {
           overflow: 'hidden'
         }}
       >
-        <div style={{ 
-          padding: '2rem 0', 
-          display: 'flex', 
-          alignItems: 'center', 
-          gap: '1rem', 
+        <div style={{
+          padding: '2rem 0',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '1rem',
           paddingLeft: '1.25rem',
           borderBottom: '1px solid var(--border)',
           whiteSpace: 'nowrap'
@@ -90,24 +90,24 @@ function AdminDashboard() {
         <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', padding: '1.5rem 0', flex: 1 }}>
           {isAdmin1 && (
             <>
-              <TabButton active={activeTab === 'carreras'} onClick={() => setActiveTab('carreras')} icon={<Building size={20}/>} text="Gestión de Carreras" isHovered={isHovered} badge={stats.carreras} />
-              <TabButton active={activeTab === 'cursos'} onClick={() => setActiveTab('cursos')} icon={<BookOpen size={20}/>} text="Plan de Estudios" isHovered={isHovered} badge={stats.cursos} />
+              <TabButton active={activeTab === 'carreras'} onClick={() => setActiveTab('carreras')} icon={<Building size={20} />} text="Gestión de Carreras" isHovered={isHovered} badge={stats.carreras} />
+              <TabButton active={activeTab === 'cursos'} onClick={() => setActiveTab('cursos')} icon={<BookOpen size={20} />} text="Plan de Estudios" isHovered={isHovered} badge={stats.cursos} />
               <div style={{ height: '1px', background: 'var(--border)', margin: '1rem 1.5rem' }} />
-              <TabButton active={activeTab === 'alumnos'} onClick={() => setActiveTab('alumnos')} icon={<GraduationCap size={20}/>} text="Alumnos" isHovered={isHovered} badge={stats.alumnos} />
+              <TabButton active={activeTab === 'alumnos'} onClick={() => setActiveTab('alumnos')} icon={<GraduationCap size={20} />} text="Alumnos" isHovered={isHovered} badge={stats.alumnos} />
               <div style={{ height: '1px', background: 'var(--border)', margin: '1rem 1.5rem' }} />
             </>
           )}
           {isAdmin2 && (
             <>
-              <TabButton active={activeTab === 'docentes'} onClick={() => setActiveTab('docentes')} icon={<Users size={20}/>} text="Personal Docente" isHovered={isHovered} badge={stats.docentes} />
+              <TabButton active={activeTab === 'docentes'} onClick={() => setActiveTab('docentes')} icon={<Users size={20} />} text="Personal Docente" isHovered={isHovered} badge={stats.docentes} />
               <div style={{ height: '1px', background: 'var(--border)', margin: '1rem 1.5rem' }} />
-              <TabButton active={activeTab === 'secciones'} onClick={() => setActiveTab('secciones')} icon={<Layers size={20}/>} text="Salones y Horarios" isHovered={isHovered} badge={stats.secciones} />
+              <TabButton active={activeTab === 'secciones'} onClick={() => setActiveTab('secciones')} icon={<Layers size={20} />} text="Salones y Horarios" isHovered={isHovered} badge={stats.secciones} />
               <div style={{ height: '1px', background: 'var(--border)', margin: '1rem 1.5rem' }} />
-              <TabButton active={activeTab === 'planificacion'} onClick={() => setActiveTab('planificacion')} icon={<BarChart2 size={20}/>} text="Centro de Planificación" isHovered={isHovered} />
+              <TabButton active={activeTab === 'planificacion'} onClick={() => setActiveTab('planificacion')} icon={<BarChart2 size={20} />} text="Centro de Planificación" isHovered={isHovered} />
               <div style={{ height: '1px', background: 'var(--border)', margin: '1rem 1.5rem' }} />
             </>
           )}
-          <TabButton active={activeTab === 'recursos'} onClick={() => setActiveTab('recursos')} icon={<Activity size={20}/>} text="Consumo de Recursos" isHovered={isHovered} />
+          <TabButton active={activeTab === 'recursos'} onClick={() => setActiveTab('recursos')} icon={<Activity size={20} />} text="Consumo de Recursos" isHovered={isHovered} />
         </nav>
 
         <div style={{ padding: '1.5rem 0', borderTop: '1px solid var(--border)' }}>
@@ -119,9 +119,9 @@ function AdminDashboard() {
       </aside>
 
       {/* Main Content Area */}
-      <main style={{ 
-        flex: 1, 
-        marginLeft: isHovered ? '260px' : '80px', 
+      <main style={{
+        flex: 1,
+        marginLeft: isHovered ? '260px' : '80px',
         transition: 'margin-left 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
         padding: '2rem 3rem'
       }}>
@@ -132,9 +132,9 @@ function AdminDashboard() {
             <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', margin: 0 }}>Bienvenido, {user?.nombre}</p>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-             <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'var(--primary-gradient)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>
-               {user?.nombre?.charAt(0)}
-             </div>
+            <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'var(--primary-gradient)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>
+              {user?.nombre?.charAt(0)}
+            </div>
           </div>
         </header>
 
@@ -166,14 +166,14 @@ function AdminDashboard() {
 // Sidebar Button Component
 const TabButton = ({ active, onClick, icon, text, isHovered, badge }) => {
   const [hovered, setHovered] = useState(false);
-  
+
   let bg = 'transparent';
   if (active) bg = 'var(--primary-alpha)';
   else if (hovered) bg = 'rgba(0,0,0,0.02)';
 
   return (
-    <button 
-      onClick={onClick} 
+    <button
+      onClick={onClick}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
@@ -193,12 +193,12 @@ const TabButton = ({ active, onClick, icon, text, isHovered, badge }) => {
         <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           {text}
           {badge !== undefined && badge !== null && badge > 0 && (
-            <span style={{ 
-              background: active ? 'var(--primary-purple)' : 'var(--primary-alpha)', 
-              color: active ? 'white' : 'var(--primary-purple)', 
-              fontSize: '0.72rem', 
-              padding: '2px 7px', 
-              borderRadius: '20px', 
+            <span style={{
+              background: active ? 'var(--primary-purple)' : 'var(--primary-alpha)',
+              color: active ? 'white' : 'var(--primary-purple)',
+              fontSize: '0.72rem',
+              padding: '2px 7px',
+              borderRadius: '20px',
               fontWeight: '800',
               marginLeft: '4px',
               transition: 'all 0.2s ease'

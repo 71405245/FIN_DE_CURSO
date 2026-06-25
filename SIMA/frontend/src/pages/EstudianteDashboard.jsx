@@ -214,7 +214,7 @@ function EstudianteDashboard() {
 
   if (loading) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', backgroundColor: '#f8fafc', fontFamily: 'Outfit, sans-serif' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', backgroundColor: 'var(--surface)', fontFamily: 'Outfit, sans-serif' }}>
         <div style={{ textAlign: 'center' }}>
           <div style={{ border: '4px solid #f3f3f3', borderTop: '4px solid #6366f1', borderRadius: '50%', width: '40px', height: '40px', animation: 'spin 1s linear infinite', margin: '0 auto 1rem' }}></div>
           <p style={{ color: '#64748b', fontWeight: '500' }}>Cargando Portal Estudiantil...</p>
@@ -226,7 +226,7 @@ function EstudianteDashboard() {
   const clasesHoy = getClasesHoy();
 
   return (
-    <div style={{ backgroundColor: '#f8fafc', minHeight: '100vh', fontFamily: 'Outfit, sans-serif', paddingBottom: '4rem' }}>
+    <div style={{ backgroundColor: 'var(--surface)', minHeight: '100vh', fontFamily: 'Outfit, sans-serif', paddingBottom: '4rem' }}>
       
       {/* Styles Inyectados */}
       <style>{`
@@ -287,7 +287,7 @@ function EstudianteDashboard() {
       `}</style>
 
       {/* Header Premium */}
-      <header style={{ background: '#ffffff', borderBottom: '1px solid #e2e8f0', padding: '1rem 2rem', position: 'sticky', top: 0, zIndex: 10, boxShadow: '0 1px 3px rgba(0,0,0,0.02)' }}>
+      <header style={{ background: 'var(--surface)', borderBottom: '1px solid #e2e8f0', padding: '1rem 2rem', position: 'sticky', top: 0, zIndex: 10, boxShadow: '0 1px 3px rgba(0,0,0,0.02)' }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <div style={{ background: '#4f46e5', padding: '8px', borderRadius: '12px', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -345,7 +345,7 @@ function EstudianteDashboard() {
             </div>
             
             {/* Progress bar dual */}
-            <div style={{ height: '8px', background: '#f1f5f9', borderRadius: '4px', display: 'flex', overflow: 'hidden', marginBottom: '0.75rem' }}>
+            <div style={{ height: '8px', background: 'var(--surface)', borderRadius: '4px', display: 'flex', overflow: 'hidden', marginBottom: '0.75rem' }}>
               <div style={{ width: `${(perfil?.creditosAprobados / perfil?.limiteCreditos) * 100}%`, background: '#6366f1' }}></div>
               <div style={{ width: `${(perfil?.creditosMatriculados / perfil?.limiteCreditos) * 100}%`, background: '#38bdf8' }}></div>
             </div>
@@ -390,7 +390,7 @@ function EstudianteDashboard() {
               </button>
               <button 
                 onClick={() => setShowPrefsModal(true)}
-                style={{ padding: '8px 14px', borderRadius: '8px', border: '1px solid #e2e8f0', background: 'white', color: '#64748b', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', transition: 'all 0.2s' }}
+                style={{ padding: '8px 14px', borderRadius: '8px', border: '1px solid #e2e8f0', background: 'var(--surface)', color: '#64748b', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', transition: 'all 0.2s' }}
               >
                 <Cpu size={14} /> Preferencias
               </button>
@@ -412,7 +412,7 @@ function EstudianteDashboard() {
                   <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: '0 0 0.25rem 0' }}>📅 Mi Agenda Semanal</h3>
                   <p style={{ color: '#64748b', fontSize: '0.85rem', margin: 0 }}>Tus clases matriculadas distribuidas en el calendario</p>
                 </div>
-                <button onClick={handleDownloadPDF} style={{ padding: '8px 16px', borderRadius: '8px', border: '1px solid #e2e8f0', background: 'white', color: '#475569', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem', transition: 'all 0.2s', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }} className="hover:bg-slate-50">
+                <button onClick={handleDownloadPDF} style={{ padding: '8px 16px', borderRadius: '8px', border: '1px solid #e2e8f0', background: 'var(--surface)', color: '#475569', fontWeight: '600', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem', transition: 'all 0.2s', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }} className="hover:bg-slate-50">
                   <Download size={16} /> Exportar PDF
                 </button>
               </div>
@@ -430,7 +430,7 @@ function EstudianteDashboard() {
                   <tbody>
                     {SLOTS.map(slot => (
                       <tr key={slot}>
-                        <td style={{ fontSize: '0.75rem', fontWeight: '700', color: '#64748b', background: '#f8fafc', whiteSpace: 'nowrap' }}>
+                        <td style={{ fontSize: '0.75rem', fontWeight: '700', color: '#64748b', background: 'var(--surface)', whiteSpace: 'nowrap' }}>
                           {slot.split(' - ')[0]}
                         </td>
                         {DIAS.map(dia => {
@@ -485,7 +485,7 @@ function EstudianteDashboard() {
                       <div key={s._id} className="glass-card p-5" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: '220px' }}>
                         <div>
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
-                            <span style={{ background: '#f1f5f9', color: '#475569', fontSize: '0.65rem', fontWeight: '800', padding: '2px 8px', borderRadius: '6px' }}>
+                            <span style={{ background: 'var(--surface)', color: '#475569', fontSize: '0.65rem', fontWeight: '800', padding: '2px 8px', borderRadius: '6px' }}>
                               Sección {s.codigoSeccion}
                             </span>
                             <span style={{ color: '#4f46e5', fontWeight: '800', fontSize: '0.75rem', background: 'rgba(79, 70, 229, 0.08)', padding: '2px 8px', borderRadius: '20px' }}>
@@ -542,7 +542,7 @@ function EstudianteDashboard() {
                     {clasesHoy.map(c => {
                       const colors = getPastelColor(c.curso?._id);
                       return (
-                        <div key={c._id} style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem', border: '1px solid #f1f5f9', borderRadius: '12px', background: '#ffffff', transition: 'all 0.2s' }}>
+                        <div key={c._id} style={{ display: 'flex', alignItems: 'center', gap: '1rem', padding: '1rem', border: '1px solid #f1f5f9', borderRadius: '12px', background: 'var(--surface)', transition: 'all 0.2s' }}>
                           <div style={{ backgroundColor: colors.bg, color: colors.text, padding: '10px', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <Clock size={20} />
                           </div>
@@ -575,7 +575,7 @@ function EstudianteDashboard() {
                         <p style={{ fontSize: '0.75rem', color: '#64748b', margin: 0 }}>Sección {s.codigoSeccion} • Aula {s.aula}</p>
                       </div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                        <span style={{ color: '#4f46e5', fontWeight: '800', fontSize: '0.75rem', background: '#f1f5f9', padding: '2px 6px', borderRadius: '6px' }}>
+                        <span style={{ color: '#4f46e5', fontWeight: '800', fontSize: '0.75rem', background: 'var(--surface)', padding: '2px 6px', borderRadius: '6px' }}>
                           {s.curso?.creditos} CR
                         </span>
                         <button onClick={() => handleRectificar(s._id)} aria-label={`Retirarme de ${s.curso?.nombre}`} style={{ background: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', border: 'none', padding: '6px', borderRadius: '6px', cursor: 'pointer', transition: 'all 0.2s', display: 'flex', alignItems: 'center', justifyContent: 'center' }} title="Retirarme del curso">
@@ -595,8 +595,8 @@ function EstudianteDashboard() {
         {/* Preferencias Modal */}
         {showPrefsModal && (
           <dialog open aria-modal="true" aria-labelledby="modal-prefs-title" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(15,23,42,0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, overflowY: 'auto', border: 'none' }}>
-            <div className="glass-card" style={{ background: 'white', width: '90%', maxWidth: '500px', borderRadius: '24px', overflow: 'hidden', margin: 'auto' }}>
-              <div style={{ padding: '1.5rem 2rem', borderBottom: '1px solid #f1f5f9', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#f8fafc' }}>
+            <div className="glass-card" style={{ background: 'var(--surface)', width: '90%', maxWidth: '500px', borderRadius: '24px', overflow: 'hidden', margin: 'auto' }}>
+              <div style={{ padding: '1.5rem 2rem', borderBottom: '1px solid #f1f5f9', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--surface)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                    <div style={{ background: 'rgba(245,158,11,0.1)', padding: '8px', borderRadius: '10px', color: '#f59e0b' }}><Cpu size={20} aria-hidden="true" /></div>
                    <h3 id="modal-prefs-title" style={{ margin: 0, fontSize: '1.25rem', fontWeight: '800', color: '#0f172a' }}>Preferencias de IA</h3>
@@ -609,7 +609,7 @@ function EstudianteDashboard() {
                 
                 <div style={{ marginBottom: '1.5rem' }}>
                   <label htmlFor="ia-turno" style={{ display: 'block', fontWeight: '700', color: '#334155', marginBottom: '0.5rem' }}>Turno Preferido</label>
-                  <select id="ia-turno" value={iaPrefs.turno} onChange={(e) => setIaPrefs({...iaPrefs, turno: e.target.value})} style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #e2e8f0', background: 'white', color: '#0f172a' }}>
+                  <select id="ia-turno" value={iaPrefs.turno} onChange={(e) => setIaPrefs({...iaPrefs, turno: e.target.value})} style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #e2e8f0', background: 'var(--surface)', color: '#0f172a' }}>
                     <option value="MIXTO">Indiferente (Mixto)</option>
                     <option value="MAÑANA">Mañana (07:00 - 13:00)</option>
                     <option value="TARDE">Tarde (13:00 - 18:00)</option>
@@ -620,11 +620,11 @@ function EstudianteDashboard() {
                 <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem' }}>
                   <div style={{ flex: 1 }}>
                     <label htmlFor="ia-cant-cursos" style={{ display: 'block', fontWeight: '700', color: '#334155', marginBottom: '0.5rem' }}>Cantidad de Cursos</label>
-                    <input id="ia-cant-cursos" type="number" min="1" max="7" value={iaPrefs.cantidadCursos} onChange={(e) => setIaPrefs({...iaPrefs, cantidadCursos: Number(e.target.value)})} style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #e2e8f0', background: 'white', color: '#0f172a' }} />
+                    <input id="ia-cant-cursos" type="number" min="1" max="7" value={iaPrefs.cantidadCursos} onChange={(e) => setIaPrefs({...iaPrefs, cantidadCursos: Number(e.target.value)})} style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #e2e8f0', background: 'var(--surface)', color: '#0f172a' }} />
                   </div>
                   <div style={{ flex: 1 }}>
                     <label htmlFor="ia-dias" style={{ display: 'block', fontWeight: '700', color: '#334155', marginBottom: '0.5rem' }}>Días a la semana (Máx)</label>
-                    <input id="ia-dias" type="number" min="1" max="7" value={iaPrefs.diasPorSemana} onChange={(e) => setIaPrefs({...iaPrefs, diasPorSemana: Number(e.target.value)})} style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #e2e8f0', background: 'white', color: '#0f172a' }} />
+                    <input id="ia-dias" type="number" min="1" max="7" value={iaPrefs.diasPorSemana} onChange={(e) => setIaPrefs({...iaPrefs, diasPorSemana: Number(e.target.value)})} style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #e2e8f0', background: 'var(--surface)', color: '#0f172a' }} />
                   </div>
                 </div>
 
@@ -639,8 +639,8 @@ function EstudianteDashboard() {
         {/* IA Resultados Modal */}
         {showResultsModal && iaResult && (
           <div role="dialog" aria-modal="true" aria-labelledby="modal-results-title" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', background: 'rgba(15,23,42,0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000, overflowY: 'auto' }}>
-            <div className="glass-card" style={{ background: 'white', width: '90%', maxWidth: '700px', borderRadius: '24px', overflow: 'hidden', margin: 'auto' }}>
-              <div style={{ padding: '1.5rem 2rem', borderBottom: '1px solid #f1f5f9', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: '#f8fafc' }}>
+            <div className="glass-card" style={{ background: 'var(--surface)', width: '90%', maxWidth: '700px', borderRadius: '24px', overflow: 'hidden', margin: 'auto' }}>
+              <div style={{ padding: '1.5rem 2rem', borderBottom: '1px solid #f1f5f9', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'var(--surface)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                    <div style={{ background: 'rgba(245,158,11,0.1)', padding: '8px', borderRadius: '10px', color: '#f59e0b' }}><Sparkles size={20} aria-hidden="true" /></div>
                    <h3 id="modal-results-title" style={{ margin: 0, fontSize: '1.25rem', fontWeight: '800', color: '#0f172a' }}>Opciones de Horario</h3>
@@ -655,7 +655,7 @@ function EstudianteDashboard() {
 
                 <div style={{ maxHeight: '350px', overflowY: 'auto', paddingRight: '0.5rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                   {iaResult.alternativas.length > 0 ? iaResult.alternativas.map((alt, idx) => (
-                    <div key={idx} style={{ padding: '1.25rem', border: '1px solid #e2e8f0', borderRadius: '12px', background: '#f8fafc', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    <div key={idx} style={{ padding: '1.25rem', border: '1px solid #e2e8f0', borderRadius: '12px', background: 'var(--surface)', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                       <p style={{ margin: '0', fontWeight: '600', color: '#334155', fontSize: '0.9rem', lineHeight: '1.4' }}>{alt.descripcion}</p>
                       <button onClick={() => aplicarAlternativa(alt)} style={{ width: '100%', padding: '10px', background: '#4f46e5', color: 'white', border: 'none', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', transition: 'background 0.2s' }}>
                         Aplicar Alternativa {idx + 1}
