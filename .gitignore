@@ -59,3 +59,6 @@ server.js.backup
 
 # Archivos Markdown de trabajo pendiente (borradores internos)
 docs/cierre/PENDIENTE_*.md
+
+# Directorio local de shims de npm (generado automáticamente)
+bin/
