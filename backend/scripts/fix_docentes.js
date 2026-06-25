@@ -1,9 +1,9 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
-const Curso = require('./models/Curso');
-const User = require('./models/User');
-const Seccion = require('./models/Seccion');
-const Carrera = require('./models/Carrera');
+const Curso = require('../models/Curso');
+const User = require('../models/User');
+const Seccion = require('../models/Seccion');
+const Carrera = require('../models/Carrera');
 
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/sima_db');
 

@@ -1,10 +1,10 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const Curso = require('./models/Curso');
-const User = require('./models/User');
-const Seccion = require('./models/Seccion');
-const Calificacion = require('./models/Calificacion');
+const Curso = require('../models/Curso');
+const User = require('../models/User');
+const Seccion = require('../models/Seccion');
+const Calificacion = require('../models/Calificacion');
 
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/sima_db');
 
