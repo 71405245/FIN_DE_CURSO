@@ -1,95 +1,257 @@
-# 🎓 SIMA  
-## Sistema Inteligente de Matrícula Académica
+# 🎓 SIMA — Sistema Inteligente de Matrícula Académica
 
-> Sistema web inteligente que optimiza la gestión académica universitaria mediante inteligencia artificial, generando horarios personalizados para estudiantes, planificación eficiente de aulas y soporte a la asignación docente considerando restricciones académicas, operativas y criterios de sostenibilidad.
-
-# 👥 Equipo del Proyecto SIMA
-[Integrantes del grupo](docs/Integrantes.md)
+> Plataforma web inteligente que optimiza la gestión académica universitaria mediante inteligencia artificial, generando horarios personalizados, planificando eficientemente las aulas y apoyando la asignación docente considerando restricciones académicas, operativas y criterios de sostenibilidad.
 
 ---
 
-## 🚀 Tecnologías utilizadas
+## 📋 Tabla de Contenido
 
-### 💻 Stack Tecnológico
-
-![Frontend](https://img.shields.io/badge/Frontend-React%20%2B%20Vite-61DAFB)
-![Backend](https://img.shields.io/badge/Backend-Node.js%20%2B%20Express-339933)
-![Database](https://img.shields.io/badge/Database-MongoDB-47A248)
-![Architecture](https://img.shields.io/badge/Architecture-Agent%20Based%20System-blue)
-
-### 🛡️ Calidad, Seguridad y Sostenibilidad
-
-![Security](https://img.shields.io/badge/Security-OWASP%20Top%2010-red)
-![Quality](https://img.shields.io/badge/Quality-SonarQube-orange)
-![Accessibility](https://img.shields.io/badge/Accessibility-WCAG-blue)
-![Usability](https://img.shields.io/badge/Usability-SUS-purple)
-![Sustainability](https://img.shields.io/badge/Software-Green%20Software-success)
-![Standard](https://img.shields.io/badge/Standard-ISO%2025010-lightgrey)
+1. [Nombre del Proyecto](#1-nombre-del-proyecto)
+2. [Integrantes del Equipo](#2-integrantes-del-equipo)
+3. [Problemática Abordada](#3-problemática-abordada)
+4. [Justificación del PMV](#4-justificación-del-pmv)
+5. [Tecnologías Utilizadas](#5-tecnologías-utilizadas)
+6. [Arquitectura del Sistema](#6-arquitectura-del-sistema)
+7. [Instrucciones de Instalación](#7-instrucciones-de-instalación)
+8. [Instrucciones de Build y Despliegue](#8-instrucciones-de-build-y-despliegue)
+9. [Documentación del Proyecto](#9-documentación-del-proyecto)
 
 ---
 
-# 🚀 1. Inicio (Initiating)
+## 1. Nombre del Proyecto
 
-Documentación inicial del proyecto, alineamiento de interesados y definición del propósito del sistema.
+**SIMA — Sistema Inteligente de Matrícula Académica**
 
-- 📄 [Descripción del Proyecto](docs/descripcion.md)
-- 🎯 [Visión del Proyecto](docs/vision.md)
-- 🏛️ [Project Charter](docs/project-charter.md)
-- 📋 [Acta de Constitución](docs/Acta_constitución.md)
-- ❗ [Documento del Problema](docs/Problema.md)
-- 🎯 [Enfoque del Proyecto](docs/enfoque-proyecto.md)
-- 👥 [Equipo del Proyecto](docs/equipo-proyecto.md)
-- 📋 [Documentacion de capacitacion](docs/Documentacion_capacitacion.md)
+Sistema web full-stack (MERN) diseñado para simplificar y optimizar el proceso de matrícula universitaria mediante un motor de inteligencia artificial que genera horarios óptimos sin cruces, adapta la carga académica según el rendimiento del estudiante y monitorea los recursos del servidor en tiempo real.
 
 ---
 
-# 📅 2. Planificación (Planning)
+## 2. Integrantes del Equipo
 
-Planificación adaptativa basada en iteraciones, gestión de requerimientos, recursos y restricciones.
+| Integrante | DNI | Correo institucional |
+|---|---|---|
+| 👨‍💻 Kevin Sebastian Cornejo Garcia | 73144637 | 73144637@continental.edu.pe |
+| 👨‍💻 Jordan Smith Acevedo Ura | 71405245 | 71405245@continental.edu.pe |
+| 👨‍💻 Liand Anthuane Mejia Poma | 72455406 | 72455406@continental.edu.pe |
 
-| 📑 Requerimientos Funcionales y No Funcionales | 📅 Gestión del Proyecto |
-|:---------------------------------------------|:------------------------|
-| 📌 [Requerimientos Funcionales](docs/requerimientos-funcionales.md) | 💰 [Presupuesto](docs/presupuesto.md) |
-| 🔒 [Requerimientos No Funcionales](docs/requerimientos-no-funcionales.md) | 📆 [Cronograma](docs/cronograma-SIMA.png) |
-| 📚 [Backlog del Producto](docs/backlog_producto.md) | ⚠️ [Registro de Riesgos](docs/registro-riesgos.md) |
-| 📝 [Backlog Detallado](docs/backlog-detallado-producto.md) | 🌟 [Registro de Oportunidades](docs/registro-oportunidades.md) |
-| 🚀 [Backlog del Sprint](docs/backlog_del_sprint.md) | 📌 [Supuestos y Restricciones](docs/supuestos-restricciones.md) |
-| 🚧 [Registro de Impedimentos](docs/impedimentos.md) | 📋 [Registro de Incidentes](docs/registro-incidencias.md) |
-| 🐞 [Registro de Defectos](docs/registro-defectos.md) |  |
+📄 Ver ficha completa del equipo: [docs/inicio/equipo-proyecto.md](docs/inicio/equipo-proyecto.md)
 
 ---
 
-# 💻 3. Ejecución (Executing)
+## 3. Problemática Abordada
 
-Desarrollo del producto mediante iteraciones, arquitectura, implementación y construcción de componentes.
+El proceso de matrícula académica en entornos universitarios es crítico pero suele estar gestionado con sistemas poco inteligentes. Los estudiantes enfrentan superposición de horarios, desconocimiento de prerrequisitos y falta de recomendaciones personalizadas, generando retrasos en su progreso académico y estrés innecesario.
 
-| 🏗️ Diseño y Arquitectura | 🛠️ Desarrollo |
-|:---|:---|
-| 🏛️ [Arquitectura del Proyecto](docs/arquitectura.md) | 📈 [Informe de Estado](docs/informe_estado2.md) |
-| 📊 [Optimización y Análisis](docs/Optimizacion-y-Analisis.md) | 🤝 [Minuta Reunión 2](docs/minuta-reunion2.md) |
-| ⚙️ [Desarrollo Algoritmo IA](docs/Desarrollo-del-algoritmo.md) | 🤝 [Minuta Reunión 1](docs/minuta-reunion.md) |
-| 📐 [Spec-Driven Development](docs/Spec-DrivenDevelopment.md)
+Las instituciones, por su parte, carecen de herramientas que integren la planificación docente, la capacidad de aulas y las preferencias del alumno en un único flujo automatizado.
 
----
+**Problema central:** ¿Cómo optimizar el proceso de planificación de matrícula académica mediante un sistema inteligente que genere y recomiende horarios adecuados, respetando restricciones académicas y operativas?
 
-# 🔍 4. Seguimiento y Control (Monitoring & Controlling)
-
-Control continuo del proyecto mediante validación, calidad, seguridad y mejora continua.
-
-| 🔄 Iteraciones | 📊 Calidad del Software |
-|:---|:---|
-| 📈 [Métricas de Calidad](docs/interpretacion_metricas.md) | 🔍 [SonarQube](docs/analisis_Sonarqube.md) |
-| 🖥️ [Pruebas Frontend](docs/pruebas-frontend.md) | 🛡️ [Análisis OWASP](docs/analisis_OWASP.md) |
-| ⚙️ [Pruebas Backend](docs/pruebas-backend.md) | ♿ [Validación WCAG](docs/validacion_WCAG.md) |
-| 🔄 [Pruebas E2E](docs/pruebas-e2e.md) | 👥 [Evaluación SUS](docs/analisis_SUS.md) |
-| 📑 [Informe Técnico Integral](docs/Reporte_integral.md) | 🍃 [Aplicación de Green Code](docs/aplicacion_greencode.md) |
+📄 Detalle completo: [docs/inicio/Problema.md](docs/inicio/Problema.md)
 
 ---
 
-# 🏁 5. Cierre (Closing)
+## 4. Justificación del PMV
 
-Finalización de iteraciones, evaluación del proyecto y documentación final.
+El **Producto Mínimo Viable (PMV) v1.0.0** de SIMA entrega las funcionalidades esenciales que validan la propuesta de valor del sistema:
 
-- 📊 [Informe final del proyecto](docs/informe_final.md)
-- 🏁 [Informe de lecciones aprendidas](docs/INFORME_LECCIONES_APRENDIDAS.md)
-- 📄 [Declaración del trabajo](docs/sow.md)
+- **Motor de IA funcional:** Algoritmo de Búsqueda en Profundidad (DFS) con Backtracking que genera hasta 5 alternativas de horario óptimas sin cruces en menos de 1 segundo.
+- **Tres portales de usuario:** Dashboards diferenciados para Administrador, Docente y Estudiante, con autenticación basada en roles (JWT).
+- **Gestión académica completa:** CRUD de Carreras, Cursos, Secciones, Docentes y Estudiantes con importación masiva desde CSV.
+- **Calidad y seguridad validadas:** Análisis SonarQube (0 vulnerabilidades, calificación A), cumplimiento OWASP Top 10, accesibilidad WCAG 2.1 AA y usabilidad SUS score 85.75/100.
+- **Sostenibilidad:** Optimizaciones de Green Code que reducen el tráfico de peticiones en un 66.6% y suspenden el polling cuando la pestaña está inactiva.
+
+📄 Detalle completo: [docs/inicio/vision.md](docs/inicio/vision.md) | [docs/inicio/enfoque-proyecto.md](docs/inicio/enfoque-proyecto.md)
+
+---
+
+## 5. Tecnologías Utilizadas
+
+### Stack Principal (MERN)
+
+| Capa | Tecnología | Propósito |
+|---|---|---|
+| **Frontend** | React + Vite | Interfaz de usuario reactiva y modular |
+| **Backend** | Node.js + Express | Servidor HTTP y API REST |
+| **Base de Datos** | MongoDB + Mongoose | Persistencia NoSQL con ODM |
+| **Estilos** | Vanilla CSS | Diseño personalizado sin frameworks |
+
+### Calidad, Seguridad y Sostenibilidad
+
+| Herramienta | Propósito |
+|---|---|
+| JWT + Bcryptjs | Autenticación y encriptación de contraseñas |
+| Helmet + express-rate-limit | Seguridad HTTP y protección contra fuerza bruta |
+| SonarQube v10.7 | Análisis estático de código (calificación A, 0 vulnerabilidades) |
+| Jest + Vitest | Pruebas unitarias (backend y frontend) |
+| Cypress + Playwright | Pruebas E2E |
+| Green Software | Optimizaciones de sostenibilidad y reducción de CO₂ |
+
+### Estándares Aplicados
+
+![OWASP](https://img.shields.io/badge/Seguridad-OWASP%20Top%2010-red)
+![SonarQube](https://img.shields.io/badge/Calidad-SonarQube-orange)
+![WCAG](https://img.shields.io/badge/Accesibilidad-WCAG%202.1%20AA-blue)
+![SUS](https://img.shields.io/badge/Usabilidad-SUS%2085.75%2F100-purple)
+![Green](https://img.shields.io/badge/Software-Green%20Code-success)
+![ISO](https://img.shields.io/badge/Estándar-ISO%2025010-lightgrey)
+
+---
+
+## 6. Arquitectura del Sistema
+
+SIMA sigue una **arquitectura por capas** separada en dos aplicaciones independientes:
+
+```
+frontend/           ← Capa de Presentación (React + Vite, puerto 5173)
+│   src/
+│   ├── components/ ← Componentes reutilizables (admin, paneles)
+│   ├── pages/      ← Vistas por rol (Login, AdminDashboard, etc.)
+│   └── tests/      ← Pruebas unitarias y E2E
+
+backend/            ← Capa de Lógica de Negocio y Acceso a Datos (Node.js, puerto 5000)
+│   ├── controllers/ ← Lógica de negocio por módulo
+│   ├── models/      ← Esquemas Mongoose (User, Curso, Seccion, etc.)
+│   ├── routes/      ← Definición de endpoints REST
+│   ├── middleware/  ← Autenticación JWT y captura de errores
+│   ├── services/    ← Motor de IA (schedulerService.js — DFS + Backtracking)
+│   └── tests/       ← Suite de 50 pruebas unitarias (Jest)
+```
+
+**Flujo de comunicación:**
+```
+Navegador → React (Vite) → Axios → Express API → Mongoose → MongoDB
+```
+
+📄 Documento completo de arquitectura: [docs/ejecucion/arquitectura.md](docs/ejecucion/arquitectura.md)
+📄 Diagrama entidad-relación: [docs/ejecucion/diagrama-entidad–relacion.md](docs/ejecucion/diagrama-entidad–relacion.md)
+
+---
+
+## 7. Instrucciones de Instalación
+
+### Prerrequisitos
+
+- **Node.js** v18.x o superior → [nodejs.org](https://nodejs.org/)
+- **MongoDB Community Server** v6.0+ corriendo en `localhost:27017` → [mongodb.com](https://www.mongodb.com/try/download/community)
+- **Git** → [git-scm.com](https://git-scm.com/)
+
+### Clonar el repositorio
+
+```bash
+git clone https://github.com/71405245/FIN_DE_CURSO.git
+cd FIN_DE_CURSO
+```
+
+### Configurar variables de entorno
+
+Copiar el archivo de ejemplo y completar los valores:
+
+```bash
+# En la raíz del proyecto
+copy .env.example backend/.env
+```
+
+Editar `backend/.env` con los valores reales:
+
+```env
+PORT=5000
+MONGO_URI=mongodb://localhost:27017/sima_db
+MONGODB_URI=mongodb://localhost:27017/sima_db
+JWT_SECRET=tu_secreto_seguro_aqui
+NODE_ENV=development
+```
+
+### Instalar dependencias del Backend
+
+```bash
+cd backend
+npm install
+```
+
+### Instalar dependencias del Frontend
+
+```bash
+cd ../frontend
+npm install
+```
+
+📄 Guía completa de instalación: [docs/ejecucion/installation.md](docs/ejecucion/installation.md)
+
+---
+
+## 8. Instrucciones de Build y Despliegue
+
+### Modo desarrollo (recomendado para evaluación)
+
+Abrir **dos terminales** desde la raíz del proyecto:
+
+**Terminal 1 — Backend (puerto 5000):**
+```bash
+cd backend
+npm run dev
+```
+
+**Terminal 2 — Frontend (puerto 5173):**
+```bash
+cd frontend
+npm run dev
+```
+
+Acceder desde el navegador a: **[http://localhost:5173](http://localhost:5173)**
+
+**Credenciales de administrador:**
+- Correo: `admin@sima.com`
+- Contraseña: `123456789`
+
+### Sembrado inicial de datos (opcional)
+
+Para poblar la base de datos con datos de prueba reales (3,000 estudiantes, 80 docentes, 1,000 secciones):
+
+```bash
+cd backend
+node seeders/importarEstudiantes.js --limpiar
+node seeders/importarDocentes.js --limpiar
+node seeders/generarHorariosYSalones.js --limpiar
+```
+
+### Ejecutar pruebas
+
+```bash
+# Pruebas backend (Jest — 50 pruebas)
+cd backend && npm test
+
+# Pruebas frontend (Vitest)
+cd frontend && npm test
+
+# Pruebas E2E (Playwright)
+cd frontend && npx playwright test
+```
+
+### Build de producción
+
+```bash
+cd frontend
+npm run build
+# Los archivos estáticos se generan en frontend/dist/
+```
+
+### 🎥 Video explicativo del proyecto
+
+> ⏳ **Pendiente de publicación** — El enlace al video demostrativo (máximo 5 minutos) será agregado aquí antes de la entrega final.
+>
+> `[Enlace al video]` — *Por añadir*
+
+---
+
+## 9. Documentación del Proyecto
+
+La documentación completa está organizada en la carpeta [`docs/`](docs/) siguiendo las áreas de conocimiento del **PMBOK**:
+
+| Área PMBOK | Carpeta | Contenido Principal |
+|---|---|---|
+| 🚀 **Inicio** | [`docs/inicio/`](docs/inicio/) | Acta de Constitución, Project Charter, Visión, Problemática, Equipo |
+| 📅 **Planificación** | [`docs/planificacion/`](docs/planificacion/) | Requerimientos, Backlogs, Cronograma, Riesgos, Presupuesto |
+| 💻 **Ejecución** | [`docs/ejecucion/`](docs/ejecucion/) | Arquitectura, API, Algoritmos de IA, Minutas, Informes de Estado |
+| 🔍 **Seguimiento y Control** | [`docs/seguimiento_control/`](docs/seguimiento_control/) | Pruebas, SonarQube, OWASP, WCAG, SUS, Métricas de Calidad |
+| 🏁 **Cierre** | [`docs/cierre/`](docs/cierre/) | Informe Final, Lecciones Aprendidas, SOW |
+| 📂 **Otros** | [`docs/otros/`](docs/otros/) | Agentes, Mejoras, Guías adicionales |
