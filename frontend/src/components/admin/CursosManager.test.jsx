@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, within } from '@testing-library/react';
 import React from 'react';
 import axios from 'axios';
 import CursosManager from './CursosManager';
@@ -84,7 +84,7 @@ describe('CursosManager', () => {
     await waitFor(() => {
       expect(screen.getByText('Código')).toBeInTheDocument();
       expect(screen.getByText('Asignatura')).toBeInTheDocument();
-      expect(screen.getByText('Tipo')).toBeInTheDocument();
+      expect(within(screen.getByRole('table')).getByText('Tipo')).toBeInTheDocument();
     });
   });
 

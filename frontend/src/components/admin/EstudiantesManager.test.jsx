@@ -67,6 +67,11 @@ describe('EstudiantesManager', () => {
     fireEvent.change(screen.getByPlaceholderText('Apellidos'), { target: { value: 'Ramírez' } });
     fireEvent.change(screen.getByPlaceholderText('ejemplo@alumno.edu'), { target: { value: 'pedro@sima.com' } });
     fireEvent.change(screen.getByPlaceholderText('••••••••'), { target: { value: 'pass123' } });
+    
+    // Seleccionar carrera en el formulario (primer combobox)
+    const selects = screen.getAllByRole('combobox');
+    fireEvent.change(selects[0], { target: { value: 'c1' } });
+
     fireEvent.click(screen.getByText('Matricular'));
 
     await waitFor(() => {
@@ -100,7 +105,7 @@ describe('EstudiantesManager', () => {
     render(<EstudiantesManager />);
     await waitFor(() => { expect(screen.getByText('Ana Torres')).toBeInTheDocument(); });
 
-    const carreraSelect = screen.getAllByRole('combobox')[0];
+    const carreraSelect = screen.getAllByRole('combobox')[1];
     fireEvent.change(carreraSelect, { target: { value: 'c2' } });
 
     await waitFor(() => {

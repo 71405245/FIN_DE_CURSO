@@ -30,6 +30,8 @@ otros/sima_db_backup/
 *.log
 logs/
 **/logs/
+coverage/
+**/coverage/
 
 # Archivos temporales y de configuración del sistema operativo/editores
 .DS_Store

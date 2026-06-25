@@ -55,7 +55,7 @@ describe('PlanificacionManager', () => {
   it('3. Debe mostrar la lista de docentes en pestaña planificador', async () => {
     render(<PlanificacionManager />);
     await waitFor(() => {
-      expect(screen.getByText('Prof. Juan Pérez')).toBeInTheDocument();
+      expect(screen.getByText(/Prof. Juan Pérez/)).toBeInTheDocument();
     });
   });
 
@@ -114,9 +114,9 @@ describe('PlanificacionManager', () => {
 
   it('8. Debe expandir las secciones de un docente al hacer click', async () => {
     render(<PlanificacionManager />);
-    await waitFor(() => { expect(screen.getByText('Prof. Juan Pérez')).toBeInTheDocument(); });
+    await waitFor(() => { expect(screen.getByText(/Prof. Juan Pérez/)).toBeInTheDocument(); });
 
-    const docenteRow = screen.getByText('Prof. Juan Pérez').closest('[role="button"]');
+    const docenteRow = screen.getByText(/Prof. Juan Pérez/).closest('[role="button"]');
     fireEvent.click(docenteRow);
 
     await waitFor(() => {

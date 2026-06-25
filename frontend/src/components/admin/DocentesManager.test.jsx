@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, within } from '@testing-library/react';
 import React from 'react';
 import axios from 'axios';
 import DocentesManager from './DocentesManager';
@@ -104,7 +104,7 @@ describe('DocentesManager', () => {
       expect(screen.getByText('Docente')).toBeInTheDocument();
       expect(screen.getByText('Email')).toBeInTheDocument();
       expect(screen.getByText('Disponibilidad')).toBeInTheDocument();
-      expect(screen.getByText('Carreras Asignadas')).toBeInTheDocument();
+      expect(within(screen.getByRole('table')).getByText('Carreras Asignadas')).toBeInTheDocument();
     });
   });
 
