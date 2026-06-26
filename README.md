@@ -29,39 +29,18 @@ Sistema web full-stack (MERN) diseñado para simplificar y optimizar el proceso 
 ## 2. Integrantes del Equipo
 
 <div align="center">
-<table>
-<tr>
 
-<td align="center">
-<img src=""<img width="790" height="860" alt="WhatsApp Image 2026-06-25 at 6 59 46 PM" src="https://github.com/user-attachments/assets/d965b0b5-8a73-45e8-b974-9d9fb331198e" />
- /><br/>
-<b>Kevin Sebastian Cornejo Garcia</b><br/>
-DNI: 73144637<br/>
-<a href="mailto:73144637@continental.edu.pe">73144637@continental.edu.pe</a><br/>
-🔧 Scrum Master
-</td>
+| Integrante | Integrante | Integrante |
+|:----------:|:----------:|:----------:|
+| <img src="https://github.com/user-attachments/assets/d965b0b5-8a73-45e8-b974-9d9fb331198e" width="150" alt="Kevin Sebastian Cornejo Garcia"/> | <img src="https://github.com/user-attachments/assets/fd044ef8-1444-4d77-b34d-cd673903c6bb" width="150" alt="Jordan Smith Acevedo Ura"/> | <img src="https://github.com/user-attachments/assets/35033400-9f3e-46ce-9a45-e0692673eb41" width="150" alt="Liand Anthuane Mejia Poma"/> |
+| **Kevin Sebastian Cornejo Garcia** | **Jordan Smith Acevedo Ura** | **Liand Anthuane Mejia Poma** |
+| DNI: 73144637 | DNI: 71405245 | DNI: 72455406 |
+| <a href="mailto:73144637@continental.edu.pe">73144637@continental.edu.pe</a> | <a href="mailto:71405245@continental.edu.pe">71405245@continental.edu.pe</a> | <a href="mailto:72455406@continental.edu.pe">72455406@continental.edu.pe</a> |
+| 🔧 Scrum Master | 💻 Developer | 📋 Product Owner |
 
-<td align="center">
-<img src="<img width="828" height="1140" alt="WhatsApp Image 2026-06-25 at 6 59 05 PM" src="https://github.com/user-attachments/assets/fd044ef8-1444-4d77-b34d-cd673903c6bb" />
-" width="150px" alt="Jordan Acevedo" /><br/>
-<b>Jordan Smith Acevedo Ura</b><br/>
-DNI: 71405245<br/>
-<a href="mailto:71405245@continental.edu.pe">71405245@continental.edu.pe</a><br/>
-💻 Developer
-</td>
-
-<td align="center">
-<img src=<img width="982" height="1074" alt="WhatsApp Image 2026-06-25 at 7 02 44 PM" src="https://github.com/user-attachments/assets/35033400-9f3e-46ce-9a45-e0692673eb41" />
- width="150px" alt="Liand Mejia" /><br/>
-<b>Liand Anthuane Mejia Poma</b><br/>
-DNI: 72455406<br/>
-<a href="mailto:72455406@continental.edu.pe">72455406@continental.edu.pe</a><br/>
-📋 Product Owner
-</td>
-
-</tr>
-</table>
 </div>
+
+
 
 📄 Ver ficha completa del equipo: [docs/inicio/equipo-proyecto.md](docs/inicio/equipo-proyecto.md)
 
