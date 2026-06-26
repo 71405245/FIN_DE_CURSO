@@ -33,7 +33,8 @@ Sistema web full-stack (MERN) diseñado para simplificar y optimizar el proceso 
 <tr>
 
 <td align="center">
-<img src="docs/inicio/img/kevin.jpg" width="150px" alt="Kevin Cornejo" /><br/>
+<img src=""<img width="790" height="860" alt="WhatsApp Image 2026-06-25 at 6 59 46 PM" src="https://github.com/user-attachments/assets/d965b0b5-8a73-45e8-b974-9d9fb331198e" />
+ /><br/>
 <b>Kevin Sebastian Cornejo Garcia</b><br/>
 DNI: 73144637<br/>
 <a href="mailto:73144637@continental.edu.pe">73144637@continental.edu.pe</a><br/>
