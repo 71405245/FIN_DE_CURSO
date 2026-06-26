@@ -42,7 +42,8 @@ DNI: 73144637<br/>
 </td>
 
 <td align="center">
-<img src="docs/inicio/img/jordan.jpg" width="150px" alt="Jordan Acevedo" /><br/>
+<img src="<img width="828" height="1140" alt="WhatsApp Image 2026-06-25 at 6 59 05 PM" src="https://github.com/user-attachments/assets/fd044ef8-1444-4d77-b34d-cd673903c6bb" />
+" width="150px" alt="Jordan Acevedo" /><br/>
 <b>Jordan Smith Acevedo Ura</b><br/>
 DNI: 71405245<br/>
 <a href="mailto:71405245@continental.edu.pe">71405245@continental.edu.pe</a><br/>
@@ -50,7 +51,8 @@ DNI: 71405245<br/>
 </td>
 
 <td align="center">
-<img src="docs/inicio/img/liand.jpg" width="150px" alt="Liand Mejia" /><br/>
+<img src=<img width="982" height="1074" alt="WhatsApp Image 2026-06-25 at 7 02 44 PM" src="https://github.com/user-attachments/assets/35033400-9f3e-46ce-9a45-e0692673eb41" />
+ width="150px" alt="Liand Mejia" /><br/>
 <b>Liand Anthuane Mejia Poma</b><br/>
 DNI: 72455406<br/>
 <a href="mailto:72455406@continental.edu.pe">72455406@continental.edu.pe</a><br/>
