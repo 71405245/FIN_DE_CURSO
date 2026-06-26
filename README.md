@@ -32,11 +32,11 @@ Sistema web full-stack (MERN) diseñado para simplificar y optimizar el proceso 
 
 | Integrante | Integrante | Integrante |
 |:----------:|:----------:|:----------:|
-| <img src="https://github.com/user-attachments/assets/d965b0b5-8a73-45e8-b974-9d9fb331198e" width="150" alt="Kevin Sebastian Cornejo Garcia"/> | <img src="https://github.com/user-attachments/assets/fd044ef8-1444-4d77-b34d-cd673903c6bb" width="150" alt="Jordan Smith Acevedo Ura"/> | <img src="https://github.com/user-attachments/assets/35033400-9f3e-46ce-9a45-e0692673eb41" width="150" alt="Liand Anthuane Mejia Poma"/> |
-| **Kevin Sebastian Cornejo Garcia** | **Jordan Smith Acevedo Ura** | **Liand Anthuane Mejia Poma** |
-| DNI: 73144637 | DNI: 71405245 | DNI: 72455406 |
-| <a href="mailto:73144637@continental.edu.pe">73144637@continental.edu.pe</a> | <a href="mailto:71405245@continental.edu.pe">71405245@continental.edu.pe</a> | <a href="mailto:72455406@continental.edu.pe">72455406@continental.edu.pe</a> |
-| 🔧 Scrum Master | 💻 Developer | 📋 Product Owner |
+| <img src="https://github.com/user-attachments/assets/fd044ef8-1444-4d77-b34d-cd673903c6bb" width="150" alt="Jordan Smith Acevedo Ura"/> | <img src="https://github.com/user-attachments/assets/d965b0b5-8a73-45e8-b974-9d9fb331198e" width="150" alt="Kevin Sebastian Cornejo Garcia"/> | <img src="https://github.com/user-attachments/assets/35033400-9f3e-46ce-9a45-e0692673eb41" width="150" alt="Liand Anthuane Mejia Poma"/> |
+| **Jordan Smith Acevedo Ura** | **Kevin Sebastian Cornejo Garcia** | **Liand Anthuane Mejia Poma** |
+| DNI: 71405245 | DNI: 73144637 | DNI: 72455406 |
+| <a href="mailto:71405245@continental.edu.pe">71405245@continental.edu.pe</a> | <a href="mailto:73144637@continental.edu.pe">73144637@continental.edu.pe</a> | <a href="mailto:72455406@continental.edu.pe">72455406@continental.edu.pe</a> |
+| 💻 Developer | 🔧 Scrum Master | 📋 Product Owner |
 
 </div>
 
