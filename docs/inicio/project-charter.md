@@ -5,8 +5,8 @@
 | **Project Name** | Sistema Web Inteligente para la Optimización del Proceso de Matrícula Universitaria |
 | **Project Sponsor** | Universidad Continental |
 | **Project Manager** | Jordan,Kevin,Liand |
-| **Fecha de inicio** | 2026 |
-| **Última actualización** | 2026 |
+| **Fecha de inicio** | 31-03-2026 |
+| **Última actualización** | 25-06-2026 |
 
 ---
 
